@@ -122,12 +122,6 @@
 		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
 	</context>
 
-	<context id="wizard_trace32_page" >
-		<description>Specify Trace32 configuration information.</description>
-		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Symbian OS Trace32 Support"			href="html/reference/wnd_Trace32_config.htm" />
-	</context>
-
 	<context id="wizard_trk_connection_page" >
 		<description>Specify TRK connection information.</description>
 		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
@@ -333,6 +327,17 @@
 		<topic label="Project Settings"					href="html/reference/build_properties/pane_project_settings.htm" />
 	</context>
 	
+
+	<!-- ============================================================== -->
+	<!-- PREFERENCE PANELS                                              -->
+	
+	<!-- QT - ADDED for 3.0 -->
+	<context id="preference_dialog_context" >
+		<label>Qt</label>
+		<topic label="Qt preferences"  		href="html/qt_help/qt_pref_panel.htm" />
+	</context>
+
+
 	
 	<!-- PREFERENCE PANELS -->
 

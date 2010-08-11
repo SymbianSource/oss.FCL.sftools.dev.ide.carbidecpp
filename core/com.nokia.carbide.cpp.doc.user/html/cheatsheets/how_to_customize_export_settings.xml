@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<cheatsheet
+      title="Share my Settings">
+`	<intro>
+		Intro text
+	</intro>
+	<item
+       title="one">
+		<description>
+     one
+			
+		</description>
+		<command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.project)" confirm="false">
+		</command>
+	</item>
+</cheatsheet>

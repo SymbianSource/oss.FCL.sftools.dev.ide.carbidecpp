@@ -72,11 +72,11 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		plugin = this;
 		super.start(context);
-		Job j = new Job("Getting proxy info") {
+		Job j = new Job(Messages.Activator_GetProxyInfoJobTitle) {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				try {
-					IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com"));
+					IProxyData proxyData = ProxyUtils.getProxyData(new URI("http://www.yahoo.com")); //$NON-NLS-1$
 					if (proxyData != null) {
 						System.setProperty(PROPERTY_PROXYHOST, proxyData.getHost());
 						System.setProperty(PROPERTY_PROXYPORT, String.valueOf(proxyData.getPort()));
@@ -101,7 +101,7 @@ public class Activator extends AbstractUIPlugin {
 	}
 
 	public static void runInUIThreadWhenProxyDataSet(final Control control, final Runnable r) {
-		Job j = new Job("") {
+		Job j = new Job("") { //$NON-NLS-1$
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				setBusyCursor(control, true);
@@ -123,6 +123,8 @@ public class Activator extends AbstractUIPlugin {
 	}
 	
 	public static void setBusyCursor(final Control control, final boolean isBusy) {
+		if (control == null)
+			return;
 		final Display display = control.getDisplay();
 		display.syncExec(new Runnable() {
 			@Override
@@ -193,5 +195,9 @@ public class Activator extends AbstractUIPlugin {
 		}
 		return (String) properties.get(key);
 	}
+
+    public static IStatus makeErrorStatus(String message, Throwable t) {
+        return new Status(IStatus.ERROR, PLUGIN_ID, message, t);
+    }
 
 }

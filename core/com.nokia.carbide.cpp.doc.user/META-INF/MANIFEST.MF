@@ -5,4 +5,5 @@ Bundle-SymbolicName: com.nokia.carbide.cpp.doc.user;singleton:=true
 Bundle-Version: 1.4.0.qualifier
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.help
+Require-Bundle: org.eclipse.help,
+ org.eclipse.ui.cheatsheets

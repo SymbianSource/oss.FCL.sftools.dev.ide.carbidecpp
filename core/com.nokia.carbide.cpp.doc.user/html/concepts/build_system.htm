@@ -7,7 +7,7 @@
 <title>Build System Overview</title>
 <link rel="StyleSheet" href="../../book.css" type="text/css"/>
 </head>
-<body bgcolor="#FFFFFF">
+<body >
 <h2>Build System Overview </h2>
 <p>The Carbide.c++ build system provides a wrapper around the standard Symbian OS build process utilizing component description files (bld.inf) and project definition files (.mmp files). Because the Carbide.++ build system provides a visual view into this system, it will be useful for new developers to the Symbian OS to become familiar with the basic Symbian OS build process. Further information on the Symbian OS build system can be found in the <a href="http://developer.symbian.com/main/oslibrary/osdocs/index.jsp">Symbian Developer Library</a> under the <b>Build Tools Guide</b> and <b>Build Tools Reference</b> sections. If you are already familiar with the Symbian OS build system then you should feel right at home with the Carbide.c++ builder user interface. </p>
 <p>In Carbide.c++, as in the Symbian OS, a project is described by a <span class="code">bld.inf</span> file. Hence, all projects must start with a <span class="code">bld.inf</span> file. Carbide.c++ supports either building all components of a project (including extension makefiles) or only building selected sub-components. This gives the developer the granularity to either build all of a project&#8217;s dependencies or, if you are working on very large projects, only building a small sub-component of a larger project. </p>

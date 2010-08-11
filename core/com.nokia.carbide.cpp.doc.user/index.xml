@@ -481,7 +481,7 @@
 		<topic href="html/reference/pref_cpp_code_style.htm" />
 		<topic href="html/reference/pref_carb_debugger.htm" />
 		<topic href="html/tasks/sdks/sdk_platform_filter.htm" />
-		<topic href="html/reference/pref_carb_sdk_preferencea.html" />
+	   <topic href="html/reference/pref_carb_symbian_sdk.htm" />
 		<topic href="html/reference/pref_carb_preprocess.htm" />
 		<topic href="html/reference/pref_carb_diagnostic_logs.htm" />
     </entry>
@@ -569,6 +569,7 @@
 <!-- S -->
 
 	<entry keyword="SDKs">
+	   <topic href="html/reference/pref_carb_symbian_sdk.htm" />
 	   <topic href="html/tasks/sdks/sdk_add.htm" />
 	   <topic href="html/tasks/sdks/sdk_add_custkits.htm" label="Adding Symbian Custom Kits"/>
 	   <topic href="html/tasks/sdks/sdk_search.htm" label="Searching"/>
@@ -576,13 +577,13 @@
        <topic href="html/qt_help/qt_pref_panel.htm"/>
 	</entry>
 
-	<entry keyword="SDK Preferences">
-	   <topic href="html/reference/pref_carb_sdk_preferencea.html"/>
-       <topic href="html/qt_help/qt_pref_panel.htm"/>
+	<entry keyword="Symbian SDKs">
+		<topic href="html/reference/pref_carb_symbian_sdk.htm" />
+		<topic href="html/qt_help/qt_pref_panel.htm"/>
 	</entry>
 
 	<entry keyword="SDK Support">
-	   <topic href="html/tasks/AddinganSDK.html" />
+	   <topic href="html/tasks/sdks/sdk_add.htm" />
 	   <topic href="html/tasks/WorkingwithSDKs.html"/>
 	   <topic href="html/tasks/RmvngandVwngPropsosSDK.html" label="Viewing and Editing SDK Properties"/>
 	</entry>
@@ -643,6 +644,15 @@
 	<entry keyword="System Browser View">
 	   <topic href="html/reference/view_system_browser.htm" label="System Browser" />
 	</entry>
+	
+	<entry keyword="Symbian Build System">
+	   <topic href="html/concepts/sbsv2.htm" label="Symbian Build System" />
+	</entry>
+
+	<entry keyword="SBSv2">
+	   <topic href="html/concepts/sbsv2.htm" label="Symbian Build System" />
+	</entry>
+
 
 <!-- T -->
 

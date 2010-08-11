@@ -377,8 +377,8 @@
 	
 	<!-- Carbide.c++ > SDK Preferences panel -->
 	<context id="sdk_prefs_page" >
-		<description>Use the SDK Preferences page to Add or remove SDKs, or edit SDK properties</description>
-		<topic label="SDK Preferences"  					href="html/reference/SDKPreferences.html" />
+		<description>Use the Symbian SDKs page to Add or remove SDKs, or edit SDK properties</description>
+		<topic label="Symbian SDKs"  						href="html/reference/pref_carb_symbian_sdk.htm" />
 		<topic label="Adding SDKs" 							href="html/tasks/sdks/sdk_add.htm" />
 		<topic label="Searching SDKs" 						href="html/tasks/sdks/sdk_search.htm" />
 		<topic label="Viewing SDK Properties" 				href="html/tasks/sdks/sdk_view_properties.htm" />
@@ -390,13 +390,14 @@
 		<description>Use the SDK Add dialog to Add SDKs to current project</description>
 		<topic label="Add SDK"			        href="html/tasks/sdks/sdk_add.htm" />
 		<topic label="SDK Properties"			href="html/tasks/sdks/sdk_view_properties.htm" />
+		<topic label="Symbian SDKs"  						href="html/reference/pref_carb_symbian_sdk.htm" />
 	</context>
 
 	<!-- SDK Preferences panel: SDK Properties dialog -->
 	<context id="sdk_properties_dialog" >
 		<description>Use the SDK Properties window to examine the properties associated with the currently selected SDK in the SDK Preferences panel.</description>
 		<topic label="SDK Properties"				href="html/tasks/sdks/sdk_view_properties.htm" />
-		<topic label="SDK Preferences"				href="html/reference/SDKPreferences.html" />
+		<topic label="Symbian SDKs"  						href="html/reference/pref_carb_symbian_sdk.htm" />
 		<topic label="Adding Symbian Custom Kits"	href="html/tasks/sdks/sdk_add_custkits.htm" />
 	</context>
 
@@ -404,7 +405,7 @@
 	<context id="sdk_platform_filter_page" >
 		<description>Use the SDK Platform Filter window to show only platforms related to selected SDK.</description>
 		<topic label="Platform Filtering Preferences"		href="html/tasks/sdks/sdk_platform_filter.htm" />
-		<topic label="SDK Preferences"						href="html/reference/SDKPreferences.html" />
+		<topic label="Symbian SDKs"  						href="html/reference/pref_carb_symbian_sdk.htm" />
 	</context>
 
 	<!-- New Symbian OS Project wizard > Symbian OS SDKs page -->

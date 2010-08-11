@@ -20,10 +20,4 @@ import com.nokia.carbide.internal.discovery.ui.extension.AbstractDiscoveryPortal
 
 
 public class PulsarPageLayer extends AbstractDiscoveryPortalPageLayer {
-
-	@Override
-	protected String getDirectoryURL() {
-		return "http://tools.ext.nokia.com/pulsar/directory.xml"; //$NON-NLS-1$
-	}
-	
 }

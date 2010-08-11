@@ -19,5 +19,5 @@ Bundle-ClassPath: trksupport.jar,
  lib/commons-codec-1.3.jar,
  lib/commons-logging-1.1.jar
 Export-Package: com.nokia.carbide.trk.support.connection;x-friends:="com.nokia.carbide.symsee.trk.support,com.nokia.carbide.cpp.edc",
- com.nokia.carbide.trk.support.service;x-friends:="com.nokia.carbide.symsee.trk.support,com.nokia.cdt.debug.launch.platSim,com.nokia.carbide.cpp.edc"
+ com.nokia.carbide.trk.support.service;x-friends:="com.nokia.carbide.symsee.trk.support,com.nokia.carbide.cpp.edc"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

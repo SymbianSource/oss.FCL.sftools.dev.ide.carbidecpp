@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
+
 <toc label="Introduction" href="html/concepts/Introduction.html"  >
   <topic label="Carbide.c++ Overview" 			href="html/tasks/start/carbide_overview.htm" >
     <topic href="html/tasks/start/carbide_requirements.htm" label="System Requirements">
@@ -17,8 +18,8 @@
     <topic label="Supported Target Types"		href="html/concepts/build_targets.htm" />
     <topic label="Supported SDKs" 		    	href="html/sos_references.htm" />
     <topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" />
-    <topic label="Concepts" 					href="html/concepts/concepts.htm" />
   </topic>
+   <topic label="Concepts" 					href="html/concepts/concepts.htm" />
    <topic label="Carbide tutorials">
 		<topic label="Emulator Application Projects"				href="html/projects/tutorials/new_proj_from_template_00.htm" >
 		  <topic label="Creating new projects from templates" 		href="html/projects/tutorials/new_proj_from_template_01.htm" />
@@ -101,23 +102,25 @@
       <topic label="Workspace Information"	        href="html/concepts/workspaces.htm" />
   </topic>
   <topic label="Project management" >
-    <topic label="Carbide C/C++ perspective" 		href="html/concepts/CarbidePerspective.html" />
-    <topic label="Carbide.c++ preferences" 			href="html/reference/pref_carb_cpp.htm" >
-      <topic label="Build"							href="html/reference/pref_carb_build.htm" />
-      <topic label="Carbide.c++ News"				href="html/reference/pref_carb_carbide_news.htm" />
-      <topic label="Debugger"						href="html/reference/pref_carb_debugger.htm" />
-      <topic label="Diagnostic Logs"          		href="html/reference/pref_carb_diagnostic_logs.htm" />
-      <topic label="Platform Filtering Preferences"	href="html/tasks/sdks/sdk_platform_filter.htm" />
-      <topic label="Preprocess"						href="html/reference/pref_carb_preprocess.htm" />
-      <topic label="SDK Preferences"                  href="html/reference/pref_carb_sdk_preferencea.html" />
+    <topic label="Carbide C/C++ perspective" 			href="html/concepts/CarbidePerspective.html" />
+    <topic label="Symbian Build System (SBSv2)" 			href="html/concepts/sbsv2.htm" />
+    <topic label="Carbide.c++ preferences" 				href="html/reference/pref_carb_cpp.htm" >
+      <topic label="Build"								href="html/reference/pref_carb_build.htm" />
+      <topic label="Debugger"							href="html/reference/pref_carb_debugger.htm" />
+      <topic label="Diagnostic Logs"          			href="html/reference/pref_carb_diagnostic_logs.htm" />
+      <topic label="Preprocess"							href="html/reference/pref_carb_preprocess.htm" />
+      <topic label="SDK Preferences (deprecated)"                  	href="html/reference/pref_carb_sdk_preference.html" />
+      <topic label="Symbian Filtering Preferences"		href="html/tasks/sdks/sdk_platform_filter.htm" />
+      <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
       <topic label="Code Styles"						href="html/reference/pref_cpp_code_style.htm" >
         <topic label="Setting the Workspace Code Style"	href="html/tasks/code_style_workspace.htm" />
         <topic label="Reformatting a Source File"		href="html/tasks/code_style_reformatting_sources.htm" />
       </topic>
     </topic>
     <topic label="Working with SDKs"					href="html/tasks/WorkingwithSDKs.html" >
-      <topic label="SDK Preferences"					href="html/reference/SDKPreferences.html" />
-      <topic label="Adding an SDK"					href="html/tasks/AddinganSDK.html" >
+      <topic label="SDK Preferences (deprecated)"					href="html/reference/SDKPreferences.html" />
+      <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
+      <topic label="Adding an SDK"					href="html/tasks/sdks/sdk_add.htm" >
         <topic label="Adding SDKs"					href="html/tasks/sdks/sdk_add.htm" />
       </topic>
       <topic label="Searching for SDKs"				href="html/tasks/sdks/sdk_search.htm" />
@@ -201,7 +204,6 @@
         <topic label="Attach to Process"			href="html/projects/launch/attach_process.htm" />
         <topic label="Emulation"					href="html/projects/launch/emulation.htm" />
         <topic label="System TRK"					href="html/projects/launch/stop_mode.htm" />
-        <topic label="Trace32"						href="html/projects/launch/trace32.htm" />
         <anchor id="launch_config_ANCHOR"/>
       </topic>
       <topic label="Configuration panes"				href="html/projects/launch/pages_overview.htm" >
@@ -291,17 +293,8 @@
        <topic href="html/projects/launch/launch_board.htm" label="Debugging a reference board">
        </topic>
       <topic label="Stop Mode Debug Example" 				href="html/tasks/debugger/stop_mode_debug.htm" >
-        <topic label="1. On-Device Debugging Preconditions" href="html/tasks/debugger/stop_mode_debug_precond.htm" />
-        <topic label="2. Trace32 Support" 					href="html/projects/launch/trace32.htm" >
-          <topic label="Main" 								href="html/projects/launch/page_main.htm" />
-          <topic label="Connection" 						href="html/projects/launch/page_connection.htm" />
-          <topic label="Debugger" 							href="html/projects/launch/page_debugger.htm" />
-          <topic label="ROM Image" 							href="html/projects/launch/page_rom_image.htm" />
-          <topic label="Executables" 						href="html/projects/launch/page_executables.htm" />
-          <topic label="Source" 							href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm" />
-          <topic label="Commmon" 							href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_comm.htm/" />
-        </topic>
-        <topic label="4. Using Soft Attach"	 href="html/tasks/debugger/soft_attach_debug.htm" />
+        <topic label="On-Device Debugging Preconditions" href="html/tasks/debugger/stop_mode_debug_precond.htm" />
+        <topic label="Using Soft Attach"	 href="html/tasks/debugger/soft_attach_debug.htm" />
       </topic>
       <topic label="Building a ROM Image File"            href="html/reference/ROM_build_settings.html" />
       <topic label="ARM Registers" 						href="html/concepts/arm_registers.htm" />
@@ -341,7 +334,6 @@
       <topic label="Emulation Debugging"			        href="html/concepts/emulators.htm" />
       <topic label="Debugging DLLs"						href="html/tasks/projects/prj_debug_dlls.htm" />
       <topic label="Debugging in ROM"		                href="html/tasks/projects/prj_debug_rom.htm" />
-      <topic label="Importing Symbian Executables"		href="html/tasks/projects/prj_import_exe.htm" />
     </topic>
 
       <topic label="Troubleshooting" 						href="html/tasks/trk/trk_troubleshooting.htm"/>
@@ -352,6 +344,18 @@
     <topic label="System Search view"      		href="html/reference/search/view_system_search.htm" />
     <topic label="System Search preferences"    href="html/reference/search/pref_system_search.htm" />
   </topic>
-  <topic href="html/hints_tips.htm" label="Tips &amp; Hints" />
   <topic href="html/tasks/carbide_tools.htm" label="Creating Carbide Tools" />
+  <topic href="html/tasks/custom/carb_customizing.htm" label="Customizing Carbide">
+     <topic href="html/tasks/custom/carb_custom_styles.htm" label="Code Styles">
+     </topic>
+     <topic href="html/tasks/custom/carb_custom_editors.htm" label="Editors">
+     </topic>
+     <topic href="html/tasks/custom/carb_custom_menus.htm" label="Toolbars and Menus">
+     </topic>
+     <topic href="html/tasks/custom/carb_custom_keys.htm" label="Shortcut Keys">
+     </topic>
+     <topic href="html/tasks/custom/carb_export_setup.htm" label="Sharing Carbide Setups">
+     </topic>
+  </topic>
+  <topic href="html/hints_tips.htm" label="Tips &amp; Hints" />
 </toc>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cheatsheet title="Getting Started">
+<cheatsheet title="Creating and debugging an application project">
    <intro>
-      <description>
-         Follow these steps to create a Symbian OS project and debug it using the S60 EPOC Emulator.
-      </description>
+ Follow these steps to create and debug a Symbian project and using an emulator. using the S60 EPOC Emulator.
    </intro>
    <item title="Verify a Symbian SDK is available" dialog="true" skip="true" href="/com.nokia.carbide.cpp.doc.user/html/reference/SDKPreferences.html">
       <description>

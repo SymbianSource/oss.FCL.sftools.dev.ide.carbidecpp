@@ -20,7 +20,17 @@
 		  
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
-       		label="Improved Carbide Debugger  (3.0b)" 
+       		label="Symbian Build System (SBSv2, 3.0)" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/concepts/sbsv2.htm" 
+       		id="carbide-whatsnew" 
+       		style-id="content-link">
+          	<text>SBSv2 is the new build engine for Symbian programs. Find out more here.</text>
+       		</link>
+       	</group>
+
+		<group style-id="content-group" id="carbide-cpp">
+       		<link 
+       		label="Improved Carbide Debugger (3.0)" 
        		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
        		id="carbide-whatsnew" 
        		style-id="content-link">
@@ -30,11 +40,11 @@
 
 		<group style-id="content-group" id="carbide-cpp">
        		<link 
-       		label="Plug-n-Play On-device Debugging (in 2.5)" 
-       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/release_notes.htm" 
+       		label="TCF TRK (3.0)" 
+       		url="http://org.eclipse.ui.intro/showHelpTopic?id=/com.nokia.carbide.cpp.doc.user/html/concepts/trk.htm" 
        		id="carbide-whatsnew" 
        		style-id="content-link">
-          	<text>Debugging programs on a target device has never been easier with PnP on-device debugging.</text>
+          	<text>The TRK remote agent now uses TCF for faster, more flexible communication.</text>
        		</link>
        	</group>
 

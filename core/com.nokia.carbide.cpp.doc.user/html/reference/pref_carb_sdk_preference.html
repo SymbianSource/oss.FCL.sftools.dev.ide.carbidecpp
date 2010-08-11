@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<title>SDK Preferences</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+<style type="text/css">
+<!--
+.style2 {
+	color: #FF0000;
+	font-weight: bold;
+}
+.style3 {color: #EE0000}
+-->
+</style>
+</head>
+   <body>
+   <div class="Head1">
+<h2>SDK Preferences (<span class="style3">deprecated</span>)</h2>
+</div>
+Use the <img src="../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferencePage)")'>
+SDK Preferences</a> page in the <b>Preferences</b> window to control which installed SDKs are available to projects during an import.  To
+	 access SDK preferences preference panel, select <b>Window &gt; Preferences &gt; Carbide.c++ &gt; SDK Preferences</b>. 
+	 <p class="note"><b>NOTE</b> There must be at least one recognized SDK installed before you can create a project.  If the SDK you have installed is not recognized, you may still be able to add it to the Discovered Symbian OS SDK list. See <a href="../tasks/start/carbide_requirements.htm">Carbide.c++ Requirements</a> for a list of supported SDKs. </p>
+   <p class="note"><b>NOTE</b> This panel serves as a <span class="code">devices.xml</span> file editor. The <span class="code">devices.xml</span> file stores information about the installed SDKs used for Symbian OS development.</p>
+   <div class="Figure">
+
+	  <p align="center" class="Image"><img src="../images/SDKPreferences.png" width="696" height="583" alt="SDK preferences panel" /></p>
+     <p align="center" class="figure">Figure 1. SDK Preferences preference panel </p>
+   </div>
+   <table cellpadding="2" cellspacing="0"
+border="0">
+	 <tr valign="top"><th width="221" class="Cell">Name</th><th width="584" class="Cell">Function</th></tr>
+         <tr valign="top">
+           <td class="Cell"><b>Available Symbian OS SDK's</b></td>
+           <td class="Cell"><p>Lists all the installed and recognized SDKs supported by the IDE. Only SDKs supported by the IDE are included in the list. </p>
+             <p>Checked SDKs indicate build configurations available for creating projects. Unchecked SDKs are not displayed when creating new projects. </p>
+             <p>SDKs shown in <span class="style2">red</span>  indicate  a problem, usually no <span class="code">EPOCROOT</span> or missing build configurations. </p>
+           <p>Click on a SDK name to see its EPOCROOT location and build configuration status in the SDK Information area. </p></td>
+        </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Remove SDK </b></td>
+           <td class="Cell">Click to remove the selected SDK from the Available Symbian OS SDK's list. </td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Add New SDK </b></td>
+           <td class="Cell"><p>Click to <a href="../tasks/sdks/sdk_add.htm">add</a> an SDK to the <b>Available Symbian OS SDKs</b> list.</p>           </td>
+     </tr>
+         <tr valign="top">
+           <td class="Cell"><b>SDK Properties</b></td>
+           <td class="Cell"><p>Click to view and edit the <a href="../tasks/sdks/sdk_view_properties.htm">properties</a> of the currently selected SDK in the <b>Available Symbian OS SDKs</b> list.</p>           </td>
+     </tr>
+         <tr valign="top">
+           <td class="Cell"><b>Listen for devices.xml changes outside of Carbide </b></td>
+           <td class="Cell">Enable of have  Carbide  issue an alert prompting you to rescan your SDKs when changes to the <span class="code">devices.xml</span> file are made outside of  Carbide. When disabled the <span class="code">devices.xml</span> file is not scanned for changes. </td>
+         </tr>
+         <tr valign="top">
+           <td class="Cell"><p><b>Rescan All SDKs</b></p>           </td>
+           <td class="Cell"><p>Click to <a href="../tasks/sdks/sdk_search.htm">rescan</a>  the drive  for newly installed SDKs. The devices.xml file is scanned for SDKs and the list of available SDKs is updated if the devices.xml file has changed.</p>
+             <p class="note"><b>NOTE</b> Carbide.c++ scans for available SDKs each time it is started.</p></td>
+        </tr>
+   </table>
+   <h5>Related tasks</h5>
+	 <ul>
+       
+       <li><a href="../tasks/WorkingwithSDKs.html">Working with SDKs</a></li>
+       <li><a href="../tasks/sdks/sdk_add.htm">Adding an SDK</a></li>
+       <li><a href="../tasks/RmvngandVwngPropsosSDK.html">SDK Properties</a></li>
+  </ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+   </html>
+   

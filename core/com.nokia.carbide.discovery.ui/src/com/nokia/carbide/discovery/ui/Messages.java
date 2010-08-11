@@ -25,6 +25,7 @@ public class Messages extends NLS {
 	public static String AbstractBrowserPortalPage_RefreshLabel;
 	public static String AbstractBrowserPortalPage_StopLabel;
 	public static String AbstractBrowserPortalPageLayer_BadURLError;
+	public static String AbstractBrowserPortalPageLayer_BrowserCreateError;
 	public static String AbstractBrowserPortalPageLayer_ForwardLabel;
 	public static String AbstractBrowserPortalPageLayer_InvalidURLError;
 	public static String AbstractBrowserPortalPageLayer_OpenLocationLabel;
@@ -43,6 +44,7 @@ public class Messages extends NLS {
 	public static String AbstractDiscoveryPortalPageLayer_UncheckAllActionLabel;
 	public static String AbstractRSSPortalPageLayer_ReturnToFeedLabel;
 	public static String AbstractRSSPortalPageLayer_RSSReadError;
+	public static String Activator_GetProxyInfoJobTitle;
 	public static String Activator_MissingConfigURLError;
 	public static String PortalEditor_BadCommandBarFactoryError;
 	public static String PortalEditor_Name;

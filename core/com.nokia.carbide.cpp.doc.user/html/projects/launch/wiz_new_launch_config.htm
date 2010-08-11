@@ -8,7 +8,7 @@
   <title>New Launch Configuration Wizard</title>
   <link rel="StyleSheet" href="../../../book.css" type="text/css" />
 </head>
-<body bgcolor="#ffffff">
+<body >
 <h2>New Launch Configuration Wizard </h2>
 <p>The <b>New Launch Configuration Wizard</b> launches when no launch configuration exists for a project. Wherever possible the <b>New Launch Configuration </b> wizard gathers the information from the project and asks additional questions based on the type of launch configuration chosen. For example, a launch configuration using Application TRK requires different information than  one targeted for System TRK. </p>
 <table width="700"  border="0" cellpadding="2" cellspacing="0">
@@ -39,13 +39,6 @@
     <td><ul>
       <li><a href="#TRK_CONN">TRK Connection Settings</a></li>
       <li><a href="#TRK_SIS">TRK SIS Selection</a> (<i>Application TRK only</i>) </li>
-    </ul>    </td>
-  </tr>
-  <tr>
-    <td><b>Trace32</b></td>
-    <td><ul>
-      <li><a href="#TRACE32">Trace32 Initialization Settings</a></li>
-      <li><a href="#ROM_IMG">Symbian ROM Image  Settings</a></li>
     </ul>    </td>
   </tr>
   <tr>
@@ -91,16 +84,6 @@
 <p>If you checkmark <b> Advanced settings</b>, the <a href="../../reference/wnd_debug_configuration.htm">Debug</a> dialog appears instead of launching the project. This enables you to make additional changes to the new launch configuration before starting the debug session. By design and intent, this should seldom be required for the initial launch. </p>
 <p align="center"><img src="../../images/icons/wiz_launch_config_finish.png" width="438" height="533"></p>
 <p class="figure">Figure 8 - New Launch Configuration page </p>
-<h3><a name="TRACE32" id="TRACE32"></a>Trace32 Initialization Settings</h3>
-<p>Use the <b>Trace32 Initialization Settings</b> page to specify the <a href="trace32.htm">initialization</a> script and target processor of the target device.Enter the Trace32 Initialization Script and choose the Target Processor, then click <b>Next</b>. </p>
-<p> This page only appears when creating a Trace32 launch configuration. </p>
-<p align="center"><img src="../../images/icons/wiz_launch_config_trace32.png" width="438" height="533"></p>
-<p class="figure">Figure 9 - <b>Trace32 Initialization Settings</b> page </p>
-<h3><a name="ROM_IMG" id="ROM_IMG"></a>Symbian ROM Image  Settings</h3>
-<p>Use the <b>Symbian ROM Image Settings</b> page to specify the method of <a href="page_debugger.htm">debugging</a>, the start address, and the <a href="page_rom_image.htm">ROM Image</a> and Log File locations.  </p>
-<p>This page  appears when creating a Trace32 launch configuration. </p>
-<p align="center"><img src="../../images/icons/wiz_launch_config_rom_image.png" width="438" height="533"></p>
-<p class="figure">Figure 10 - Symbian ROM Image  Settings page</p>
 <h5>Other references</h5>
 <ul>
   <li><a href="../../projects/launch/launch_configs_overview.htm">Launch Configuration</a>  </li>

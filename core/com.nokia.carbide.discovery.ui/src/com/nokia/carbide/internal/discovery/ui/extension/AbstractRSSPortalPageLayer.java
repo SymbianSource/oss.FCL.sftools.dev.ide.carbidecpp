@@ -17,8 +17,12 @@
 package com.nokia.carbide.internal.discovery.ui.extension;
 
 import java.net.URL;
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -34,6 +38,8 @@ import com.nokia.carbide.internal.discovery.ui.editor.SimpleRSSReader.Rss;
 
 public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPageLayer {
 
+	private static final List<Pattern> EXCLUDE_TAG_PATTERNS = new ArrayList<Pattern>();
+
 	private static final String[] EXCLUDE_TAGS = { 	
 		"object", //$NON-NLS-1$
 		"param", //$NON-NLS-1$
@@ -42,10 +48,18 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 		"img" //$NON-NLS-1$
 	};
 	
-	private static final Pattern[] EXCLUDE_TAG_PATTERNS = new Pattern[EXCLUDE_TAGS.length * 2];
+	private static final String[] EXCLUDE_FORMAT_TAGS = {
+		"b", //$NON-NLS-1$
+		"i", //$NON-NLS-1$
+		"em", //$NON-NLS-1$
+		"strong", //$NON-NLS-1$
+		"tt", //$NON-NLS-1$
+		"s", //$NON-NLS-1$
+		"strike", //$NON-NLS-1$
+		"p" //$NON-NLS-1$
+	};
 	
 	static {
-		int i = 0;
 		for (String tagString : EXCLUDE_TAGS) {
 			StringBuilder sb = new StringBuilder();
 			sb.append('<');
@@ -53,18 +67,25 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 			sb.append(" .*</"); //$NON-NLS-1$
 			sb.append(tagString);
 			sb.append('>');
-			EXCLUDE_TAG_PATTERNS[i++] = 
-				Pattern.compile(sb.toString(), 
-						Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+			EXCLUDE_TAG_PATTERNS.add(Pattern.compile(sb.toString(),
+					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE));
 		}
 		for (String tagString : EXCLUDE_TAGS) {
 			StringBuilder sb = new StringBuilder();
 			sb.append('<');
 			sb.append(tagString);
 			sb.append(" .*/>"); //$NON-NLS-1$
-			EXCLUDE_TAG_PATTERNS[i++] = 
-				Pattern.compile(sb.toString(), 
-						Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+			EXCLUDE_TAG_PATTERNS.add(Pattern.compile(sb.toString(),
+					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE));
+		}
+		for (String formatTag : EXCLUDE_FORMAT_TAGS) {
+			StringBuilder sb = new StringBuilder();
+			sb.append("</?"); //$NON-NLS-1$
+			sb.append(formatTag);
+			sb.append('>');
+			EXCLUDE_TAG_PATTERNS.add(Pattern.compile(sb.toString(),
+					Pattern.CASE_INSENSITIVE | Pattern.MULTILINE));
+			
 		}
 	}
 	
@@ -114,21 +135,28 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 				buf.append(clean(item.getTitle()));
 				buf.append("</a>"); //$NON-NLS-1$
 				buf.append("<div class=\"itemBody\">"); //$NON-NLS-1$
+				Date date = item.getPubDate();
+				if (date != null) {
+					String dateString = DateFormat.getDateTimeInstance().format(date);
+					buf.append(dateString);
+					buf.append("<br>");
+				}
 				buf.append(clean(item.getDescription()));
 				buf.append("</div></li>"); //$NON-NLS-1$
 			}
 			buf.append("</ul>"); //$NON-NLS-1$
 		}
 		buf.append(HTML_BODY_FOOTER);
-		System.out.println(buf.toString());
 		browser.setText(buf.toString());
 	}
 
 	private String clean(String s) {
+		String output = s;
 		for (Pattern pattern : EXCLUDE_TAG_PATTERNS) {
-			s = pattern.matcher(s).replaceAll(""); //$NON-NLS-1$
+			output = pattern.matcher(output).replaceAll(""); //$NON-NLS-1$
 		}
-		return s.length() > MAX_ELEM_LEN ? s.substring(0, MAX_ELEM_LEN) : s;
+		output = output.length() > MAX_ELEM_LEN ? output.substring(0, MAX_ELEM_LEN) : output;
+		return output;
 	}
 
 	@Override

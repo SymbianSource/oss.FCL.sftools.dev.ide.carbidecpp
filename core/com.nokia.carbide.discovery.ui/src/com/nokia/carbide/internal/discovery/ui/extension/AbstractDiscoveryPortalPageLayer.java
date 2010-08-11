@@ -113,6 +113,7 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 	protected static final String REFRESH_ACTION_ID = 
 		AbstractDiscoveryPortalPageLayer.class.getName() + ".refresh"; //$NON-NLS-1$
 
+	private IEditorPart part;
 	private CatalogViewer viewer;
 	private List<ISelectionChangedListener> selectionListeners;
 	private IActionUIUpdater updater;
@@ -181,6 +182,7 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 	}
 
 	protected IAction[] makeActions(final IEditorPart part) {
+		this.part = part;
 		selectionListeners = new ArrayList<ISelectionChangedListener>();
 		List<IAction> actions = new ArrayList<IAction>();
 		IAction action;
@@ -188,9 +190,7 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 		// install
 		action = new BaseSelectionListenerAction(Messages.AbstractDiscoveryPortalPageLayer_InstallActionLabel) {
 			public void run() {
-				DiscoveryUi.install(viewer.getCheckedItems(), 
-						new RunnableContextDialog(part.getEditorSite().getShell(), 
-								Messages.AbstractDiscoveryPortalPageLayer_GatheringInstallInfoDesc));
+				installCatalogItems(viewer.getCheckedItems());
 			};
 			
 			protected boolean updateSelection(IStructuredSelection selection) {
@@ -280,6 +280,12 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 		return (IAction[]) actions.toArray(new IAction[actions.size()]);
 	}
 
+	protected void installCatalogItems(List<CatalogItem> items) {
+		DiscoveryUi.install(items, 
+				new RunnableContextDialog(part.getEditorSite().getShell(), 
+						Messages.AbstractDiscoveryPortalPageLayer_GatheringInstallInfoDesc));
+	}
+
 	@Override
 	public void dispose() {
 		for (ISelectionChangedListener listener : selectionListeners) {
@@ -293,16 +299,16 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 		IProvisioningAgent agent = session.getProvisioningAgent();
 		IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager) agent.getService(IMetadataRepositoryManager.SERVICE_NAME);
 		IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager) agent.getService(IArtifactRepositoryManager.SERVICE_NAME);
-		for (URI uri : getCatalogURIs()) {
+		for (URI uri : getSiteURIs(viewer.getCatalog().getItems())) {
 			metadataManager.addRepository(uri);
 			artifactManager.addRepository(uri);
 		}
 		defaultUI.openInstallWizard(null, null, null);
 	}
 
-	protected Collection<URI> getCatalogURIs() {
+	protected static Collection<URI> getSiteURIs(List<CatalogItem> catalogItems) {
 		Set<URI> uris = new HashSet<URI>();
-		for (CatalogItem catalogItem : viewer.getCatalog().getItems()) {
+		for (CatalogItem catalogItem : catalogItems) {
 			try {
 				uris.add(new URI(catalogItem.getSiteUrl()));
 			} catch (URISyntaxException e) {

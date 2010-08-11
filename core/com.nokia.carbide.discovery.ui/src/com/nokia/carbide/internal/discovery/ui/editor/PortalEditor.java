@@ -238,7 +238,7 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 				Rectangle rect = composite.getClientArea();
 				Image newImage = new Image(composite.getDisplay(), rect.width, rect.height);
 				GC gc = new GC(newImage);
-				gc.setForeground(composite.getDisplay().getSystemColor(SWT.COLOR_BLACK));
+				gc.setForeground(composite.getDisplay().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));
 				gc.setBackground(composite.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 				gc.fillGradientRectangle(0, 0, rect.width, rect.height, true);
 				gc.dispose();
@@ -339,11 +339,6 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 	@Override
 	public IEditorPart getEditorPart() {
 		return this;
-	}
-
-	@Override
-	public void refreshCommandBars() {
-		// TODO ask portal page to recreate command bars
 	}
 
 }
