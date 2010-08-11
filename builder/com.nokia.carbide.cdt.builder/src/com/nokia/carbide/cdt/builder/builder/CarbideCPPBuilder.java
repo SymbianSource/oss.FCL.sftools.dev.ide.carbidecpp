@@ -842,6 +842,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param abldArgs array of String arguments to be passed to abld
 	 * @param removeMarkers project markers will be removed when true
 	 * @return true if operation was successful, false otherwise
+	 * @deprecated - ABLD is deprecated
 	 */
 	public static boolean invokeAbldCommand(ICarbideBuildConfiguration buildConfig, CarbideCommandLauncher launcher, String[] abldArgs, boolean removeMarkers) {
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();

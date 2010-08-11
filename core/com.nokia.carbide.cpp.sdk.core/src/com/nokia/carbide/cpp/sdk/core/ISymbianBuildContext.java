@@ -144,4 +144,17 @@ public interface ISymbianBuildContext {
 	 */
 	String getConfigurationID();
 	
+	/**
+	 * This is the list of macros used to preprocess CPP source files.
+	 * @return a list of defines.
+	 */
+	List<IDefine> getBuildMacros();
+	
+	/**
+	 * This is the list of macros used to preprocess Symbian build files (bld.inf & mmp)
+	 * @return a list of defines
+	 */
+	List<IDefine> getMetadataMacros();
+	
+	
 }

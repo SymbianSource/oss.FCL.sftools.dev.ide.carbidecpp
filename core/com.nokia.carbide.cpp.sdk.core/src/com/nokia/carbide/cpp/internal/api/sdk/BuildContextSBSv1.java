@@ -674,6 +674,18 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		
 		return variantCFGMacros;
 	}
+
+	@Override
+	public List<IDefine> getBuildMacros() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<IDefine> getMetadataMacros() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }
