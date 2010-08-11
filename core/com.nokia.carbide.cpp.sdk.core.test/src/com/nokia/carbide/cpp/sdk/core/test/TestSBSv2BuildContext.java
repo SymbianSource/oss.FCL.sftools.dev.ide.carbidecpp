@@ -77,14 +77,14 @@ public class TestSBSv2BuildContext extends TestCase {
 		assertNotNull(context.getVariantHRHDefines());
 
 		// getPrefixFileIncludes()
-		assertNotNull(context.getPrefixFileIncludes());
-		for (Iterator<File> itr = context.getPrefixFileIncludes().iterator(); itr.hasNext();) {
+		assertNotNull(context.getVariantHRHIncludes());
+		for (Iterator<File> itr = context.getVariantHRHIncludes().iterator(); itr.hasNext();) {
 			File includeFile = itr.next();
 			assertTrue(includeFile.exists());
 		}
 
 		// getCompilerMacros()
-		assertNotNull(context.getCompilerMacros());		
+		assertNotNull(context.getCompilerPreincludeDefines());		
 
 		// getToolChain()
 		String toolChain = context.getToolChain();

@@ -12,11 +12,9 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
@@ -25,12 +23,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.cdt.utils.WindowsRegistry;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
@@ -42,9 +37,9 @@ import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
-import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SDKEnvInfoFailureException;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -79,7 +74,6 @@ public class SDKManager extends AbstractSDKManager {
 	
 	public SDKManager() {
 		super();
-		checkPerlInstallation();
 	}
 	
 	protected boolean doScanSDKs(IProgressMonitor monitor) {
@@ -297,33 +291,6 @@ public class SDKManager extends AbstractSDKManager {
 		return false;
 	}
 	
-	protected void checkPerlInstallation(){
-		
-		Runtime rt=Runtime.getRuntime();
-		
-		// check for Perl
-		try {
-			Process p = rt.exec("perl.exe -v");
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			String overallOutput = null;
-			String stdErrLine = null;
-			while ((stdErrLine = br.readLine()) != null) {
-				overallOutput += stdErrLine;
-			}
-			
-			if (overallOutput != null && !overallOutput.contains("v5.6.1")){
-				ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.WARNING, SDKCorePlugin.PLUGIN_ID, IStatus.WARNING, "Perl v5.6.1 was not detected. Some SDKs do not work with other Perl versions.", null));
-			}
-			
-			p.destroy();
-			
-		}
-		catch (IOException e) {
-			//	report error to PDE log
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Perl was not found on the PATH environment variable. Perl 5.6.1 is recommended for Carbide use if using SBSv1 and Symbian OS 9.4 and prior.", e));
-		}
-	}
 	
 	/**
 	 * Checks to see if the devices.xml on disk contains the same current information

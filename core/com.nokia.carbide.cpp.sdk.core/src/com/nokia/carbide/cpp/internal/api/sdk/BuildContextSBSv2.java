@@ -20,6 +20,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Check;
@@ -40,6 +41,8 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	
 	// cconfiguration data store
 	private SBSv2BuilderInfo sbsv2BuildInfo;
+	
+	private IPath cachedVariantHRHFile = null;
 	
 	public BuildContextSBSv2(ISymbianSDK sdk, String platform, String target, String alias, String displayString, String configID) {
 		this.sdk = sdk;
@@ -157,12 +160,12 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	}
 
 	@Override
-	public List<File> getPrefixFileIncludes() {
+	public List<File> getVariantHRHIncludes() {
 		return getCachedData().getPrefixFileIncludes();
 	}
 
 	@Override
-	public List<IDefine> getCompilerMacros() {
+	public List<IDefine> getCompilerPreincludeDefines() {
 		IPath prefixFile = getCompilerPrefixFile();
 		if (prefixFile == null || !prefixFile.toFile().exists()) {
 			return getCachedData().getCompilerMacros(null);
@@ -175,13 +178,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	public String getBuildVariationName() {
 		// Not needed for Raptor
 		return "";
-	}
-
-	@Override
-	public boolean isSymbianBinaryVariation() {
-		// Not be needed for Raptor. We do check
-		// in the MPP for the featurevariant keyword
-		return false;
 	}
 	
 	@Override
@@ -401,6 +397,16 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	public String getConfigurationID() {
 		return getConfigID();
 	}
+	
+	/**
+	 * Get the full path to the prefix file defined under \epoc32\tools\variant\variant.cfg
+	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
+	 */
+	public IPath getPrefixFromVariantCfg(){
+		ISBSv2BuildInfo sbsv2BldInfo = ((ISBSv2BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER));
+		return sbsv2BldInfo.getPrefixFromVariantCfg();
+	}
+
 
 	
 }

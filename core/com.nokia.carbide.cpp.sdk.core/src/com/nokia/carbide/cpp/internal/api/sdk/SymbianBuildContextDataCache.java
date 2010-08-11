@@ -188,14 +188,13 @@ public class SymbianBuildContextDataCache {
 			List<IDefine> macros = new ArrayList<IDefine>();
 			Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
 			
-			ISDKBuildInfo sdkBuildInfo = sdk.getBuildInfo(builderId);
-			File prefixFile = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
+			File prefixFile = context.getPrefixFromVariantCfg().toFile();
 			ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 			
 			if (prefixFile == null){
 				// Check that the prefix file may have become available since the SDK was scanned last.
 				// This can happen, for e.g., if the user opens the IDE _then_ does a subst on a drive that already has an SDK entry.
-				IPath prefixCheck = buildInfo.getPrefixFromVariantCfg();
+				IPath prefixCheck = context.getPrefixFromVariantCfg();
 				if (prefixCheck != null){
 					prefixFile = prefixCheck.toFile();
 					((SymbianSDK)sdk).setPrefixFile(prefixCheck, builderId);
@@ -261,9 +260,7 @@ public class SymbianBuildContextDataCache {
 				
 				if (buildInfo instanceof ISBSv1BuildInfo) {
 					// SBSv2 does not parse the variant.cfg file to collect macros.
-					List<String> variantCFGMacros = new ArrayList<String>();
-					
-					variantCFGMacros = ((ISBSv1BuildInfo)buildInfo).getVariantCFGMacros();
+					List<String> variantCFGMacros = ((ISBSv1BuildContext)context).getVariantCFGMacros();
 					for (String cfgMacros : variantCFGMacros){
 						// we don't want duplicate macros, so check to see if it's already there.
 						IDefine existingMacro = namedMacros.get(cfgMacros);
@@ -476,8 +473,7 @@ public class SymbianBuildContextDataCache {
 		}
 		
 		// also search files in same folder as variant.hrh
-		ISDKBuildInfo sdkBuildInfo = sdk.getBuildInfo(builderId);
-		File prefix = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
+		File prefix = context.getPrefixFromVariantCfg().toFile();
 		if (sbvPlatform != null){
 			// might be an alternate HRH file to use
 			IPath varVarHRH = sbvPlatform.getBuildVariantHRHFile();

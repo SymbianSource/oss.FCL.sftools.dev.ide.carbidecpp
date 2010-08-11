@@ -2319,13 +2319,12 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			}
 			
 			// we need to check the variant hrh files as well
-			ISDKBuildInfo sdkBuildInfo = config.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
-			File prefixFile = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
+			File prefixFile = config.getBuildContext().getPrefixFromVariantCfg().toFile();
 			if (prefixFile != null && prefixFile.lastModified() > oldestMakefileTimestamp) {
 				return true;
 			}
 
-			for (File file : config.getBuildContext().getPrefixFileIncludes()) {
+			for (File file : config.getBuildContext().getVariantHRHIncludes()) {
 				if (file.lastModified() > oldestMakefileTimestamp) {
 					return true;
 				}
@@ -2441,13 +2440,12 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final long makefileTimestamp = makefile.lastModified();
 		
 		// we need to check the variant hrh files as well
-		ISDKBuildInfo sdkBuildInfo = config.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
-		File prefixFile = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
+		File prefixFile = config.getBuildContext().getPrefixFromVariantCfg().toFile();
 		if (prefixFile != null && prefixFile.lastModified() > makefileTimestamp) {
 			return true;
 		}
 
-		for (File file : config.getBuildContext().getPrefixFileIncludes()) {
+		for (File file : config.getBuildContext().getVariantHRHIncludes()) {
 			if (file.lastModified() > makefileTimestamp) {
 				return true;
 			}
@@ -2525,13 +2523,12 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final long makefileTimestamp = makefile.lastModified();
 		
 		// we need to check the variant hrh files as well
-		ISDKBuildInfo sdkBuildInfo = config.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
-		File prefixFile = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
+		File prefixFile = config.getBuildContext().getPrefixFromVariantCfg().toFile();
 		if (prefixFile != null && prefixFile.lastModified() > makefileTimestamp) {
 			return true;
 		}
 		
-		for (File file : config.getBuildContext().getPrefixFileIncludes()) {
+		for (File file : config.getBuildContext().getVariantHRHIncludes()) {
 			if (file.lastModified() > makefileTimestamp) {
 				return true;
 			}
@@ -2899,8 +2896,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				ISymbianSDK sdk = config.getSDK();
 				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 				ISBVPlatform sbvPlatform = sbsv1BuildInfo.getSBVCatalog().findPlatform(config.getPlatformString());
-				ISDKBuildInfo sdkBuildInfo = config.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
-				File sdkPrefix = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
+				File sdkPrefix = config.getBuildContext().getPrefixFromVariantCfg().toFile();
 
 				if (sbvPlatform != null){
 					// might be an alternate HRH file to use
@@ -2914,7 +2910,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					newRule = newRule + "-include \"" + sdkPrefix.getAbsolutePath() + "\" "; 
 				}
 
-				
 				newRule += " -o " + depFilePath + view.getEOL();
 				
 				// for some reason cpp.exe doesn't like paths without the drive letter when working on a subst'ed drive.

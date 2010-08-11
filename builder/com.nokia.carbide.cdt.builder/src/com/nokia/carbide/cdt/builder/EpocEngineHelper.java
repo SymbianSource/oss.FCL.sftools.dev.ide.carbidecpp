@@ -418,15 +418,8 @@ public class EpocEngineHelper {
 				defaultContext = context;
 				ISymbianSDK sdk = defaultContext.getSDK();
 				
-				if (context instanceof ISBSv1BuildContext){
-					ISDKBuildInfo sdkBuildInfo = sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
-					if (sdkBuildInfo.getPrefixFromVariantCfg() != null)
-						break;
-				} else {
-					ISDKBuildInfo sdkBuildInfo = sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);;
-					if (sdkBuildInfo.getPrefixFromVariantCfg() != null)
-						break;
-				}
+				if (context.getPrefixFromVariantCfg() != null)
+					break;
 			}
 		}
 		final ISymbianBuildContext defaultContextToUse = defaultContext;

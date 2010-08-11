@@ -1,5 +1,7 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
+import java.util.List;
+
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 /**
@@ -51,6 +53,13 @@ public interface ISBSv1BuildContext extends ISymbianBuildContext {
 	 * @return IBuildArgumentsInfo instance, never null
 	 */
 	void setBuildArgumentsInfo(BuildArgumentsInfo bldArgInfo);
+	
+	/**
+	* Returns a list of the macros defined in the variant.cfg file. This is NOT the macros
+	* in the HRH file, but the actual maros written to the variant.cfg file.
+	* @return A String list of macros found as is, or an empty list if none.
+	*/
+	public List<String> getVariantCFGMacros();
 	
 	
 }

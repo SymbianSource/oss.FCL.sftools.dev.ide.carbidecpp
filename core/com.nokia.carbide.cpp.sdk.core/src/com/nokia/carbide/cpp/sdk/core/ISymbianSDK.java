@@ -12,8 +12,6 @@
 */
 package com.nokia.carbide.cpp.sdk.core;
 
-import java.io.File;
-import java.util.List;
 import java.util.Set;
 
 import org.eclipse.core.runtime.IPath;

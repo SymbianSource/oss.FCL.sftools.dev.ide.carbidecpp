@@ -162,7 +162,7 @@ public class CarbideLanguageData extends CLanguageData {
 				macros.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 			}
 
-			for (IDefine define : carbideBuildConfig.getBuildContext().getCompilerMacros()) {
+			for (IDefine define : carbideBuildConfig.getBuildContext().getCompilerPreincludeDefines()) {
 				macros.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 			}
 			

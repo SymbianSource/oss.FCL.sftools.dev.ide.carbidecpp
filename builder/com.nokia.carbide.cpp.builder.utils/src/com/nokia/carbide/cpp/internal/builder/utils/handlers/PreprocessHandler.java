@@ -203,14 +203,7 @@ public class PreprocessHandler extends AbstractHandler {
 							}
 
 							// add the sdk prefix file if any
-							File sdkPrefix = null;
-							if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-								ISDKBuildInfo sdkBuildInfo = buildConfig.getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);;
-								sdkPrefix = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
-							} else {
-								ISDKBuildInfo sdkBuildInfo = buildConfig.getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);;
-								sdkPrefix = sdkBuildInfo.getPrefixFromVariantCfg().toFile();
-							}
+							File sdkPrefix = buildConfig.getBuildContext().getPrefixFromVariantCfg().toFile();
 							
 							if (sdkPrefix != null && sdkPrefix.exists()) {
 								args.add("-include"); //$NON-NLS-1$

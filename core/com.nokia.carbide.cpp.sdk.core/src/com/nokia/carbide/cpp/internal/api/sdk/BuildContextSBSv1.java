@@ -13,11 +13,18 @@
 package com.nokia.carbide.cpp.internal.api.sdk;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
@@ -33,6 +40,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
 
 public class BuildContextSBSv1 implements ISBSv1BuildContext {
 
@@ -54,6 +62,14 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	// Preference data
 	protected BuildArgumentsInfo buildArgumentsInfo;
 	protected final static String ARGUMENTS_DATA_ID = "ARGUMENTS_DATA_ID"; //$NON-NLS-1$
+	
+	// --> variant.cfg info
+	// greedy match means the filename is in the last group
+	public static Pattern VARIANT_HRH_LINE_PATTERN = Pattern.compile("(?i)(.*)(/|\\\\)(.*hrh)");
+	private IPath variantFilePath;
+	public static final String VARIANT_CFG_FILE = "epoc32/tools/variant/variant.cfg"; //$NON-NLS-1$
+	public static final String SPP_VARIANT_CFG_FILE = "epoc32/tools/variant/spp_variant.cfg"; //$NON-NLS-1$
+	// <--
 	
 	public BuildContextSBSv1(ISymbianSDK theSDK, String thePlatform, String theTarget) {
 		sdkId = theSDK.getUniqueId();
@@ -348,12 +364,12 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return getCachedData().getVariantHRHDefines();
 	}
 
-	public List<File> getPrefixFileIncludes() {
+	public List<File> getVariantHRHIncludes() {
 		return getCachedData().getPrefixFileIncludes();
 	}
 
 
-	public List<IDefine> getCompilerMacros() {
+	public List<IDefine> getCompilerPreincludeDefines() {
 		// we parse the compiler prefix file to gather macros.  this can be time consuming so do it
 		// once and cache the values.  only reset the cache when the compiler prefix has changed.
 		
@@ -377,14 +393,13 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return varName;
 	}
 
-
-	public boolean isSymbianBinaryVariation() {
-		if (getPlatformString().split("\\.").length == 2){
-			return true;
-		} else {
-			return false;
-		}
-	}
+//	public boolean isSymbianBinaryVariation() {
+//		if (getPlatformString().split("\\.").length == 2){
+//			return true;
+//		} else {
+//			return false;
+//		}
+//	}
 
 	/**
 	 * Get the cache holding the data that applies to this build context globally.
@@ -564,5 +579,97 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 	public String getConfigurationID() {
 		return getDisplayString();
 	}
+	
+	/**
+	 * Get the full path to the prefix file defined under \epoc32\tools\variant\variant.cfg
+	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
+	 */
+	public IPath getPrefixFromVariantCfg(){
+		
+		if (variantFilePath != null){
+			return variantFilePath;
+		}
+		
+		File epocRoot = new File(getSDK().getEPOCROOT());
+		File variantCfg;
+		variantCfg = new File(epocRoot, SPP_VARIANT_CFG_FILE);
+		if (!variantCfg.exists()) {
+			variantCfg = new File(epocRoot, VARIANT_CFG_FILE);
+			if (!variantCfg.exists())
+				return null;
+		}
+		
+		String variantDir = null;
+		String variantFile = null;
+		try {
+			char[] cbuf = new char[(int) variantCfg.length()];
+			Reader reader = new FileReader(variantCfg);
+			reader.read(cbuf);
+			reader.close();
+			String[] lines = new String(cbuf).split("\r\n|\r|\n");
+			for (int i = 0; i < lines.length; i++) {
+				// skip comments and blank lines
+				String line = SymbianSDK.removeComments(lines[i]);
+				if (line.matches("\\s*#.*") || line.trim().length() == 0) 
+					continue;
+				
+				// parse the variant line, which is an EPOCROOT-relative
+				// path to a bldvariant.hrh file
+				Matcher matcher = VARIANT_HRH_LINE_PATTERN.matcher(line);
+				if (matcher.matches()) {
+					variantDir = matcher.group(1);
+					variantFile = matcher.group(3); 
+					File variantFullPathFile = new File(epocRoot, variantDir + File.separator + variantFile);
+					variantFilePath = new Path(PathUtils.convertPathToUnix(variantFullPathFile.getAbsolutePath()));
+					return variantFilePath;
+				}
+			}
+		} catch (IOException e) {
+		}
+		
+		return null; // can't find the file...
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> getVariantCFGMacros(){
+		
+		List<String> variantCFGMacros = new ArrayList<String>();
+		File epocRoot = new File(getSDK().getEPOCROOT());
+		File variantCfg;
+		variantCfg = new File(epocRoot, SPP_VARIANT_CFG_FILE);
+		if (!variantCfg.exists()) {
+			variantCfg = new File(epocRoot, VARIANT_CFG_FILE);
+			if (!variantCfg.exists())
+				return Collections.EMPTY_LIST;
+		}
+		
+		try {
+			char[] cbuf = new char[(int) variantCfg.length()];
+			Reader reader = new FileReader(variantCfg);
+			reader.read(cbuf);
+			reader.close();
+			String[] lines = new String(cbuf).split("\r\n|\r|\n");
+			for (int i = 0; i < lines.length; i++) {
+				// skip comments and blank lines
+				String line = SymbianSDK.removeComments(lines[i]);
+				if (line.matches("\\s*#.*") || line.trim().length() == 0) 
+					continue;
+				
+				// parse the variant line, which is an EPOCROOT-relative
+				// path to a bldvariant.hrh file
+				Matcher matcher = VARIANT_HRH_LINE_PATTERN.matcher(line);
+				if (matcher.matches()) {
+					continue; // Skip this it's the file
+				} else {
+					// all other patterns are assumed to be macro
+					variantCFGMacros.add(line.trim());
+				}
+			}
+		} catch (IOException e) {
+		}
+		
+		return variantCFGMacros;
+	}
+	
 
 }
