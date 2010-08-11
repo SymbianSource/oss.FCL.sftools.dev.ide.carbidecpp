@@ -47,6 +47,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.SDKCacheUtils;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -67,7 +68,7 @@ public class SBSv2QueryUtils {
 	@SuppressWarnings("unchecked")
 	public static HashMap<String, String> getAliasesForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
 		HashMap<String, String> aliases;
-		Map<String, HashMap<String, String>> aliasesMap = SDKCorePlugin.getCache().getCachedData(ALIAS_CACHE_KEY, Map.class, 0);
+		Map<String, HashMap<String, String>> aliasesMap = SDKCacheUtils.getCache().getCachedData(ALIAS_CACHE_KEY, Map.class, 0);
 		SBSv2SDKKey key = new SBSv2SDKKey(sdk);
 
 		if (aliasesMap == null) {
@@ -82,14 +83,14 @@ public class SBSv2QueryUtils {
 		
 		aliases = getAliasesQuery(sdk);
 		aliasesMap.put(key.toString(), aliases);
-		SDKCorePlugin.getCache().putCachedData(ALIAS_CACHE_KEY, (Serializable)aliasesMap, 0);
+		SDKCacheUtils.getCache().putCachedData(ALIAS_CACHE_KEY, (Serializable)aliasesMap, 0);
 		return aliases;
 	}
 
 	@SuppressWarnings("unchecked")
 	public static List<String> getProductVariantsForSDK(ISymbianSDK sdk) throws SBSv2MinimumVersionException {
 		List<String> products;
-		Map<String, List<String>> productsMap = SDKCorePlugin.getCache().getCachedData(PRODUCT_CACHE_KEY, Map.class, 0);
+		Map<String, List<String>> productsMap = SDKCacheUtils.getCache().getCachedData(PRODUCT_CACHE_KEY, Map.class, 0);
 		SBSv2SDKKey key = new SBSv2SDKKey(sdk);
 		
 		if (productsMap == null) {
@@ -104,7 +105,7 @@ public class SBSv2QueryUtils {
 
 		products = getProductsQuery(sdk);
 		productsMap.put(key.toString(), products);
-		SDKCorePlugin.getCache().putCachedData(PRODUCT_CACHE_KEY, (Serializable)productsMap, 0);
+		SDKCacheUtils.getCache().putCachedData(PRODUCT_CACHE_KEY, (Serializable)productsMap, 0);
 		return products;
 	}
 
@@ -132,7 +133,7 @@ public class SBSv2QueryUtils {
 	@SuppressWarnings("unchecked")
 	public static SBSv2ConfigQueryData getConfigQueryDataForSDK(ISymbianSDK sdk, String alias) {
 		SBSv2ConfigQueryData configQueryData = null;
-		Map<String, SBSv2ConfigQueryData> configsMap = SDKCorePlugin.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
+		Map<String, SBSv2ConfigQueryData> configsMap = SDKCacheUtils.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
 		String key = (new SBSv2SDKKey(sdk)).toString() + "[" + alias + "]";
 
 		if (configsMap != null) {
@@ -143,7 +144,7 @@ public class SBSv2QueryUtils {
 
 	@SuppressWarnings("unchecked")
 	public static void storeConfigQueryDataForSDK(ISymbianSDK sdk, String alias, SBSv2ConfigQueryData configQueryData) {
-		Map<String, SBSv2ConfigQueryData> configsMap = SDKCorePlugin.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
+		Map<String, SBSv2ConfigQueryData> configsMap = SDKCacheUtils.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
 		String key = (new SBSv2SDKKey(sdk)).toString() + "[" + alias + "]";
 
 		if (configsMap == null) {
@@ -156,7 +157,7 @@ public class SBSv2QueryUtils {
 		}
 
 		configsMap.put(key, configQueryData);
-		SDKCorePlugin.getCache().putCachedData(CONFIG_CACHE_KEY, (Serializable)configsMap, 0);		
+		SDKCacheUtils.getCache().putCachedData(CONFIG_CACHE_KEY, (Serializable)configsMap, 0);		
 	}
 
 	public static HashMap<String, String> queryConfigTargetInfo(ISymbianSDK sdk, List<String> aliasOrMeaningArray) throws SBSv2MinimumVersionException{
@@ -471,15 +472,15 @@ public class SBSv2QueryUtils {
 	}
 
 	public static void removeCachedAliases() {
-		SDKCorePlugin.getCache().removeCache(ALIAS_CACHE_KEY);
+		SDKCacheUtils.getCache().removeCache(ALIAS_CACHE_KEY);
 	}
 
 	public static void removeCachedProducts() {
-		SDKCorePlugin.getCache().removeCache(PRODUCT_CACHE_KEY);		
+		SDKCacheUtils.getCache().removeCache(PRODUCT_CACHE_KEY);		
 	}
 
 	public static void removeCachedConfigurations() {
-		SDKCorePlugin.getCache().removeCache(CONFIG_CACHE_KEY);
+		SDKCacheUtils.getCache().removeCache(CONFIG_CACHE_KEY);
 	}
 
 }

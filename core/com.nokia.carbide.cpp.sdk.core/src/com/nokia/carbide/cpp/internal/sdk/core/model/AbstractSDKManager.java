@@ -45,6 +45,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerLoadedHook;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.SDKCacheUtils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianMacroStore;
@@ -644,12 +645,12 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 
 	protected void clearSDKCache() {
-		SDKCorePlugin.getCache().removeCache(SDK_MANAGER_CACHE_KEY);
+		SDKCacheUtils.getCache().removeCache(SDK_MANAGER_CACHE_KEY);
 	}
 
 	@SuppressWarnings("unchecked")
 	protected List<String> getSDKCacheIdList() {
-		Map<String, SDKManagerCacheEntry> cacheMap = SDKCorePlugin.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
+		Map<String, SDKManagerCacheEntry> cacheMap = SDKCacheUtils.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
 		List<String> idList = new ArrayList<String>();
 
 		if (cacheMap != null) {
@@ -662,7 +663,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	@SuppressWarnings("unchecked")
 	protected SDKManagerCacheEntry getSDKCacheEntry(String id) {
 		SDKManagerCacheEntry entry = null;
-		Map<String, SDKManagerCacheEntry> cacheMap = SDKCorePlugin.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
+		Map<String, SDKManagerCacheEntry> cacheMap = SDKCacheUtils.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
 
 		if (cacheMap != null) {
 			entry = cacheMap.get(id);
@@ -674,14 +675,14 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	@SuppressWarnings("unchecked")
 	protected void setSDKCacheEntry(SDKManagerCacheEntry entry) {
 		String id = entry.getId();
-		Map<String, SDKManagerCacheEntry> cacheMap = SDKCorePlugin.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
+		Map<String, SDKManagerCacheEntry> cacheMap = SDKCacheUtils.getCache().getCachedData(SDK_MANAGER_CACHE_KEY, Map.class, 0);
 
 		if (cacheMap == null) {
 			cacheMap = new HashMap<String, SDKManagerCacheEntry>();
 		}
 
 		cacheMap.put(id, entry);
-		SDKCorePlugin.getCache().putCachedData(SDK_MANAGER_CACHE_KEY, (Serializable)cacheMap, 0);
+		SDKCacheUtils.getCache().putCachedData(SDK_MANAGER_CACHE_KEY, (Serializable)cacheMap, 0);
 	}
 
 }
