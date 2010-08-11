@@ -40,7 +40,7 @@ class RoundedCornerComposite extends SharedBackgroundComposite {
 		}
 		if (outline != null) {
 			gc.setForeground(outline);
-			gc.drawRoundRectangle(2, 2, width - 4, height - 4, 6, 6);
+			gc.drawRoundRectangle(0, 0, width - 1, height - 1, 6, 6);
 		}
 	}
 }

@@ -138,5 +138,31 @@
             version="1.0.0">
       </action>
    </extension>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            category="org.eclipse.ui.Basic"
+            class="com.nokia.carbide.internal.discovery.ui.wizard.ExportWizard"
+            icon="icons/icon-discovery_exp.png"
+            id="com.nokia.carbide.discovery.ui.features.exportWizard"
+            name="Installed Feature Configuration">
+         <description>
+            %Export.desc
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.importWizards">
+      <wizard
+            category="org.eclipse.ui.Basic"
+            class="com.nokia.carbide.internal.discovery.ui.wizard.ImportWizard"
+            icon="icons/icon-discovery.png"
+            id="com.nokia.carbide.discovery.ui.features.importWizard"
+            name="Installed Feature Configuration">
+         <description>
+            %Import.desc
+         </description>
+      </wizard>
+   </extension>
 
 </plugin>

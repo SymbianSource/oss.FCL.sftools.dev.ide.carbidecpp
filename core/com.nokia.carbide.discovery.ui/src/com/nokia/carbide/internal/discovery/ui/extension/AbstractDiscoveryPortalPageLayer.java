@@ -34,7 +34,6 @@ import org.eclipse.equinox.internal.p2.ui.discovery.DiscoveryUi;
 import org.eclipse.equinox.internal.p2.ui.discovery.wizards.CatalogConfiguration;
 import org.eclipse.equinox.internal.p2.ui.discovery.wizards.CatalogViewer;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
-import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.repository.artifact.IArtifactRepositoryManager;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.equinox.p2.ui.ProvisioningUI;
@@ -54,7 +53,9 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.BaseSelectionListenerAction;
+import org.eclipse.ui.handlers.IHandlerService;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
@@ -113,7 +114,7 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 	protected static final String REFRESH_ACTION_ID = 
 		AbstractDiscoveryPortalPageLayer.class.getName() + ".refresh"; //$NON-NLS-1$
 
-	private IEditorPart part;
+	protected IEditorPart part;
 	private CatalogViewer viewer;
 	private List<ISelectionChangedListener> selectionListeners;
 	private IActionUIUpdater updater;
@@ -294,16 +295,20 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 	}
 
 	protected void showInstallWizard() {
-		ProvisioningUI defaultUI = ProvisioningUI.getDefaultUI();
-		ProvisioningSession session = defaultUI.getSession();
-		IProvisioningAgent agent = session.getProvisioningAgent();
+		IProvisioningAgent agent = ProvisioningUI.getDefaultUI().getSession().getProvisioningAgent();
 		IMetadataRepositoryManager metadataManager = (IMetadataRepositoryManager) agent.getService(IMetadataRepositoryManager.SERVICE_NAME);
 		IArtifactRepositoryManager artifactManager = (IArtifactRepositoryManager) agent.getService(IArtifactRepositoryManager.SERVICE_NAME);
 		for (URI uri : getSiteURIs(viewer.getCatalog().getItems())) {
 			metadataManager.addRepository(uri);
 			artifactManager.addRepository(uri);
 		}
-		defaultUI.openInstallWizard(null, null, null);
+		IHandlerService handlerService = 
+			(IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
+        try {
+			handlerService.executeCommand("org.eclipse.equinox.p2.ui.sdk.install", null);
+		} catch (Exception e) {
+			Activator.logError("Could not open install wizard", e);
+		}
 	}
 
 	protected static Collection<URI> getSiteURIs(List<CatalogItem> catalogItems) {
