@@ -86,9 +86,6 @@
         <topic label="ARM Registers"						href="html/concepts/arm_registers.htm" />
       </topic>
       <topic label="Remote Connections view"		href="html/reference/trk/view_remote_connection.htm" />
-      <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data view">
-        <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" label="Setting the Refresh Rate"></topic>
-      </topic>
       <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data view"></topic>
       <topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
       <topic label="Variables and Expressions"					href="html/concepts/working_with_variables.htm" >
@@ -283,7 +280,6 @@
     -->
         
       <topic href="html/tasks/projects/prj_debug_dlls.htm" label="Debugging DLLs"></topic>
-      <topic href="html/tasks/projects/prj_import_exe.htm" label="Importing a Symbian Executable"></topic>
       <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching to a Symbian OS Process"></topic>
       <topic href="html/tasks/start/carbide_debugging.htm" label="Debugging a Symbian OS Program"></topic>
       <topic href="html/concepts/arm_registers.htm" label="Registers"></topic>
@@ -299,7 +295,6 @@
       </topic>
       <topic label="Building a ROM Image File"            href="html/reference/ROM_build_settings.html" />
       <topic label="ARM Registers" 						href="html/concepts/arm_registers.htm" />
-      <topic label="Symbian OS Data View"					href="html/reference/view_symbian_kernel.htm" />
       <topic label="Toggle HW Breakpoint"           		href="html/reference/menus/hardware_breakpoints.htm" />
     </topic>
     <topic href="html/debugger/breakpoints/breakpoints.htm" label="Breakpoints">
