@@ -83,7 +83,6 @@
         <topic href="html/tasks/registers/mem_reg_data_views.htm" label="Changing Register Data Views"></topic>
         <topic label="Expanding Register Groups"			href="html/tasks/registers/mem_reg_viewing.htm" />
         <topic label="Changing Register Values"				href="html/tasks/registers/mem_reg_changing.htm" />
-        <topic label="ARM Registers"						href="html/concepts/arm_registers.htm" />
       </topic>
       <topic label="Remote Connections view"		href="html/reference/trk/view_remote_connection.htm" />
       <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data view"></topic>
@@ -282,7 +281,6 @@
       <topic href="html/tasks/projects/prj_debug_dlls.htm" label="Debugging DLLs"></topic>
       <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching to a Symbian OS Process"></topic>
       <topic href="html/tasks/start/carbide_debugging.htm" label="Debugging a Symbian OS Program"></topic>
-      <topic href="html/concepts/arm_registers.htm" label="Registers"></topic>
       <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data View"></topic>
         
     
@@ -294,7 +292,6 @@
         <topic label="Using Soft Attach"	 href="html/tasks/debugger/soft_attach_debug.htm" />
       </topic>
       <topic label="Building a ROM Image File"            href="html/reference/ROM_build_settings.html" />
-      <topic label="ARM Registers" 						href="html/concepts/arm_registers.htm" />
       <topic label="Toggle HW Breakpoint"           		href="html/reference/menus/hardware_breakpoints.htm" />
     </topic>
     <topic href="html/debugger/breakpoints/breakpoints.htm" label="Breakpoints">
