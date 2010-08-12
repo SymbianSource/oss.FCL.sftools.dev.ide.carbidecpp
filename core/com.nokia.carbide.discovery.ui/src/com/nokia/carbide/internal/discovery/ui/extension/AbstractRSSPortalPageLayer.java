@@ -100,22 +100,26 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 		Activator.runInUIThreadWhenProxyDataSet(browser, new Runnable() {
 			@Override
 			public void run() {
-				URL url = getURL();
-				if (url != null) {
-					try {
-						rss = SimpleRSSReader.readRSS(url);
-						displayRSS();
-						actionBar.hookBrowser();
-					} catch (Exception e) {
-						Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
-					}
-					actionBar.update();
-				}
+				actionBar.hookBrowser();
+				readRSS();
+				actionBar.update();
 			}
 		});
 	}
 
-	private void displayRSS() {
+	protected void readRSS() {
+		URL url = getURL();
+		if (url != null) {
+			try {
+				rss = SimpleRSSReader.readRSS(url);
+				displayRSS();
+			} catch (Exception e) {
+				Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
+			}
+		}
+	}
+	
+	protected void displayRSS() {
 		StringBuffer buf = new StringBuffer();
 		buf.append(HTML_BODY_HEADER);
 		for (Channel channel : rss.getChannels()) {
@@ -175,7 +179,7 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 							if (browserHasURL())
 								browser.refresh();
 							else
-								displayRSS();
+								readRSS();
 							actionBar.update();
 						}
 					}
