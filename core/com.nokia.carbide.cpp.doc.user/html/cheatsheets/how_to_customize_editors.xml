@@ -3,14 +3,17 @@
 <cheatsheet
       title="Customize Editors">
 `	<intro>
-		Intro text
+		This is the intro text.
 	</intro>
-	<item
-       title="one">
-		<description>
-			one
-		</description>
-		<command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.project)" confirm="false">
-		</command>
-	</item>
+  <item
+        href="/com.nokia.carbide.cpp.doc.user/html/tasks/custom/carb_custom_editors.htm"
+        skip="true"
+        title="Customize the C/C++ editor">
+     <description>
+        Under the <b>Preferences &gt; General &gt; Editor</b> section are several preference panels that control many aspects of the C/C++ editor.
+     </description>
+     <command
+           required="false"
+           serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.ui.preferencePages.Editors)"/>
+  </item>
 </cheatsheet>

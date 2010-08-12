@@ -2,15 +2,17 @@
 
 <cheatsheet
       title="Customize Key Commands">
-`	<intro>
+`	<intro
+        href="/com.nokia.carbide.cpp.doc.user/html/tasks/custom/carb_custom_keys.htm">
 		Intro text
 	</intro>
 	<item
-       title="one">
+       title="Customize key bindings">
 		<description>
-			one
+			Open the <b>Preferences &gt; General &gt; Keys</b> preference panel to change the key commands used in Carbide. Choose from a preset theme or modify the current one to better suit your requirements.
 		</description>
-		<command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.project)" confirm="false">
-		</command>
+  <command
+        required="false"
+        serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.ui.preferencePages.Keys)"/>
 	</item>
 </cheatsheet>

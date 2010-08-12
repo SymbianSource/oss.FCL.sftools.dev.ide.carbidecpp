@@ -118,6 +118,20 @@
                 id="com.nokia.carbide.cpp.doc.user.cheatsheet1176819414"
                 name="Creating and debugging an application project">
           </cheatsheet>
+          <cheatsheet
+                category="com.nokia.carbide.how_to.cheatsheets"
+                composite="false"
+                contentFile="$nl$/html/cheatsheets/how_to_customize_key_commands.xml"
+                id="com.nokia.carbide.cpp.doc.user.cheatsheet1607489319"
+                name="Customize Key Commands">
+          </cheatsheet>
+          <cheatsheet
+                category="com.nokia.carbide.how_to.cheatsheets"
+                composite="false"
+                contentFile="$nl$/html/cheatsheets/how_to_customize_editors.xml"
+                id="com.nokia.carbide.cpp.doc.user.cheatsheet1890988061"
+                name="Customize Editors">
+          </cheatsheet>
 
    </extension>
 

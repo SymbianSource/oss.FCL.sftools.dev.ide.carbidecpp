@@ -6,11 +6,12 @@
 		Intro text
 	</intro>
 	<item
-       title="one">
+       title="Customize code styles">
 		<description>
-			one
+			Use the &lt;Preferences &gt; C/C++ &gt; Code Style</b> preference panel to select a code style profile to format source files.
 		</description>
-		<command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.project)" confirm="false">
-		</command>
+  <command
+        required="false"
+        serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.CodeFormatterPreferencePage)"/>
 	</item>
 </cheatsheet>
