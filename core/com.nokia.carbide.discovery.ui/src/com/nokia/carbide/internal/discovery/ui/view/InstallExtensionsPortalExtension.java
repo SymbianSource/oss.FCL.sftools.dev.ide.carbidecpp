@@ -92,6 +92,7 @@ public class InstallExtensionsPortalExtension extends AbstractDiscoveryPortalPag
 	private void showWizard(IWorkbenchWizard wizard) {
 		wizard.init(PlatformUI.getWorkbench(), StructuredSelection.EMPTY);
         WizardDialog dialog = new WizardDialog(part.getEditorSite().getShell(), wizard);
+		dialog.setMinimumPageSize(550, 250);
         dialog.create();
         dialog.open();
 	}

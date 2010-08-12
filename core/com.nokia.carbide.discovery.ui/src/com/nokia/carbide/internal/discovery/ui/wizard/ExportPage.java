@@ -28,14 +28,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.DialogPage;
-import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.progress.UIJob;
@@ -62,7 +59,7 @@ class ExportPage extends AbstractImportExportPage {
 		Composite composite = (Composite) getControl();
 		
         createViewerGroup(composite, "Export features:");
-		createBrowseGroup(composite, "Export to file:");
+		createBrowseGroup(composite, "Export file:");
 		
         featureInfos = new ArrayList<FeatureInfo>();
         
@@ -110,7 +107,7 @@ class ExportPage extends AbstractImportExportPage {
 		UIJob j = new UIJob("Getting Installed Features") {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
-				viewer.setInput(FeatureUtils.getInstalledFeatures(monitor));
+				viewer.setInput(P2Utils.getInstalledFeatures(monitor));
 				updateViewer();
 				return Status.OK_STATUS;
 			} 
@@ -120,6 +117,10 @@ class ExportPage extends AbstractImportExportPage {
 	
 	protected boolean validatePage() {
 		setErrorMessage(null);
+		if (viewer.getTable().getItemCount() == 0) {
+			setErrorMessage("There are no features to export");
+			return false;
+		}
 		if (viewer.getCheckedElements().length == 0) {
 			setErrorMessage("At least one feature must be selected for export");
 			return false;

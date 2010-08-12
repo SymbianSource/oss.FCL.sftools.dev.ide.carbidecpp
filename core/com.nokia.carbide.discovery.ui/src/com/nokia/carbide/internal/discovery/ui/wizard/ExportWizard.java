@@ -48,7 +48,8 @@ public class ExportWizard extends Wizard implements IExportWizard {
 		OutputStream os;
 		try {
 			os = new FileOutputStream(file);
-			Streamer.writeToXML(os, FeatureUtils.getKnownRepositories(), featureInfos);
+			ImportExportData data = new ImportExportData(false, P2Utils.getKnownRepositories(), featureInfos);
+			Streamer.writeToXML(os, data);
 		} catch (Exception e) {
 			MessageDialog.openError(getShell(), "Error", 
 					MessageFormat.format("Could not write export file due to error: {0}", e.getLocalizedMessage()));

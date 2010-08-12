@@ -18,28 +18,36 @@ package com.nokia.carbide.internal.discovery.ui.wizard;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.MessageFormat;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.ui.progress.UIJob;
 
+import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
  * Page in import wizard
  */
 class ImportPage extends AbstractImportExportPage {
-
-	private boolean importOriginalVersion;
 
 	// the following two arrays need to correspond
 	static final String[] FILTER_EXTS  = { 
@@ -50,8 +58,11 @@ class ImportPage extends AbstractImportExportPage {
 		"XML Files",
 		"All Files"
 	};
-	
 
+	private String currentPath;
+	private ImportExportData readData;
+	protected boolean wantsOriginalVersions;
+	
 	protected ImportPage() {
 		super("ImportPage"); //$NON-NLS-1$
 		setTitle("Import Feature Configuration and Install");
@@ -62,8 +73,23 @@ class ImportPage extends AbstractImportExportPage {
 		super.createControl(parent);
 		Composite composite = (Composite) getControl();
 
-        createBrowseGroup(composite, "Feature configuration file:");
-	    browseButton.addSelectionListener(new SelectionAdapter() {
+        createBrowseGroup(composite, "Import file:");
+        createViewerGroup(composite, "Import Features:");
+
+        setPageComplete(validatePage());
+	}
+	
+	@Override
+	protected void createBrowseGroup(Composite parent, String labelText) {
+		super.createBrowseGroup(parent, labelText);
+		pathText.addModifyListener(new ModifyListener() {
+			@Override
+			public void modifyText(ModifyEvent e) {
+				handlePathChanged();
+			}
+		});
+		
+		browseButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog fileDialog = new FileDialog(getShell(), SWT.OPEN);
@@ -74,19 +100,45 @@ class ImportPage extends AbstractImportExportPage {
 				String pathstr = fileDialog.open();
 				if (pathstr != null) {
 					pathText.setText(pathstr);
+//					handlePathChanged();
 				}
 			}
-	    });
-        createViewerGroup(composite, "Import Features:");
+		});
+	}
+	
+	@Override
+	protected void createViewerGroup(Composite parent, String labelText) {
+		super.createViewerGroup(parent, labelText);
+
 		viewer.addCheckStateListener(new ICheckStateListener() {
 			public void checkStateChanged(CheckStateChangedEvent event) {
 				setPageComplete(validatePage());
 			}
 		});
-
-        setPageComplete(validatePage());
+		updateViewer();
 	}
 
+	private void startGetInputJob(final String path) {
+		UIJob j = new UIJob("Reading Feature Configuration File") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+				try {
+					FileInputStream is = new FileInputStream(path);
+					readData = Streamer.readFromXML(is);
+					viewer.setInput(readData.getFeatureInfos());
+					updateViewer();
+					monitor.done();
+				} catch (IOException e) {
+					// may have bad/incomplete path, so don't log this
+				} catch (Exception e) {
+					Activator.logError(MessageFormat.format("Could not read data from file: {0}", path), e);
+				}
+				return Status.OK_STATUS;
+			} 
+		};
+		j.schedule();
+	}
+	
 	protected void createVersionRadioGroup(Composite parent) {
 	    Composite composite = new Composite(parent, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(composite);
@@ -97,23 +149,23 @@ class ImportPage extends AbstractImportExportPage {
 	    originalVersionCheck.addSelectionListener(new SelectionAdapter() {
 			@Override
 	    	public void widgetSelected(SelectionEvent e) {
-	    		importOriginalVersion = originalVersionCheck.getSelection();
+	    		wantsOriginalVersions = originalVersionCheck.getSelection();
 	    	}
 		});
 	}
-	
+
 	protected boolean validatePage() {
 		setErrorMessage(null);
 		IPath path = new Path(pathText.getText());
-		File file = path.toFile();
-		if (file.exists()) {
-			FeatureInfo[] featureInfos = getFeaturesFromFile(file);
-			if (featureInfos.length == 0) {
-				setErrorMessage("The file has no valid features");
+		if (isFilePath(path.toOSString())) {
+			if (readData == null || readData.getFeatureInfos().isEmpty()) {
+				setErrorMessage("No valid features found in configurations file");
 				return false;
 			}
-			viewer.setInput(featureInfos);
-			updateViewer();
+			if (readData == null || readData.getURIs().isEmpty()) {
+				setErrorMessage("No valid repositories found in configurations file");
+				return false;
+			}
 		}
 		else {
 			setErrorMessage("A valid exported feature configuration file must be selected");
@@ -128,9 +180,19 @@ class ImportPage extends AbstractImportExportPage {
 		return true;
 	}
 
-	private FeatureInfo[] getFeaturesFromFile(File file) {
-		// TODO
-		return new FeatureInfo[0];
+	private boolean isFilePath(String path) {
+		File file = new File(path);
+		return file.exists() && !file.isDirectory();
 	}
 
+	private void handlePathChanged() {
+		String path = pathText.getText();
+		if (!path.equals(currentPath) && isFilePath(path)) {
+			startGetInputJob(currentPath = path);
+		}
+	}
+
+	public ImportExportData getData() {
+		return readData;
+	}
 }
