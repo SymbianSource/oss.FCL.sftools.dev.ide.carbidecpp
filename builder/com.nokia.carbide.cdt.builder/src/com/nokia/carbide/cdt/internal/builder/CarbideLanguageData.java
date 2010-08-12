@@ -279,8 +279,11 @@ public class CarbideLanguageData extends CLanguageData {
 		}
 		
 		// add OEM dir
-		File oemDir = sdk.getIncludePath().append("oem").toFile();
-		if (oemDir.exists()) {
+		File oemDir = null;
+		if (sdk.getIncludePath() != null){
+			oemDir = sdk.getIncludePath().append("oem").toFile();
+		}
+		if (oemDir != null && oemDir.exists()) {
 			includeEntries.add(new CIncludePathEntry(new Path(oemDir.getAbsolutePath()), 0));
 		}
 		

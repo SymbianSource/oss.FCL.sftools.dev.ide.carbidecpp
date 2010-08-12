@@ -28,7 +28,6 @@ import org.eclipse.ui.PlatformUI;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
@@ -40,7 +39,8 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
- * SBSv2 specific build information.
+ * SBSv2 specific build information. Serves as a container for build data container for a Symbian SDK using SBSv2
+ * @since 3.0
  *
  */
 public class SBSv2BuildInfo implements ISBSv2BuildInfo {
@@ -68,6 +68,15 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		return sbsv2FilteredConetxts;
 	}
 
+	public void clearDataFromBuildCache(){
+		aliasToMeaningMap.clear();
+		if (productList != null) productList.clear();
+		sbsv2FilteredConetxts.clear();
+		cachedBuildMacros.clear();
+		cachedMetadataMacros.clear();
+		cachedVariantHRHFile = null;
+	}
+	
 	@Override
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
 		

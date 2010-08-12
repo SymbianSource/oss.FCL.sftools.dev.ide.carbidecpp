@@ -39,7 +39,7 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 @SuppressWarnings("restriction")
 public class BuildTargetTreeNode extends TreeNode {
 
-	public static final String SDK_NODE_ERROR_EPOCROOT_INVALID = " -- SDK location does not exist! Check Symbian SDKs!"; //$NON-NLS
+	public static final String SDK_NODE_ERROR_EPOCROOT_INVALID = " SDK location does not exist! Check Symbian SDKs!"; //$NON-NLS
 
 	/**
 	 * Constructs a new tree node for the given SDK
@@ -94,7 +94,7 @@ public class BuildTargetTreeNode extends TreeNode {
 		ISymbianSDK value = (ISymbianSDK) getValue();
 		File f = new File(value.getEPOCROOT());
 		if (!f.exists()){
-			return value.getUniqueId() + SDK_NODE_ERROR_EPOCROOT_INVALID;
+			return value.getUniqueId() + " (" + f.getAbsolutePath() + ") " + SDK_NODE_ERROR_EPOCROOT_INVALID;
 		}
 		return value.getUniqueId();
 	}

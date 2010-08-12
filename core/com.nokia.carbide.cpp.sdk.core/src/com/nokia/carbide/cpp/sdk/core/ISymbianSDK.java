@@ -34,7 +34,7 @@ public interface ISymbianSDK {
 	 * Value given for an SDK that is created when a build configuration
 	 * references an non-existent SDK.
 	 */
-	public static String BAD_EPOCROOT = "BAD_SDK_ROOT";
+	public static String BAD_EPOCROOT = "/BAD_SDK_ROOT";
 	
 	/**
 	 * Returns build info for a particular builder.

@@ -188,7 +188,11 @@ public class SymbianBuildContextDataCache {
 			List<IDefine> macros = new ArrayList<IDefine>();
 			Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
 			
-			File prefixFile = context.getPrefixFromVariantCfg().toFile();
+			File prefixFile = null;
+			if (context.getPrefixFromVariantCfg() != null){
+				prefixFile = context.getPrefixFromVariantCfg().toFile();
+			}
+			
 			ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 			
 			if (prefixFile == null){

@@ -179,13 +179,12 @@ public class SBSv2Utils {
 	@SuppressWarnings("unused")
 	public static boolean enableSBSv1Support() {
 		
+		// hard-coded shut off
 		if (!SDKCorePlugin.SUPPORTS_SBSV1_BUILDER)
 			return false;
 		
-		else if (!enableSBSv2Support())
-			return true;
-		
-		else if (isSBSv1Supported())
+		// check perl script
+		else if (isSBSv1Supported()) 
 			return true;
 		
 		return false;
@@ -250,33 +249,6 @@ public class SBSv2Utils {
 		return contexts; 
 	}
 	
-	/**
-	 * If a variant is defined and it changes the output directory, return the directory name.
-	 * For example, armv5_udeb.phone1 would return '.phone1'. If not variant that changes the release tree, then null
-	 * NOTE: This method deals with variant text applied to the end of a build alias, specifically testing for
-	 * variant text defined in the SBSv2 Build Configuration tab.
-	 * @return null if not a variant or the value to append to the platform release tree directory
-	 * @see com.nokia.carbide.cdt.internal.builder.ui#SBSv2BuildConfigTab
-	 */
-	public static String getVariantOutputDirModifier(String variantText) {
-		
-		String[] ignoredVariants =  { "generic", "tracecompiler", "trace", "test", "savespace", 
-				"bfc", "smp", "rvct2_2", "rvct4_0", "rvct3_1", "gcce4_3_2", "remove_freeze" };
-		
-		String newOutputDir = null;
-		if (variantText != null && variantText.length() > 1){
-			String[] variantTok = variantText.split("\\.");
-			if (variantTok.length > 1){
-				for (String ignore : ignoredVariants){
-					if (variantTok[1].toLowerCase().equals(ignore))
-						return null;
-				}
-				newOutputDir = "." + variantTok[1];
-			}
-		}
-		return newOutputDir;
-	}
-
 	private static boolean isSBSv1Supported() {
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		for (ISymbianSDK sdk : sdkMgr.getSDKList()) {

@@ -44,9 +44,12 @@ import org.eclipse.swt.widgets.TableItem;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.ui.AddSBSv2ProductVariant;
 import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 /**
@@ -121,6 +124,11 @@ public class SBSv2PlatformFilterComposite extends Composite {
 				SBSv2QueryUtils.removeAllCachedQueries();
 				clearLocalSBSCacheData();
 				initTable();
+				
+				for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
+					((SBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER)).clearDataFromBuildCache();
+				}
+				
 				refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonText")); //$NON-NLS-1$
 				refreshButton.setEnabled(true);
 			}
