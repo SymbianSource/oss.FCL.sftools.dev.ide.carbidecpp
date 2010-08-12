@@ -42,6 +42,8 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
@@ -284,6 +286,11 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		return context;
 	}
 	
+	/**
+	 * Check that at least one MMP in the project configuration has stdcpp support keyword
+	 * @return
+	 * @since 3.0
+	 */
 	public boolean hasSTDCPPSupport() {
 		
 		ICarbideProjectInfo cpi = this.getCarbideProject();
@@ -301,6 +308,19 @@ public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 		}
 		
 		return false;
+	}
+
+	public List<IDefine> getCompileTimeMacros() {
+		
+		List<IDefine> defines = new ArrayList<IDefine>();
+		
+		defines.addAll(context.getBuildMacros());
+		defines.addAll(context.getCompilerPreincludeDefines());
+		defines.addAll(context.getVariantHRHDefines());
+		defines.addAll(context.getMetadataMacros());
+		
+		return defines;
+		
 	}
 	
 }

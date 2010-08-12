@@ -45,6 +45,7 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cdt.internal.builder.CarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.BldInfDataRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.BldInfViewRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
@@ -73,13 +74,14 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPViewConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
-import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -2763,4 +2765,60 @@ public class EpocEngineHelper {
 		
 		return paths;
 	}
+	
+	/**
+	 * Retrieves all macros used for indexing a given ICarbideBuildConfiguration.
+	 * @param config - The CarbideBuildConfiguration
+	 * @param mmpFiles - null if for all MMPs in the project
+	 * @return list of IDefine
+	 * @since 3.0
+	 */
+	public static List<IDefine> getGlobalDefinesForConfiguration(ICarbideBuildConfiguration config, List<IPath> mmpFiles){
+		
+		List<IDefine> projectDefines = config.getCompileTimeMacros();
+		
+		boolean indexAllMMPs = false;
+		if (mmpFiles == null){
+			// get all macros from all mmps
+			indexAllMMPs = true;
+			mmpFiles = getMMPFilesForProject(config.getCarbideProject());
+		}
+		
+		boolean foundStdCPPSupport = false;
+		for (IPath mmpPath : mmpFiles){
+			if (!foundStdCPPSupport && hasSTDCPPSupport(config.getCarbideProject(), mmpPath)){
+				projectDefines.add(DefineFactory.createDefine("__SYMBIAN_STDCPP_SUPPORT__"));
+				foundStdCPPSupport = true;
+			}
+		}
+		
+		// get the list of all mmp files selected for the build configuration
+		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
+		List<String> buildComponents = null;
+		if (!EpocEngineHelper.getIndexAllPreference() || !indexAllMMPs)
+			buildComponents = config.getCarbideProject().isBuildingFromInf() ? null : config.getCarbideProject().getInfBuildComponents();
+
+		if (((CarbideProjectInfo)config.getCarbideProject()).shouldUseMMPMacros()){
+			for (IPath mmpPath : mmpFiles) {
+				
+				if (buildComponents != null && !TextUtils.listContainsIgnoreCase(buildComponents, mmpPath.lastSegment()))
+					continue;
+				
+				List<String> mmpMacros = getMMPMacrosForBuildConfiguration(
+						mmpPath, config);
+				for (String macro : mmpMacros) {
+					// Symbian docs say they are converted to upper case always
+					projectDefines.add(DefineFactory.createDefine(macro.toUpperCase()));
+				}
+			}
+		}
+		
+		List<String> targetTypes = getTargetTypesForBuildConfiguration(config);	
+		if (targetTypes.size() > 0){
+			projectDefines.add(config.getBuildContext().getTargetTypeMacro(targetTypes.get(0)));
+		}
+			 
+		return projectDefines;
+	}
+	
 }

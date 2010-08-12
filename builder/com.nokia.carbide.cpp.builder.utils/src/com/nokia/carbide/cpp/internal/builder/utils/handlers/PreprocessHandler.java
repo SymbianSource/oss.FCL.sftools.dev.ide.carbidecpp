@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.cdt.core.model.CModelException;
@@ -74,6 +73,7 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
@@ -82,14 +82,9 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.LanguageSelectionDialog;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -422,7 +417,7 @@ public class PreprocessHandler extends AbstractHandler {
 			macros.add(define.getName());
 		}
 		
-		if (buildConfig.hasSTDCPPSupport()){
+		if (((CarbideBuildConfiguration)buildConfig).hasSTDCPPSupport()){
 			macros.add("__SYMBIAN_STDCPP_SUPPORT__");
 		}
 		

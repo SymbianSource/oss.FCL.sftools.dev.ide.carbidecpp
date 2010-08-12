@@ -291,53 +291,24 @@ public class CarbideLanguageData extends CLanguageData {
 		macroEntries = new ArrayList<ICLanguageSettingEntry>(0);
 
 		lastUseMMPMacrosValue = cpi.shouldUseMMPMacros();
-
-		Map<String, String> macros = new HashMap<String, String>();
-		
-		// platform macros
-		for (IDefine metaDataDefine : context.getMetadataMacros()){
-			macros.put(metaDataDefine.getName(), metaDataDefine.getExpansion());
-		}
-		
-		if ((carbideBuildConfig).hasSTDCPPSupport()){
-			macros.put("__SYMBIAN_STDCPP_SUPPORT__", "");
-		}
-		
-		// target type macros (e.g. __DLL__)
-		List<String> targetTypes = EpocEngineHelper.getTargetTypesForBuildConfiguration(carbideBuildConfig);
-		// only add these if there is one target type.  this is the case when there is only one mmp file, or
-		// more than one but all have the same target type macro.  it wouldn't make sense to add different
-		// target type macros like __EXE__ and __DLL__.
-		if (targetTypes.size() == 1) {
-			// Just get the macro for the first MMP found
-			IDefine ttMacro = context.getTargetTypeMacro(targetTypes.get(0));
-			macros.put(ttMacro.getName(), ttMacro.getExpansion());
-		}
 		
 		// get the list of all mmp files selected for the build configuration
 		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
 		List<String> buildComponents = null;
 		if (!EpocEngineHelper.getIndexAllPreference())
 			buildComponents = carbideBuildConfig.getCarbideProject().isBuildingFromInf() ? null : carbideBuildConfig.getCarbideProject().getInfBuildComponents();
-
-		// if the pref option is enabled, then check the mmp's for MACRO's.
-		if (cpi.shouldUseMMPMacros()) {
-			List<IPath> mmps = EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig);
-			for (IPath mmp : mmps) {
-				if (buildComponents != null && !TextUtils.listContainsIgnoreCase(buildComponents, mmp.lastSegment()))
-					continue;
-				
-				List<String> mmpMacros = EpocEngineHelper.getMMPMacrosForBuildConfiguration(mmp, carbideBuildConfig);
-				for (String mmpMacro : mmpMacros) {
-					// Symbian docs say they are converted to upper case always
-					macros.put(mmpMacro.toUpperCase(), ""); //$NON-NLS-1$
-				}
-			}
-		}
-
+		
+		List<IPath> mmpFiles = null;
+		List<IDefine> projectDefines = new ArrayList<IDefine>();
+		if (buildComponents != null){
+			mmpFiles = EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig);
+		} 
+		
+		projectDefines = EpocEngineHelper.getGlobalDefinesForConfiguration(carbideBuildConfig, mmpFiles);
+		
 		// now create the path entries for the macros
-		for (String macro : macros.keySet()) {
-			macroEntries.add(new CMacroEntry(macro, macros.get(macro), 0));
+		for (IDefine define : projectDefines) {
+			macroEntries.add(new CMacroEntry(define.getName(), define.getExpansion(), 0));
 		}
 		
 		// get the list of files the engine references when parsing the bld.inf and mmp files

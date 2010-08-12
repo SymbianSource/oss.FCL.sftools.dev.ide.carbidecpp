@@ -21,6 +21,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
@@ -113,10 +114,14 @@ public interface ICarbideBuildConfiguration {
 	String getTargetString();
 	
 	/**
-	 * Check that at least one MMP in the project configuration has stdcpp support keyword
-	 * @return
+	 * Provides a list of macros suitable for preprocessing a CPP source file. This includes
+	 * macros from the compiler prefix, Symbian HRH, buit-in build macros, and metadata macros.
+	 * Note: If you don't want the macro values from the preincludes, you should use the methods
+	 * directly under ISymbianBuildContext for more specificity.
+	 * @return a list of macro defines
 	 * @since 3.0
 	 */
-	boolean hasSTDCPPSupport();
+	List<IDefine> getCompileTimeMacros();
+	
 	
 }
