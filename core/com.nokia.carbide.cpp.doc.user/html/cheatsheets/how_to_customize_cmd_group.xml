@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <cheatsheet
-      title="Customize Code Styles">
+      title="Customize Command Groups">
 `	<intro>
-		Intro text
+    	<description>
+			To control which commands appear on toolbars and menus, use the Customize Perspective dialog.
+    	</description>
 	</intro>
 	<item
-       title="one">
+       title="Open the Customize Perspective dialog">
 		<description>
-     one
-			
+			The Customize Perspective provides management of the command groups and the items that appear on the toolbar and menus within each group.
 		</description>
-		<command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.project)" confirm="false">
-		</command>
 	</item>
 </cheatsheet>

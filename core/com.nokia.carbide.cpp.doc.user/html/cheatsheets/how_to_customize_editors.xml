@@ -3,7 +3,9 @@
 <cheatsheet
       title="Customize Editors">
 `	<intro>
-		This is the intro text.
+    	<description>
+			To control the appearance of your source code, use the Editor related preference panels.
+    	</description>
 	</intro>
   <item
         href="/com.nokia.carbide.cpp.doc.user/html/tasks/custom/carb_custom_editors.htm"

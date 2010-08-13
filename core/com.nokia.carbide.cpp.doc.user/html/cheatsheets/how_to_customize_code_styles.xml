@@ -3,12 +3,12 @@
 <cheatsheet
       title="Customize Code Styles">
 `	<intro>
-		Intro text
+		To control the automatic formatting of your source code, use the Code Style preference panel.
 	</intro>
 	<item
        title="Customize code styles">
 		<description>
-			Use the &lt;Preferences &gt; C/C++ &gt; Code Style</b> preference panel to select a code style profile to format source files.
+			Use the <b>Preferences &gt; C/C++ &gt; Code Style</b> preference panel to select a code style profile to format source files.
 		</description>
   <command
         required="false"

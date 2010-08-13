@@ -3,8 +3,9 @@
 <cheatsheet
       title="Customize Key Commands">
 `	<intro
-        href="/com.nokia.carbide.cpp.doc.user/html/tasks/custom/carb_custom_keys.htm">
-		Intro text
+    	<description>
+			To manage the key bindings available while developing, use the Keys preference panel.
+    	<description>
 	</intro>
 	<item
        title="Customize key bindings">

@@ -3,7 +3,9 @@
 <cheatsheet
       title="Share my Settings">
 `	<intro>
-		Intro text
+    	<description>
+			Intro text
+    	</description>
 	</intro>
 	<item
        title="one">
