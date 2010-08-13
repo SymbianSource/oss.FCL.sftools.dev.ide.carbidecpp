@@ -60,7 +60,7 @@
   </topic>
   <topic label="Carbide views" 						href="html/reference/views_overview.htm"  >
       <topic label="BreakPoints view" 				href="html/reference/view_breakpoints.htm" />
-      <topic label="Carbide Portal"	    			href="html/reference/view_carbide_portal.htm" >
+      <topic label="Carbide.c++ Portal"	    		href="html/reference/view_carbide_portal.htm" >
       	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />
   	  </topic>
       <topic label="Console view" 					href="html/reference/view_console.htm" />
