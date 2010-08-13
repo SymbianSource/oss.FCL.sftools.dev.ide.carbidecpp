@@ -37,6 +37,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.progress.UIJob;
 
+import com.nokia.carbide.discovery.ui.Messages;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
@@ -50,16 +51,16 @@ class ExportPage extends AbstractImportExportPage {
 
 	protected ExportPage() {
 		super("ExportPage"); //$NON-NLS-1$
-		setTitle("Export Installed Feature Configuration");
-		setDescription("Create an export file with the selected feature configuration");
+		setTitle(Messages.ExportPage_Title);
+		setDescription(Messages.ExportPage_Description);
 	}
 
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 		Composite composite = (Composite) getControl();
 		
-        createViewerGroup(composite, "Export features:");
-		createBrowseGroup(composite, "Export file:");
+        createViewerGroup(composite, Messages.ExportPage_ViewerGroupLabel);
+		createBrowseGroup(composite, Messages.ExportPage_BrowseGroupLabel);
 		
         featureInfos = new ArrayList<FeatureInfo>();
         
@@ -90,7 +91,7 @@ class ExportPage extends AbstractImportExportPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog =  new FileDialog(getShell(), SWT.SAVE);
-				dialog.setText("Save As");
+				dialog.setText(Messages.ExportPage_FileDialogText);
 				BrowseDialogUtils.initializeFrom(dialog, pathText.getText());
 				dialog.setOverwrite(true); // prompt for overwrite
 				String path = dialog.open();
@@ -104,7 +105,7 @@ class ExportPage extends AbstractImportExportPage {
 	}
 
 	private void startGetInputJob() {
-		UIJob j = new UIJob("Getting Installed Features") {
+		UIJob j = new UIJob(Messages.ExportPage_GetFeaturesJobName) {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				viewer.setInput(P2Utils.getInstalledFeatures(monitor));
@@ -118,22 +119,22 @@ class ExportPage extends AbstractImportExportPage {
 	protected boolean validatePage() {
 		setErrorMessage(null);
 		if (viewer.getTable().getItemCount() == 0) {
-			setErrorMessage("There are no features to export");
+			setErrorMessage(Messages.ExportPage_NoFeaturesError);
 			return false;
 		}
 		if (viewer.getCheckedElements().length == 0) {
-			setErrorMessage("At least one feature must be selected for export");
+			setErrorMessage(Messages.ExportPage_NoFeaturesSelectedError);
 			return false;
 		}
 		
 		IPath path = new Path(pathText.getText());
 		file = path.toFile();
 		if (!file.isAbsolute()) {
-			setErrorMessage("A file must be selected in order to export features");
+			setErrorMessage(Messages.ExportPage_NoFileError);
 			return false;
 		}
 		if (file.exists()) {
-			setMessage("File exists at selected location and will be overwritten", DialogPage.WARNING);
+			setMessage(Messages.ExportPage_FileOverwriteWarning, DialogPage.WARNING);
 		}
 		
 		return true;

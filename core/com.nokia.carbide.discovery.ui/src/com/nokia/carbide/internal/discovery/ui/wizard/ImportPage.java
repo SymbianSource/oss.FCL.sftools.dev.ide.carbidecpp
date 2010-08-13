@@ -42,6 +42,7 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.progress.UIJob;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**
@@ -55,26 +56,27 @@ class ImportPage extends AbstractImportExportPage {
 		"*.*" //$NON-NLS-1$
 	};
 	static final String[] FILTER_EXT_NAMES  = { 
-		"XML Files",
-		"All Files"
+		Messages.ImportPage_XMLFileFilterName,
+		Messages.ImportPage_AllFilesFilterName
 	};
 
 	private String currentPath;
 	private ImportExportData readData;
-	protected boolean wantsOriginalVersions;
+	private boolean wantsOriginalVersions;
 	
 	protected ImportPage() {
 		super("ImportPage"); //$NON-NLS-1$
-		setTitle("Import Feature Configuration and Install");
-		setDescription("Import a feature configurations from a file and install the features");
+		setTitle(Messages.ImportPage_Title);
+		setDescription(Messages.ImportPage_Description);
 	}
 
 	public void createControl(Composite parent) {
 		super.createControl(parent);
 		Composite composite = (Composite) getControl();
 
-        createBrowseGroup(composite, "Import file:");
-        createViewerGroup(composite, "Import Features:");
+        createBrowseGroup(composite, Messages.ImportPage_BrowseGroupLabel);
+        createViewerGroup(composite, Messages.ImportPage_ViewerGroupLabel);
+        createVersionPrefGroup(composite);
 
         setPageComplete(validatePage());
 	}
@@ -93,14 +95,13 @@ class ImportPage extends AbstractImportExportPage {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog fileDialog = new FileDialog(getShell(), SWT.OPEN);
-				fileDialog.setText("Select an Exported Feature Configuration File");
+				fileDialog.setText(Messages.ImportPage_FileDialogText);
 				fileDialog.setFilterExtensions(FILTER_EXTS);
 				fileDialog.setFilterNames(FILTER_EXT_NAMES);
 				BrowseDialogUtils.initializeFrom(fileDialog, pathText);
 				String pathstr = fileDialog.open();
 				if (pathstr != null) {
 					pathText.setText(pathstr);
-//					handlePathChanged();
 				}
 			}
 		});
@@ -119,7 +120,7 @@ class ImportPage extends AbstractImportExportPage {
 	}
 
 	private void startGetInputJob(final String path) {
-		UIJob j = new UIJob("Reading Feature Configuration File") {
+		UIJob j = new UIJob(Messages.ImportPage_ReadFileJobName) {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
 				try {
@@ -131,7 +132,7 @@ class ImportPage extends AbstractImportExportPage {
 				} catch (IOException e) {
 					// may have bad/incomplete path, so don't log this
 				} catch (Exception e) {
-					Activator.logError(MessageFormat.format("Could not read data from file: {0}", path), e);
+					Activator.logError(MessageFormat.format(Messages.ImportPage_ReadFileError, path), e);
 				}
 				return Status.OK_STATUS;
 			} 
@@ -139,13 +140,13 @@ class ImportPage extends AbstractImportExportPage {
 		j.schedule();
 	}
 	
-	protected void createVersionRadioGroup(Composite parent) {
+	protected void createVersionPrefGroup(Composite parent) {
 	    Composite composite = new Composite(parent, SWT.NONE);
         GridLayoutFactory.fillDefaults().applyTo(composite);
 	    GridDataFactory.fillDefaults().align(SWT.FILL, SWT.BEGINNING).grab(true, false).applyTo(composite);
 	    
 	    final Button originalVersionCheck = new Button(composite, SWT.CHECK);  
-	    originalVersionCheck.setText("Attempt import original feature versions");
+	    originalVersionCheck.setText(Messages.ImportPage_OriginalVersionCheckLabel);
 	    originalVersionCheck.addSelectionListener(new SelectionAdapter() {
 			@Override
 	    	public void widgetSelected(SelectionEvent e) {
@@ -159,21 +160,21 @@ class ImportPage extends AbstractImportExportPage {
 		IPath path = new Path(pathText.getText());
 		if (isFilePath(path.toOSString())) {
 			if (readData == null || readData.getFeatureInfos().isEmpty()) {
-				setErrorMessage("No valid features found in configurations file");
+				setErrorMessage(Messages.ImportPage_NoValidFeaturesInFileError);
 				return false;
 			}
 			if (readData == null || readData.getURIs().isEmpty()) {
-				setErrorMessage("No valid repositories found in configurations file");
+				setErrorMessage(Messages.ImportPage_NoValidReposInFileError);
 				return false;
 			}
 		}
 		else {
-			setErrorMessage("A valid exported feature configuration file must be selected");
+			setErrorMessage(Messages.ImportPage_NoValidFileError);
 			return false;
 		}
 		
 		if (viewer.getCheckedElements().length == 0) {
-			setErrorMessage("At least one feature must be selected for import");
+			setErrorMessage(Messages.ImportPage_NoFeaturesSelectedError);
 			return false;
 		}
 		
@@ -194,5 +195,9 @@ class ImportPage extends AbstractImportExportPage {
 
 	public ImportExportData getData() {
 		return readData;
+	}
+	
+	public boolean getWantsOriginalVersions() {
+		return wantsOriginalVersions;
 	}
 }

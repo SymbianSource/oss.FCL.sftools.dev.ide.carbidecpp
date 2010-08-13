@@ -144,7 +144,7 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 				if (date != null) {
 					String dateString = DateFormat.getDateTimeInstance().format(date);
 					buf.append(dateString);
-					buf.append("<br>");
+					buf.append("<br>"); //$NON-NLS-1$
 				}
 				buf.append(clean(item.getDescription()));
 				buf.append("</div></li>"); //$NON-NLS-1$

@@ -306,9 +306,9 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 		IHandlerService handlerService = 
 			(IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
         try {
-			handlerService.executeCommand("org.eclipse.equinox.p2.ui.sdk.install", null);
+			handlerService.executeCommand("org.eclipse.equinox.p2.ui.sdk.install", null); //$NON-NLS-1$
 		} catch (Exception e) {
-			Activator.logError("Could not open install wizard", e);
+			Activator.logError(Messages.AbstractDiscoveryPortalPageLayer_P2InstallWizardOpenError, e);
 		}
 	}
 

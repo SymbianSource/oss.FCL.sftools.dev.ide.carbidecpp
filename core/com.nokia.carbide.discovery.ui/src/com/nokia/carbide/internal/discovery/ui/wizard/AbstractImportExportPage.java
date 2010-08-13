@@ -44,6 +44,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 
 /**
  * Abstract superclass of import and export page
@@ -92,7 +93,7 @@ abstract class AbstractImportExportPage extends WizardPage {
 			}
 		});
 		browseButton = new Button(composite, SWT.PUSH);
-		browseButton.setText("Browse...");
+		browseButton.setText(Messages.AbstractImportExportPage_BrowseButtonLabel);
 		browseButton
 				.setLayoutData(new GridData(GridData.HORIZONTAL_ALIGN_FILL));
 		setButtonLayoutData(browseButton);
@@ -108,7 +109,7 @@ abstract class AbstractImportExportPage extends WizardPage {
 		viewer = CheckboxTableViewer.newCheckList(parent, SWT.BORDER);
 		TableViewerColumn featureColumn = new TableViewerColumn(viewer,
 				SWT.CENTER);
-		featureColumn.getColumn().setText("Feature");
+		featureColumn.getColumn().setText(Messages.AbstractImportExportPage_FeatureColTitle);
 		featureColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
 			public Image getImage(Object element) {
@@ -124,7 +125,7 @@ abstract class AbstractImportExportPage extends WizardPage {
 		});
 		TableViewerColumn versionColumn = new TableViewerColumn(viewer,
 				SWT.CENTER);
-		versionColumn.getColumn().setText("Version");
+		versionColumn.getColumn().setText(Messages.AbstractImportExportPage_VersionColTitle);
 		versionColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
 			public String getText(Object element) {
@@ -146,7 +147,7 @@ abstract class AbstractImportExportPage extends WizardPage {
 				.applyTo(buttonComposite);
 		buttonComposite.setLayout(new GridLayout());
 		Button checkAllButton = new Button(buttonComposite, SWT.PUSH);
-		checkAllButton.setText("Select All");
+		checkAllButton.setText(Messages.AbstractImportExportPage_CheckAllLabel);
 		setButtonLayoutData(checkAllButton);
 		checkAllButton.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -155,7 +156,7 @@ abstract class AbstractImportExportPage extends WizardPage {
 			}
 		});
 		Button checkNoneButton = new Button(buttonComposite, SWT.PUSH);
-		checkNoneButton.setText("Deselect All");
+		checkNoneButton.setText(Messages.AbstractImportExportPage_CheckNoneLabel);
 		setButtonLayoutData(checkNoneButton);
 		checkNoneButton.addSelectionListener(new SelectionAdapter() {
 			@Override

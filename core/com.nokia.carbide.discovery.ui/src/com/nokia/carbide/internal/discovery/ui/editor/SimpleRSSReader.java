@@ -38,6 +38,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 
 /**
  * A simple RSS reader
@@ -96,7 +97,7 @@ public class SimpleRSSReader {
 					link = new URL(value);
 				} catch (MalformedURLException e) {
 					// don't store malformed URLs
-					Activator.logError("Bad URL", e);
+					Activator.logError(Messages.SimpleRSSReader_BadURLError, e);
 				}
 			}
 			else if (RSSHandler.DESCRIPTION.equalsIgnoreCase(element) || RSSHandler.SUMMARY.equalsIgnoreCase(element))

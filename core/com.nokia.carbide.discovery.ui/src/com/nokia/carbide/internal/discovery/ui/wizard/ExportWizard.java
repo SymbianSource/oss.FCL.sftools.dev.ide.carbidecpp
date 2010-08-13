@@ -31,6 +31,7 @@ import org.eclipse.ui.IExportWizard;
 import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 
 /**
  * Wizard for exporting installed features to a file
@@ -51,15 +52,15 @@ public class ExportWizard extends Wizard implements IExportWizard {
 			ImportExportData data = new ImportExportData(false, P2Utils.getKnownRepositories(), featureInfos);
 			Streamer.writeToXML(os, data);
 		} catch (Exception e) {
-			MessageDialog.openError(getShell(), "Error", 
-					MessageFormat.format("Could not write export file due to error: {0}", e.getLocalizedMessage()));
+			MessageDialog.openError(getShell(), Messages.ExportWizard_ErrorTitle, 
+					MessageFormat.format(Messages.ExportWizard_WriteFileError, e.getMessage()));
 		}
 		return true;
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		setDefaultPageImageDescriptor(Activator.getImageDescriptor("icons\\install_wiz.gif")); //$NON-NLS-1$
-		setWindowTitle("Export");
+		setWindowTitle(Messages.ExportWizard_Title);
 		exportPage = new ExportPage();
 		addPage(exportPage);
 	}

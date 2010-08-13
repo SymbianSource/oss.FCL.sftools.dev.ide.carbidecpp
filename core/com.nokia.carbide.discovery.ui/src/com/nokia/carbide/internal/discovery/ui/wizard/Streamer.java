@@ -33,6 +33,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 
 /**
  * Serializes feature infos and repository URIs into output stream as XML
@@ -62,12 +63,12 @@ class Streamer {
 	
 	private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n"; //$NON-NLS-1$
 	
-	private static final String ROOT_START = "<" + ROOT_ELEMENT + " " + VERSION_ATTR + "=\"" + CURRENT_VERSION + "\">\n"; //$NON-NLS-1$ //$NON-NLS-2$
-	private static final String ROOT_END = "</" + ROOT_ELEMENT + ">\n"; //$NON-NLS-1$
+	private static final String ROOT_START = "<" + ROOT_ELEMENT + " " + VERSION_ATTR + "=\"" + CURRENT_VERSION + "\">\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+	private static final String ROOT_END = "</" + ROOT_ELEMENT + ">\n"; //$NON-NLS-1$ //$NON-NLS-2$
 	
-	private static final String ORIGINAL_VERSION_FMT = "\t<" + WANTS_VERSIONS_ELEMENT + " " + VALUE_ATTR + "=\"{0}\"/>\n"; //$NON-NLS-1$
-	private static final String REPOSITORY_FMT = "\t<" + REPOSITORY_ELEMENT + " " + URI_ATTR + "=\"{0}\"/>\n"; //$NON-NLS-1$
-	private static final String FEATURE_FMT = "\t<" + FEATURE_ELEMENT + " " + ID_ATTR + "=\"{0}\" " + VERSION_ATTR + "=\"{1}\"/>\n"; //$NON-NLS-1$
+	private static final String ORIGINAL_VERSION_FMT = "\t<" + WANTS_VERSIONS_ELEMENT + " " + VALUE_ATTR + "=\"{0}\"/>\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private static final String REPOSITORY_FMT = "\t<" + REPOSITORY_ELEMENT + " " + URI_ATTR + "=\"{0}\"/>\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+	private static final String FEATURE_FMT = "\t<" + FEATURE_ELEMENT + " " + ID_ATTR + "=\"{0}\" " + VERSION_ATTR + "=\"{1}\"/>\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
 	public static void writeToXML(OutputStream os, ImportExportData data) throws IOException {
 		os.write(XML_HEADER.getBytes());
@@ -107,7 +108,7 @@ class Streamer {
 				String versionStr = attributes.getValue(VERSION_ATTR);
 				if (!CURRENT_VERSION.equals(versionStr))
 					throw new IllegalArgumentException(
-							MessageFormat.format("Can only read version {0} of <{1}>", CURRENT_VERSION, ROOT_ELEMENT));
+							MessageFormat.format(Messages.Streamer_BadVersionError, CURRENT_VERSION, ROOT_ELEMENT));
 			}
 			else if (WANTS_VERSIONS_ELEMENT.equals(qName)) {
 				String wantsVersions = attributes.getValue(VALUE_ATTR);
@@ -118,7 +119,7 @@ class Streamer {
 				try {
 					data.addURI(new URI(uriStr));
 				} catch (URISyntaxException e) {
-					Activator.logError(MessageFormat.format("Could not parse URI: {0}", uriStr), e);
+					Activator.logError(MessageFormat.format(Messages.Streamer_BadURIError, uriStr), e);
 				}
 			}
 			else if (FEATURE_ELEMENT.equals(qName)) {
@@ -128,7 +129,7 @@ class Streamer {
 					Version version = Version.create(versionStr);
 					data.addFeatureInfo(new FeatureInfo(id, version));
 				} catch (IllegalArgumentException e) {
-					Activator.logError(MessageFormat.format("Could not parse version: {0}", versionStr), e);
+					Activator.logError(MessageFormat.format(Messages.Streamer_VersionParseError, versionStr), e);
 				}
 			}
 		}

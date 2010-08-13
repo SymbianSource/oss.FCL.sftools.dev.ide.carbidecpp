@@ -31,6 +31,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchWizard;
 import org.eclipse.ui.PlatformUI;
 
+import com.nokia.carbide.discovery.ui.Messages;
 import com.nokia.carbide.internal.discovery.ui.extension.AbstractDiscoveryPortalPageLayer;
 import com.nokia.carbide.internal.discovery.ui.extension.IActionBar;
 import com.nokia.carbide.internal.discovery.ui.extension.IActionUIUpdater;
@@ -42,7 +43,7 @@ public class InstallExtensionsPortalExtension extends AbstractDiscoveryPortalPag
 	private final class MigrateBar implements IActionBar {
 		@Override
 		public String getTitle() {
-			return "Migrate";
+			return Messages.InstallExtensionsPortalExtension_MigrateTitle;
 		}
 
 		@Override
@@ -53,13 +54,13 @@ public class InstallExtensionsPortalExtension extends AbstractDiscoveryPortalPag
 		@Override
 		public IAction[] getActions() {
 			List<IAction> actions = new ArrayList<IAction>();
-			actions.add(new Action("Export...") {
+			actions.add(new Action(Messages.InstallExtensionsPortalExtension_ExportActionLabel) {
 				@Override
 				public void run() {
 					showWizard(new ExportWizard());
 				}
 			});
-			actions.add(new Action("Import...") {
+			actions.add(new Action(Messages.InstallExtensionsPortalExtension_ImportActionLabel) {
 				@Override
 				public void run() {
 					showWizard(new ImportWizard());
