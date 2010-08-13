@@ -301,7 +301,14 @@ public class CarbideLanguageData extends CLanguageData {
 		List<IPath> mmpFiles = null;
 		List<IDefine> projectDefines = new ArrayList<IDefine>();
 		if (buildComponents != null){
-			mmpFiles = EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig);
+			// Get the list of mmp files we are building so we only get those macros
+			List<IPath> tmpMMPFiles = EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig);
+			mmpFiles = new ArrayList<IPath>();
+			for (IPath mmp : tmpMMPFiles){
+				if (TextUtils.listContainsIgnoreCase(buildComponents, mmp.lastSegment())){
+					mmpFiles.add(mmp);
+				}
+			}
 		} 
 		
 		projectDefines = EpocEngineHelper.getGlobalDefinesForConfiguration(carbideBuildConfig, mmpFiles);

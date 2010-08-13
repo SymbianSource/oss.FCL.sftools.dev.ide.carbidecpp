@@ -477,7 +477,10 @@ public class SymbianBuildContextDataCache {
 		}
 		
 		// also search files in same folder as variant.hrh
-		File prefix = context.getPrefixFromVariantCfg().toFile();
+		File prefix = null;
+		if (context.getPrefixFromVariantCfg() != null){
+			prefix = context.getPrefixFromVariantCfg().toFile();
+		}
 		if (sbvPlatform != null){
 			// might be an alternate HRH file to use
 			IPath varVarHRH = sbvPlatform.getBuildVariantHRHFile();

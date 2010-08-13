@@ -142,6 +142,7 @@ public class EpocEngineHelper {
 		monitor.beginTask("Scanning bld.inf for mmp and make files", buildConfigs.size());
 
 		try {
+			
 			// let cache know we're iterating a lot
 			SymbianBuildContextDataCache.startProjectOperation();
 			
@@ -2777,32 +2778,22 @@ public class EpocEngineHelper {
 		
 		List<IDefine> projectDefines = config.getCompileTimeMacros();
 		
-		boolean indexAllMMPs = false;
 		if (mmpFiles == null){
 			// get all macros from all mmps
-			indexAllMMPs = true;
 			mmpFiles = getMMPFilesForProject(config.getCarbideProject());
 		}
 		
-		boolean foundStdCPPSupport = false;
 		for (IPath mmpPath : mmpFiles){
-			if (!foundStdCPPSupport && hasSTDCPPSupport(config.getCarbideProject(), mmpPath)){
+			if (hasSTDCPPSupport(config.getCarbideProject(), mmpPath)){
 				projectDefines.add(DefineFactory.createDefine("__SYMBIAN_STDCPP_SUPPORT__"));
-				foundStdCPPSupport = true;
+				break;
 			}
 		}
 		
-		// get the list of all mmp files selected for the build configuration
-		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
-		List<String> buildComponents = null;
-		if (!EpocEngineHelper.getIndexAllPreference() || !indexAllMMPs)
-			buildComponents = config.getCarbideProject().isBuildingFromInf() ? null : config.getCarbideProject().getInfBuildComponents();
-
 		if (((CarbideProjectInfo)config.getCarbideProject()).shouldUseMMPMacros()){
+			// Only return the macros from the mmps if project pref Macro Settings
+			// is enabled (Use preprocessor symbols....)
 			for (IPath mmpPath : mmpFiles) {
-				
-				if (buildComponents != null && !TextUtils.listContainsIgnoreCase(buildComponents, mmpPath.lastSegment()))
-					continue;
 				
 				List<String> mmpMacros = getMMPMacrosForBuildConfiguration(
 						mmpPath, config);

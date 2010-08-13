@@ -401,7 +401,11 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 		selectionUI.setLayoutData(gridData);
 		
 		// set the data
-		selectionUI.setBldInfFile(cpi.getAbsoluteBldInfPath(), cpi.getBuildConfigurations(), CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()));
+		List<ISymbianBuildContext> buildContexts = new ArrayList<ISymbianBuildContext>();
+		for (ICarbideBuildConfiguration config : cpi.getBuildConfigurations()){
+			buildContexts.add(config.getBuildContext());
+		}
+		selectionUI.setBldInfFile(cpi.getAbsoluteBldInfPath(), buildContexts, CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()));
 		
 		// set checked state
 		selectionUI.setAllChecked(false);
