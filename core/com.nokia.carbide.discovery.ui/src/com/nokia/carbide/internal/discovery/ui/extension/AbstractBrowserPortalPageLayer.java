@@ -172,6 +172,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 					}
 					actionBar.hookBrowser();
 					actionBar.update();
+					browser.setFocus();
 				}
 			});
 		}

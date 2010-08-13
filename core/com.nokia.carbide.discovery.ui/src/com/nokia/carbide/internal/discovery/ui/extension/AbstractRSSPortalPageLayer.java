@@ -103,6 +103,7 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 				actionBar.hookBrowser();
 				readRSS();
 				actionBar.update();
+				browser.setFocus();
 			}
 		});
 	}

@@ -143,6 +143,7 @@ public abstract class AbstractDiscoveryPortalPageLayer implements IPortalPageLay
 						viewer.addSelectionChangedListener(listener);
 					}
 					viewer.updateCatalog();
+					viewer.getControl().setFocus();
 				}
 			});
 		}
