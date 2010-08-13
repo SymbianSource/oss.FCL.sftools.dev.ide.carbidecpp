@@ -17,16 +17,20 @@
 */
 package com.nokia.carbide.cdt.builder.test;
 
-import com.nokia.carbide.cpp.sdk.core.*;
-
-import org.eclipse.ui.plugin.*;
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.osgi.framework.BundleContext;
-
+import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
 import junit.framework.TestCase;
+
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.BundleContext;
+
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class TestPlugin extends AbstractUIPlugin {
 
@@ -79,9 +83,12 @@ public class TestPlugin extends AbstractUIPlugin {
 	 */
 	public static List<ISymbianBuildContext> getUsableBuildConfigs() {
 		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
-			List<ISymbianBuildContext> contexts = sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getAllBuildConfigurations();
-			if (contexts.size() > 0) {
-				return contexts.subList(0, Math.min(contexts.size(), 8));
+			if ((new File(sdk.getEPOCROOT()).exists())){
+				// TODO: Convert to SBSv2 test
+				List<ISymbianBuildContext> contexts = sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER).getAllBuildConfigurations();
+				if (contexts.size() > 0) {
+					return contexts.subList(0, Math.min(contexts.size(), 8));
+				}
 			}
 		}
 		TestCase.fail("No installed SDKs provide build configurations");

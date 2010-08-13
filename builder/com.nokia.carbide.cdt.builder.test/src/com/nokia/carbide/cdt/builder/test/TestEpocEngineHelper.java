@@ -44,6 +44,8 @@ import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.MMPViewRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -191,6 +193,23 @@ public class TestEpocEngineHelper extends BaseTest {
 				fail("Project does not have STDCPP Support");
 			}
 		}
+	}
+	
+	public void testProjectMaroRetrieval() throws Exception {
+		ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(carbideProject);
+		
+		List<IDefine> projectDefines = EpocEngineHelper.getGlobalDefinesForConfiguration(cpi.getDefaultConfiguration(), null);
+		
+		boolean testSpecificMacro = false;
+		for (IDefine define: projectDefines){
+			if (define.getName().equals("__SUPPORT_CPP_EXCEPTIONS__")){
+				testSpecificMacro = true;
+				break;
+			}
+		}
+		assertTrue(testSpecificMacro);
+		
+		assertTrue(cpi.getDefaultConfiguration().getCompileTimeMacros().size() > 0);
 	}
 	
 }
