@@ -28,8 +28,6 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.DialogPage;
-import org.eclipse.jface.viewers.CheckStateChangedEvent;
-import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -70,12 +68,6 @@ class ExportPage extends AbstractImportExportPage {
 	@Override
 	protected void createViewerGroup(Composite parent, String labelText) {
 		super.createViewerGroup(parent, labelText);
-
-		viewer.addCheckStateListener(new ICheckStateListener() {
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				setPageComplete(validatePage());
-			}
-		});
 		startGetInputJob();
 		updateViewer();
 	}

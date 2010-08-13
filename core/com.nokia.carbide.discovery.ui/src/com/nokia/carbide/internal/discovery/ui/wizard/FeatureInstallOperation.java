@@ -26,6 +26,7 @@ import java.util.Set;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.p2.core.ProvisionException;
@@ -35,6 +36,7 @@ import org.eclipse.equinox.p2.operations.ProvisioningSession;
 import org.eclipse.equinox.p2.operations.RepositoryTracker;
 import org.eclipse.equinox.p2.query.IQuery;
 import org.eclipse.equinox.p2.query.IQueryResult;
+import org.eclipse.equinox.p2.query.IQueryable;
 import org.eclipse.equinox.p2.query.QueryUtil;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepository;
 import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
@@ -44,7 +46,7 @@ import org.eclipse.swt.widgets.Display;
 
 import com.nokia.carbide.discovery.ui.Messages;
 
-public class FeatureInstallOperation implements IRunnableWithProgress {
+class FeatureInstallOperation implements IRunnableWithProgress {
 	
 	private Collection<URI> uris;
 	private Collection<FeatureInfo> featureInfos;
@@ -80,7 +82,9 @@ public class FeatureInstallOperation implements IRunnableWithProgress {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
-				provisioningUI.openInstallWizard(ius, operation, null);
+				IQueryable<IInstallableUnit> additions = operation.getProvisioningPlan().getAdditions();
+				IQueryResult<IInstallableUnit> result = additions.query(QueryUtil.createIUGroupQuery(), new NullProgressMonitor());
+				provisioningUI.openInstallWizard(result.toSet(), operation, null);
 			}
 		});
 	}
@@ -139,15 +143,6 @@ public class FeatureInstallOperation implements IRunnableWithProgress {
 		}
 		monitor.done();
 	}
-	
-//	private FeatureInfo findInfo(Collection<FeatureInfo> featureInfos, String id, Version version) {
-//		for (FeatureInfo featureInfo : featureInfos) {
-//			boolean sameId = featureInfo.getId().equals(id);
-//			if (sameId && (!wantVersions || version.toString().equals(featureInfo.getVersion().toString())))
-//				return featureInfo;
-//		}
-//		return null;
-//	}
 	
 	private InstallOperation resolve(SubMonitor monitor) throws CoreException {
 		checkIfCanceled(monitor);

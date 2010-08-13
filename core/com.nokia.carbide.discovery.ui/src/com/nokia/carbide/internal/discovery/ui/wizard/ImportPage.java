@@ -20,7 +20,10 @@ package com.nokia.carbide.internal.discovery.ui.wizard;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -29,8 +32,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.viewers.CheckStateChangedEvent;
-import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -110,12 +111,6 @@ class ImportPage extends AbstractImportExportPage {
 	@Override
 	protected void createViewerGroup(Composite parent, String labelText) {
 		super.createViewerGroup(parent, labelText);
-
-		viewer.addCheckStateListener(new ICheckStateListener() {
-			public void checkStateChanged(CheckStateChangedEvent event) {
-				setPageComplete(validatePage());
-			}
-		});
 		updateViewer();
 	}
 
@@ -193,8 +188,17 @@ class ImportPage extends AbstractImportExportPage {
 		}
 	}
 
-	public ImportExportData getData() {
-		return readData;
+	public Collection<FeatureInfo> getFeatureInfos() {
+		Collection<FeatureInfo> infos = new ArrayList<FeatureInfo>();
+		Object[] objs = viewer.getCheckedElements();
+		for (Object o : objs) {
+			infos.add((FeatureInfo) o);
+		}
+		return infos;
+	}
+	
+	public Collection<URI> getURIs() {
+		return readData.getURIs();
 	}
 	
 	public boolean getWantsOriginalVersions() {

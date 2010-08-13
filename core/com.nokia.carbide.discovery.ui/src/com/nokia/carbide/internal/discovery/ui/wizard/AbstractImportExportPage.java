@@ -25,8 +25,10 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -54,6 +56,8 @@ abstract class AbstractImportExportPage extends WizardPage {
 	protected Text pathText;
 	protected Button browseButton;
 	protected CheckboxTableViewer viewer;
+	protected Button checkAllButton;
+	protected Button checkNoneButton;
 	protected static final ImageDescriptor FEATURE_IMGDESC = Activator
 			.getImageDescriptor("icons/iu_obj.gif"); //$NON-NLS-1$
 	protected Image featureImg;
@@ -146,22 +150,32 @@ abstract class AbstractImportExportPage extends WizardPage {
 		GridDataFactory.swtDefaults().align(SWT.END, SWT.BEGINNING)
 				.applyTo(buttonComposite);
 		buttonComposite.setLayout(new GridLayout());
-		Button checkAllButton = new Button(buttonComposite, SWT.PUSH);
+		checkAllButton = new Button(buttonComposite, SWT.PUSH);
 		checkAllButton.setText(Messages.AbstractImportExportPage_CheckAllLabel);
 		setButtonLayoutData(checkAllButton);
 		checkAllButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewer.setAllChecked(true);
+				enableButtons();
+				setPageComplete(validatePage());
 			}
 		});
-		Button checkNoneButton = new Button(buttonComposite, SWT.PUSH);
+		checkNoneButton = new Button(buttonComposite, SWT.PUSH);
 		checkNoneButton.setText(Messages.AbstractImportExportPage_CheckNoneLabel);
 		setButtonLayoutData(checkNoneButton);
 		checkNoneButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				viewer.setAllChecked(false);
+				enableButtons();
+				setPageComplete(validatePage());
+			}
+		});
+		viewer.addCheckStateListener(new ICheckStateListener() {
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				enableButtons();
+				setPageComplete(validatePage());
 			}
 		});
 	}
@@ -187,7 +201,13 @@ abstract class AbstractImportExportPage extends WizardPage {
 	protected void updateViewer() {
 		packColumns();
 		viewer.setAllChecked(true);
+		enableButtons();
 		setPageComplete(validatePage());
+	}
+
+	private void enableButtons() {
+		checkAllButton.setEnabled(viewer.getTable().getItemCount() > viewer.getCheckedElements().length);
+		checkNoneButton.setEnabled(viewer.getCheckedElements().length > 0);
 	}
 
 	@Override

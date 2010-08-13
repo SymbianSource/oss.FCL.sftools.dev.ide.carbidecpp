@@ -44,9 +44,8 @@ public class ImportWizard extends Wizard implements IImportWizard {
 	@Override
 	public boolean performFinish() {
 		try {
-			ImportExportData data = importPage.getData();
 			getContainer().run(true, true, new FeatureInstallOperation(
-					data.getURIs(), data.getFeatureInfos(), importPage.getWantsOriginalVersions()));
+					importPage.getURIs(), importPage.getFeatureInfos(), importPage.getWantsOriginalVersions()));
 		} catch (InvocationTargetException e) {
 			Throwable cause = e.getCause();
 			if (cause instanceof CoreException) {
