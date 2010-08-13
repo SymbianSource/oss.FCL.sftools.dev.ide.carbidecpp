@@ -52,7 +52,7 @@ public interface ISBSv1BuildContext extends ISymbianBuildContext {
 	
 	/**
 	 * Set the build arguments info for SBSv2 build arguments. This only sets values in memory, does
-	 * not write settings to disk. See 
+	 * not write settings to disk. 
 	 * @return IBuildArgumentsInfo instance, never null
 	 * @deprecated
 	 */
