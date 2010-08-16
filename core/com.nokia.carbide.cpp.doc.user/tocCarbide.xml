@@ -214,7 +214,7 @@
         <topic label="ROM Image"					href="html/projects/launch/page_rom_image.htm" />
         <topic label="ROM Log File"					href="html/projects/launch/page_rom_log.htm" />
         <topic label="Sources"						href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_srce.htm" />
-        <topic label="x86 Exceptions"				href="html/projects/launch/page_exceptions.htm" />
+        <topic label="x86 Exceptions"				href="html/projects/launch/page_x86_exceptions.htm" />
       </topic>
       <topic label="Customizing launch configurations"	href="html/projects/launch/customizing_launch_configs.htm" />
       <topic label="Filtering launch configurations"		href="html/projects/launch/launch_configuration_filter.htm" />
