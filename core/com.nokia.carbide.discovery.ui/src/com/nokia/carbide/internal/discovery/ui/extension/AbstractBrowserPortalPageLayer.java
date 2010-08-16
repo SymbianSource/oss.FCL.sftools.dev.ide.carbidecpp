@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -34,6 +35,8 @@ import org.eclipse.swt.browser.LocationEvent;
 import org.eclipse.swt.browser.OpenWindowListener;
 import org.eclipse.swt.browser.ProgressAdapter;
 import org.eclipse.swt.browser.ProgressEvent;
+import org.eclipse.swt.browser.StatusTextEvent;
+import org.eclipse.swt.browser.StatusTextListener;
 import org.eclipse.swt.browser.WindowEvent;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -85,6 +88,12 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				}
 				@Override
 				public void completed(ProgressEvent event) {
+					getStatusLineManager().setMessage(null);
+					if (!failedConnect && !browserHasURL()) {
+						displayCannotFindServerPage();
+						Activator.logError("Could not display URL in browser: " + getURL().toExternalForm(), null);
+						failedConnect = true;
+					}
 					setLoading(false);
 					NavigationActionBar.this.updater.updateAll();
 				}
@@ -93,6 +102,12 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				@Override
 				public void open(WindowEvent event) {
 					event.browser = browser;
+				}
+			});
+			browser.addStatusTextListener(new StatusTextListener() {
+				@Override
+				public void changed(StatusTextEvent event) {
+					getStatusLineManager().setMessage(event.text);
 				}
 			});
 		}
@@ -126,11 +141,17 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 		}
 	}
 
+	protected static final String HTML_BODY_HEADER = "<html><head><title></title><style type=\"text/css\">div.item {font-family : sans-serif; font-size : 12px; margin-bottom : 16px;} div.itemBody {padding-top : 3px; padding-bottom : 3px;} div.itemInfo {background-color : #EEEEEE; color : #333333;} div.feedflare {display: none;} a.itemTitle {font-size : 12px; font-weight : bold;} a.markItemRead {font-size : 10px; color : #333333;}</style></head><body>"; //$NON-NLS-1$
+	protected static final String HTML_BODY_FOOTER = "</body></html>"; //$NON-NLS-1$
+
 	protected Browser browser;
 	protected NavigationActionBar actionBar;
+	private IEditorPart part;
+	private boolean failedConnect;
 
 	@Override
 	public Control createControl(Composite parent, IEditorPart part) {
+		this.part = part;
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
 		composite.setLayout(new FillLayout());
@@ -167,9 +188,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				public void run() {
 					URL url = getURL();
 					if (url != null) {
-						if (!browser.setUrl(url.toString())) {
-							browser.redraw();
-						}
+						browser.setUrl(url.toString());
 					}
 					actionBar.hookBrowser();
 					actionBar.update();
@@ -227,7 +246,15 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 			@Override
 			public void run() {
 				if (browser != null) {
-					browser.refresh();
+					if (failedConnect) {
+						URL url = getURL();
+						if (url != null) {
+							browser.setUrl(url.toString());
+							failedConnect = false;
+						}
+					}
+					else
+						browser.refresh();
 					actionBar.update();
 				}
 			}
@@ -294,5 +321,17 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 	protected boolean browserHasURL() {
 		String url = browser.getUrl();
 		return url.matches("^.*://.*"); //$NON-NLS-1$
+	}
+
+	protected void displayCannotFindServerPage() {
+		StringBuilder sb = new StringBuilder(HTML_BODY_HEADER);
+		// if we want, we can add html here for failed connect case
+		sb.append(HTML_BODY_FOOTER);
+		browser.setText(sb.toString());
+		browser.redraw();
+	}
+	
+	private IStatusLineManager getStatusLineManager() {
+		return part.getEditorSite().getActionBars().getStatusLineManager();
 	}
 }

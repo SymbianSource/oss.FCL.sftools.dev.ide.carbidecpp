@@ -94,8 +94,6 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 		}
 	}
 	
-	private static final String HTML_BODY_HEADER = "<html><head><title></title><style type=\"text/css\">div.item {font-family : sans-serif; font-size : 12px; margin-bottom : 16px;} div.itemBody {padding-top : 3px; padding-bottom : 3px;} div.itemInfo {background-color : #EEEEEE; color : #333333;} div.feedflare {display: none;} a.itemTitle {font-size : 12px; font-weight : bold;} a.markItemRead {font-size : 10px; color : #333333;}</style></head><body>"; //$NON-NLS-1$
-	private static final String HTML_BODY_FOOTER = "</body></html>"; //$NON-NLS-1$
 	private static final int MAX_ELEM_LEN = 256;
 	
 	private Rss rss;
