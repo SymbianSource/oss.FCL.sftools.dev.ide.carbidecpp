@@ -3,7 +3,9 @@
 <cheatsheet
       title="Customize Code Styles">
 `	<intro>
-		To control the automatic formatting of your source code, use the Code Style preference panel.
+		<description>
+			To control the automatic formatting of your source code, use the Code Style preference panel.
+		</description>
 	</intro>
 	<item
        title="Customize code styles">

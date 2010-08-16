@@ -47,8 +47,8 @@
 		 <cheatsheet
            composite="false"
 		   category="com.nokia.carbide.how_to.cheatsheets"
-           contentFile="html/cheatsheets/how_to_customize_cmd_groups.xml"
-           id="com.nokia.carbide.cpp.doc.user.customize_cmd_groups"
+           contentFile="html/cheatsheets/how_to_customize_cmd_group.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_cmd_group"
            name="Customize Toolbars and Menus"/>
 
 		 <cheatsheet
@@ -68,15 +68,15 @@
 		 <cheatsheet
            composite="false"
 		   category="com.nokia.carbide.how_to.cheatsheets"
-           contentFile="html/cheatsheets/how_to_customize_key_cmds.xml"
-           id="com.nokia.carbide.cpp.doc.user.customize_key_cmds"
+           contentFile="html/cheatsheets/how_to_customize_key_commands.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_key_commands"
            name="Customize Key Commands"/>
 
 		 <cheatsheet
            composite="false"
 		   category="com.nokia.carbide.how_to.cheatsheets"
-           contentFile="html/cheatsheets/how_to_customize_share_settings.xml"
-           id="com.nokia.carbide.cpp.doc.user.customize_share_settings"
+           contentFile="html/cheatsheets/how_to_customize_export_settings.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_export_settings"
            name="Share my Settings..."/>
 
    </extension>
