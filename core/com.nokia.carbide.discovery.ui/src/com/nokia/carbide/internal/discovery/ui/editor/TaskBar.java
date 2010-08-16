@@ -64,7 +64,7 @@ class TaskBar extends RoundedCornerComposite {
 				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		createTitle(actionBar);
 		createActions(actionBar);
-		RowLayoutFactory.swtDefaults().type(SWT.VERTICAL).margins(10, 10).extendedMargins(5, 5, 5, 10).fill(true).wrap(false).applyTo(this);
+		RowLayoutFactory.swtDefaults().type(SWT.VERTICAL).margins(5, 5).extendedMargins(7, 7, 7, 7).fill(true).wrap(false).applyTo(this);
 	}
 
 	private void createTitle(IActionBar actionBar) {

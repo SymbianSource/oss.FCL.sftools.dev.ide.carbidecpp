@@ -167,8 +167,9 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				public void run() {
 					URL url = getURL();
 					if (url != null) {
-						browser.setUrl(url.toString());
-						actionBar.setLoading(true);
+						if (!browser.setUrl(url.toString())) {
+							browser.redraw();
+						}
 					}
 					actionBar.hookBrowser();
 					actionBar.update();

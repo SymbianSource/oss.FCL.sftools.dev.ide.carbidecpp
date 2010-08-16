@@ -26,8 +26,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.swt.widgets.Display;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
@@ -109,14 +114,24 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 	}
 
 	protected void readRSS() {
-		URL url = getURL();
+		final URL url = getURL();
 		if (url != null) {
-			try {
-				rss = SimpleRSSReader.readRSS(url);
-				displayRSS();
-			} catch (Exception e) {
-				Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
-			}
+			Job j = new Job("Getting RSS feed") {
+
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					try {
+						rss = SimpleRSSReader.readRSS(url);
+						displayRSS();
+					} catch (Exception e) {
+						Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
+					}
+					return Status.OK_STATUS;
+				}
+				
+			};
+			j.setUser(true);
+			j.schedule();
 		}
 	}
 	
@@ -152,7 +167,13 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 			buf.append("</ul>"); //$NON-NLS-1$
 		}
 		buf.append(HTML_BODY_FOOTER);
-		browser.setText(buf.toString());
+		final String s = buf.toString();
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				browser.setText(s);
+			}
+		});
 	}
 
 	private String clean(String s) {
