@@ -16,7 +16,7 @@
 */
 package com.nokia.carbide.cdt.builder.extension;
 
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 
 /**
  * Allows those using the Carbide Preferences Modifier extension point to to read
@@ -43,7 +43,7 @@ public interface ICarbidePrefsModifier {
 	 * @return The String value. Or null if the the pref id is unknown or no longer in use.
 	 * @since 3.0
 	 */
-	String getValue(ISymbianBuildContext newParam, String prefID);
+	String getConfigurationValue(ICarbideBuildConfiguration newParam, String prefID);
 	
 	/**
 	 * Set the project configuration setting by ID.
@@ -52,5 +52,15 @@ public interface ICarbidePrefsModifier {
 	 * @param prefID
 	 * @since 3.0
 	 */
-	void setValue(ISymbianBuildContext context, String arg, String prefID);
+	void setConfigurationValue(ICarbideBuildConfiguration context, String arg, String prefID);
+	
+	/**
+	 * Test whether or not a particular prefID is supported for read/write.
+	 * The ID tests support first by the ID, then, if configuration specific, by the ISymbianBuildContext
+	 * @param config
+	 * @param prefID
+	 * @return true if the prefID is supported, false otherwise.
+	 */
+	boolean isSupportedConfigurationPrefId(ICarbideBuildConfiguration config, String prefID);
+	
 }

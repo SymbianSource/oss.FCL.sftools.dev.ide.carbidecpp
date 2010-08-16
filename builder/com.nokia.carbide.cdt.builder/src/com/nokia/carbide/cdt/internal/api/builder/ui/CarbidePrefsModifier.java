@@ -17,17 +17,19 @@
 package com.nokia.carbide.cdt.internal.api.builder.ui;
 
 import com.nokia.carbide.cdt.builder.extension.ICarbidePrefsModifier;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cpp.internal.api.sdk.BuildArgumentsInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 
 public class CarbidePrefsModifier implements ICarbidePrefsModifier {
 
-	public String getValue(ISymbianBuildContext context,  String prefID) {
+	@SuppressWarnings("deprecation")
+	public String getConfigurationValue(ICarbideBuildConfiguration config,  String prefID) {
 		
 		if (prefID.equals(ICarbidePrefsModifier.ABLD_BUILD_ARG_SETTING)){
-			if (context instanceof ISBSv1BuildContext){
-				BuildArgumentsInfo info = ((ISBSv1BuildContext)context).getBuildArgumentsInfoCopy();
+			if (config.getBuildContext() instanceof ISBSv1BuildContext){
+				BuildArgumentsInfo info = ((ISBSv1BuildContext)config.getBuildContext()).getBuildArgumentsInfoCopy();
 				return info.getAbldBuildArgs();
 			}
 		}
@@ -35,15 +37,30 @@ public class CarbidePrefsModifier implements ICarbidePrefsModifier {
 		return null;
 	}
 
-	public void setValue(ISymbianBuildContext context, String arg,  String prefID) {
+	@SuppressWarnings("deprecation")
+	public void setConfigurationValue(ICarbideBuildConfiguration config, String arg,  String prefID) {
 		
 		if (prefID.equals(ICarbidePrefsModifier.ABLD_BUILD_ARG_SETTING)){
-			if (context instanceof ISBSv1BuildContext){
-				BuildArgumentsInfo info = ((ISBSv1BuildContext)context).getBuildArgumentsInfoCopy();
+			if (config.getBuildContext() instanceof ISBSv1BuildContext){
+				BuildArgumentsInfo info = ((ISBSv1BuildContext)config.getBuildContext()).getBuildArgumentsInfoCopy();
 				info.abldBuildArgs = arg;
-				((ISBSv1BuildContext)context).setBuildArgumentsInfo(info);
+				((ISBSv1BuildContext)config.getBuildContext()).setBuildArgumentsInfo(info);
 			}
 		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public boolean isSupportedConfigurationPrefId(
+			ICarbideBuildConfiguration config, String prefID) {
+
+		if (prefID.equals(ICarbidePrefsModifier.ABLD_BUILD_ARG_SETTING)){
+			if (config.getBuildContext() instanceof ISBSv2BuildContext){
+				return false; // SBSv1 only
+			}
+			return true;
+		}
+		
+		return false;
 	}
 
 }

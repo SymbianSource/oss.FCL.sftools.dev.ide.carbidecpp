@@ -68,26 +68,27 @@ public class TestCarbideProjectSettingsModifier extends TestCase {
         // get 
 		ICarbidePrefsModifier extProvider = CarbideBuilderPlugin.getBuildManager().getPrefsModifier();
         
+		// this will be false once abld is deprecated
+		assertTrue(extProvider.isSupportedConfigurationPrefId(cpi.getDefaultConfiguration(), ICarbidePrefsModifier.ABLD_BUILD_ARG_SETTING));
+		
+		assertFalse(extProvider.isSupportedConfigurationPrefId(cpi.getDefaultConfiguration(), "bad_id"));
+		
         assertNotNull(extProvider); // will be null when SBSv1 support is removed
         
-		String original = extProvider.getValue(cpi.getDefaultConfiguration().getBuildContext(), ABLD_BUILD_ARG_SETTING);
+		String original = extProvider.getConfigurationValue(cpi.getDefaultConfiguration(), ABLD_BUILD_ARG_SETTING);
 		assertTrue(original.equals(""));
 
-		extProvider.setValue(cpi.getDefaultConfiguration()
-				.getBuildContext(), "FOO", ABLD_BUILD_ARG_SETTING);
+		extProvider.setConfigurationValue(cpi.getDefaultConfiguration(), "FOO", ABLD_BUILD_ARG_SETTING);
 
 		cpi.getDefaultConfiguration().saveConfiguration(false);
 
-		String test = extProvider.getValue(cpi.getDefaultConfiguration()
-				.getBuildContext(), ABLD_BUILD_ARG_SETTING);
+		String test = extProvider.getConfigurationValue(cpi.getDefaultConfiguration(), ABLD_BUILD_ARG_SETTING);
 		assertTrue(test.equals("FOO"));
 
-		extProvider.setValue(cpi.getDefaultConfiguration()
-				.getBuildContext(), original, ABLD_BUILD_ARG_SETTING);
+		extProvider.setConfigurationValue(cpi.getDefaultConfiguration(), original, ABLD_BUILD_ARG_SETTING);
 
 		cpi.getDefaultConfiguration().saveConfiguration(false);
-		test = extProvider.getValue(cpi.getDefaultConfiguration()
-				.getBuildContext(), ABLD_BUILD_ARG_SETTING);
+		test = extProvider.getConfigurationValue(cpi.getDefaultConfiguration(), ABLD_BUILD_ARG_SETTING);
 		assertTrue(original.equals(test));
 	}
 	
