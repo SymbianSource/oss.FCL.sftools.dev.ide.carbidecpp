@@ -24,26 +24,33 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
  * 
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * @deprecated - abld support is deprecated
+ * since 3.0
  *
  */
 public interface ICarbidePrefsModifier {
 	
 	/**
-	 * Get the abld build setting from the Carbide build config arguments preference.
-	 * This only works with the SBSv1 buider and has no effect on other builders.
-	 * @param newParam
-	 * @return The String value. Or null if the the pref is not supported under the current context.
-	 * @deprecated- abld support is deprecated
+	 * @deprecated - limited support for abld, String will be removed in the future so reference
+	 * with your own local String.
+	 * @since 3.0
 	 */
-	String getAbdlBuildArg(ISymbianBuildContext newParam);
+	final String ABLD_BUILD_ARG_SETTING = "ABLD_BUILD_ARG_SETTING";
 	
 	/**
-	 * Set the abld build setting from the Carbide build config arguments preference.
-	 * This only works with the SBSv1 buider and has no effect on other builders.
-	 * @param context
-	 * @param arg
-	 * @deprecated - abld support is deprecated
+	 * Get the project configuration setting by ID.
+	 * @param ISymbianBuildContext
+	 * @param prefID
+	 * @return The String value. Or null if the the pref id is unknown or no longer in use.
+	 * @since 3.0
 	 */
-	void setAbldBuildArg(ISymbianBuildContext context, String arg);
+	String getValue(ISymbianBuildContext newParam, String prefID);
+	
+	/**
+	 * Set the project configuration setting by ID.
+	 * @param ISymbianBuildContext
+	 * @param String - the argument value
+	 * @param prefID
+	 * @since 3.0
+	 */
+	void setValue(ISymbianBuildContext context, String arg, String prefID);
 }

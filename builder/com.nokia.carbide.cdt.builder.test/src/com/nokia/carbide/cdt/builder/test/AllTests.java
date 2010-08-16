@@ -36,6 +36,7 @@ public class AllTests {
 		suite.addTestSuite(TestProjectExportsGatherer.class);
 		suite.addTestSuite(BuilderPrefConstantsTest.class);
 		suite.addTestSuite(TestEnvironmentModifier.class);
+		suite.addTestSuite(TestCarbideProjectSettingsModifier.class);
 		suite.addTestSuite(TestEpocEngineHelper.class);
 		suite.addTestSuite(SBSv2QueryTests.class);
 		

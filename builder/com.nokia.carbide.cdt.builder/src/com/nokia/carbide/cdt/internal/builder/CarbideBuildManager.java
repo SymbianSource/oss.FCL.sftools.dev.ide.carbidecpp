@@ -46,9 +46,11 @@ import org.eclipse.core.runtime.jobs.Job;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.ICarbideBuildManager;
+import com.nokia.carbide.cdt.builder.extension.ICarbidePrefsModifier;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
+import com.nokia.carbide.cdt.internal.api.builder.ui.CarbidePrefsModifier;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -70,9 +72,15 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 	private Map<IProject, ICarbideProjectInfo> projectInfoMap = new HashMap<IProject, ICarbideProjectInfo>();
 	private MultiResourceChangeListenerDispatcher resourceChangedListener = new MultiResourceChangeListenerDispatcher();
 	
+	ICarbidePrefsModifier clientPrefsModifier;
+	
 	
 	public CarbideBuildManager() {
 		SDKCorePlugin.getSDKManager().addInstalledSdkChangeListener(this);
+		
+		if (clientPrefsModifier == null){
+			clientPrefsModifier = new CarbidePrefsModifier();
+		}
 	}
 	
 	public boolean isCarbideProject(IProject project) {
@@ -406,6 +414,10 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 //				}
 //			}
 		}
+	}
+	
+	public ICarbidePrefsModifier getPrefsModifier(){
+		return clientPrefsModifier;
 	}
 
 }

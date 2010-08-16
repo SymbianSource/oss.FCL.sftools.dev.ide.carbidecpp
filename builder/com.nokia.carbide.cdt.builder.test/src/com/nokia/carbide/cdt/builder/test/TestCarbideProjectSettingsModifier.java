@@ -17,29 +17,19 @@
 package com.nokia.carbide.cdt.builder.test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import junit.framework.TestCase;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.dom.IPDOMManager;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Platform;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.extension.ICarbidePrefsModifier;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.cpp.internal.api.utils.core.Check;
-import com.nokia.cpp.internal.api.utils.core.Logging;
 
 
 public class TestCarbideProjectSettingsModifier extends TestCase {
@@ -48,7 +38,7 @@ public class TestCarbideProjectSettingsModifier extends TestCase {
 	
 	protected static final String PROJECT_NAME = "test-prj-modifier-project";
 	
-
+	private static final String ABLD_BUILD_ARG_SETTING = "ABLD_BUILD_ARG_SETTING";
 	
 	// First thing we have to do is actually create a project in a workspace...
 	protected void setUp() throws Exception {
@@ -75,70 +65,31 @@ public class TestCarbideProjectSettingsModifier extends TestCase {
         ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
         assertNotNull(cpi);
         
-        // get registry
-        
-		ICarbidePrefsModifier extProvider = checkForFeatureExtension();
+        // get 
+		ICarbidePrefsModifier extProvider = CarbideBuilderPlugin.getBuildManager().getPrefsModifier();
         
         assertNotNull(extProvider); // will be null when SBSv1 support is removed
         
-		String original = extProvider.getAbdlBuildArg(cpi
-				.getDefaultConfiguration().getBuildContext());
+		String original = extProvider.getValue(cpi.getDefaultConfiguration().getBuildContext(), ABLD_BUILD_ARG_SETTING);
 		assertTrue(original.equals(""));
 
-		extProvider.setAbldBuildArg(cpi.getDefaultConfiguration()
-				.getBuildContext(), "FOO");
+		extProvider.setValue(cpi.getDefaultConfiguration()
+				.getBuildContext(), "FOO", ABLD_BUILD_ARG_SETTING);
 
 		cpi.getDefaultConfiguration().saveConfiguration(false);
 
-		String test = extProvider.getAbdlBuildArg(cpi.getDefaultConfiguration()
-				.getBuildContext());
+		String test = extProvider.getValue(cpi.getDefaultConfiguration()
+				.getBuildContext(), ABLD_BUILD_ARG_SETTING);
 		assertTrue(test.equals("FOO"));
 
-		extProvider.setAbldBuildArg(cpi.getDefaultConfiguration()
-				.getBuildContext(), original);
+		extProvider.setValue(cpi.getDefaultConfiguration()
+				.getBuildContext(), original, ABLD_BUILD_ARG_SETTING);
 
 		cpi.getDefaultConfiguration().saveConfiguration(false);
-		test = extProvider.getAbdlBuildArg(cpi.getDefaultConfiguration()
-				.getBuildContext());
+		test = extProvider.getValue(cpi.getDefaultConfiguration()
+				.getBuildContext(), ABLD_BUILD_ARG_SETTING);
 		assertTrue(original.equals(test));
 	}
 	
-	@SuppressWarnings("deprecation")
-	public static ICarbidePrefsModifier checkForFeatureExtension() {
-		
-			ICarbidePrefsModifier testExt = null;
 
-			IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
-			IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint("com.nokia.carbide.cdt.builder.carbideProjectPrefModifier"); //$NON-NLS-1$
-			IExtension[] extensions = extensionPoint.getExtensions();
-			
-			for (int i = 0; i < extensions.length; i++) {
-				IExtension extension = extensions[i];
-				IConfigurationElement[] elements = extension.getConfigurationElements();
-				Check.checkContract(elements.length == 1);
-				IConfigurationElement element = elements[0];
-				
-				boolean failed = false;
-				try {
-					Object extObject = element.createExecutableExtension("class"); //$NON-NLS-1$
-					if (extObject instanceof ICarbidePrefsModifier) {
-						testExt = (ICarbidePrefsModifier)extObject;
-						break;
-					} else {
-						failed = true;
-					}
-				} 
-				catch (CoreException e) {
-					failed = true;
-				}
-				
-				if (failed) {
-					CarbideBuilderPlugin.log(Logging.newStatus(CarbideBuilderPlugin.getDefault(), 
-							IStatus.ERROR,
-							"Unable to load com.nokia.carbide.cdt.builder.carbideProjectPrefModifier extension from " + extension.getContributor().getName()));
-				}
-			}
-		
-		return testExt;
-	}
 }

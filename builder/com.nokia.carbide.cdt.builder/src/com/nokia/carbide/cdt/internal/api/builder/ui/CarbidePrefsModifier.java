@@ -23,27 +23,26 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public class CarbidePrefsModifier implements ICarbidePrefsModifier {
 
-	/**
-	 * @deprecated
-	 */
-	public String getAbdlBuildArg(ISymbianBuildContext context) {
+	public String getValue(ISymbianBuildContext context,  String prefID) {
 		
-		if (context instanceof ISBSv1BuildContext){
-			BuildArgumentsInfo info = ((ISBSv1BuildContext)context).getBuildArgumentsInfoCopy();
-			return info.getAbldBuildArgs();
+		if (prefID.equals(ICarbidePrefsModifier.ABLD_BUILD_ARG_SETTING)){
+			if (context instanceof ISBSv1BuildContext){
+				BuildArgumentsInfo info = ((ISBSv1BuildContext)context).getBuildArgumentsInfoCopy();
+				return info.getAbldBuildArgs();
+			}
 		}
 		
 		return null;
 	}
 
-	/**
-	 * @deprecated
-	 */
-	public void setAbldBuildArg(ISymbianBuildContext context, String arg) {
-		if (context instanceof ISBSv1BuildContext){
-			BuildArgumentsInfo info = ((ISBSv1BuildContext)context).getBuildArgumentsInfoCopy();
-			info.abldBuildArgs = arg;
-			((ISBSv1BuildContext)context).setBuildArgumentsInfo(info);
+	public void setValue(ISymbianBuildContext context, String arg,  String prefID) {
+		
+		if (prefID.equals(ICarbidePrefsModifier.ABLD_BUILD_ARG_SETTING)){
+			if (context instanceof ISBSv1BuildContext){
+				BuildArgumentsInfo info = ((ISBSv1BuildContext)context).getBuildArgumentsInfoCopy();
+				info.abldBuildArgs = arg;
+				((ISBSv1BuildContext)context).setBuildArgumentsInfo(info);
+			}
 		}
 	}
 

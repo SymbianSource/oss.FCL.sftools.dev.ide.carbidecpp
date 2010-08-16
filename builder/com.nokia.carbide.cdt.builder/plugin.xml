@@ -322,6 +322,5 @@
    </extension>
    
    <extension-point id="environmentModifier" name="Environment Modifier" schema="schema/environmentModifier.exsd"/>
-   <extension-point id="carbideProjectPrefModifier" name="Carbide Preferences Modifier" schema="schema/carbideProjectPrefModifier.exsd"/>
 
 </plugin>
