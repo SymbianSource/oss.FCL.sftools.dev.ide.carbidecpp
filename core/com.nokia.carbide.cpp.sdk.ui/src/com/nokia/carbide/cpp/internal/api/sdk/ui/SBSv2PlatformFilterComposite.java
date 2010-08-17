@@ -51,6 +51,7 @@ import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 /**
  * @since 1.4
@@ -294,13 +295,20 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	public void setDefaults(){
 		initTable();
 		for (TableItem item : buildAliasTableViewer.getTable().getItems()) {
-			if (item.getText().toLowerCase().equals("armv5_udeb")  || 
-				item.getText().toLowerCase().equals("armv5_urel") ||
-				item.getText().toLowerCase().equals("armv5_udeb_gcce")  || 
-				item.getText().toLowerCase().equals("armv5_urel_gcce") ||
-				item.getText().toLowerCase().equals("winscw_udeb")  ||
-				item.getText().toLowerCase().equals("winscw_urel")) {
-				buildAliasTableViewer.setChecked(item.getData(), true);
+			String tableItemText = item.getText().toLowerCase();
+			if (tableItemText.equals("armv5_udeb")  || 
+				tableItemText.equals("armv5_urel") ||
+				tableItemText.equals("armv5_udeb_gcce")  || 
+				tableItemText.equals("armv5_urel_gcce") ||
+				tableItemText.equals("winscw_udeb")  ||
+				tableItemText.equals("winscw_urel")) {
+				
+				if (HostOS.IS_UNIX && tableItemText.startsWith("winscw"))
+					;  // ignore winscw as an option for Unix
+				else
+					buildAliasTableViewer.setChecked(item.getData(), true);
+				
+				
 			} else {
 				buildAliasTableViewer.setChecked(item.getData(), false);
 			}

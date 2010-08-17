@@ -35,6 +35,7 @@ import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
 import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
 import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 import com.nokia.carbide.internal.api.templatewizard.ui.TemplateWizard;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 /**
  * Wizard for creating Symbian OS C++ project
@@ -52,13 +53,15 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 		setTemplateFilter(new TemplateSDKsFilter());
 		setWindowTitle(Messages.getString("NewSymbianOSCppProjectWizard.WindowTitle")); //$NON-NLS-1$
 		
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
-			if (sdkMgr instanceof ISDKManagerInternal){
-				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
-				sdkMgrInternal.fireDevicesXMLChanged();
+		if (HostOS.IS_WIN32){
+			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
+				if (sdkMgr instanceof ISDKManagerInternal){
+					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
+					sdkMgrInternal.fireDevicesXMLChanged();
+				}
+				
 			}
-			
 		}
 	}
 

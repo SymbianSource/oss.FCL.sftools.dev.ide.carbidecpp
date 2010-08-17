@@ -117,4 +117,11 @@ public interface ISDKManager {
 	 */
 	public Version getSBSv2Version(boolean forceScan);
 	
+	/**
+	 * Retrieve the minimum supported version of SBSv2 for Carbide.c++
+	 * @return Version
+	 * @since 3.0
+	 */
+	public Version getMinimumSupportedSBSv2Version();
+	
 }

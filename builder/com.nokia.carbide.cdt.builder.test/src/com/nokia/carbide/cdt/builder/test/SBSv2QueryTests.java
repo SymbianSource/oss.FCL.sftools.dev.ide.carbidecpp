@@ -42,7 +42,7 @@ public class SBSv2QueryTests extends BaseTest {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		Version sbsVersion = ((SDKManager)SDKCorePlugin.getSDKManager()).getSBSv2Version(true);
+		Version sbsVersion = SDKCorePlugin.getSDKManager().getSBSv2Version(true);
 		if ((sbsVersion.getMajor() == 2 && sbsVersion.getMinor() < 15) ||
 			 sbsVersion.getMajor() < 2){
 			

@@ -67,6 +67,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetTreeNode;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 @SuppressWarnings("restriction")
@@ -148,12 +149,14 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		this.cpi = cpi;
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 		
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
-			if (sdkMgr instanceof ISDKManagerInternal){
-				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
-				sdkMgrInternal.fireDevicesXMLChanged();
-			}	
+		if (HostOS.IS_WIN32){
+			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
+				if (sdkMgr instanceof ISDKManagerInternal){
+					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
+					sdkMgrInternal.fireDevicesXMLChanged();
+				}	
+			}
 		}
 	}
 	

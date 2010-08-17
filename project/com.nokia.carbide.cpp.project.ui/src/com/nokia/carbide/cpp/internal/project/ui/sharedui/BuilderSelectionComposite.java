@@ -30,6 +30,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.project.ui.Messages;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage;
 
@@ -90,7 +91,7 @@ public class BuilderSelectionComposite extends Composite {
 				useSBSv2Builder = false;
 			}
 			else if (selection.equals(Messages.getString("NewProjectPage.sbsv2"))) { //$NON-NLS-1$
-				SDKManager sdkMgr = (SDKManager)SDKCorePlugin.getSDKManager();
+				ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 				// if SBSv2 is selected, make sure SBS bin directory exists
 				if (SBSv2Utils.getSBSBinDirectory() == null){
 					status = new Status(Status.ERROR, ProjectUIPlugin.PLUGIN_ID, "The Symbian Build System (sbs) cannot be found on the PATH. Carbide needs a valid SBS installation on the PATH to use the SBSv2 builder.");

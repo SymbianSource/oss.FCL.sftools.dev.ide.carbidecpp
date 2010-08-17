@@ -48,7 +48,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKCacheUtils;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Logging;
@@ -413,7 +413,7 @@ public class SBSv2QueryUtils {
 	}
 
 	private static boolean checkForMinimumRaptorVersion() throws SBSv2MinimumVersionException{
-		SDKManager sdkMgr = (SDKManager)SDKCorePlugin.getSDKManager();
+		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		Version sbsVers = sdkMgr.getSBSv2Version(false);
 		if (sbsVers.compareTo(sdkMgr.getMinimumSupportedSBSv2Version()) >= 0)
 			return true;

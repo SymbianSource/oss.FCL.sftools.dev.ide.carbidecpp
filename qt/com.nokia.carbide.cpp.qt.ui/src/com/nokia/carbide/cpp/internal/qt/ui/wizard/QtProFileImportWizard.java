@@ -48,6 +48,7 @@ import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.trolltech.qtcppproject.QtProject;
 import com.trolltech.qtcppproject.qmake.QMakeRunner;
 
@@ -66,11 +67,13 @@ public class QtProFileImportWizard extends Wizard implements IImportWizard {
 		setDialogSettings(section);
 		setNeedsProgressMonitor(true);
 		
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
-			if (sdkMgr instanceof ISDKManagerInternal){
-				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
-				sdkMgrInternal.fireDevicesXMLChanged();
+		if (HostOS.IS_WIN32){
+			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
+				if (sdkMgr instanceof ISDKManagerInternal){
+					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
+					sdkMgrInternal.fireDevicesXMLChanged();
+				}
 			}
 		}
 	}

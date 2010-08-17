@@ -23,6 +23,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.cdt.core,
  org.eclipse.ui.ide,
  com.trolltech.qtcppproject;bundle-version="1.6.0";resolution:=optional,
- com.nokia.cpp.utils.ui
+ com.nokia.cpp.utils.ui,
+ com.nokia.cpp.utils.core;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
