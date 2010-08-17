@@ -250,6 +250,10 @@ public class SBSv2Utils {
 	}
 	
 	private static boolean isSBSv1Supported() {
+		if (HostOS.IS_UNIX){
+			return false;
+		}
+		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		for (ISymbianSDK sdk : sdkMgr.getSDKList()) {
 			File abld = new File(sdk.getEPOCROOT(), "epoc32/tools/abld.pl"); //$NON-NLS-1$

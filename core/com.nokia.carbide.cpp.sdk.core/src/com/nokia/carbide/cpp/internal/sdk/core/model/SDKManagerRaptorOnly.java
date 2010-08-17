@@ -42,6 +42,8 @@ public class SDKManagerRaptorOnly extends AbstractSDKManager {
 	@Override
 	protected boolean doScanSDKs(IProgressMonitor monitor) {
 		
+		scanCarbideSDKCache();
+		
 		String message = SBSv2Utils.scanSBSv2();
 		if (message != null) {
 			reportError(message);

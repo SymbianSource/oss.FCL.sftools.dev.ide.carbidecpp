@@ -47,6 +47,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
 import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 public class BldInfImportWizard extends Wizard implements IImportWizard {
 	
@@ -67,10 +68,12 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 		setDefaultPageImageDescriptor(CarbideUIPlugin.getSharedImages().getImageDescriptor(ICarbideSharedImages.IMG_IMPORT_BLDINF_WIZARD_BANNER));
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
-			if (sdkMgr instanceof ISDKManagerInternal){
-				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
-				sdkMgrInternal.fireDevicesXMLChanged();
+		if (HostOS.IS_WIN32){
+			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
+				if (sdkMgr instanceof ISDKManagerInternal){
+					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
+					sdkMgrInternal.fireDevicesXMLChanged();
+				}
 			}
 		}
 	}
