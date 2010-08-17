@@ -13,7 +13,7 @@
 		</description>
 	</item>
 	
-	<item title="Define a Trace32 Launch Configuration" href="/com.nokia.carbide.cpp.doc.user/html/reference/wnd_Trace32_config.htm" >
+	<item title="Define a Launch Configuration" >
 		<description>
 		Define debug launch configurations for the selected project.
 		</description>
