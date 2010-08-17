@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -59,6 +60,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IExtensionFilter;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IToggleServicesTestingListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
@@ -119,6 +121,11 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		loadServiceExtensions();
 		loadConnectedServiceFactoryExtensions();
 		mapConnectionTypeToServices();
+		RemoteConnectionsActivator.getDefault().addToggleServicesTestingListener(new IToggleServicesTestingListener() {
+			public void servicesTestingToggled(boolean enabled) {
+				setShouldTestServices(enabled);
+			}
+		});
 	}
 
 	private void loadConnectedServiceFactoryExtensions() {
@@ -338,6 +345,9 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		fireConnectionAdded(connection);
 		
 		setLastConnectionId(connection.getIdentifier());
+		for (IConnectedService connectedService : connectedServices) {
+			connectedService.setEnabled(RemoteConnectionsActivator.getDefault().getShouldTestServices());
+		}
 	}
 	
 	private void ensureUniqueId(IConnection connection) {
@@ -689,5 +699,13 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 		if (id == null) 
 			return;
 		RemoteConnectionsActivator.getDefault().getPreferenceStore().setValue(LAST_CONNECTION_ID, id);
+	}
+
+	private void setShouldTestServices(boolean shouldTest) {
+		for (Entry<IConnection, List<IConnectedService>> entry : connectionToConnectedServices.entrySet()) {
+			for (IConnectedService connectedService : entry.getValue()) {
+				connectedService.setEnabled(shouldTest);
+			}	
+		}
 	}
 }

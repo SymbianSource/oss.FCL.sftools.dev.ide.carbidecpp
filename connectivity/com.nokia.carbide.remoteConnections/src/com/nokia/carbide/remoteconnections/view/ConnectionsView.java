@@ -89,6 +89,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConne
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.ToggleDiscoveryAgentAction;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
+import com.nokia.carbide.remoteconnections.internal.api.IToggleServicesTestingListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
@@ -110,6 +111,7 @@ public class ConnectionsView extends ViewPart {
 	private TreeViewer viewer;
 	private IConnectionsManagerListener connectionStoreChangedListener;
 	private IConnectionListener connectionListener;
+	private IToggleServicesTestingListener toggleServicesTestingListener;
 	private Map<IConnectedService, IStatusChangedListener> serviceToListenerMap;
 	private Map<IConnection2, IConnectionStatusChangedListener> connectionToListenerMap;
 	private List<Action> actions;
@@ -131,6 +133,7 @@ public class ConnectionsView extends ViewPart {
 	private static final String DELETE_ACTION = "ConnectionsView.delete"; //$NON-NLS-1$
 	private static final String HELP_ACTION = "ConnectionsView.help"; //$NON-NLS-1$
 	private static final String SET_CURRENT_ACTION = "ConnectionsView.makeCurrent"; //$NON-NLS-1$
+	private static final String TOGGLE_SERVICES_ACTION = "ConnectionsView.toggleServices"; //$NON-NLS-1$
 	private KeyAdapter keyListener;
 	private boolean isDisposed;
 
@@ -175,7 +178,6 @@ public class ConnectionsView extends ViewPart {
 				};
 				connectedService.addStatusChangedListener(statusChangedListener);
 				serviceToListenerMap.put(connectedService, statusChangedListener);
-				connectedService.setEnabled(true);
 				serviceNodes.add(treeNode);
 			}
 			for (TreeNode serviceNode : serviceNodes) {
@@ -456,7 +458,8 @@ public class ConnectionsView extends ViewPart {
 		@Override
 		public boolean isEnabled() {
 			IConnectedService connectedService = getSelectedConnectedService();
-			return connectedService != null && connectedService.getService().isTestable();
+			return connectedService != null && connectedService.getService().isTestable() &&
+				RemoteConnectionsActivator.getDefault().getShouldTestServices();
 		}
 	}
 
@@ -533,10 +536,12 @@ public class ConnectionsView extends ViewPart {
 						wizard.open(getViewSite().getShell());
 					}
 					else if (value instanceof IConnectedService) {
-						IConnectedService connectedService = (IConnectedService) value;
-						connectedService.setEnabled(true);
-						connectedService.testStatus();
-						((EnableConnectedServiceAction) getAction(ENABLE_SERVICE_ACTION)).updateLabel();
+						if (RemoteConnectionsActivator.getDefault().getShouldTestServices()) {
+							IConnectedService connectedService = (IConnectedService) value;
+							connectedService.setEnabled(true);
+							connectedService.testStatus();
+							((EnableConnectedServiceAction) getAction(ENABLE_SERVICE_ACTION)).updateLabel();
+						}
 					}
 				}
 			}
@@ -690,6 +695,7 @@ public class ConnectionsView extends ViewPart {
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) {
+		manager.add(getAction(TOGGLE_SERVICES_ACTION));
 		manager.add(getAction(REFRESH_ACTION));
 		manager.add(getAction(NEW_ACTION));
 		manager.add(getAction(EDIT_ACTION));
@@ -778,6 +784,7 @@ public class ConnectionsView extends ViewPart {
 		};
 		action.setAccelerator(SWT.F5);
 		action.setId(REFRESH_ACTION);
+		action.setEnabled(RemoteConnectionsActivator.getDefault().getShouldTestServices());
 		actions.add(action);
 		
 		action = new Action(Messages.getString("ConnectionsView.DeleteActionLabel"),  //$NON-NLS-1$
@@ -861,10 +868,31 @@ public class ConnectionsView extends ViewPart {
 		actions.add(action);
 		connectionSelectedActions.add(action);		
 		
+		action = new Action(Messages.getString("ConnectionsView.ToggleServicesLabel"), IAction.AS_CHECK_BOX) { //$NON-NLS-1$
+			public void setChecked(boolean checked) {
+				if (isChecked() != checked) {
+					super.setChecked(checked);
+					RemoteConnectionsActivator.getDefault().setShouldTestServices(checked);
+				}
+			};
+		};
+		action.setImageDescriptor(SERVICE_TEST_IMGDESC);
+		action.setId(TOGGLE_SERVICES_ACTION);
+		action.setChecked(RemoteConnectionsActivator.getDefault().getShouldTestServices());
+		actions.add(action);
+		
 		enableConnectionSelectedActions(false);
 		enableServiceSelectedActions(false);
 		
 		makeToggleDiscoveryAgentActions();
+
+		toggleServicesTestingListener = new IToggleServicesTestingListener() {
+			public void servicesTestingToggled(boolean enabled) {
+				getAction(TOGGLE_SERVICES_ACTION).setChecked(enabled);
+				getAction(REFRESH_ACTION).setEnabled(enabled);
+			}
+		};
+		RemoteConnectionsActivator.getDefault().addToggleServicesTestingListener(toggleServicesTestingListener);
 	}
 	
 	private void makeToggleDiscoveryAgentActions() {
@@ -931,24 +959,12 @@ public class ConnectionsView extends ViewPart {
 		connectionToListenerMap.clear();
 	}
 	
-	private void disableAllConnectedServices() {
-		Collection<IConnection> connections = 
-			Registry.instance().getConnections();
-		for (IConnection connection : connections) {
-			Collection<IConnectedService> connectedServicesForConnection = 
-				Registry.instance().getConnectedServices(connection);
-			for (IConnectedService connectedService : connectedServicesForConnection) {
-				connectedService.setEnabled(false);
-			}
-		}
-	}
-	
 	@Override
 	public void dispose() {
 		removeStatusListeners();
 		Registry.instance().removeConnectionStoreChangedListener(connectionStoreChangedListener);
 		Registry.instance().removeConnectionListener(connectionListener);
-		disableAllConnectedServices();
+		RemoteConnectionsActivator.getDefault().removeToggleServicesTestingListener(toggleServicesTestingListener);
 		isDisposed = true;
 		super.dispose();
 	}

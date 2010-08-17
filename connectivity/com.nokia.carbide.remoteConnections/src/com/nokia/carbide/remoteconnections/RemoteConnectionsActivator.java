@@ -27,6 +27,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -44,6 +45,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent.IPrerequisiteStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IStatusDisplay;
+import com.nokia.carbide.remoteconnections.internal.api.IToggleServicesTestingListener;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.DeviceDiscoveryPrequisiteErrorDialog;
 import com.nokia.carbide.remoteconnections.internal.ui.StatusDisplay;
@@ -103,15 +105,18 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 
 	private Collection<IDeviceDiscoveryAgent> discoveryAgents;
 	private ListenerList<IDiscoveryAgentsLoadedListener> listeners;
+	private ListenerList<IToggleServicesTestingListener> toggleServicesListeners;
 
 	private static final String IGNORE_AGENT_LOAD_ERRORS_KEY = "ignoreAgentLoadErrors"; //$NON-NLS-1$
 	private static final String AGENT_STATE_KEY_PREFIX = "agentState."; //$NON-NLS-1$
+	private static final String SHOULD_TEST_SERVICES_PREF_ID = "shouldTestServices"; //$NON-NLS-1$
 
 	/**
 	 * The constructor
 	 */
 	public RemoteConnectionsActivator() {
 		listeners = new ListenerList<IDiscoveryAgentsLoadedListener>();
+		toggleServicesListeners = new ListenerList<IToggleServicesTestingListener>();
 	}
  
 	public void start(BundleContext context) throws Exception {
@@ -120,7 +125,8 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 		Registry instance = Registry.instance();
 		instance.loadExtensions();
 		instance.loadConnections();
-
+		fireToggleServicesTestingListener(getShouldTestServices());
+		
 		new WhenWorkbenchIsVisibleThread(new Runnable() {
 			public void run() {
 				if (!ignoreAgentLoadErrors())
@@ -343,4 +349,38 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 			listener.agentsAreLoaded();
 		}
 	}
+	
+	public boolean getShouldTestServices() {
+		IEclipsePreferences eclipsePreferences = new InstanceScope().getNode(PLUGIN_ID);
+		return eclipsePreferences.getBoolean(SHOULD_TEST_SERVICES_PREF_ID, true);
+	}
+	
+	public void setShouldTestServices(boolean shouldTest) {
+		boolean currentState = getShouldTestServices();
+		if (shouldTest == currentState)
+			return;
+		fireToggleServicesTestingListener(shouldTest);
+		try {
+			IEclipsePreferences eclipsePreferences = new InstanceScope().getNode(PLUGIN_ID);
+			eclipsePreferences.putBoolean(SHOULD_TEST_SERVICES_PREF_ID, shouldTest);
+			eclipsePreferences.flush();
+		} catch (BackingStoreException e) {
+			logError(e);
+		}
+	}
+
+	public void addToggleServicesTestingListener(IToggleServicesTestingListener listener) {
+		toggleServicesListeners.add(listener);
+	}
+	
+	public void removeToggleServicesTestingListener(IToggleServicesTestingListener listener) {
+		toggleServicesListeners.remove(listener);
+	}
+	
+	private void fireToggleServicesTestingListener(boolean enabled) {
+		for (IToggleServicesTestingListener listener : toggleServicesListeners) {
+			listener.servicesTestingToggled(enabled);
+		}
+	}
+	
 }
