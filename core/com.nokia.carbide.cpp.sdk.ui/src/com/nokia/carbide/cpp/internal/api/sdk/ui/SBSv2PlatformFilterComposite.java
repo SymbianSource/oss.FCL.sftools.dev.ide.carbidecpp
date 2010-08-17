@@ -243,7 +243,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 				aliasMap = SBSv2QueryUtils.getCompleteAliasList();
 			} catch (SBSv2MinimumVersionException e) {
 				// Force a scan for version in case system was updated
-				((SDKManager)SDKCorePlugin.getSDKManager()).getSBSv2Version(true);
+				SDKCorePlugin.getSDKManager().getSBSv2Version(true);
 				try {
 					// try, try again...
 					aliasMap = SBSv2QueryUtils.getCompleteAliasList();

@@ -36,6 +36,8 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	private String displayString;
 	private String configID;  // cconfiguration 'id' attribute from .cproject
 	
+	private boolean reportedSBSVersionError;
+	
 	// Raptor config query data
 	private ISBSv2ConfigQueryData configQueryData;
 	
@@ -302,9 +304,12 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 				}
 			}
 		} catch (final SBSv2MinimumVersionException e) {
+			reportedSBSVersionError = true; // only report once per IDE session.
 			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
 				public void run() {
-					MessageDialog.openError(WorkbenchUtils.getSafeShell(), "Minimum sbs version not met.", e.getMessage());
+					if (!reportedSBSVersionError){
+						MessageDialog.openError(WorkbenchUtils.getSafeShell(), "Minimum sbs version not met.", e.getMessage());
+					}
 				}
 			});	
 			Logging.log(SDKCorePlugin.getDefault(), Logging.newSimpleStatus(0, IStatus.ERROR,

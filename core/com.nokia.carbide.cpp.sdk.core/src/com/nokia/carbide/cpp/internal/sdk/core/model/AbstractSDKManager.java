@@ -537,7 +537,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 						MessageFormat.format(
 							"Could not find or launch Raptor script ''{0}''; SBSv2 support will not be available",
 							sbsPath), e));
-			}
+			} 
 			if (p != null) {
 				BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
 				String overallOutput = "";
