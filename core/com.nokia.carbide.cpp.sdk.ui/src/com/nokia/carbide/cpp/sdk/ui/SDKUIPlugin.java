@@ -31,6 +31,7 @@ import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.ui.SDKUIPreferenceConstants;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.QueryWithTristatePrefDialog;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
@@ -61,7 +62,9 @@ public class SDKUIPlugin extends AbstractUIPlugin implements IStartup, ICarbideD
 		super.start(context);
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		((SDKManager)sdkMgr).setPlatformList(SBSv1PlatformFilterComposite.getPlatFilterPrefsStore());	
+		if (HostOS.IS_WIN32){
+			((SDKManager)sdkMgr).setPlatformList(SBSv1PlatformFilterComposite.getPlatFilterPrefsStore());
+		}
 	}
 	
 	
