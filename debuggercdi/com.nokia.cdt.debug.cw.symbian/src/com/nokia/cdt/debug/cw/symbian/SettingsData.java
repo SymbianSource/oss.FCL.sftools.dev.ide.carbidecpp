@@ -21,7 +21,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 import org.eclipse.cdt.core.CCorePlugin;
@@ -42,8 +41,6 @@ import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.core.ILaunchDelegate;
-import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -348,21 +345,6 @@ public class SettingsData {
 		configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, ""); //$NON-NLS-1$
 		configuration.setAttribute(PreferenceConstants.J_PN_ProgramArguments, ""); //$NON-NLS-1$
 		configuration.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, Registry.CURRENT_CONNECTION_ID);
-
-	    HashSet<String> set = new HashSet<String>();
-	    set.add(ILaunchManager.DEBUG_MODE);
-	    try {
-    	    ILaunchDelegate preferredDelegate = configuration.getPreferredDelegate(set);
-    	    if (preferredDelegate == null) {
-    	        if (configuration.getType().getIdentifier().equals(APP_TRK_LAUNCH_TYPE_ID)) {
-    	        	configuration.setPreferredLaunchDelegate(set, "com.nokia.carbide.cpp.edc.launch.appTRKLaunchDelegate"); //$NON-NLS-1$
-    	        } else if (configuration.getType().getIdentifier().equals(SYS_TRK_LAUNCH_TYPE_ID)) {
-    	        	configuration.setPreferredLaunchDelegate(set, "com.nokia.carbide.cpp.edc.launch.systemTRKLaunchDelegate"); //$NON-NLS-1$
-    	        } else if (configuration.getType().getIdentifier().equals(ATTACH_LAUNCH_TYPE_ID)) {
-    	        	configuration.setPreferredLaunchDelegate(set, "com.nokia.carbide.cpp.edc.launch.attachLaunchDelegate"); //$NON-NLS-1$
-                } 
-    	    }
-	    } catch (CoreException e) {}
 
 		if (project != null) {
 			String projectName = project.getName();
