@@ -50,8 +50,12 @@ public class ImportWizard extends Wizard implements IImportWizard {
 			Throwable cause = e.getCause();
 			if (cause instanceof CoreException) {
 				IStatus status = ((CoreException) cause).getStatus();
-				Activator.logError(Messages.ImportWizard_ImportFailedError, cause);
-				ErrorDialog.openError(getShell(), Messages.ImportWizard_ErrorTitle, null, status);
+				if (allInstalledStatus(status)) {
+					MessageDialog.openWarning(getShell(), Messages.ImportWizard_AllInstalledTitle, Messages.ImportWizard_AllInstalledMessage);
+				}
+				else {
+					ErrorDialog.openError(getShell(), Messages.ImportWizard_ErrorTitle, null, status);
+				}
 			} else {
 				MessageDialog.openError(getShell(), Messages.ImportWizard_ErrorTitle, 
 						MessageFormat.format(Messages.ImportWizard_InstallErrorSimple, cause.getMessage()));
@@ -59,6 +63,21 @@ public class ImportWizard extends Wizard implements IImportWizard {
 		} catch (InterruptedException e) {
 		}
 		return true;
+	}
+
+	private boolean allInstalledStatus(IStatus status) {
+		boolean isOpFailed = false;
+		IStatus[] statusChildren = status.getChildren();
+		if (statusChildren != null && statusChildren.length > 0) {
+			isOpFailed = statusChildren[0].getCode() == 10050;
+			if (isOpFailed) {
+				for (int i = 1; i < statusChildren.length; i++) {
+					if (statusChildren[i].getCode() != 10005)
+						isOpFailed = false;
+				}
+			}
+		}
+		return isOpFailed;
 	}
 
 	public void init(IWorkbench workbench, IStructuredSelection selection) {

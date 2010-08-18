@@ -31,6 +31,7 @@ public class Messages extends NLS {
 	public static String AbstractBrowserPortalPageLayer_OpenLocationLabel;
 	public static String AbstractBrowserPortalPageLayer_OpenLocationTitle;
 	public static String AbstractBrowserPortalPageLayer_ShowInBrowserLabel;
+	public static String AbstractBrowserPortalPageLayer_URLDisplayError;
 	public static String AbstractBrowserPortalPageLayer_URLLabel;
 	public static String AbstractDiscoveryPortalPageLayer_AdvancedInstallActionLabel;
 	public static String AbstractDiscoveryPortalPageLayer_CheckAllActionLabel;
@@ -48,6 +49,7 @@ public class Messages extends NLS {
 	public static String AbstractImportExportPage_CheckNoneLabel;
 	public static String AbstractImportExportPage_FeatureColTitle;
 	public static String AbstractImportExportPage_VersionColTitle;
+	public static String AbstractRSSPortalPageLayer_GettingFeedJobTitle;
 	public static String AbstractRSSPortalPageLayer_ReturnToFeedLabel;
 	public static String AbstractRSSPortalPageLayer_RSSReadError;
 	public static String Activator_GetProxyInfoJobTitle;
@@ -83,6 +85,8 @@ public class Messages extends NLS {
 	public static String ImportPage_Title;
 	public static String ImportPage_ViewerGroupLabel;
 	public static String ImportPage_XMLFileFilterName;
+	public static String ImportWizard_AllInstalledMessage;
+	public static String ImportWizard_AllInstalledTitle;
 	public static String ImportWizard_ErrorTitle;
 	public static String ImportWizard_ImportFailedError;
 	public static String ImportWizard_InstallErrorSimple;

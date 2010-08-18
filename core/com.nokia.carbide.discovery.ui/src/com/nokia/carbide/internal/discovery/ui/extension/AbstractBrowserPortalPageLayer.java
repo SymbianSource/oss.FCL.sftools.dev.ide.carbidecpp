@@ -91,7 +91,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 					getStatusLineManager().setMessage(null);
 					if (!failedConnect && !isValidPage()) {
 						displayCannotFindServerPage();
-						Activator.logError("Could not display URL in browser: " + getURL().toExternalForm(), null);
+						Activator.logError(Messages.AbstractBrowserPortalPageLayer_URLDisplayError + getURL().toExternalForm(), null);
 						failedConnect = true;
 					}
 					setLoading(false);

@@ -116,7 +116,7 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 	protected void readRSS() {
 		final URL url = getURL();
 		if (url != null) {
-			Job j = new Job("Getting RSS feed") {
+			Job j = new Job(Messages.AbstractRSSPortalPageLayer_GettingFeedJobTitle) {
 
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
