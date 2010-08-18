@@ -672,10 +672,6 @@
 	   <topic href="html/concepts/thread_cond_breakpoints.htm"/>
 	</entry>
 
-	<entry keyword="Trace32">
-	   <topic href="html/projects/launch/trace32.htm"/>
-	</entry>
-
 	<entry keyword="TRK" >
 		<topic href="html/concepts/trk.htm" label="On-device Debugging" />
 		<topic href="html/tasks/trk/trk_overview.htm" label="TRK Overview" />

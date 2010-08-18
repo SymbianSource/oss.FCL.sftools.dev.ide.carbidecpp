@@ -258,14 +258,6 @@
 		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
 	</context>
 
-	<!-- STOPMODE.T32CONNECTION -->
-	<context id="stopmode_t32connection" >
-		<description>Specify the settings for Trace32 debugging.</description>
-		<topic label="Trace32 Support"    					href="html/reference/wnd_Trace32_config.htm" />
-		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Setting a Build Configuration"		href="html/tasks/projects/prj_set_build_tgt.htm" />
-	</context>
-
 	<!--  STOPMODE.ROMIMAGE -->
 	<context id="stopmode_romimage" >
 		<description>Specify the ROM image details.</description>
@@ -307,12 +299,6 @@
 		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
-	<context id="wizard_trace32_page" >
-		<description>Specify Trace32 configuration information.</description>
-		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
-		<topic label="Symbian OS Trace32 Support"			href="html/reference/wnd_Trace32_config.htm" />
-	</context>
-
 	<context id="wizard_trk_connection_page" >
 		<description>Specify TRK connection information.</description>
   <topic href="html/reference/launch_configs/page_connection.htm" label="Connection options"/>
@@ -327,14 +313,12 @@
 
 	<context id="wizard_rom_image_page" >
 		<description>Specify ROM image information.</description>
-  		<topic href="html/reference/wnd_Trace32_config.htm" label="Symbian OS Trace32 Support"/>
 		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 	</context>
 
 	<context id="wizard_stop_mode_rom_img_page" >
 		<description>Define startup options and ROM image download information.</description>
-  		<topic href="html/reference/wnd_Trace32_config.htm" label="Symbian OS Trace32 Support"/>
 		<topic label="Stop-mode Debugger"					href="html/reference/launch_configs/page_trk_debugger.htm" />
 		<topic label="ROM Image options"					href="html/reference/launch_configs/stop_mode_rom_image.htm" />
 	</context>
