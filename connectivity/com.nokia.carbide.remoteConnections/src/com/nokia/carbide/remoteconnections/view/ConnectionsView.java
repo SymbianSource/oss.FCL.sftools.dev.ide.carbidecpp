@@ -123,6 +123,7 @@ public class ConnectionsView extends ViewPart {
 	private static final ImageDescriptor CONNECTION_NEW_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionNew.png"); //$NON-NLS-1$
 	private static final ImageDescriptor CONNECTION_EDIT_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionEdit.png"); //$NON-NLS-1$
 	private static final ImageDescriptor SERVICE_TEST_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/serviceTest.png"); //$NON-NLS-1$
+	private static final ImageDescriptor SERVICE_TEST_DISABLED_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/serviceTest_No.png"); //$NON-NLS-1$
 	private static final ImageDescriptor CONNECTION_REFRESH_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionRefresh.png"); //$NON-NLS-1$
 
 	private static final String NEW_ACTION = "ConnectionsView.new"; //$NON-NLS-1$
@@ -873,12 +874,13 @@ public class ConnectionsView extends ViewPart {
 				if (isChecked() != checked) {
 					super.setChecked(checked);
 					RemoteConnectionsActivator.getDefault().setShouldTestServices(checked);
+					setImageDescriptor(checked ? SERVICE_TEST_IMGDESC : SERVICE_TEST_DISABLED_IMGDESC);
 				}
 			};
 		};
-		action.setImageDescriptor(SERVICE_TEST_IMGDESC);
 		action.setId(TOGGLE_SERVICES_ACTION);
 		action.setChecked(RemoteConnectionsActivator.getDefault().getShouldTestServices());
+		action.setImageDescriptor(action.isChecked() ? SERVICE_TEST_IMGDESC : SERVICE_TEST_DISABLED_IMGDESC);
 		actions.add(action);
 		
 		enableConnectionSelectedActions(false);
