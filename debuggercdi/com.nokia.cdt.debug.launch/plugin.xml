@@ -299,25 +299,6 @@
          </factory>
     </extension>
  
-   <!-- hack to make the traditional memory rendering the default.  we probaly
-   		need to keep it this way until CDT adopts this rendering as the default.
-   		see Eclipse bugzilla #146667 for more information. -->
-   <extension
-         point="org.eclipse.debug.ui.memoryRenderings">
-      <renderingBindings
-            defaultIds="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering"
-            primaryId="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering"
-            renderingIds="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering">
-         <enablement>
-            <instanceof value="org.eclipse.cdt.debug.internal.core.model.CMemoryBlockExtension"/>
-         </enablement>
-      </renderingBindings>
-   </extension>
-   
-   <extension
-         point="org.eclipse.ui.startup">
-   </extension>
-
    <extension-point id="launchWizardExtension" name="Launch Wizard Page" schema="schema/launchWizardExtension.exsd"/>
    <extension-point id="launchCategoryExtension" name="Launch Category" schema="schema/launchCategoryExtension.exsd"/>
 
