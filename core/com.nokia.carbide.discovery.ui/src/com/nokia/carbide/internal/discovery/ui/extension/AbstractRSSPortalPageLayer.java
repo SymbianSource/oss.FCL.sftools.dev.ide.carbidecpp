@@ -98,6 +98,8 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 	
 	private Rss rss;
 
+	private boolean displayingFeed;
+
 	@Override
 	public void init() {
 		Activator.runInUIThreadWhenProxyDataSet(browser, new Runnable() {
@@ -170,6 +172,7 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 			@Override
 			public void run() {
 				browser.setText(s);
+				displayingFeed = true;
 			}
 		});
 	}
@@ -187,6 +190,17 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 	public void dispose() {
 	}
 
+	@Override
+	protected boolean isValidPage() {
+		return super.browserHasURL() || displayingFeed;
+	}
+	
+	@Override
+	protected void setUrl(String url) {
+		super.setUrl(url);
+		displayingFeed = false;
+	}
+	
 	@Override
 	protected Set<IAction> makeActions() {
 		Set<IAction> actions = new LinkedHashSet<IAction>();

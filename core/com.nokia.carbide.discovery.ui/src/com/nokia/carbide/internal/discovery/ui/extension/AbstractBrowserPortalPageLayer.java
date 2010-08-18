@@ -89,7 +89,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				@Override
 				public void completed(ProgressEvent event) {
 					getStatusLineManager().setMessage(null);
-					if (!failedConnect && !browserHasURL()) {
+					if (!failedConnect && !isValidPage()) {
 						displayCannotFindServerPage();
 						Activator.logError("Could not display URL in browser: " + getURL().toExternalForm(), null);
 						failedConnect = true;
@@ -188,7 +188,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				public void run() {
 					URL url = getURL();
 					if (url != null) {
-						browser.setUrl(url.toString());
+						setUrl(url.toString());
 					}
 					actionBar.hookBrowser();
 					actionBar.update();
@@ -246,15 +246,14 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 			@Override
 			public void run() {
 				if (browser != null) {
-					if (failedConnect) {
+					if (browserHasURL())
+						browser.refresh();
+					else {
 						URL url = getURL();
 						if (url != null) {
-							browser.setUrl(url.toString());
-							failedConnect = false;
+							setUrl(url.toString());
 						}
 					}
-					else
-						browser.refresh();
 					actionBar.update();
 				}
 			}
@@ -304,7 +303,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				});
 				int result = dlg.open();
 				if (result == Dialog.OK) {
-					browser.setUrl(dlg.getValue());
+					setUrl(dlg.getValue());
 					actionBar.update();
 				}
 			};
@@ -321,6 +320,15 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 	protected boolean browserHasURL() {
 		String url = browser.getUrl();
 		return url.matches("^.*://.*"); //$NON-NLS-1$
+	}
+
+	protected boolean isValidPage() {
+		return browserHasURL();
+	}
+	
+	protected void setUrl(String url) {
+		browser.setUrl(url);
+		failedConnect = false;
 	}
 
 	protected void displayCannotFindServerPage() {
