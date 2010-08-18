@@ -14,8 +14,65 @@
      <description>
         Under the <b>Preferences &gt; General &gt; Editor</b> section are several preference panels that control many aspects of the C/C++ editor.
      </description>
-     <command
-           required="false"
-           serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.ui.preferencePages.Editors)"/>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.CEditorPreferencePage)"/>
   </item>
+   <item
+         title="Content Assist">
+      <description>
+         <b>Body</b>
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.CodeAssistPreferencePage)"/>
+   </item>
+   <item
+         title="Folding">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Hovering">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Mark Occurrences">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Save Actions">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Scalability">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Syntax Coloring">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Templates">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Typing">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
 </cheatsheet>
