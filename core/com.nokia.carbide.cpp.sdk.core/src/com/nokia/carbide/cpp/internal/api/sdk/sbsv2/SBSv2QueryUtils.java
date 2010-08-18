@@ -472,15 +472,15 @@ public class SBSv2QueryUtils {
 	}
 
 	public static void removeCachedAliases() {
-		SDKCacheUtils.getCache().removeCache(ALIAS_CACHE_KEY);
+		SDKCacheUtils.getCache().removeCache(ALIAS_CACHE_KEY, true);
 	}
 
 	public static void removeCachedProducts() {
-		SDKCacheUtils.getCache().removeCache(PRODUCT_CACHE_KEY);		
+		SDKCacheUtils.getCache().removeCache(PRODUCT_CACHE_KEY, true);		
 	}
 
 	public static void removeCachedConfigurations() {
-		SDKCacheUtils.getCache().removeCache(CONFIG_CACHE_KEY);
+		SDKCacheUtils.getCache().removeCache(CONFIG_CACHE_KEY, true);
 	}
 
 }

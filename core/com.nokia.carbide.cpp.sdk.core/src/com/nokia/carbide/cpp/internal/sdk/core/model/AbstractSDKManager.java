@@ -645,7 +645,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 
 	protected void clearSDKCache() {
-		SDKCacheUtils.getCache().removeCache(SDK_MANAGER_CACHE_KEY);
+		SDKCacheUtils.getCache().removeCache(SDK_MANAGER_CACHE_KEY, false);
 	}
 
 	@SuppressWarnings("unchecked")

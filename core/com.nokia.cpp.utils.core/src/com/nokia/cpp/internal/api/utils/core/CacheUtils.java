@@ -102,11 +102,13 @@ public class CacheUtils {
 		return result;		
 	}
 
-	public void removeCache(String identifier) {
+	public void removeCache(String identifier, boolean removeFromDisk) {
 		CacheEntry cache = caches.get(identifier);
 		if (cache != null) {
 			caches.remove(identifier);
-			cache.delete();
+			if (removeFromDisk){
+				cache.delete();
+			}
 		}
 	}
 
