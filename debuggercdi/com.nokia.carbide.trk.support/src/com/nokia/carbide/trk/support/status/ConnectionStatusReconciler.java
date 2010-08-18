@@ -25,13 +25,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PartInitException;
 
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
+import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
-import com.nokia.carbide.remoteconnections.interfaces.AbstractConnection.ConnectionStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
@@ -39,13 +39,12 @@ import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnection
 import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.carbide.trk.support.service.TRKConnectedService;
-import com.nokia.carbide.trk.support.service.TracingConnectedService;
 import com.nokia.cpp.internal.api.utils.ui.RunRunnableWhenWorkbenchVisibleJob;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * A singleton object that manages the device status of dynamic connections
- * based on the status of the TRK and Tracing services.
+ * based on the status of the debugging services.
  */
 public class ConnectionStatusReconciler {
 	
@@ -121,8 +120,7 @@ public class ConnectionStatusReconciler {
 	private void addConnection(IConnection connection) {
 		handledConnections.add(connection);
 		for (IConnectedService service : manager.getConnectedServices(connection)) {
-			if (service instanceof TRKConnectedService ||
-					service instanceof TracingConnectedService) {
+			if (service instanceof TRKConnectedService || isTCFTRKService(service)) {
 				service.addStatusChangedListener(serviceStatusListener);
 			}
 		}
@@ -213,35 +211,34 @@ public class ConnectionStatusReconciler {
 		
 		boolean isSysTRK = false;
 		EStatus trkStatus = EStatus.UNKNOWN;
-		EStatus traceStatus = EStatus.UNKNOWN;
+		EStatus tcfTRKStatus = EStatus.UNKNOWN;
 		for (IConnectedService service : manager.getConnectedServices(connection)) {
 			if (service instanceof TRKConnectedService) {
 				isSysTRK = isSysTRK((TRKConnectedService) service);
 				trkStatus = service.getStatus().getEStatus();
 			}
-			if (service instanceof TracingConnectedService) {
-				traceStatus = service.getStatus().getEStatus();
+			if (isTCFTRKService(service)) { //$NON-NLS-1$
+				tcfTRKStatus = service.getStatus().getEStatus();
 			}
 		}
-		setConnectionStatus((IConnection2) connection, isSysTRK, trkStatus, traceStatus);
+		setConnectionStatus((IConnection2) connection, isSysTRK, trkStatus, tcfTRKStatus);
 	}
 
-	private void setConnectionStatus(IConnection2 connection, boolean isSysTRK, EStatus trkStatus, EStatus traceStatus) {
-		// use trk status
-		EConnectionStatus connectionStatus = service2ConnectionStatus(trkStatus);
-		// NOTE: removing trace status logic for now
-//		// if sys trk, tracing also used
-//		if (isSysTRK && connectionStatus.equals(EConnectionStatus.READY)) {
-//			connectionStatus = service2ConnectionStatus(traceStatus);
-//		}
+	private boolean isTCFTRKService(IConnectedService service) {
+		return service.getService().getIdentifier().equals("com.nokia.carbide.cpp.edc.TCFTRKService");
+	}
+
+	private void setConnectionStatus(IConnection2 connection, boolean isSysTRK, EStatus trkStatus, EStatus tcfTRKStatus) {
+		EStatus serviceStatus = tcfTRKStatus;
+		EConnectionStatus connectionStatus = service2ConnectionStatus(serviceStatus);
+		if (!connectionStatus.equals(EConnectionStatus.READY)) {
+			serviceStatus = trkStatus;
+			connectionStatus = service2ConnectionStatus(serviceStatus);
+		}
 
 		String shortDesc = getShortDescriptionForStatus(connectionStatus);
 		StringBuilder longDesc = new StringBuilder(Messages.getString("ConnectionStatusReconciler_TRKServicePrefix")); //$NON-NLS-1$
-		longDesc.append(getServiceStatusString(trkStatus));
-//		if (isSysTRK) {
-//			longDesc.append(Messages.getString("ConnectionStatusReconciler_TracingServicePrefix")); //$NON-NLS-1$
-//			longDesc.append(getServiceStatusString(traceStatus));
-//		}
+		longDesc.append(getServiceStatusString(serviceStatus));
 		
 		connection.setStatus(new ConnectionStatus(connectionStatus, shortDesc, longDesc.toString()));
 	}
