@@ -10,69 +10,93 @@
   <item
         href="/com.nokia.carbide.cpp.doc.user/html/tasks/custom/carb_custom_editors.htm"
         skip="true"
-        title="Customize the C/C++ editor">
+        title="Set the C/C++ editor appearance">
      <description>
-        Under the <b>Preferences &gt; General &gt; Editor</b> section are several preference panels that control many aspects of the C/C++ editor.
+        Under the <b>Editor</b> preference panel to control the appearance of text highlighting in C/C++ editors.
      </description>
       <command
             required="false"
             serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.CEditorPreferencePage)"/>
   </item>
    <item
-         title="Content Assist">
+         title="Set editor assistance triggers">
       <description>
-         <b>Body</b>
+         Use the <b>Content Assist</b> preference panel to customize the Content Assist feature in C/C++ editors.
       </description>
       <command
             required="false"
             serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.CodeAssistPreferencePage)"/>
    </item>
    <item
-         title="Folding">
+         title="Change editor folding behavior">
       <description>
-         <b>Body</b>
+         Use the <b>Folding</b> preference panel to customize the C/C++ editor folding behavior.
       </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.FoldingPreferencePage)"/>
    </item>
    <item
-         title="Hovering">
+         title="Change hovering behavior">
       <description>
-         <b>Body</b>
+         Use the <b>Hovers</b> preference panel to customize the C/C++ editor hover behavior.
       </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.HoverPreferencePage)"/>
    </item>
    <item
-         title="Mark Occurrences">
+         title="Set annotation appearance">
       <description>
-         <b>Body</b>
+         Use the <b>Mark Occurrences</b> preference panel to set annotations for the C/C++ Editor view.
       </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.MarkOccurrencesPreferencePage)"/>
    </item>
    <item
-         title="Save Actions">
+         title="Set automatic save actions">
       <description>
-         <b>Body</b>
+         Use the <b>Save Actions</b> preference panel to configure actions performed by the C/C++ editor while saving a file.
       </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.SaveActionsPreferencePage)"/>
    </item>
    <item
-         title="Scalability">
+         title="Set large file options">
       <description>
-         <b>Body</b>
+         Use the <b>Scalability</b> preference panel to configure options for dealing with large source files.
       </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.CScalabilityPreferences)"/>
    </item>
    <item
-         title="Syntax Coloring">
+         title="Configure source code appearance">
       <description>
-         <b>Body</b>
+         Use the <b>Syntax Coloring</b> preference panel to specify how C/C++ source code is rendered.
       </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.CodeColoringPreferencePage)"/>
    </item>
    <item
-         title="Templates">
+         title="Modifying source templates">
       <description>
-         <b>Body</b>
+         Use the <b>Templates</b> preference panel to manipulate any of the common templates predefined within CDT or create your own.
       </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.TemplatePreferencePage)"/>
    </item>
    <item
-         title="Typing">
+         title="Configure automatic formatting">
       <description>
-         <b>Body</b>
+         Use the <b>Typing</b> preference panel to assist in formatting input as you type.
       </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferences.SmartTypingPreferencePage)"/>
    </item>
 </cheatsheet>
