@@ -177,6 +177,13 @@ public class CacheUtils {
 		caches.clear();
 	}
 
+	public void flushCache(String identifier) throws Exception {
+		CacheEntry entry = caches.get(identifier);
+		if (entry != null) {
+			entry.flush();
+		}
+	}
+
 	public IPath getDefaultLocation() {
 		return defaultLocation;
 	}

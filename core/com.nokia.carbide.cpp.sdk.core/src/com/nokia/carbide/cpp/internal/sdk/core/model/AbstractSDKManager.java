@@ -343,6 +343,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				entry.setEnabled(currSDK.isEnabled());
 				setSDKCacheEntry(entry);
 			}
+			flushSDKCache();
 		}
 	}
 
@@ -646,6 +647,14 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 
 	protected void clearSDKCache() {
 		SDKCacheUtils.getCache().removeCache(SDK_MANAGER_CACHE_KEY, false);
+	}
+
+	protected void flushSDKCache() {
+		try {
+			SDKCacheUtils.getCache().flushCache(SDK_MANAGER_CACHE_KEY);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
