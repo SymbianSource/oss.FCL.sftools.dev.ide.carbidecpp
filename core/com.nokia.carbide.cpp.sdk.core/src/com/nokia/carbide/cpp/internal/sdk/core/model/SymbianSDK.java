@@ -540,6 +540,7 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	@SuppressWarnings("unchecked")
 	private void setSupportFeatures() {
 		scanForWINSCW_UREL();
+		scanForWINSCW_UDEB();
 		scanForAvkon();
 		sdkFeatures.add(ISymbianSDKFeatures.IS_EKA2);
 	}
@@ -581,6 +582,23 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 			if (winscwURELPath.append("epoc.exe").toFile().exists()){
 				if (winscwURELPath.append("euser.dll").toFile().exists()){
 					sdkFeatures.add(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Check to see whether or not we should support WINSCW UDEB
+	 */
+	@SuppressWarnings("unchecked")
+	private void scanForWINSCW_UDEB(){
+		String winscwURELFullPathStr = getEPOCROOT();
+		winscwURELFullPathStr += WINSCW_UDEB_DIR;
+		IPath winscwURELPath = new Path(winscwURELFullPathStr);
+		if (winscwURELPath != null && winscwURELPath.toFile().exists()){
+			if (winscwURELPath.append("epoc.exe").toFile().exists()){
+				if (winscwURELPath.append("euser.dll").toFile().exists()){
+					sdkFeatures.add(ISymbianSDKFeatures.IS_WINSCW_UDEB_SUPPORTED);
 				}
 			}
 		}

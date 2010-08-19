@@ -82,10 +82,12 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 			return Collections.emptyList();
 		}
 
-		buildTargets.add(new BuildContextSBSv1(sdk, ISBSv1BuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
-		
 		if (sdkFeatures.contains(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED)){
 			buildTargets.add(new BuildContextSBSv1(sdk, ISBSv1BuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.RELEASE_TARGET));
+		}
+		
+		if (sdkFeatures.contains(ISymbianSDKFeatures.IS_WINSCW_UDEB_SUPPORTED)){
+			buildTargets.add(new BuildContextSBSv1(sdk, ISBSv1BuildContext.EMULATOR_PLATFORM, ISymbianBuildContext.DEBUG_TARGET));
 		}
 		
 		for (String currPlat : buildPlats){
