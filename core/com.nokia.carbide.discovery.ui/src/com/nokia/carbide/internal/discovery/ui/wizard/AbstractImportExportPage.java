@@ -111,8 +111,7 @@ abstract class AbstractImportExportPage extends WizardPage {
 		GridDataFactory.defaultsFor(label).span(2, 1).applyTo(label);
 
 		viewer = CheckboxTableViewer.newCheckList(parent, SWT.BORDER);
-		TableViewerColumn featureColumn = new TableViewerColumn(viewer,
-				SWT.CENTER);
+		TableViewerColumn featureColumn = new TableViewerColumn(viewer, SWT.LEFT);
 		featureColumn.getColumn().setText(Messages.AbstractImportExportPage_FeatureColTitle);
 		featureColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
@@ -127,8 +126,7 @@ abstract class AbstractImportExportPage extends WizardPage {
 				return null;
 			}
 		});
-		TableViewerColumn versionColumn = new TableViewerColumn(viewer,
-				SWT.CENTER);
+		TableViewerColumn versionColumn = new TableViewerColumn(viewer,	SWT.LEFT);
 		versionColumn.getColumn().setText(Messages.AbstractImportExportPage_VersionColTitle);
 		versionColumn.setLabelProvider(new ColumnLabelProvider() {
 			@Override
