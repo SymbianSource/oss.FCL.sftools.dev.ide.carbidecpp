@@ -4,31 +4,43 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
-<title>Carbide x86 Exceptions page</title>
+<title>Carbide Exceptions page</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 </head>
 <body >
-<h2>x86 Exceptions page </h2>
-<p>  Use the <b>x86 Exceptions</b> page in the <a href="emulation.htm">Emulation</a> launch configuration to set  the x86 exceptions  the debugger should catch. If you want the debugger to catch all the exceptions, enable all of the options in this page. However, if you prefer to handle only certain exceptions, enable only those options that reflect the exceptions you want to handle.</p>
-<p align="center"><img src="images/page_exceptions.png" width="627" height="270" /></p>
-<p align="center" class="figure">Figure 1 - x86 Exceptions page</p>
-<h5>Table 1. x86 Exceptions page &mdash;items </h5>
-<table width="88%"  border="0" cellpadding="2" cellspacing="0">
+<h2>Exceptions page (stop mode)</h2>
+<p>  Use the <b>Exceptions</b> page in stop mode launch configurations enables you to control how stop threads are handled.</p>
+<p align="center"><img src="images/page_exceptions.png" alt="Exceptions page" width="565" height="255"></p>
+<p align="center" class="figure">Figure 1 - Exceptions page (stop-mode)</p>
+<h5>Table 1. Exceptions page &mdash;items </h5>
+<table width="800"  border="0" cellpadding="2" cellspacing="0">
   <tr>
-    <th width="38%" scope="col">Item</th>
-    <th width="62%" scope="col">Explanation</th>
+    <th width="30%" scope="col">Item</th>
+    <th width="70%" scope="col">Explanation</th>
   </tr>
   <tr>
-    <td><b>Exceptions to catch </b></td>
-    <td>Click to enable by exception which x86 exceptions the debugger should catch. </td>
+    <td><b>Stop thread on panic</b></td>
+    <td><p>Choose one of the options below to handle panic exceptions:</p>
+        <ul>
+            <li>Only threads being debugged</li>
+            <li>Any threads</li>
+        </ul></td>
   </tr>
   <tr>
-    <td><b>Check All </b></td>
-    <td>Enables catching all exceptions.</td>
+    <td><b>Stop thread on software exception</b></td>
+    <td><p>Choose one of the options below to handle software exceptions:</p>
+        <ul>
+            <li>Only threads being debugged</li>
+            <li>Any threads</li>
+        </ul></td>
   </tr>
   <tr>
-    <td><b>Clear All </b></td>
-    <td>Disables catching all exceptions.</td>
+    <td><b>Stop thread on hardware exception</b></td>
+    <td><p>Choose one of the options below to handle hardware exceptions:</p>
+        <ul>
+            <li>Only threads being debugged</li>
+            <li>Any threads</li>
+        </ul></td>
   </tr>
 </table>
 <h4>Other references</h4>

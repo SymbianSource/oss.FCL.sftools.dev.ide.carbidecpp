@@ -159,7 +159,7 @@ public class FilesBlock {
 				FileToTransfer file = (FileToTransfer)element;
 				File hostFile = new Path(file.getHostPath()).toFile();
 				if (!fileExists(hostFile)) {
-					return LaunchPlugin.getImageDescriptor("icons/Launch/etool16/warning_obj.gif").createImage();
+					return LaunchPlugin.getImageDescriptor("icons/warning_obj.gif").createImage();
 				}
 			}
 			return null;

@@ -16,39 +16,6 @@
             id="com.nokia.cdt.debug.launch.emulationLaunchDelegate">
       </launchDelegate>
 
-      <launchDelegate
-            name="Classic Symbian OS Application TRK"
-            delegateDescription="Launch a classic Symbian OS Application TRK debug session."          
-            delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
-            modes="run,debug"
-            type="com.nokia.cdt.debug.launch.appTRKLaunch"
-            id="com.nokia.cdt.debug.launch.appTRKLaunchDelegate"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
-      </launchDelegate>
- 
-      <launchDelegate
-            name="Classic Symbian OS System TRK"
-            delegateDescription="Launch a classic Symbian OS System TRK debug session."          
-            delegate="com.nokia.cdt.internal.debug.launch.TRKLaunchDelegate"
-            modes="run,debug"
-            type="com.nokia.cdt.debug.launch.systemTRKLaunch"
-            id="com.nokia.cdt.debug.launch.systemTRKLaunchDelegate"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
-      </launchDelegate>
- 
-      <launchDelegate
-            name="Classic Symbian OS Attach to Process"
-            delegate="com.nokia.cdt.internal.debug.launch.AttachLaunchDelegate"
-            delegateDescription="Launch a classic Symbian OS Attach to Process debug session."          
-            modes="debug"
-            type="com.nokia.cdt.debug.launch.attachLaunch"
-            id="com.nokia.cdt.debug.launch.attachLaunchDelegate"
-            sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
-            sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer">
-      </launchDelegate>
-    
    </extension>
 
    <extension
@@ -332,25 +299,6 @@
          </factory>
     </extension>
  
-   <!-- hack to make the traditional memory rendering the default.  we probaly
-   		need to keep it this way until CDT adopts this rendering as the default.
-   		see Eclipse bugzilla #146667 for more information. -->
-   <extension
-         point="org.eclipse.debug.ui.memoryRenderings">
-      <renderingBindings
-            defaultIds="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering"
-            primaryId="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering"
-            renderingIds="org.eclipse.dd.debug.memory.renderings.traditional.TraditionalRendering">
-         <enablement>
-            <instanceof value="org.eclipse.cdt.debug.internal.core.model.CMemoryBlockExtension"/>
-         </enablement>
-      </renderingBindings>
-   </extension>
-   
-   <extension
-         point="org.eclipse.ui.startup">
-   </extension>
-
    <extension-point id="launchWizardExtension" name="Launch Wizard Page" schema="schema/launchWizardExtension.exsd"/>
    <extension-point id="launchCategoryExtension" name="Launch Category" schema="schema/launchCategoryExtension.exsd"/>
 

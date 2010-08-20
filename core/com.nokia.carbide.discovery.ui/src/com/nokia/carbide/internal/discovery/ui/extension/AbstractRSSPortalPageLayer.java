@@ -26,8 +26,13 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.swt.widgets.Display;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
@@ -89,33 +94,48 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 		}
 	}
 	
-	private static final String HTML_BODY_HEADER = "<html><head><title></title><style type=\"text/css\">div.item {font-family : sans-serif; font-size : 12px; margin-bottom : 16px;} div.itemBody {padding-top : 3px; padding-bottom : 3px;} div.itemInfo {background-color : #EEEEEE; color : #333333;} div.feedflare {display: none;} a.itemTitle {font-size : 12px; font-weight : bold;} a.markItemRead {font-size : 10px; color : #333333;}</style></head><body>"; //$NON-NLS-1$
-	private static final String HTML_BODY_FOOTER = "</body></html>"; //$NON-NLS-1$
 	private static final int MAX_ELEM_LEN = 256;
 	
 	private Rss rss;
+
+	private boolean displayingFeed;
 
 	@Override
 	public void init() {
 		Activator.runInUIThreadWhenProxyDataSet(browser, new Runnable() {
 			@Override
 			public void run() {
-				URL url = getURL();
-				if (url != null) {
-					try {
-						rss = SimpleRSSReader.readRSS(url);
-						displayRSS();
-						actionBar.hookBrowser();
-					} catch (Exception e) {
-						Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
-					}
-					actionBar.update();
-				}
+				actionBar.hookBrowser();
+				readRSS();
+				actionBar.update();
+				browser.setFocus();
 			}
 		});
 	}
 
-	private void displayRSS() {
+	protected void readRSS() {
+		final URL url = getURL();
+		if (url != null) {
+			Job j = new Job(Messages.AbstractRSSPortalPageLayer_GettingFeedJobTitle) {
+
+				@Override
+				protected IStatus run(IProgressMonitor monitor) {
+					try {
+						rss = SimpleRSSReader.readRSS(url);
+						displayRSS();
+					} catch (Exception e) {
+						Activator.logError(MessageFormat.format(Messages.AbstractRSSPortalPageLayer_RSSReadError, url), e);
+					}
+					return Status.OK_STATUS;
+				}
+				
+			};
+			j.setUser(true);
+			j.schedule();
+		}
+	}
+	
+	protected void displayRSS() {
 		StringBuffer buf = new StringBuffer();
 		buf.append(HTML_BODY_HEADER);
 		for (Channel channel : rss.getChannels()) {
@@ -139,7 +159,7 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 				if (date != null) {
 					String dateString = DateFormat.getDateTimeInstance().format(date);
 					buf.append(dateString);
-					buf.append("<br>");
+					buf.append("<br>"); //$NON-NLS-1$
 				}
 				buf.append(clean(item.getDescription()));
 				buf.append("</div></li>"); //$NON-NLS-1$
@@ -147,7 +167,14 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 			buf.append("</ul>"); //$NON-NLS-1$
 		}
 		buf.append(HTML_BODY_FOOTER);
-		browser.setText(buf.toString());
+		final String s = buf.toString();
+		Display.getDefault().syncExec(new Runnable() {
+			@Override
+			public void run() {
+				browser.setText(s);
+				displayingFeed = true;
+			}
+		});
 	}
 
 	private String clean(String s) {
@@ -164,6 +191,17 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 	}
 
 	@Override
+	protected boolean isValidPage() {
+		return super.browserHasURL() || displayingFeed;
+	}
+	
+	@Override
+	protected void setUrl(String url) {
+		super.setUrl(url);
+		displayingFeed = false;
+	}
+	
+	@Override
 	protected Set<IAction> makeActions() {
 		Set<IAction> actions = new LinkedHashSet<IAction>();
 		for (IAction action : super.makeActions()) {
@@ -175,7 +213,7 @@ public abstract class AbstractRSSPortalPageLayer extends AbstractBrowserPortalPa
 							if (browserHasURL())
 								browser.refresh();
 							else
-								displayRSS();
+								readRSS();
 							actionBar.update();
 						}
 					}

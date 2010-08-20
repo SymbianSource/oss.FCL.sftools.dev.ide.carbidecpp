@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Symbian OS Data: Libraries</title>
+<link rel="StyleSheet" href="../../book.css" type="text/css"/>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+<body >
+<h2>Symbian OS Data view: Libraries</h2>
+<p>The <img src="../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=com.nokia.carbide.cpp.debug.kernelaware.ui.SymbianOSView)")'>Symbian OS Data</a> view displays the processes and threads for the suspended debug session based on the selection in the <a href="../debugger/debug/viewing_debug.htm">Debug</a> view. Read-only data is displayed for ARM build configurations. </p>
+<p>Data to be viewed includes:</p>
+<ul>
+    <li><a href="view_sym_os_data_overview.htm">Overview</a></li>
+    <li><a href="view_sym_os_data_process.htm">Processes</a></li>
+    <li><a href="view_sym_os_data_threads.htm">Threads</a></li>
+    <li><a href="view_sym_os_data_chunks.htm">Chunks</a></li>
+    <li><a href="view_sym_os_data_libs.htm">Libraries</a></li>
+</ul>
+<p class="note"><b>NOTE</b>  Information for the Chunks and Libraries tabs is not available when debugging with the TRK debug agent.</p>
+<hr>
+<h2><a name="Library" id="Library"></a>Libraries Tab</h2>
+<p> The Libraries pane (Figure 5) in the Symbian OS view provides  information on libraries in the Symbian OS residing on the target.</p>
+<p class="note"> <b>NOTE</b> Library data is not available during TRK debugging.</p>
+<p align="center"><img src="images/view_symbianOS_Lib.png" width="531" height="278" alt="" /></p>
+<p class="figure">Figure 5. Libraries Pane of Symbian OS view</p>
+<h3><a name="attach" id="attach"></a>Attaching to a Process</h3>
+<p>If <span class="note">you double click on a thread item in the Thread tab, or right-click and choose <b>Debug</b>, the owning process of the thread will be attached.</span> The thread with an attached process will appear in bold. You can also select a thread and click the bug icon in the Symbian OS Data toolbar. You can also view properties for the attached process by clicking the &quot;Show properties of the selected item&quot; icon () in the Symbian OS Data toolbar or right-click the thread and choose <b>Properties</b>.</p>
+<p class="note"><b>NOTE </b>If an executable is not part of a project in the workspace use the Executables view to import an executable to make it visible to the debugger. Once included in the Executables list, the symbolics for that executable can be loaded and breakpoints resolved and hit. Open a source file in an editor view or use the <a href="view_breakpoints.htm">Breakpoints</a> view to verify that the executable breakpoints have been <a href="../concepts/breakpoints.htm">resolved</a>. </p>
+<p class="note"><b>IMPORTANT</b> In stop mode debugging when debugging multiple processes at the same time, selecting a process in the <a href="../debugger/debug/viewing_debug.htm">Debug</a> pane and clicking <b>Terminate</b> disconnects the attached process on the board, leaving  all other processes running. It does not terminate the debug session.  However, if there is only one debug process  when you click <b>Terminate</b> the CPU is  suspended until the next debug session.</p>
+<p class="note"><b>WARNING</b> Detaching from a system process or any process not initiated by the program you are attempting to debug may cause the device to stop working, forcing a restart of the device. </p>
+<p><img src="images/symOSData_attachprocess.png" width="1144" height="332" alt="" /></p>
+<h5>Other  references</h5>
+<ul>
+  <li><a href="../debugger/debug/viewing_debug.htm">Debug view</a></li>
+  <li><a href="../tasks/debugger/view_symbian_kernel_set.htm">Setting Symbian OS View Refresh Rate</a><br />
+  </li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

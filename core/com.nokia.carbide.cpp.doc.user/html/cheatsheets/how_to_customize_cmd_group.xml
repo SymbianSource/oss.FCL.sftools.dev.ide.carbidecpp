@@ -1,17 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <cheatsheet
-      title="Customize Code Styles">
-`	<intro>
-		Intro text
+      title="Customize Command Groups">
+`	<intro
+        href="/com.nokia.carbide.cpp.doc.user/html/tasks/custom/carb_custom_menus.htm">
+    	<description>
+			To control which commands appear on toolbars and menus, use the <b>Customize Perspective</b> dialog.
+    	</description>
 	</intro>
 	<item
-       title="one">
+       title="Open the Customize Perspective dialog">
+	
 		<description>
-     one
-			
+         The <b>Customize Perspective</b> provides management of the command groups and the items that appear on the toolbar and menus within each group.
 		</description>
-		<command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.project)" confirm="false">
-		</command>
+  		<command
+        required="false"
+        serialization="org.eclipse.ui.window.customizePerspective"/>
 	</item>
+   <item
+         title="Select visible command groups">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Set visible menu options">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Set visible toolbar options">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
+   <item
+         title="Set command shortcuts">
+      <description>
+         <b>Body</b>
+      </description>
+   </item>
 </cheatsheet>

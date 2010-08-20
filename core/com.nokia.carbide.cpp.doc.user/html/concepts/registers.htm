@@ -9,7 +9,13 @@
 </head>
 <body >
 <h2>Registers</h2>
-<p>  Registers are the register contents of the central processing unit (CPU) of the host computer or the targeted device. When debugging projects using the emulator, only the host computer x86 registers are visible in the <a href="../reference/view_registers.htm">Registers</a> view. When debugging projects on a device, only the target device registers are visible. </p>
+<p>Use the <a href="../reference/view_registers.htm">Registers</a> view to view the general and specific registers  central processing unit (CPU) of the host computer. The exact listing of these registers depends on the host CPU and current build target. </p>
+<ul>
+    <li><a href="#general">General registers</a></li>
+    <li><a href="#arm">ARM registers</a></li>
+</ul>
+<h2><a name="general"></a>General registers</h2>
+<p>Registers are the register contents of the central processing unit (CPU) of the host computer or the targeted device. When debugging projects using the emulator, only the host computer x86 registers are visible in the <a href="../reference/view_registers.htm">Registers</a> view. When debugging projects on a device, only the target device registers are visible. </p>
 <p>In most cases, the contents of all the registers can be modified. However,  when debugging applications on a target device with Application TRK, you cannot change the LR and SP registers.</p>
 <p align="center"><img src="images/view_registers.png" width="463" height="260"></p>
 <p class="figure">Figure 1. Registers view with possible register types</p>
@@ -22,6 +28,17 @@
   <li><b>host-specific</b>&#8212;additional register contents for registers specific to the host (for example ARM registers)</li>
 </ul>
 <p class="note"><b>NOTE</b> When opening the Registers view, the list of available registers will vary depending upon the target devices being debugged. </p>
+<h2 class="note"><a name="arm"></a>ARM registers</h2>
+<p>The ARM microprocessor has 16 general-purpose registers. THUMB has eight general-purpose registers, R0-R7, and access to the high registers, R8-R15. Note that registers R0 through R3 hold the first four words of incoming arguments. The microprocessor constructs remaining arguments in the calling function's argument build area, which does not provide space into which R0 through R3 can be spilled.</p>
+<p>Three registers are best left for special uses. These are:</p>
+<ul>
+    <li>R13 for stack operations</li>
+    <li>R14 is the link register (it is used for storing return addresses in the construction of sub routines)</li>
+    <li>R15 is the program counter (PC)</li>
+</ul>
+<p>In most cases, the contents of all the registers can be modified. However,  when debugging applications on a target device with Application TRK, you cannot change the LR, SP, and CPSR registers.</p>
+<p align="center"><img src="images/ARM_registers.PNG" alt="" width="648" height="276" /></p>
+<p align="left" class="figure">Figure 2 - ARM Registers </p>
 <h5>Other  references <b></b></h5>
     <ul>
   <li><a href="../reference/view_registers.htm">Registers</a> view</li>

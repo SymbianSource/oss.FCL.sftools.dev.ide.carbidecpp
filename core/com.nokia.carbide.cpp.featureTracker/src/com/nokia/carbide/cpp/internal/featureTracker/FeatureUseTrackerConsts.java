@@ -16,12 +16,9 @@ package com.nokia.carbide.cpp.internal.featureTracker;
 public class FeatureUseTrackerConsts {
 
 	public static final String CARBIDE_APP_TRK = "Carbide_App_TRK";
-	public static final String CARBIDE_CUSTKITS = "Carbide_CustKits"; // deprecated
 	public static final String CARBIDE_UI_DESIGNER = "Carbide_UI_Designer";
-	public static final String CARBIDE_KERNELAWARE = "Carbide_KernelAware"; // symbian os data view
 	public static final String CARBIDE_SYS_TRK = "Carbide_Sys_TRK";
 	public static final String CARBIDE_PROFILER = "Carbide_Profiler";
-	public static final String CARBIDE_APPDEP = "Carbide_AppDep"; // dependency explorer
 	public static final String CARBIDE_CODESCANNER = "Carbide_CodeScanner";
 	public static final String CARBIDE_OST_TRACE = "Carbide_OST_Trace";
 	public static final String CARBIDE_IDE = "Carbide_IDE"; // did user launch IDE

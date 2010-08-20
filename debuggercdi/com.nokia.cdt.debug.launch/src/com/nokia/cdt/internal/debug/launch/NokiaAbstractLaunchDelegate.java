@@ -47,7 +47,6 @@ import org.eclipse.swt.widgets.Display;
 
 import com.freescale.cdt.debug.cw.core.cdi.Session;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
-import com.nokia.carbide.cpp.debug.kernelaware.OSDataManager;
 import com.nokia.cdt.debug.common.internal.source.lookup.SourceMappingUtils;
 import com.nokia.cdt.debug.cw.symbian.ui.executables.ExecutableTargeted;
 import com.nokia.cdt.internal.debug.launch.ui.ExecutablesTab;
@@ -188,8 +187,6 @@ public abstract class NokiaAbstractLaunchDelegate extends
 	}
 
 	protected void doAdditionalSessionSetup(Session session) {
-		if (session.getOSDataManager() == null)
-			session.setOSDataManager(new OSDataManager(session));		
 		session.setExecutableTargetedCallback(new ExecutableTargeted());
 	}
 
@@ -313,29 +310,6 @@ public abstract class NokiaAbstractLaunchDelegate extends
 		
 		return false;
 	}
-
-	// Move to CDT when the import wizard is integrated. There is another copy
-	// of this function in the import wizard code.
-	private void waitForParsingToComplete() {
-		// After adding the binary parsers to the project we have to wait for
-		// them to finish
-		// before we can extract a good list of source files.
-		String binaryTaskName = ""; //$NON-NLS-1$
-
-		IJobManager jobMan = Job.getJobManager();
-		Job[] jobs = jobMan.find(null);
-
-		for (int i = 0; i < jobs.length; i++) {
-			if (jobs[i].getName().equals(binaryTaskName)) {
-				try {
-					jobs[i].join();
-				} catch (InterruptedException e) {
-				}
-			}
-		}
-	}
-
-
 
 	protected String getTargetLabel(String processName) {
 		String format = "{0} (Launched {1})"; //$NON-NLS-1$

@@ -312,14 +312,6 @@ three (3) years from the date of the distribution of this product by Nokia.
 
 </license>
 
-   <url>
-      <!-- all Carbide.c++ features should use the exact same text for update label and discovery label -->
-      <update label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide203"/>
-      <discovery label="Carbide.c++ Update Site" url="http://tools.ext.nokia.com/updates/carbide203"/>
-   </url>
-
-
-
    <requires>
       <import feature="org.eclipse.platform"/>
       <import plugin="org.eclipse.core.runtime" version="3.2.0" match="compatible"/>

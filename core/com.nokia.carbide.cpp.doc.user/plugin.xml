@@ -47,13 +47,6 @@
 		 <cheatsheet
            composite="false"
 		   category="com.nokia.carbide.how_to.cheatsheets"
-           contentFile="html/cheatsheets/how_to_customize_cmd_groups.xml"
-           id="com.nokia.carbide.cpp.doc.user.customize_cmd_groups"
-           name="Customize Toolbars and Menus"/>
-
-		 <cheatsheet
-           composite="false"
-		   category="com.nokia.carbide.how_to.cheatsheets"
            contentFile="html/cheatsheets/how_to_customize_code_styles.xml"
            id="com.nokia.carbide.cpp.doc.user.customize_code_styles"
            name="Customize Code Styles"/>
@@ -68,15 +61,22 @@
 		 <cheatsheet
            composite="false"
 		   category="com.nokia.carbide.how_to.cheatsheets"
-           contentFile="html/cheatsheets/how_to_customize_key_cmds.xml"
-           id="com.nokia.carbide.cpp.doc.user.customize_key_cmds"
+           contentFile="html/cheatsheets/how_to_customize_cmd_group.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_cmd_group"
+           name="Customize Toolbars and Menus"/>
+
+		 <cheatsheet
+           composite="false"
+		   category="com.nokia.carbide.how_to.cheatsheets"
+           contentFile="html/cheatsheets/how_to_customize_key_commands.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_key_commands"
            name="Customize Key Commands"/>
 
 		 <cheatsheet
            composite="false"
 		   category="com.nokia.carbide.how_to.cheatsheets"
-           contentFile="html/cheatsheets/how_to_customize_share_settings.xml"
-           id="com.nokia.carbide.cpp.doc.user.customize_share_settings"
+           contentFile="html/cheatsheets/how_to_customize_export_settings.xml"
+           id="com.nokia.carbide.cpp.doc.user.customize_export_settings"
            name="Share my Settings..."/>
 
    </extension>
@@ -111,13 +111,13 @@
 			contentFile="html/cheatsheets/stop_mode_cs.xml"
             id="com.nokia.carbide.cpp.doc.user.stop_mode"
             name="Stop Mode On-Device Debugging" />
+			
           <cheatsheet
-                category="com.nokia.carbide.ide.cheatsheets"
-                composite="false"
-                contentFile="$nl$/html/cheatsheets/getStarted_cs.xml"
-                id="com.nokia.carbide.cpp.doc.user.cheatsheet1176819414"
-                name="Creating and debugging an application project">
-          </cheatsheet>
+            category="com.nokia.carbide.ide.cheatsheets"
+            composite="false"
+            contentFile="$nl$/html/cheatsheets/getStarted_cs.xml"
+            id="com.nokia.carbide.cpp.doc.user.cheatsheet1176819414"
+             name="Creating and debugging an application project" />
 
    </extension>
 

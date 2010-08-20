@@ -18,8 +18,6 @@ package com.nokia.cdt.internal.debug.launch;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
 
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.CoreModel;
@@ -31,42 +29,23 @@ import org.eclipse.cdt.ui.CUIPlugin;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.debug.core.ILaunchConfigurationListener;
 import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.core.ILaunchListener;
 import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.ui.AbstractDebugView;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.IDebugUIConstants;
-import org.eclipse.debug.ui.IDebugView;
-import org.eclipse.debug.ui.contexts.DebugContextEvent;
-import org.eclipse.debug.ui.contexts.IDebugContextListener;
-import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IPartListener2;
-import org.eclipse.ui.IStartup;
-import org.eclipse.ui.IWindowListener;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.ui.progress.UIJob;
 import org.osgi.framework.BundleContext;
 
-import com.freescale.cdt.debug.cw.core.CWPlugin;
-import com.freescale.cdt.debug.cw.core.ui.ShowAllVariablesToggleAction;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
@@ -82,7 +61,7 @@ import com.nokia.cpp.internal.api.utils.core.Logging;
 /**
  * The main plugin class to be used in the desktop.
  */
-public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, ILaunchConfigurationListener, IStartup {
+public class LaunchPlugin extends AbstractUIPlugin {
 	
 	public interface ILaunchCreationWizardFactory {
 		ILaunchCreationWizard createLaunchCreationWizard(LaunchOptions launchOptions) throws Exception;
@@ -90,23 +69,13 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 
 	//The shared instance.
 	private static LaunchPlugin plugin;
-	//Resource bundle.
-	private ResourceBundle resourceBundle;
-	
-	private ArrayList<ILaunchConfiguration> recentlyLaunchedConfigs = new ArrayList<ILaunchConfiguration>();
 	
 	public static final String PLUGIN_ID = "com.nokia.cdt.debug.launch"; //$NON-NLS-1$
 
 	public static final String EMULATION_LAUNCH_TYPE = "com.nokia.cdt.debug.launch.emulationLaunch"; //$NON-NLS-1$
-	public static final String PROXY_LAUNCH_TYPE = "com.nokia.cdt.debug.launch.proxyLaunch"; //$NON-NLS-1$
 	
 	public static final String REMOTE_CONNECTIONS_TRK_SERVICE = "com.nokia.carbide.trk.support.service.TRKService"; //$NON-NLS-1$
 	public static final String REMOTE_CONNECTIONS_TRACING_SERVICE = "com.nokia.carbide.trk.support.service.TracingService"; //$NON-NLS-1$
-
-	// Preference constants
-	public static final String Use_New_Project_Assist = "com.nokia.cdt.debug.launch.Use_New_Project_Assist"; //$NON-NLS-1$
-
-	
 
 	
 	/**
@@ -122,9 +91,6 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-
-		DebugPlugin.getDefault().getLaunchManager().addLaunchListener(this);
-		DebugPlugin.getDefault().getLaunchManager().addLaunchConfigurationListener(this);
 	}
 
 	/**
@@ -133,10 +99,6 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 	public void stop(BundleContext context) throws Exception {
 		super.stop(context);
 		plugin = null;
-		resourceBundle = null;
-		
-		DebugPlugin.getDefault().getLaunchManager().removeLaunchListener(this);
-		DebugPlugin.getDefault().getLaunchManager().removeLaunchConfigurationListener(this);
 	}
 
 	/**
@@ -144,32 +106,6 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 	 */
 	public static LaunchPlugin getDefault() {
 		return plugin;
-	}
-
-	/**
-	 * Returns the string from the plugin's resource bundle,
-	 * or 'key' if not found.
-	 */
-	public static String getResourceString(String key) {
-		ResourceBundle bundle = LaunchPlugin.getDefault().getResourceBundle();
-		try {
-			return (bundle != null) ? bundle.getString(key) : key;
-		} catch (MissingResourceException e) {
-			return key;
-		}
-	}
-
-	/**
-	 * Returns the plugin's resource bundle,
-	 */
-	public ResourceBundle getResourceBundle() {
-		try {
-			if (resourceBundle == null)
-				resourceBundle = ResourceBundle.getBundle("com.nokia.cdt.debug.launch.LaunchPluginResources"); //$NON-NLS-1$
-		} catch (MissingResourceException x) {
-			resourceBundle = null;
-		}
-		return resourceBundle;
 	}
 
 	/**
@@ -204,11 +140,7 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 		return getLaunchManager().getLaunchConfigurationType(LaunchPlugin.EMULATION_LAUNCH_TYPE);
 	}
 
-	public ILaunchConfigurationType getProxyLaunchConfigType() {
-		return getLaunchManager().getLaunchConfigurationType(LaunchPlugin.PROXY_LAUNCH_TYPE);
-	}
-
-	protected ILaunchManager getLaunchManager() {
+	private ILaunchManager getLaunchManager() {
 		return DebugPlugin.getDefault().getLaunchManager();
 	}
 	
@@ -448,153 +380,8 @@ public class LaunchPlugin extends AbstractUIPlugin implements ILaunchListener, I
 		return AbstractUIPlugin.imageDescriptorFromPlugin("com.nokia.cdt.debug.launch", path); //$NON-NLS-1$
 	}
 
-	public void launchRemoved(ILaunch launch) {
-		// don't care about this
-	}
-
-	public void launchAdded(ILaunch launch) {
-		// keep a list of recent launches.  we're really just interested in the
-		// order so we can launch the most recently used config if more than one
-		// exists for a particular project/build config combo.
-		ILaunchConfiguration config = launch.getLaunchConfiguration();
-		if (recentlyLaunchedConfigs.contains(config)) {
-			recentlyLaunchedConfigs.remove(config);
-		}
-		
-		// insert at the front of the list
-		recentlyLaunchedConfigs.add(0, config);
-	}
-
-	public void launchChanged(ILaunch launch) {
-		// don't care about this
-	}
-
-	public void launchConfigurationAdded(ILaunchConfiguration configuration) {
-		// don't care about this
-	}
-
-	public void launchConfigurationChanged(ILaunchConfiguration configuration) {
-		// don't care about this
-	}
-
-	public void launchConfigurationRemoved(ILaunchConfiguration configuration) {
-		// remove this launch config from our list of recent launches if necessary
-		if (recentlyLaunchedConfigs.contains(configuration)) {
-			recentlyLaunchedConfigs.remove(configuration);
-		}
-	}
-
-	public void earlyStartup() {
-		UIJob earlyJob = new UIJob("Startup"){//$NON-NLS-1$
-
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-				listenForVariablesView();
-				return Status.OK_STATUS;
-			}};
-			// earlyJob.schedule();
-	}
-
 	public static IProject getSelectedProject() {
 		return CarbideBuilderPlugin.getProjectInContext();
-	}
-	
-	public void addShowAllVariablesAction(final IDebugView variablesView)
-	{
-		UIJob installSAVJob = new UIJob("Show All Variables Action"){//$NON-NLS-1$
-
-			@Override
-			public IStatus runInUIThread(IProgressMonitor monitor) {
-		    	ShowAllVariablesToggleAction showAllVarsAction = new ShowAllVariablesToggleAction();
-		    	variablesView.setAction("com.freescale.cdt.debug.cw.core.ui.showAllVariablesToggle", showAllVarsAction); //$NON-NLS-1$
-
-				IActionBars actionBars = variablesView.getViewSite().getActionBars();
-				IMenuManager viewMenu = actionBars.getMenuManager();
-				viewMenu.add(showAllVarsAction);								
-				return Status.OK_STATUS;
-			}};
-			
-			installSAVJob.schedule();
-		
-	}
-
-	private void addVariablesViewListener(IWorkbenchWindow window)
-	{
-		window.getPartService().addPartListener(new IPartListener2() {
-
-			public void partActivated(IWorkbenchPartReference partRef) {}
-
-			public void partBroughtToTop(IWorkbenchPartReference partRef) {}
-
-			public void partClosed(IWorkbenchPartReference partRef) {}
-
-			public void partDeactivated(IWorkbenchPartReference partRef) {}
-
-			public void partHidden(IWorkbenchPartReference partRef) {}
-
-			public void partInputChanged(IWorkbenchPartReference partRef) {}
-
-			public void partOpened(IWorkbenchPartReference partRef) {
-				if (partRef.getId().equals(IDebugUIConstants.ID_VARIABLE_VIEW))
-				{
-					IDebugView variablesView = (IDebugView) partRef.getPart(true);
-					addShowAllVariablesAction(variablesView);
-				}
-			}
-
-			public void partVisible(IWorkbenchPartReference partRef) {}});
-	}
-	
-	private void setupShowAllVariablesAction(IWorkbenchWindow window)
-	{
-	    IWorkbenchPage page = window.getActivePage();
-	    AbstractDebugView variablesView = (AbstractDebugView) page.findView(IDebugUIConstants.ID_VARIABLE_VIEW);
-        if (variablesView == null)
-			addVariablesViewListener(window);
-        else
-        	addShowAllVariablesAction(variablesView);
-        
-		DebugUITools.getDebugContextManager().getContextService(window).addDebugContextListener(new IDebugContextListener() {
-
-			public void debugContextChanged(DebugContextEvent event) {
-				if ((event.getFlags() & DebugContextEvent.ACTIVATED) > 0) {
-					contextActivated(event.getContext());
-				}
-			}
-
-			private void contextActivated(ISelection context) {
-				CWPlugin.setDebugContext(((IStructuredSelection) context).getFirstElement());
-			}});
-
-	}
-	
-	public void listenForVariablesView()
-	{
-
-		Display.getDefault().asyncExec(new Runnable() {
-			public void run() {
-
-				IWorkbenchWindow[] windows = getDefault().getWorkbench().getWorkbenchWindows();
-				
-				for (int i = 0; i < windows.length; i++) {
-					setupShowAllVariablesAction(windows[i]);
-				}
-				
-				getDefault().getWorkbench().addWindowListener(new IWindowListener() {
-
-					public void windowActivated(IWorkbenchWindow window) {}
-
-					public void windowClosed(IWorkbenchWindow window) {}
-
-					public void windowDeactivated(IWorkbenchWindow window) {}
-
-					public void windowOpened(IWorkbenchWindow window) {
-						setupShowAllVariablesAction(window);
-					}});
-				
-			}
-		});
-		
 	}
 	
 	public static IService getTRKService() {

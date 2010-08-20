@@ -13,6 +13,9 @@
 
 package com.nokia.carbide.cpp.internal.featureTracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtension;
@@ -24,7 +27,6 @@ import com.nokia.carbide.cpp.internal.api.featureTracker.IFeatureUseTracker;
 
 /**
  * Proxy to a client implementing the 'featureUseTracker' extension point.
- * There can only be one client registered as a time to this extension.
  *
  */
 public class FeatureUseTrackerProxy implements IFeatureUseTracker {
@@ -32,40 +34,31 @@ public class FeatureUseTrackerProxy implements IFeatureUseTracker {
 	public static final String FEATURE_USE_EXTENSION_ID = FeatureUseTrackerPlugin.PLUGIN_ID
 			+ ".featureUseTracker"; //$NON-NLS-1$
 
-	private IFeatureUseTracker featureClient;
+	private List<IFeatureUseTracker> featureClients = new ArrayList<IFeatureUseTracker>();
 	private boolean featureClientInited;
 
 	public void startUsingFeature(String featureName) {
-		if (featureClient == null && featureClientInited) {
-			return; // no client plug-in installed, do nothing because we've all ready checked
-
-		} else if (featureClient == null) {
-			featureClient = checkForFeatureExtension();
+		if (!featureClientInited) {
+			checkForClients();
 			featureClientInited = true;
 		}
 
-		if (featureClient != null) {
-			featureClient.startUsingFeature(featureName);
+		for (IFeatureUseTracker client : featureClients) {
+			client.startUsingFeature(featureName);
 		}
-
 	}
 
 	public void stopUsingFeature(String featureName) {
-		if (featureClient == null) {
-			return; // no feature client, nothing to do
-		} else {
-			featureClient.stopUsingFeature(featureName);
+		for (IFeatureUseTracker client : featureClients) {
+			client.stopUsingFeature(featureName);
 		}
-
 	}
 	
 	/**
-	 * Find clients of the 'featureUseTracker' extension point and return the first one
-	 * @return the first client that is found implementing IFeatureUseTracker
+	 * Find clients of the 'featureUseTracker' extension point
 	 */
-	private IFeatureUseTracker checkForFeatureExtension() {
+	private void checkForClients() {
 
-		IFeatureUseTracker result = null;
 		IExtensionRegistry er = Platform.getExtensionRegistry();
 		IExtensionPoint ep = er.getExtensionPoint(FEATURE_USE_EXTENSION_ID);
 		IExtension[] extensions = ep.getExtensions();
@@ -80,22 +73,15 @@ public class FeatureUseTrackerProxy implements IFeatureUseTracker {
 					if (providerElement.getAttribute("class") != null) { //$NON-NLS-1$
 
 						try {
-							result = (IFeatureUseTracker) providerElement
-									.createExecutableExtension("class"); //$NON-NLS-1$
+							featureClients.add((IFeatureUseTracker) providerElement
+									.createExecutableExtension("class")); //$NON-NLS-1$
 						} catch (CoreException e) {
 							// ignore
-							// e.printStackTrace();
 						}
-						return result;
-
 					}
-
 				}
-
 			}
 		}
-		return result;
-
 	}
 
 }

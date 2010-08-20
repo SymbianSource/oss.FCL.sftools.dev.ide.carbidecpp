@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Composite;
 
 class RoundedCornerComposite extends SharedBackgroundComposite {
 
+	private static final int ARC = 9;
 	private final Color background;
 	private final Color outline;
 
@@ -36,11 +37,11 @@ class RoundedCornerComposite extends SharedBackgroundComposite {
 		super.drawBackground(gc, x, y, width, height);
 		if (background != null) {
 			gc.setBackground(background);
-			gc.fillRoundRectangle(0, 0, width, height, 6, 6);
+			gc.fillRoundRectangle(0, 0, width, height, ARC, ARC);
 		}
 		if (outline != null) {
 			gc.setForeground(outline);
-			gc.drawRoundRectangle(2, 2, width - 4, height - 4, 6, 6);
+			gc.drawRoundRectangle(0, 0, width - 1, height - 1, ARC, ARC);
 		}
 	}
 }

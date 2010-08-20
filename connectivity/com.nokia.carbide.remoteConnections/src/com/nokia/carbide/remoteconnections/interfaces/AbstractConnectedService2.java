@@ -197,14 +197,14 @@ public abstract class AbstractConnectedService2 implements IConnectedService2 {
 		return ServiceTester.getInstance().isRegistered(this);
 	}
 
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(boolean enable) {
 		if (!service.isTestable())
 			return;
-		if (enabled && !isEnabled()) {
+		if (enable && !isEnabled()) {
 			Check.checkState(connection.getSettings() != null);
 			ServiceTester.getInstance().register(this);
 		}
-		else if (!enabled && isEnabled()) {
+		else if (!enable) {
 			ServiceTester.getInstance().unregister(this);
 			currentStatus.setEStatus(EStatus.UNKNOWN, 
 					Messages.getString("AbstractConnectedService.NoTestingLabel"), //$NON-NLS-1$

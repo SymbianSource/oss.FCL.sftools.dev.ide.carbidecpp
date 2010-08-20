@@ -330,6 +330,20 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 				openConnectionsView();
 			}
 		});
+
+		new MenuItem(menu, SWT.SEPARATOR);
+		
+		final MenuItem toggleServicesTestingItem = new MenuItem(menu, SWT.CHECK);
+		toggleServicesTestingItem.setText(Messages.getString("ConnectionStatusSelectorContribution.TestServicesMenuLabel")); //$NON-NLS-1$
+		toggleServicesTestingItem.setSelection(RemoteConnectionsActivator.getDefault().getShouldTestServices());
+		toggleServicesTestingItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				boolean state = !RemoteConnectionsActivator.getDefault().getShouldTestServices();
+				RemoteConnectionsActivator.getDefault().setShouldTestServices(state);
+				toggleServicesTestingItem.setSelection(state);
+			}
+		});
 	}
 
 	/**

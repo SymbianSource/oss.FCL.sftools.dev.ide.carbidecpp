@@ -1071,7 +1071,7 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 	private String getInitialNameText() {
 		IConnection connectionToEdit = settingsWizard.getConnectionToEdit();
 		if (connectionToEdit != null) {
-			generatedName = "";
+			generatedName = ""; //$NON-NLS-1$
 			return connectionToEdit.getDisplayName();
 		}
 		

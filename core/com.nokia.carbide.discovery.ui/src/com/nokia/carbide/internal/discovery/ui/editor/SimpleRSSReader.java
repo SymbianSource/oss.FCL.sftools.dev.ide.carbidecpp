@@ -38,6 +38,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.discovery.ui.Messages;
 
 /**
  * A simple RSS reader
@@ -89,22 +90,22 @@ public class SimpleRSSReader {
 		}
 		
 		protected void setField(String element, String value) {
-			if (RSSHandler.TITLE.equals(element))
+			if (RSSHandler.TITLE.equalsIgnoreCase(element))
 				title = value;
-			else if (RSSHandler.LINK.equals(element)) {
+			else if (RSSHandler.LINK.equalsIgnoreCase(element)) {
 				try {
 					link = new URL(value);
 				} catch (MalformedURLException e) {
 					// don't store malformed URLs
-					Activator.logError("Bad URL", e);
+					Activator.logError(Messages.SimpleRSSReader_BadURLError, e);
 				}
 			}
-			else if (RSSHandler.DESCRIPTION.equals(element) || RSSHandler.SUMMARY.equals(element))
+			else if (RSSHandler.DESCRIPTION.equalsIgnoreCase(element) || RSSHandler.SUMMARY.equalsIgnoreCase(element))
 				description = value;
-			else if (RSSHandler.PUBDATE.equals(element)) {
+			else if (RSSHandler.PUBDATE.equalsIgnoreCase(element)) {
 				pubDate = parseRFC822Date(value);
 			}
-			else if (RSSHandler.CATEGORY.equals(element))
+			else if (RSSHandler.CATEGORY.equalsIgnoreCase(element))
 				categories.add(value);
 		}
 
@@ -158,12 +159,12 @@ public class SimpleRSSReader {
 		private static final String CATEGORY = "category"; //$NON-NLS-1$
 		private static final Set<String> charsElements = new HashSet<String>();
 		static {
-			charsElements.add(TITLE);
-			charsElements.add(LINK);
-			charsElements.add(DESCRIPTION);
-			charsElements.add(SUMMARY);
-			charsElements.add(PUBDATE);
-			charsElements.add(CATEGORY);
+			charsElements.add(TITLE.toLowerCase());
+			charsElements.add(LINK.toLowerCase());
+			charsElements.add(DESCRIPTION.toLowerCase());
+			charsElements.add(SUMMARY.toLowerCase());
+			charsElements.add(PUBDATE.toLowerCase());
+			charsElements.add(CATEGORY.toLowerCase());
 		}
 
 		private Channel curChannel;
@@ -177,26 +178,26 @@ public class SimpleRSSReader {
 		
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-			if (charsElements.contains(qName)) {
+			if (charsElements.contains(qName.toLowerCase())) {
 				charsBuf = new StringBuffer();
 			}
-			if (CHANNEL.equals(qName)) {
+			if (CHANNEL.equalsIgnoreCase(qName)) {
 				curChannel = new Channel();
 			}
-			else if (ITEM.equals(qName) && curChannel != null) {
+			else if (ITEM.equalsIgnoreCase(qName) && curChannel != null) {
 				curItem = new Item(curChannel);
 			}
 		}
 
 		@Override
 		public void endElement(String uri, String localName, String qName) throws SAXException {
-			if (CHANNEL.equals(qName)) {
+			if (CHANNEL.equalsIgnoreCase(qName)) {
 				if (curChannel != null && curChannel.isValid() && curChannel.hasItems())
 					rss.addChannel(curChannel);
 				curChannel = null;
 				curItem = null;
 			}
-			else if (ITEM.equals(qName)) {
+			else if (ITEM.equalsIgnoreCase(qName)) {
 				if (curChannel != null && curItem != null && curItem.isValid())
 					curChannel.addItem(curItem);
 				curItem = null;
