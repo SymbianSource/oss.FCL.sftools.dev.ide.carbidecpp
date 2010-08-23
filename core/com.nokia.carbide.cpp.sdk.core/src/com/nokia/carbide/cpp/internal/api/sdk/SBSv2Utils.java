@@ -176,7 +176,6 @@ public class SBSv2Utils {
 	 * @return true if SBSv1 is available, false otherwise
 	 */
 	
-	@SuppressWarnings("unused")
 	public static boolean enableSBSv1Support() {
 		
 		// hard-coded shut off

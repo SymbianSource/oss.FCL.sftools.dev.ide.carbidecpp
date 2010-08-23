@@ -62,7 +62,6 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		this.sdk = sdk;
 	}
 
-	@Override
 	public List<ISymbianBuildContext> getAllBuildConfigurations() {
 		// This really only applies to SBSv1. We never return the full list of configs for SBSv2, only the filtered ones
 		return sbsv2FilteredConetxts;
@@ -77,7 +76,6 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		cachedVariantHRHFile = null;
 	}
 	
-	@Override
 	public List<ISymbianBuildContext> getFilteredBuildConfigurations() {
 		
 		if (aliasToMeaningMap.size() == 0){

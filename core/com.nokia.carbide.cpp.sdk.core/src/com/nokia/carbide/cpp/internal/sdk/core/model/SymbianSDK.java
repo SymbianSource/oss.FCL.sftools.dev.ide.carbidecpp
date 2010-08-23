@@ -16,15 +16,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
@@ -50,7 +45,6 @@ import org.w3c.dom.traversal.NodeIterator;
 import org.xml.sax.SAXException;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISymbianSDKModifier;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
@@ -82,7 +76,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	private Version osVersion;
 	private Map<String, ISDKBuildInfo> buildInfoMap = new HashMap<String, ISDKBuildInfo>();
 	private Map<String, File> prefixFileMap = new HashMap<String, File>();
-	@SuppressWarnings("rawtypes")
 	private Set<Object> sdkFeatures = new HashSet<Object>();
 
 	public SymbianSDK(DeviceType device) {
@@ -90,7 +83,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		scanSDK();
 	}
 
-	@SuppressWarnings("unchecked")
 	public void addSupportedFeature(Object feature) {
 		sdkFeatures.add(feature);
 	}
@@ -380,7 +372,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		
 		try {
 			
-			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			Node node = XPathAPI.selectSingleNode(doc, "sdk/paths");
 			for (NodeIterator nodeIter = XPathAPI.selectNodeIterator(doc, "sdk"); (node = nodeIter.nextNode()) != null;) {
 				NamedNodeMap attribs = node.getAttributes();
@@ -472,7 +463,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 			setOSVersion(new Version("9.5.0"));  // Set a default version that will work with all EKA2
 		
 		try {
-			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 			char[] cbuf = new char[(int) bldInfoFile.length()];
 			Reader reader = new FileReader(bldInfoFile);
 			reader.read(cbuf);
@@ -537,7 +527,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void setSupportFeatures() {
 		scanForWINSCW_UREL();
 		scanForWINSCW_UDEB();
@@ -573,7 +562,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	/**
 	 * Check to see whether or not we should support WINSCW UREL
 	 */
-	@SuppressWarnings("unchecked")
 	private void scanForWINSCW_UREL(){
 		String winscwURELFullPathStr = getEPOCROOT();
 		winscwURELFullPathStr += WINSCW_UREL_DIR;
@@ -590,7 +578,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	/**
 	 * Check to see whether or not we should support WINSCW UDEB
 	 */
-	@SuppressWarnings("unchecked")
 	private void scanForWINSCW_UDEB(){
 		String winscwURELFullPathStr = getEPOCROOT();
 		winscwURELFullPathStr += WINSCW_UDEB_DIR;

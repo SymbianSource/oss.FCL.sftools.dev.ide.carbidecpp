@@ -259,7 +259,6 @@ public class SBSv1BuildInfo implements ISBSv1BuildInfo {
 		return buildContexts;
 	}
 
-	@Override
 	public List<String> getBuiltinMacros(ISymbianBuildContext context) {
 		List<String> macros = new ArrayList<String>();
 		

@@ -13,7 +13,6 @@
 
 package com.nokia.carbide.cpp.internal.api.sdk;
 
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;

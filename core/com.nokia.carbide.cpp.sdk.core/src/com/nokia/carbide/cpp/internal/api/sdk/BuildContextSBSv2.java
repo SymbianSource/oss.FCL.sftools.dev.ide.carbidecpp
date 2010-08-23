@@ -74,12 +74,10 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		this.displayString = sbsv2Alias + " [" + sdk.getUniqueId() + "]"; 
 	}
 
-	@Override
 	public ISymbianSDK getSDK() {
 		return sdk;
 	}
 
-	@Override
 	public String getPlatformString() {
 		
 		if (platform == null){
@@ -97,7 +95,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return platform;
 	}
 
-	@Override
 	public String getTargetString() {
 		if (target == null){
 			return configQueryData.getConfigurationErrorMessage();
@@ -109,7 +106,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return configID;
 	}
 	
-	@Override
 	public String getDisplayString() {
 		Check.checkState(displayString != null);
 		return displayString;
@@ -120,7 +116,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return getConfigID();
 	}
 
-	@Override
 	public String getDefaultDefFileDirectoryName() {
 	
 		String dirName = getDefFileDirectoryNameForPlatform(platform);
@@ -142,7 +137,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return null;
 	}
 	
-	@Override
 	public IPath getCompilerPrefixFile() {
 		
 		if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_GCCE) ||
@@ -156,17 +150,14 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return null;
 	}
 	
-	@Override
 	public List<IDefine> getVariantHRHDefines() {
 		return getCachedData().getVariantHRHDefines();
 	}
 
-	@Override
 	public List<File> getVariantHRHIncludes() {
 		return getCachedData().getPrefixFileIncludes();
 	}
 
-	@Override
 	public List<IDefine> getCompilerPreincludeDefines() {
 		IPath prefixFile = getCompilerPrefixFile();
 		if (prefixFile == null || !prefixFile.toFile().exists()) {
@@ -176,13 +167,11 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return getCachedData().getCompilerMacros(prefixFile);
 	}
 
-	@Override
 	public String getBuildVariationName() {
 		// Not needed for Raptor
 		return "";
 	}
 	
-	@Override
 	public String getSBSv2Alias() {
 		return sbsv2Alias;
 	}
@@ -319,12 +308,10 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return configQueryData;
 	}
 
-	@Override
 	public ISBSv2ConfigQueryData getConfigQueryData() {
 		return configQueryData;
 	}
 
-	@Override
 	public String getToolChain() {
 		
 		if (configQueryData != null) {
@@ -350,7 +337,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return TOOLCHAIN_UNKNOWN;
 	}
 
-	@Override
 	public List<IPath> getSystemIncludes() {
 		if (configQueryData != null) {
 			List<String> includes = configQueryData.getMetaDataIncludes();
@@ -372,13 +358,11 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return null;
 	}
 
-	@Override
 	public List<String> getSupportedTargettypes() {
 		return configQueryData.getTargettypes();
 	}
 
 
-	@Override
 	public void loadConfigurationSettings(ICStorageElement se) {
 		if (sbsv2BuildInfo == null){
 			sbsv2BuildInfo = new SBSv2BuilderInfo();
@@ -387,13 +371,11 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		sbsv2BuildInfo.loadFromStorage(se);
 	}
 
-	@Override
 	public void saveConfigurationSettings(ICStorageElement se, ISymbianBuildContext context) {
 		sbsv2BuildInfo = new SBSv2BuilderInfo((ISBSv2BuildContext)context);
 		sbsv2BuildInfo.saveToStorage(se.createChild(SBSV2_DATA_ID)); 
 	}
 
-	@Override
 	/**
 	 * Get the unique ID for this build configuration.
 	 * For ABLD it is the display name, for SBSv2, it is the builder ID (cconfiguration 'id')
@@ -412,7 +394,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return sbsv2BldInfo.getPrefixFromVariantCfg();
 	}
 
-	@Override
 	public List<IDefine> getBuildMacros() {
 		ISBSv2BuildInfo sbsv2BldInfo = ((ISBSv2BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER));
 		Map<String, String> buildMacroMap = sbsv2BldInfo.getBuildMacros(getSBSv2Alias());
@@ -424,7 +405,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return defines;
 	}
 
-	@Override
 	public List<IDefine> getMetadataMacros() {
 		ISBSv2BuildInfo sbsv2BldInfo = ((ISBSv2BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER));
 		Map<String, String> platMacroMap = sbsv2BldInfo.getMetadataMacros(getSBSv2Alias());
@@ -436,7 +416,6 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		return defines;
 	}
 
-	@Override
 	public IDefine getTargetTypeMacro(String targettype) {
 		ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 		return DefineFactory.createDefine(sbsv2BuildInfo.getTargetTypeMacro(targettype));

@@ -439,29 +439,24 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return getCachedData().getSystemIncludePaths();
 	}
 
-	@Override
 	public void loadConfigurationSettings(ICStorageElement se) {
 		if (se.getName().equals(ARGUMENTS_DATA_ID)) {
 			loadBuildArgsFromStorage(se);
 		}
 	}
 
-	@Override
 	public IBuildArgumentsInfo getBuildArgumentsInfo() {
 		return (IBuildArgumentsInfo)buildArgumentsInfo;
 	}
 	
-	@Override
 	public BuildArgumentsInfo getBuildArgumentsInfoCopy() {
 		return new BuildArgumentsInfo(buildArgumentsInfo);
 	}
 	
-	@Override
 	public void setBuildArgumentsInfo(BuildArgumentsInfo buildArgumentsInfo) {
 		this.buildArgumentsInfo = buildArgumentsInfo;
 	}
 	
-	@SuppressWarnings("deprecation")
 	private void loadBuildArgsFromStorage(ICStorageElement rootStorage) {
 		buildArgumentsInfo = new BuildArgumentsInfo(getSDK());
 		String value = rootStorage.getAttribute(BuildArgumentsInfo.BLDMAKEBLDFILESARGSSTORAGE);
@@ -570,12 +565,10 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		}
 	}
 
-	@Override
 	public void saveConfigurationSettings(ICStorageElement se, ISymbianBuildContext context) {
 		saveBuildArgsToStorage(se.createChild(ARGUMENTS_DATA_ID)); 
 	}
 
-	@Override
 	/**
 	 * Get the unique ID for this build configuration.
 	 * For ABLD it is the display name, for SBSv2, it is the builder ID
@@ -676,7 +669,6 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return variantCFGMacros;
 	}
 
-	@Override
 	public List<IDefine> getBuildMacros() {
 		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		List<IDefine> defines = new ArrayList<IDefine>();
@@ -699,7 +691,6 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return defines;
 	}
 
-	@Override
 	public List<IDefine> getMetadataMacros() {
 		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		List<IDefine> defines = new ArrayList<IDefine>();
@@ -710,7 +701,6 @@ public class BuildContextSBSv1 implements ISBSv1BuildContext {
 		return defines;
 	}
 
-	@Override
 	public IDefine getTargetTypeMacro(String targettype) {
 		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		return DefineFactory.createDefine(sbsv1BuildInfo.getTargetTypeMacro(targettype));

@@ -16,8 +16,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamClass;
 
-import javax.swing.filechooser.FileSystemView;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 

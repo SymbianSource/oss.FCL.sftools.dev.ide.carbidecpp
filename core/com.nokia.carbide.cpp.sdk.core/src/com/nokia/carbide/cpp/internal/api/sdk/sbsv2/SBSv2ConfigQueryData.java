@@ -48,47 +48,38 @@ public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
 		parseQueryConfigResults(queryResult);
 	}
 
-	@Override
 	public String getAlias() {
 		return alias;
 	}
 
-	@Override
 	public String getBuildPrefix() {
 		return buildPrefix;
 	}
 
-	@Override
 	public Map<String, String> getBuildMacros() {
 		return buildMacros;
 	}
 	
-	@Override
 	public List<String> getTargettypes() {
 		return targettypes;
 	}
 
-	@Override
 	public String getConfigurationErrorMessage() {
 		return configurationErrorMessage;
 	}
 
-	@Override
 	public Map<String, String> getMetaDataMacros() {
 		return metaDataMacros;
 	}
 
-	@Override
 	public List<String> getMetaDataIncludes() {
 		return metaDataIncludes;
 	}
 
-	@Override
 	public String getMetaDataVariantHRH() {
 		return metaDataVariantHRH;
 	}
 
-	@Override
 	public String getOutputPathString() {
 		return outputPathString;
 	}
