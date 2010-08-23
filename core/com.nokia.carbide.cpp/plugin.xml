@@ -66,13 +66,13 @@
 		<!-- Splash screen attributes -->
 		<property 
 			name="startupProgressRect" 
-			value="0,257,469,10" />
+			value="0,267,490,10" />
 		<property 
 			name="startupForegroundColor" 
-			value="333333" />
+			value="FFFFFF" />
 		<property 
 			name="startupMessageRect" 
-			value="24,190,441,15" /> 
+			value="20,248,441,15" /> 
 	</product> 
 
    </extension>
