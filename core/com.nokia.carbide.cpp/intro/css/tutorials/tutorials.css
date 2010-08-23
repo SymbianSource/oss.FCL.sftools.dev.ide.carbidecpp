@@ -89,9 +89,9 @@ p #group-description {
 .tutorials-link:hover { border-right : 0px; }
 
 /* added Carbide bullet icons here for topic */
-a#carbide img { background-image : url(../graphics/icons/carbide_bullet_blue.png); }
-a#carbide:hover img { background-image : url(../graphics/icons/carbide_bullet_turq.png); }
+/* a#carbide img { background-image : url(../graphics/icons/carbide_bullet_blue.png); }
+/* a#carbide:hover img { background-image : url(../graphics/icons/carbide_bullet_turq.png); }
 
 /* added Carbide application icon here for tutorials */
-a#carbideapp img { background-image : url(../graphics/icons/obj48/carbideapp_obj.gif); }
-a#carbideapp:hover img { background-image : url(../graphics/icons/obj48/carbideapphov_obj.gif); }
+/* a#carbideapp img { background-image : url(../graphics/icons/obj48/carbideapp_obj.gif); }
+/* a#carbideapp:hover img { background-image : url(../graphics/icons/obj48/carbideapphov_obj.gif); }
