@@ -16,6 +16,7 @@ package com.nokia.carbide.cpp.internal.sdk.core.model;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,7 @@ import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2MinimumVersionException
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -46,7 +48,7 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	private ISymbianSDK sdk;
-	private List<ISymbianBuildContext> sbsv2FilteredConetxts = new ArrayList<ISymbianBuildContext>();
+	private List<ISymbianBuildContext> sbsv2FilteredContexts = new ArrayList<ISymbianBuildContext>();
 	private boolean wasScanned = false;
 	/** from <metadata> element from sbs --query=config[] */
 	private Map<String, Map<String, String>> cachedMetadataMacros = new HashMap<String, Map<String, String>>();
@@ -64,13 +66,13 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	public List<ISymbianBuildContext> getAllBuildConfigurations() {
 		// This really only applies to SBSv1. We never return the full list of configs for SBSv2, only the filtered ones
-		return sbsv2FilteredConetxts;
+		return sbsv2FilteredContexts;
 	}
 
 	public void clearDataFromBuildCache(){
 		aliasToMeaningMap.clear();
 		if (productList != null) productList.clear();
-		sbsv2FilteredConetxts.clear();
+		sbsv2FilteredContexts.clear();
 		cachedBuildMacros.clear();
 		cachedMetadataMacros.clear();
 		cachedVariantHRHFile = null;
@@ -118,7 +120,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			}
 		} 
 		
-		return sbsv2FilteredConetxts;
+		return sbsv2FilteredContexts;
 	}
 
 	private void initSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {
@@ -148,12 +150,12 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		}
 
 		List<String> processedAliasList = new ArrayList<String>();
-		sbsv2FilteredConetxts.clear();
+		sbsv2FilteredContexts.clear();
 		for (String alias : filteredAliasList) {
 			SBSv2ConfigQueryData configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
 			if (configQueryData != null && configQueryData.getConfigurationErrorMessage().trim().length() == 0) {
 				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
-				sbsv2FilteredConetxts.add(sbsv2Context);
+				sbsv2FilteredContexts.add(sbsv2Context);
 				processedAliasList.add(alias);
 			}
 		}
@@ -177,10 +179,35 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 				}
 				SBSv2ConfigQueryData configQueryData = new SBSv2ConfigQueryData(alias, meaning, configQueryXML);
 				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
-				sbsv2FilteredConetxts.add(sbsv2Context);
+				sbsv2FilteredContexts.add(sbsv2Context);
 				SBSv2QueryUtils.storeConfigQueryDataForSDK(sdk, alias, configQueryData);
 			}
 		}
+
+		checkWINSCWSupport();
+	}
+
+	private void checkWINSCWSupport() {
+		List<ISymbianBuildContext> contextList = new ArrayList<ISymbianBuildContext>();
+		for (Iterator<ISymbianBuildContext> itr = sbsv2FilteredContexts.iterator(); itr.hasNext();) {
+			ISBSv2BuildContext context = (ISBSv2BuildContext) itr.next();
+			if (context.getPlatformString().equalsIgnoreCase(ISBSv2BuildContext.TOOLCHAIN_WINSCW)) {
+				if (context.getTargetString().equalsIgnoreCase(ISymbianBuildContext.DEBUG_TARGET)) {
+					if (sdk.getSupportedFeatures().contains(ISymbianSDKFeatures.IS_WINSCW_UDEB_SUPPORTED)){
+						contextList.add(context);
+					}
+				}
+				else
+					if (context.getTargetString().equalsIgnoreCase(ISymbianBuildContext.RELEASE_TARGET)) {
+						if (sdk.getSupportedFeatures().contains(ISymbianSDKFeatures.IS_WINSCW_UREL_SUPPORTED)){
+							contextList.add(context);
+						}
+					}
+			} else {
+				contextList.add(context);
+			}
+		}
+		sbsv2FilteredContexts = contextList;
 	}
 
 	private String getMeaningForVariant(String alias) {
@@ -203,11 +230,11 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		if (platformMacros == null) {
 			platformMacros = new HashMap<String, String>();
 			synchronized (cachedMetadataMacros) {
-				if (sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) {
+				if (sbsv2FilteredContexts == null || sbsv2FilteredContexts.size() == 0) {
 					getFilteredBuildConfigurations();
 				}
-				if (sbsv2FilteredConetxts.size() > 0) {
-					for (ISymbianBuildContext context : sbsv2FilteredConetxts) {
+				if (sbsv2FilteredContexts.size() > 0) {
+					for (ISymbianBuildContext context : sbsv2FilteredContexts) {
 						if (((ISBSv2BuildContext)context).getSBSv2Alias().equalsIgnoreCase(buildAlias)) {
 							platformMacros.putAll(((ISBSv2BuildContext)context).getConfigQueryData().getMetaDataMacros());
 						}
@@ -224,11 +251,11 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		if (buildMacros == null) {
 			buildMacros = new HashMap<String, String>();
 			synchronized (cachedBuildMacros) {
-				if (sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) {
+				if (sbsv2FilteredContexts == null || sbsv2FilteredContexts.size() == 0) {
 					getFilteredBuildConfigurations();
 				}
-				if (sbsv2FilteredConetxts.size() > 0) {
-					for (ISymbianBuildContext context : sbsv2FilteredConetxts) {
+				if (sbsv2FilteredContexts.size() > 0) {
+					for (ISymbianBuildContext context : sbsv2FilteredContexts) {
 						if (((ISBSv2BuildContext)context).getSBSv2Alias().equalsIgnoreCase(buildAlias)) {
 							buildMacros.putAll(((ISBSv2BuildContext)context).getConfigQueryData().getBuildMacros());
 						}
@@ -246,11 +273,11 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	 */
 	public IPath getPrefixFromVariantCfg(){
 		if (cachedVariantHRHFile == null) {
-			if (sbsv2FilteredConetxts == null || sbsv2FilteredConetxts.size() == 0) {
+			if (sbsv2FilteredContexts == null || sbsv2FilteredContexts.size() == 0) {
 				getFilteredBuildConfigurations();
 			}
-			if (sbsv2FilteredConetxts.size() > 0) {
-				for (ISymbianBuildContext context : sbsv2FilteredConetxts) {
+			if (sbsv2FilteredContexts.size() > 0) {
+				for (ISymbianBuildContext context : sbsv2FilteredContexts) {
 					String vStr = ((ISBSv2BuildContext)context).getConfigQueryData().getMetaDataVariantHRH();
 					if (vStr != null) {
 						cachedVariantHRHFile = new Path(vStr);
