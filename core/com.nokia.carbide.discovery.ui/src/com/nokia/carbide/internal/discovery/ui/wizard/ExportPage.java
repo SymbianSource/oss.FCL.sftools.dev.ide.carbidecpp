@@ -21,6 +21,8 @@ package com.nokia.carbide.internal.discovery.ui.wizard;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -46,9 +48,11 @@ class ExportPage extends AbstractImportExportPage {
 	private File file;
 	private Collection<FeatureInfo> featureInfos;
 	private static String saveAsParent;
+	private Set<String> filteredFeatureIds;
 
-	protected ExportPage() {
+	protected ExportPage(Collection<String> filteredFeatureIds) {
 		super("ExportPage"); //$NON-NLS-1$
+		this.filteredFeatureIds = new HashSet<String>(filteredFeatureIds);
 		setTitle(Messages.ExportPage_Title);
 		setDescription(Messages.ExportPage_Description);
 	}
@@ -100,13 +104,24 @@ class ExportPage extends AbstractImportExportPage {
 		UIJob j = new UIJob(Messages.ExportPage_GetFeaturesJobName) {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
-				viewer.setInput(P2Utils.getInstalledFeatures(monitor));
+				viewer.setInput(getInstalledFeatureInfos(monitor));
 				updateViewer();
 				return Status.OK_STATUS;
-			} 
+			}
 		};
 		j.schedule();
 	}
+	
+	private Collection<FeatureInfo> getInstalledFeatureInfos(IProgressMonitor monitor) {
+		Collection<FeatureInfo> featureInfos = new ArrayList<FeatureInfo>();
+		// filter out the filtered ids
+		for (FeatureInfo featureInfo : P2Utils.getInstalledFeatures(monitor)) {
+			if (!filteredFeatureIds.contains(featureInfo.getId()))
+				featureInfos.add(featureInfo);
+		}
+		
+		return featureInfos;
+	} 
 	
 	protected boolean validatePage() {
 		setErrorMessage(null);
