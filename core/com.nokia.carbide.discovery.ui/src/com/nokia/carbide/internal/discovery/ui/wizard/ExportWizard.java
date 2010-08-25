@@ -88,7 +88,7 @@ public class ExportWizard extends Wizard implements IExportWizard {
 			try {
 				Streamer.writeToXML(new FileOutputStream(file), data);
 			} catch (Exception e) {
-				Activator.logError("Could not write installed features file: " + file, e);
+				Activator.logError(Messages.ExportWizard_WriteInstalledFeaturesError + file, e);
 			}
 		}
 		else {
@@ -96,7 +96,7 @@ public class ExportWizard extends Wizard implements IExportWizard {
 				ImportExportData data = Streamer.readFromXML(new FileInputStream(file));
 				installedFeatures = data.getFeatureInfos();
 			} catch (Exception e) {
-				Activator.logError("Could not read installed features file: " + file, e);
+				Activator.logError(Messages.ExportWizard_ReadInstalledFeaturesError + file, e);
 			}
 		}
 		
