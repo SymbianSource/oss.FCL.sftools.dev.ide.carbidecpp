@@ -65,8 +65,10 @@ public class Messages extends NLS {
 	public static String ExportPage_Title;
 	public static String ExportPage_ViewerGroupLabel;
 	public static String ExportWizard_ErrorTitle;
+	public static String ExportWizard_ReadInstalledFeaturesError;
 	public static String ExportWizard_Title;
 	public static String ExportWizard_WriteFileError;
+	public static String ExportWizard_WriteInstalledFeaturesError;
 	public static String FeatureInstallOperation_ConfiguringTaskName;
 	public static String FeatureInstallOperation_IdLabel;
 	public static String FeatureInstallOperation_MissingFeaturesError;

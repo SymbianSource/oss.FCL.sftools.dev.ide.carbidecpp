@@ -70,4 +70,9 @@ class FeatureInfo {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return getId() + " " + getVersion().toString(); //$NON-NLS-1$
+	}
 }
