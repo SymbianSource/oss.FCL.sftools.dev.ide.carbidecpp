@@ -33,6 +33,7 @@ public interface ISymbianSDK {
 	/**
 	 * Value given for an SDK that is created when a build configuration
 	 * references an non-existent SDK.
+	 * @since 3.0
 	 */
 	public static String BAD_EPOCROOT = "/BAD_SDK_ROOT";
 	

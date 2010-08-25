@@ -103,6 +103,7 @@ public interface ISymbianBuildContext {
 	 * files could be different for different context's since the platform can potentially change the list of include
 	 * paths.
 	 * @return a list of header files which may be empty
+	 * @since 3.0
 	 */
 	public List<File> getVariantHRHIncludes();
 
@@ -110,6 +111,7 @@ public interface ISymbianBuildContext {
 	 * Returns the list of compiler macros from the compiler prefix file (if any). This is the result
 	 * of preprocessing the actual compiler pre-include file, e.g. rvct.h or gcce.h. WINSCW platform builds will return an empty list.
 	 * @return a list of macros which may be empty.
+	 * @since 3.0
 	 */
 	public List<IDefine> getCompilerPreincludeDefines();
 	

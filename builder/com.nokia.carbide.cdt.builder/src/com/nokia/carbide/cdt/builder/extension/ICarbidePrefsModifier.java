@@ -24,7 +24,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
  * 
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
- * since 3.0
+ * @since 3.0
  *
  */
 public interface ICarbidePrefsModifier {
