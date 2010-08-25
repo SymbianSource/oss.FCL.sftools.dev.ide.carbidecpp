@@ -17,25 +17,46 @@
 package com.nokia.carbide.cdt.internal.builder;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
-import org.eclipse.cdt.core.settings.model.*;
+import org.eclipse.cdt.core.settings.model.CIncludePathEntry;
+import org.eclipse.cdt.core.settings.model.CMacroEntry;
+import org.eclipse.cdt.core.settings.model.CMacroFileEntry;
+import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
+import org.eclipse.cdt.core.settings.model.ICLanguageSettingEntry;
+import org.eclipse.cdt.core.settings.model.ICProjectDescription;
+import org.eclipse.cdt.core.settings.model.ICSettingEntry;
+import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.cdt.core.settings.model.extension.CLanguageData;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
-import org.eclipse.core.runtime.*;
-import org.eclipse.core.runtime.content.*;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.content.IContentType;
+import org.eclipse.core.runtime.content.IContentTypeManager;
+import org.eclipse.core.runtime.content.IContentTypeSettings;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
 import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 /**
@@ -132,11 +153,11 @@ public class CarbideLanguageData extends CLanguageData {
 			Set<ICLanguageSettingEntry> macros = new HashSet<ICLanguageSettingEntry>();
 			macros.addAll(macroEntries);
 			
-			for (IDefine define : carbideBuildConfig.getVariantHRHDefines()) {
+			for (IDefine define : carbideBuildConfig.getBuildContext().getVariantHRHDefines()) {
 				macros.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 			}
 
-			for (IDefine define : carbideBuildConfig.getCompilerMacros()) {
+			for (IDefine define : carbideBuildConfig.getBuildContext().getCompilerPreincludeDefines()) {
 				macros.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 			}
 			
@@ -174,10 +195,18 @@ public class CarbideLanguageData extends CLanguageData {
 		
 		CarbideProjectInfo cpi = (CarbideProjectInfo)carbideBuildConfig.getCarbideProject();
 		IProject project = cpi.getProject();
+		ISymbianSDK sdk = carbideBuildConfig.getSDK();
+		ISymbianBuildContext context = carbideBuildConfig.getBuildContext();
 
 		// add platform includes first
-		IBSFPlatform platform = carbideBuildConfig.getSDK().getBSFCatalog().findPlatform(carbideBuildConfig.getPlatformString());
-		ISBVPlatform sbvPlat = carbideBuildConfig.getSDK().getSBVCatalog().findPlatform(carbideBuildConfig.getPlatformString());
+		IBSFPlatform platform = null;
+		ISBVPlatform sbvPlat = null;
+		if (context instanceof ISBSv1BuildContext) {
+			// SBSv1 only
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			platform = sbsv1BuildInfo.getBSFCatalog().findPlatform(carbideBuildConfig.getPlatformString());
+			sbvPlat = sbsv1BuildInfo.getSBVCatalog().findPlatform(carbideBuildConfig.getPlatformString());
+		} 
 		if (platform != null) {
 			IPath[] systemIncludePaths = platform.getSystemIncludePaths();
 			for (IPath path : systemIncludePaths) {
@@ -212,6 +241,28 @@ public class CarbideLanguageData extends CLanguageData {
 				includeEntries.add(new CIncludePathEntry(incPath, ICSettingEntry.LOCAL));
 			}
 		}
+		
+		if (context instanceof ISBSv2BuildContext) {
+			// SBSv2 only system includes
+			if (((ISBSv2BuildContext)context).getSystemIncludes() != null){
+			
+				for (IPath incPath : ((ISBSv2BuildContext)context).getSystemIncludes()) {
+					IPath projRelIncPath = FileUtils.removePrefixFromPath(projectPath, incPath);
+					if (projRelIncPath != null) {
+						includeEntries.add(new CIncludePathEntry(projectPath.append(projRelIncPath), 0));
+					} else {
+						includeEntries.add(new CIncludePathEntry(incPath, 0));
+					}
+	
+					// remove duplicate system includes
+					File inc = incPath.toFile();
+					if (systemIncludes.contains(inc)) {
+						systemIncludes.remove(inc);
+					}
+				}
+			}
+		}
+		
 		for (File inc : systemIncludes) {
 			// convert the absolute path to project relative if possible
 			IPath incPath = new Path(inc.toString());
@@ -224,8 +275,11 @@ public class CarbideLanguageData extends CLanguageData {
 		}
 		
 		// add OEM dir
-		File oemDir = carbideBuildConfig.getSDK().getIncludePath().append("oem").toFile();
-		if (oemDir.exists()) {
+		File oemDir = null;
+		if (sdk.getIncludePath() != null){
+			oemDir = sdk.getIncludePath().append("oem").toFile();
+		}
+		if (oemDir != null && oemDir.exists()) {
 			includeEntries.add(new CIncludePathEntry(new Path(oemDir.getAbsolutePath()), 0));
 		}
 		
@@ -233,59 +287,31 @@ public class CarbideLanguageData extends CLanguageData {
 		macroEntries = new ArrayList<ICLanguageSettingEntry>(0);
 
 		lastUseMMPMacrosValue = cpi.shouldUseMMPMacros();
-
-		Map<String, String> macros = new HashMap<String, String>();
-		
-		// platform macros
-		for (String platMacro : carbideBuildConfig.getSDK().getPlatformMacros(carbideBuildConfig.getPlatformString())) {
-			macros.put("__" + platMacro + "__", ""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		}
-		
-		// built in macros
-		for (String builtinMacro : carbideBuildConfig.getBuiltinMacros()) {
-			macros.put(builtinMacro, ""); //$NON-NLS-1$
-		}
-		
-		// vendor macros (e.g. __SERIES60_3x__)
-		for (String builtinMacro : carbideBuildConfig.getSDK().getVendorSDKMacros()) {
-			macros.put(builtinMacro, ""); //$NON-NLS-1$
-		}
-	
-		// target type macros (e.g. __DLL__)
-		List<String> targetTypes = EpocEngineHelper.getTargetTypesForBuildConfiguration(carbideBuildConfig);
-		// only add these if there is one target type.  this is the case when there is only one mmp file, or
-		// more than one but all have the same target type macro.  it wouldn't make sense to add different
-		// target type macros like __EXE__ and __DLL__.
-		if (targetTypes.size() == 1) {
-			for (String targetTypeMacro : carbideBuildConfig.getSDK().getTargetTypeMacros(targetTypes.get(0))) {
-				macros.put(targetTypeMacro, ""); //$NON-NLS-1$
-			}
-		}
 		
 		// get the list of all mmp files selected for the build configuration
 		// a null buildComponents list means all MMPs are included - so leave it null when indexing all files
 		List<String> buildComponents = null;
 		if (!EpocEngineHelper.getIndexAllPreference())
 			buildComponents = carbideBuildConfig.getCarbideProject().isBuildingFromInf() ? null : carbideBuildConfig.getCarbideProject().getInfBuildComponents();
-
-		// if the pref option is enabled, then check the mmp's for MACRO's.
-		if (cpi.shouldUseMMPMacros()) {
-			List<IPath> mmps = EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig);
-			for (IPath mmp : mmps) {
-				if (buildComponents != null && !TextUtils.listContainsIgnoreCase(buildComponents, mmp.lastSegment()))
-					continue;
-				
-				List<String> mmpMacros = EpocEngineHelper.getMMPMacrosForBuildConfiguration(mmp, carbideBuildConfig);
-				for (String mmpMacro : mmpMacros) {
-					// Symbian docs say they are converted to upper case always
-					macros.put(mmpMacro.toUpperCase(), ""); //$NON-NLS-1$
+		
+		List<IPath> mmpFiles = null;
+		List<IDefine> projectDefines = new ArrayList<IDefine>();
+		if (buildComponents != null){
+			// Get the list of mmp files we are building so we only get those macros
+			List<IPath> tmpMMPFiles = EpocEngineHelper.getMMPFilesForBuildConfiguration(carbideBuildConfig);
+			mmpFiles = new ArrayList<IPath>();
+			for (IPath mmp : tmpMMPFiles){
+				if (TextUtils.listContainsIgnoreCase(buildComponents, mmp.lastSegment())){
+					mmpFiles.add(mmp);
 				}
 			}
-		}
-
+		} 
+		
+		projectDefines = EpocEngineHelper.getGlobalDefinesForConfiguration(carbideBuildConfig, mmpFiles);
+		
 		// now create the path entries for the macros
-		for (String macro : macros.keySet()) {
-			macroEntries.add(new CMacroEntry(macro, macros.get(macro), 0));
+		for (IDefine define : projectDefines) {
+			macroEntries.add(new CMacroEntry(define.getName(), define.getExpansion(), 0));
 		}
 		
 		// get the list of files the engine references when parsing the bld.inf and mmp files
@@ -306,7 +332,7 @@ public class CarbideLanguageData extends CLanguageData {
 		// the cache.
 		cacheTimestamp = System.currentTimeMillis();
 	}
-	
+
 	private void persistCache() {
 		// persist the cache between IDE launches.
 		try {

@@ -138,9 +138,6 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 			helpCompilerNames = new String[] { HELP_COMPILER_WIN32, HELP_COMPILER_PERL };
 		} else {
 			
-			// TODO: the infrastructure for the techview/bldhelp.mk is a total mess 
-			// currently, and it also appears that help is obsolete in recent devkits,
-			// so just drop this
 			if (!SBSv2Utils.enableSBSv1Support() && isSBSv2Project(template))
 				return null;
 			
@@ -178,7 +175,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 				// the 3.2 CustKit
 				// has the middleware folder but doesn't use the new build
 				// macros for include paths
-				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
+				if (middleWareInclude.exists()) {
 					// add symbol as at least one build config is a CustKit
 					S60_50_Macros_String = S60_INC_MACROS;
 					break;
@@ -187,7 +184,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 				middleWareInclude = new File(sdk.getEPOCROOT(), S60_MIDDWARE_INC2);
 				File sfoPath = new File(sdk.getEPOCROOT(), S60_SF_FOLDER);
 				// check for middleware paths and /sf path (if SFO kit)
-				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists() && sfoPath.exists()) {
+				if (middleWareInclude.exists() && sfoPath.exists()) {
 					// add symbol as at least one build config is a CustKit
 					S60_50_Macros_String = S60_INC_MACROS_SF;
 					break;
@@ -195,7 +192,7 @@ public class CheckS60CustKitSupport extends AbstractProjectProcess {
 				
 				// try newer middleware paths moved to app layer includes
 				
-				if (sdk.getSDKVersion().getMajor() >= 5 && middleWareInclude.exists()) {
+				if (middleWareInclude.exists()) {
 					// add symbol as at least one build config is a CustKit
 					File domainPath = new File(sdk.getEPOCROOT(), S60_DOMAND_OSTEXT_PLAT_PATHS);
 					if (domainPath.exists()){

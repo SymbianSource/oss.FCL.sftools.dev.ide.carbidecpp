@@ -14,14 +14,13 @@
 * Description: 
 *
 */
-package com.nokia.carbide.cdt.builder.project;
+package com.nokia.carbide.cpp.internal.api.sdk;
 
 /**
  * IBuildArgumentsInfo represents one instance of configuration data for the Arguments tab.
  * This interface only applies for the Symbian 'abld' build system (SBSv1)
  * @see ICarbideBuildConfiguration
  * 
- * @deprecated use BuildArgumentsInfo directly
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IBuildArgumentsInfo {

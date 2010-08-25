@@ -437,7 +437,6 @@ public class BldInfView extends ViewASTBase implements IBldInfView {
 	 */
 	@Override
 	protected boolean internalMerge(IASTTranslationUnit oldTu) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

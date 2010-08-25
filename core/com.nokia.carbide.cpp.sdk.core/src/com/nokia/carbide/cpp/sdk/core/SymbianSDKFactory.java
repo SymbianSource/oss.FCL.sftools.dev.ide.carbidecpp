@@ -38,35 +38,21 @@ public class SymbianSDKFactory {
 	 */
 	public static ISymbianSDK createInstance(String id, 
 											 String epocRoot, 
-											 String name, 
-											 Version osVersion,
-											 String osBranch,
-											 Version sdkVersion, 
-											 boolean isDefault){
+											 Version osVersion) {
 		DeviceType newDeviceEntry = DevicesFactory.eINSTANCE.createDeviceType();
 		newDeviceEntry.setId(id);
 		newDeviceEntry.setEpocroot(epocRoot);
-		newDeviceEntry.setName(name);
-		if (isDefault){
-			newDeviceEntry.setDefault(DefaultType.YES_LITERAL);
-		} else {
-			newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
-		}
+		newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
 		
 		SymbianSDK sdk = new SymbianSDK(newDeviceEntry); // create SDK and set the attribs found in devices.xml
-		// Set other essential paramaters not in devices.xml
-		
-		if (sdk.getOSVersion().getMajor() != 0){
+		// Set other essential parameters not in devices.xml
+		if (sdk.getOSVersion().getMajor() != 0) {
 			// use the version detected from the SDK creation
 		} else {
 			sdk.setOSVersion(osVersion);
-			sdk.setOSSDKBranch(osBranch);
-		}
-		
-		if (sdk.getSDKVersion().getMajor() == 0){
-			sdk.setSDKVersion(sdkVersion);
 		}
 		
 		return sdk;
 	}
+	
 }

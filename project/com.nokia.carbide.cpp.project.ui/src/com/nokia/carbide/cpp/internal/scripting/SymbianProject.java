@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IProject;
 
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -51,7 +51,7 @@ public class SymbianProject {
 					// " is not on the same drive as SDK: " + sdkName
 					// + " and could not import: " + projectName);
 				}
-				contexts.add(new SymbianBuildContext(sdk, currMap
+				contexts.add(new BuildContextSBSv1(sdk, currMap
 						.get(KEY_PLATFORM), currMap.get(KEY_TARGET)));
 			}
 		}

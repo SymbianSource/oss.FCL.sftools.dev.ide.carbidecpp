@@ -19,6 +19,7 @@ package com.nokia.carbide.cpp.internal.sdk.core.model;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 
@@ -39,11 +40,16 @@ public class SDKManagerRaptorOnly extends AbstractSDKManager {
 	 * @see com.nokia.carbide.cpp.internal.sdk.core.model.AbstractSDKManager#doScanSDKs()
 	 */
 	@Override
-	protected boolean doScanSDKs() {
+	protected boolean doScanSDKs(IProgressMonitor monitor) {
+		
+		scanCarbideSDKCache();
 		
 		String message = SBSv2Utils.scanSBSv2();
 		if (message != null) {
-			reportError(message);
+			// If Raptor is not installed version will be 0.0
+			// and a message will be displayed saying that
+			// the minimum version is not met.
+			//reportError(message);
 			
 			// no good will come from checking over and over...
 			return true;
@@ -122,12 +128,6 @@ public class SDKManagerRaptorOnly extends AbstractSDKManager {
 		return new File(System.getProperty("user.home"), "devices.xml");
 	}
 
-	/* (non-Javadoc)
-	 * @see com.nokia.carbide.cpp.sdk.core.ISDKManager#setDefaultSDK(com.nokia.carbide.cpp.sdk.core.ISymbianSDK)
-	 */
-	public void setDefaultSDK(ISymbianSDK sdk) {
-		// ignore
-	}
 
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.cpp.sdk.core.ISDKManager#updateSDK(com.nokia.carbide.cpp.sdk.core.ISymbianSDK)

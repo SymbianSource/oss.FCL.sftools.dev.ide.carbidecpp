@@ -16,21 +16,31 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.images;
 
-import com.nokia.carbide.cdt.builder.ImageMakefileViewPathHelper;
-import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cpp.epoc.engine.image.*;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPAIFInfo;
-import com.nokia.carbide.cpp.internal.ui.images.CachingImageLoader;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.ui.images.*;
-import com.nokia.cpp.internal.api.utils.core.ProjectUtils;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.osgi.framework.Version;
 
-import java.util.*;
+import com.nokia.carbide.cdt.builder.ImageMakefileViewPathHelper;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.epoc.engine.image.IImageSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IImageSourceReference;
+import com.nokia.carbide.cpp.epoc.engine.image.IMultiImageSource;
+import com.nokia.carbide.cpp.epoc.engine.image.ImageFormat;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPAIFInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.ui.images.CachingImageLoader;
+import com.nokia.carbide.cpp.ui.images.IImageContainerEditorProvider;
+import com.nokia.carbide.cpp.ui.images.IImageContainerModel;
+import com.nokia.carbide.cpp.ui.images.IImageContainerModelListener;
+import com.nokia.carbide.cpp.ui.images.IImageLoader;
+import com.nokia.carbide.cpp.ui.images.IImageModel;
+import com.nokia.carbide.cpp.ui.images.ImageContainerModelBase;
+import com.nokia.carbide.cpp.ui.images.ImageModelFactory;
+import com.nokia.cpp.internal.api.utils.core.ProjectUtils;
 
 /**
  * Factory for Carbide-specific image models and containers
@@ -280,30 +290,8 @@ public abstract class CarbideImageModelFactory extends ImageModelFactory {
 	 * @return flag
 	 */
 	public static boolean doesProjectSupportSVG(ICarbideProjectInfo projectInfo) {
-		boolean supportsSVG = false;
-		if (projectInfo == null)
-			return true;
-		
-		List<ICarbideBuildConfiguration> buildConfigurations = projectInfo.getBuildConfigurations();
-		for (ICarbideBuildConfiguration buildConfiguration : buildConfigurations) {
-			ISymbianSDK sdk = buildConfiguration.getSDK();
-			if (sdk.isS60()) {
-				Version version = sdk.getSDKVersion();
-				if (version != null) {
-					if (version.compareTo(new Version(2, 8, 0)) >= 0) {
-						supportsSVG = true;
-						break;
-					}
-				}
-            }
-			if (sdk.getFamily().equals(ISymbianSDK.UIQ_FAMILY_ID)) {
-				Version version = sdk.getSDKVersion();
-				supportsSVG |= version != null && version.compareTo(new Version(3, 1, 0)) >= 0;
-				if (supportsSVG)
-					break;
-			}
-        }
-		return supportsSVG;
+		// SVG supported after 2.8 on S60
+		return true;
 	}
 
 	/**
@@ -313,21 +301,8 @@ public abstract class CarbideImageModelFactory extends ImageModelFactory {
 	 */
 	public static IImageConverterFactory getImageConverterFactory(
 			ICarbideProjectInfo projectInfo) {
-		IImageConverterFactory imageConverterFactory = null;
-		if (projectInfo != null) {
-			List<ICarbideBuildConfiguration> buildConfigurations = projectInfo.getBuildConfigurations();
-			for (ICarbideBuildConfiguration buildConfiguration : buildConfigurations) {
-				ISymbianSDK sdk = buildConfiguration.getSDK();
-				if (sdk.getFamily().equals(ISymbianSDK.UIQ_FAMILY_ID)) {
-					imageConverterFactory = new UIQImageConverterFactory();
-					break;
-				}
-	        }
-		}
-		if (imageConverterFactory == null) {
-			imageConverterFactory = new SymbianImageConverterFactory();
-		}
-		return imageConverterFactory;
+		
+		return new SymbianImageConverterFactory();
 	}
 
 	/**

@@ -20,12 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogSettings;
@@ -35,12 +37,17 @@ import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
 import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 public class BldInfImportWizard extends Wizard implements IImportWizard {
 	
@@ -61,10 +68,12 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 		setDefaultPageImageDescriptor(CarbideUIPlugin.getSharedImages().getImageDescriptor(ICarbideSharedImages.IMG_IMPORT_BLDINF_WIZARD_BANNER));
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!sdkMgr.checkDevicesXMLSynchronized()){
-			if (sdkMgr instanceof ISDKManagerInternal){
-				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
-				sdkMgrInternal.fireDevicesXMLChanged();
+		if (HostOS.IS_WIN32){
+			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
+				if (sdkMgr instanceof ISDKManagerInternal){
+					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
+					sdkMgrInternal.fireDevicesXMLChanged();
+				}
 			}
 		}
 	}
@@ -78,16 +87,20 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
     	
 		final String projectName = projectPropertiesPage.getProjectName();
 		final IPath rootDirectory = projectPropertiesPage.getRootDirectory();
+		final boolean isLinkedProject = projectPropertiesPage.linkedResourcesEnabled();
 		
 		// calculate the project relative path to the bld.inf file.
 		IPath absoluteBldInfPath = new Path(getBldInfFile());
 		assert(rootDirectory.isPrefixOf(absoluteBldInfPath));
 		final String projectRelativePath = absoluteBldInfPath.removeFirstSegments(rootDirectory.segmentCount()).setDevice(null).toOSString();
+		final String absoluteInfPath = absoluteBldInfPath.toOSString();
 		
 		// if all mmps are checked then don't pass any to createProject.  that
 		// way the project setting will be set to build bld.inf.
 		final List<String> components = mmpSelectionPage.areAllMakMakeReferencesChecked() ? new ArrayList<String>(0) : mmpSelectionPage.getSelectedMakMakeReferences();
 
+		final List<String> refs = getSelectedMakMakeReferences();
+		
 		final List<ISymbianBuildContext> selectedConfigs = getSelectedConfigs();
 
 		// run this in a workspace job
@@ -96,13 +109,41 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 			public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 				monitor.beginTask(Messages.BldInfImportWizard_CreatingProjectJobName, IProgressMonitor.UNKNOWN);
 
-				IProject newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
-        		monitor.worked(1);
+				// write the debug target mmp setting - use the last mmp in
+				// the list of selected mak make files.
+				// We also need to check for project test mmpfiles and add that only if the project is only comprised of test mmp files
+				String debugMMP = ""; //$NON-NLS-1$
+				boolean hasOneNormalMMP = false; // Don't add test mmp if there's a regular MMP
+				for (String ref : refs) {
+					if (ref.toLowerCase().endsWith(".mmp")){
+						hasOneNormalMMP = true;
+						debugMMP = ref;
+					}
+					
+					if (hasOneNormalMMP == false){
+						if (ref.toLowerCase().endsWith(".mmp " + ICarbideProjectInfo.TEST_COMPONENT_LABEL)) { //$NON-NLS-1$
+			    			debugMMP = ref;
+		    				debugMMP = debugMMP.substring(0, debugMMP.indexOf( " " + ICarbideProjectInfo.TEST_COMPONENT_LABEL));
+			    		}
+					}
+				} // for
 
+				IProject newProject = null;
+				if (isLinkedProject){
+					newProject = ProjectCorePlugin.createProject(projectName, null);
+					newProject.getFolder(rootDirectory.lastSegment()).createLink(rootDirectory.toFile().toURI(), IResource.BACKGROUND_REFRESH, new NullProgressMonitor());
+				} else {
+					newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
+				}
+        		monitor.worked(1);
+        		
     			newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(useSBSv2Builder()));
 
-    			// TODO pass PKG file path to postProjectCreatedActions, currently passing null
-        		ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, null, null, monitor);
+    			if (isLinkedProject){
+    				ProjectCorePlugin.postProjectCreatedActions(newProject, absoluteInfPath, selectedConfigs, components, debugMMP, null, monitor);
+    			} else {
+    				ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
+    			}
         		
         		if (monitor.isCanceled()) {
 	    			// the user canceled the import so delete the project

@@ -57,14 +57,12 @@ import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
 import com.nokia.carbide.cdt.builder.PKGViewPathHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
 import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv1Builder;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv2Builder;
 import com.nokia.carbide.cdt.internal.builder.ICarbideBuilder;
-import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPSelectionDialog;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
@@ -76,9 +74,9 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -195,7 +193,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 			}
 			
 			if (defaultConfig != null) {
-				CarbideCommandLauncher launcher = new CarbideCommandLauncher(currentProject, monitor, getParserIdArray(defaultConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
+				CarbideCommandLauncher launcher = new CarbideCommandLauncher(currentProject, monitor, defaultConfig.getErrorParserList(), cpi.getINFWorkingDirectory());
 				launcher.showCommand(true);
 				invokeBuild(defaultConfig, launcher, subMonitor.newChild(1), true);
 			} else {
@@ -340,7 +338,6 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 			// build ROM if necessary
 			subMonitor = SubMonitor.convert(monitor, 1);
-			invokeROMBuilder(buildConfig, launcher, subMonitor.newChild(1));
 
 		} else {
 			launcher.writeToConsole("\n***Errors were detected in build. See the Problems or Console view for details.\n");
@@ -382,7 +379,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		getBuilder(cpi.getProject()).preCleanStep(buildConfig);
 
-		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, getParserIdArray(buildConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
+		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, buildConfig.getErrorParserList(), cpi.getINFWorkingDirectory());
 		launcher.showCommand(true);
 
 		calculateComponentLists(buildConfig, launcher);
@@ -425,7 +422,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		IProject project = cpi.getProject();
 		
-		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, getParserIdArray(buildConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
+		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, buildConfig.getErrorParserList(), cpi.getINFWorkingDirectory());
 		launcher.showCommand(true);
 
 		// make sure the project is built
@@ -461,7 +458,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();		
 		List<ISymbianBuildContext> buildConfigList = new ArrayList<ISymbianBuildContext>(1);
-		buildConfigList.add(buildConfig);
+		buildConfigList.add(buildConfig.getBuildContext());
 		
 		if (clearMarkers) {
     		try {
@@ -623,7 +620,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		final List<IPath> rules = new ArrayList<IPath>();
 		
 		EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new MMPDataRunnableAdapter() {
 
 				public Object run(IMMPData mmpData) {
@@ -719,7 +716,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	}
 
 	protected static void runPreBuildChecks(ICarbideBuildConfiguration buildConfig, CarbideCommandLauncher launcher) {
-		if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM) && BuilderPreferencePage.useBuiltInX86Vars()) {
+		if (buildConfig.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM) && BuilderPreferencePage.useBuiltInX86Vars()) {
 			X86BuildPlugin.checkForUpdates();
 		}
 	}
@@ -733,7 +730,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();		
 		List<ISymbianBuildContext> buildConfigList = new ArrayList<ISymbianBuildContext>(1);
-		buildConfigList.add(buildConfig);
+		buildConfigList.add(buildConfig.getBuildContext());
 
 		// get the list of mmp/make files for this build configuration
 		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfigList, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
@@ -821,6 +818,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param bldmakeArgs array of String arguments to be passed to bldmake
 	 * @param removeMarkers project markers will be removed when true
 	 * @return true if operation was successful, false otherwise
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	public static boolean invokeBldmakeCommand(ICarbideBuildConfiguration buildConfig, CarbideCommandLauncher launcher, String[] bldmakeArgs, boolean removeMarkers) {
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
@@ -844,6 +842,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param abldArgs array of String arguments to be passed to abld
 	 * @param removeMarkers project markers will be removed when true
 	 * @return true if operation was successful, false otherwise
+	 * @deprecated - ABLD is deprecated
 	 */
 	public static boolean invokeAbldCommand(ICarbideBuildConfiguration buildConfig, CarbideCommandLauncher launcher, String[] abldArgs, boolean removeMarkers) {
 		ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
@@ -899,16 +898,25 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param config the build configuration context
 	 * @param launcher the Carbide launcher
 	 * @return false if makefile generation was necessary but failed, true otherwise
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	public static boolean generateBldmakeMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher) {
 
+		if (!(config.getBuildContext() instanceof ISBSv1BuildContext)){
+			return false; // SBSv1 only!
+		}
+		
 		if (needsBldmakeMakefileGeneration(config)) {
 			
 			List<String> argsList = new ArrayList<String>();
 			argsList.add("bldfiles");
-			argsList.add(config.getBasePlatformForVariation().toLowerCase());
+			if (config instanceof ISBSv1BuildContext){
+				argsList.add(((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation().toLowerCase());
+			}
 			
-			for (String arg : config.getBuildArgumentsInfo().getBldmakeBldFilesArgs().split(" ")) {
+			ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)config.getBuildContext();
+			
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getBldmakeBldFilesArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -928,6 +936,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * is newer than any of the makefiles, then returns true.
 	 * @param config - The build configuration to check the makefiles for
 	 * @return true if makefiles need to be regenerated (bldmake bldfiles platform)
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	protected static boolean needsBldmakeMakefileGeneration(ICarbideBuildConfiguration config) {
 		return getBuilder(config.getCarbideProject().getProject()).needsBldmakeMakefileGeneration(config);
@@ -985,6 +994,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param progress monitor to allow user to cancel
 	 * @return false if any makefile generation was necessary but failed, true otherwise
 	 * @since 2.0
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	public static boolean generateAbldMakefilesIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, boolean calculateComponentLists, IProgressMonitor progress) {
 
@@ -1007,7 +1017,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		return true;
 	}
-	
+		
 	/**
 	 * Generates the abld makefile if necessary.
 	 * Generates the makefile for the given mmp file if:
@@ -1021,26 +1031,7 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 	 * @param componentPath the absolute file system path of the component
 	 * @param isTest true for test components, false otherwise
 	 * @return false if any makefile generation was necessary but failed, true otherwise
-	 * 
-	 * @deprecated use {@link #generateAbldMakefileIfNecessary(ICarbideBuildConfiguration, CarbideCommandLauncher, IPath, boolean, IProgressMonitor)} instead
-	 */
-	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest) {
-		return generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, new NullProgressMonitor());
-	}
-	
-	/**
-	 * Generates the abld makefile if necessary.
-	 * Generates the makefile for the given mmp file if:
-	 * 	 1) the makefile for the mmp does not exist
-	 *   2) if the mmp or any of its includes is newer than the makefile
-	 *   3) the makefile does not have the necessary Carbide changes
-	 *   
-	 *   The command used will be 'abld [test] makefile platform mmpname'
-	 * @param config the build configuration context
-	 * @param launcher the Carbide launcher
-	 * @param componentPath the absolute file system path of the component
-	 * @param isTest true for test components, false otherwise
-	 * @return false if any makefile generation was necessary but failed, true otherwise
+	 * @deprecated - Abld support to be be removed vFuture
 	 */
 	protected static boolean generateAbldMakefileIfNecessary(ICarbideBuildConfiguration config, CarbideCommandLauncher launcher, IPath componentPath, boolean isTest, IProgressMonitor progress) {
 		return getBuilder(config.getCarbideProject().getProject()).generateAbldMakefileIfNecessary(config, launcher, componentPath, isTest, progress);
@@ -1352,7 +1343,7 @@ public static String[] getParserIdArray(int id) {
 
 			IPath tmpPKGPath = buildDirPath.append(prefix + pkgPath.lastSegment());
 
-			IPath resolvedPKGPath = resolvePKGFile(pkgPath, config, tmpPKGPath);
+			IPath resolvedPKGPath = resolvePKGFile(pkgPath, config.getBuildContext(), tmpPKGPath);
 			
 			List<String> args = new ArrayList<String>();
 
@@ -1626,7 +1617,7 @@ public static String[] getParserIdArray(int id) {
 
 		// update the temp pkg file by setting the PU flag and removing any files that have not been modified
 		PKGModelHelper.runWithPKGView(tempPkgBuildTreePath,
-				new DefaultViewConfiguration(config.getCarbideProject(), config), 
+				new DefaultViewConfiguration(config.getCarbideProject(), config.getBuildContext()), 
 				new PKGViewRunnableAdapter() {
 
 				public Object run(IPKGView view) {
@@ -1710,7 +1701,7 @@ public static String[] getParserIdArray(int id) {
 				}
 		});
 
-		tempPkgBuildTreePath = resolvePKGFile(tempPkgBuildTreePath, config, tempPkgBuildTreePath);
+		tempPkgBuildTreePath = resolvePKGFile(tempPkgBuildTreePath, config.getBuildContext(), tempPkgBuildTreePath);
 
 		// create link to temp pkg file and mark it as derived.
 		IFile tempPkgFileLink = getTempPkgIFile(pkgPath, tempPkgBuildTreePath, config);
@@ -1941,12 +1932,9 @@ public static String[] getParserIdArray(int id) {
     				// need to create a new PKG file, resolved...
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_EPOCROOT, context.getSDK().getEPOCROOT());
     				String platSubst = context.getPlatformString().toLowerCase();				
-    				if (context instanceof CarbideBuildConfiguration){
+    				if (context instanceof ISBSv2BuildContext){
     					// Test is this is an SBSv2 build binary variant (changes the output directory)
-    					ISBSv2BuildConfigInfo sbsv2Info = ((CarbideBuildConfiguration)context).getSBSv2BuildConfigInfo();
-    					if (sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null){
-    						platSubst = platSubst + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
-    					}
+    					platSubst = ((ISBSv2BuildContext)context).getPlatformReleaseDirName();
     				}
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_PLATFORM, platSubst);
     				pkgFileStr = pkgFileStr.replace(PKG_SYMBOL_TARGET, context.getTargetString().toLowerCase());
@@ -1992,53 +1980,6 @@ public static String[] getParserIdArray(int id) {
     	return null;
     }
     
-	/**
-	 * Invoke the ROM builder for the given build configuration
-	 * @param config - The current configuration from where to get the settings from
-	 * @param cmdLauncher - The object to use for the process execution
-	 * @param monitor - An IProgressMonitor
-	 */   
-	public static void invokeROMBuilder(ICarbideBuildConfiguration config, CarbideCommandLauncher cmdLauncher, IProgressMonitor monitor) {
-
-		IROMBuilderInfo info = config.getROMBuildInfo();
-		if (info != null) {
-			String commandLine = info.getCommandLine().trim();
-			if (commandLine.length() > 0) {
-
-				monitor.setTaskName("Building ROM Image");
-
-				IPath workingDir = config.getCarbideProject().getINFWorkingDirectory();
-				String workingDirString = info.getWorkingDirectory().trim();
-				if (workingDirString.length() > 0) {
-					workingDir = new Path(workingDirString);
-				}
-				
-				cmdLauncher.writeToConsole("\n***Building ROM Image ....\n");
-				List<String> args = tokenizeArgsWithQuotes(commandLine);
-				args.add(0, "/c");
-
-				cmdLauncher.setErrorParserManager(workingDir, getParserIdArray(ICarbideBuildConfiguration.ERROR_PARSERS_ROM_BUILDER));
-				int retVal = cmdLauncher.executeCommand(CarbideCommandLauncher.getCmdExeLocation(), args.toArray(new String[args.size()]), getResolvedEnvVars(config), workingDir);
-		   		if (retVal != 0){
-		   			cmdLauncher.writeToConsole("***Non-Zero Status: Specified rom build command returned with exit value = " + retVal);  //$NON-NLS-1$
-		   			CarbideBuilderPlugin.createCarbideProjectMarker(config.getCarbideProject().getProject(), IMarker.SEVERITY_ERROR,  "Specified rom build command returned with exit value = " + retVal, IMarker.PRIORITY_LOW); //$NON-NLS-1$
-		   			cmdLauncher.writeToConsole("\nRom build failed\n");			   			
-		   		} else { 
-		   			cmdLauncher.writeToConsole("\nRom build completed\n");	//$NON-NLS-1$
-		   		}
-				cmdLauncher.writeToConsole(cmdLauncher.getTimingStats());					
-
-				
-		   		monitor.worked(1);
-		   		if (monitor.isCanceled()) {
-		   			return;
-		   		}
-			}
-		}
-		
-    	monitor.done();
-	}
-
 	 /**
 	  * Returns a list of arguments as strings.  The given string is basically split at spaces, but not if the space(s)
 	  * is contained in quotes.  Arguments are typically quoted if they contain spaces.
@@ -2067,59 +2008,6 @@ public static String[] getParserIdArray(int id) {
 		return allTokens;
 	}
 
-	/**
-	 * This method performs a build for a given Carbide build configuration.
-	 * @param config - The Carbide configuration to build
-	 * @param monitor - A progress monitor so user can cancel build (can be null)
-	 * @param console - Where to pipe the output. If null, a new CConole will be created and existing console cleared.
-	 * @param buildKind - FULL_BUILD, else incremental build assumed.
-	 * 
-	 * @deprecated use {@link #invokeBuild(ICarbideBuildConfiguration, IConsole, IProgressMonitor)} instead
-	 */
-	public static void callAbldBuildForConfiguration(ICarbideBuildConfiguration config, IProgressMonitor monitor, IConsole console, int buildKind, boolean clearMarkers){
-		
-		if (monitor == null) {
-			monitor = new NullProgressMonitor();
-		}
-		
-		if (console == null){
-			console = CCorePlugin.getDefault().getConsole();
-		}
-
-		CarbideCommandLauncher launcher = new CarbideCommandLauncher(config.getCarbideProject().getProject(), monitor, console, getParserIdArray(config.getErrorParserId()), config.getCarbideProject().getINFWorkingDirectory());
-		launcher.showCommand(true);
-
-		invokeBuild(config, launcher, monitor, clearMarkers);
-	}
-
-	/**
-	 * Invoke bldmake bldfiles on the current bld.inf and SDK.
-	 * @param config - Config to generate makefiles for.
-	 * @param cmdLauncher - The process launcher
-	 * @param monitor - The progress monitor
-	 * @param console - The console to write the messages to.
-	 * @param env - The array of environment variables to be used for the process
-	 * @param workingDir - The full path to the bld.inf file to be used as the current working directory
-	 * 
-	 * @deprecated use {@link #generateBldmakeMakefilesIfNecessary(ICarbideBuildConfiguration, CarbideCommandLauncher, IConsole, IProgressMonitor, boolean)} instead
-	 */
-	public static boolean invokeBldmakeBldFiles(ICarbideBuildConfiguration config, CarbideCommandLauncher cmdLauncher, IProgressMonitor monitor, IConsole console, String[] env, IPath workingDir ){
-		return generateBldmakeMakefilesIfNecessary(config, cmdLauncher);
-	}
-
-	/**
-	 * Check to see if abld.bat and the SDK's platform makefile exists. If either don't exist, re-generate makefiles
-	 * This also tests to make sure the makefile target is OLDER than the bld.inf file.
-	 * @param bldInfDir - The working dir of the bld.inf file (should not contain 'bld.inf')
-	 * @param defaultConfig - The ISymbianBuildConfiguration to be built.
-	 * @return true if makefiles need to be regenerated
-	 * 
-	 * @deprecated use {@link #needsBldmakeMakefileGeneration(ICarbideBuildConfiguration)}
-	 */
-	public static boolean projectNeedsMakefileGeneration(IPath bldInfDir, ICarbideBuildConfiguration defaultConfig){
-		return needsBldmakeMakefileGeneration(defaultConfig);
-	}
-
     /**
      * Checks the Problems view for any error markers.
      * @param project - IProject to check for problem markers
@@ -2144,6 +2032,11 @@ public static String[] getParserIdArray(int id) {
 		return false;
     }
     
+    /**
+     * @deprecated - Abld support to be be removed vFuture
+     * @param config
+     * @return
+     */
     public static IPath getBuilderMakefileDir(ICarbideBuildConfiguration config){
     	return getBuilder(config.getCarbideProject().getProject()).getMakefileDirectory(config);
     }

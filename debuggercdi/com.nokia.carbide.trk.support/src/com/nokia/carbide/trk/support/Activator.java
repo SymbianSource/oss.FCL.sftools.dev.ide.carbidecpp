@@ -84,12 +84,4 @@ public class Activator extends AbstractUIPlugin {
 	public static void log(Throwable t) {
 		Logging.log(plugin, Logging.newSimpleStatus(0, t));
 	}
-	
-	public static void checkoutTraceLicense() {
-		FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_OST_TRACE);
-	}
-	
-	public static void checkinTraceLicense() {
-		FeatureUseTrackerPlugin.getFeatureUseProxy().stopUsingFeature(FeatureUseTrackerConsts.CARBIDE_OST_TRACE);
-	}
 }

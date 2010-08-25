@@ -17,6 +17,7 @@
 package com.nokia.carbide.cdt.internal.api.builder.ui;
 
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
@@ -168,7 +169,7 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 	private Button excludeExtensionMakefilesCheckbox;
 	private Button excludeTestComponentsCheckbox;
 	private ListenerList<ISelectionChangedListener> listeners;
-	private List<? extends ISymbianBuildContext> buildConfigs;
+	private List<ISymbianBuildContext> buildConfigs;
 	private IPath bldInfFile;
 	private final IRunnableContext runnableContext;
     private List<FileInfo> data = Collections.emptyList();
@@ -370,12 +371,12 @@ public class MMPSelectionUI extends Composite implements ISelectionProvider {
 	 * @param bldInfFile IPath
 	 * @param buildConfigs List<ISymbianBuildContext>
 	 */
-	public void setBldInfFile(final IPath bldInfFile, final List buildConfigs, final boolean useSBSv2Builder) {
+	public void setBldInfFile(final IPath bldInfFile, final List<ISymbianBuildContext> buildContexts, final boolean useSBSv2Builder) {
 		if (bldInfFile.equals(this.bldInfFile) && buildConfigs.equals(this.buildConfigs))
 			return;
 		
 		this.bldInfFile = bldInfFile;
-		this.buildConfigs = buildConfigs;
+		this.buildConfigs = buildContexts;
 		this.useSBSv2Builder = useSBSv2Builder;
 
 		try {

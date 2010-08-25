@@ -118,7 +118,7 @@ public class TemplateWizardPage extends org.eclipse.jface.wizard.WizardPage impl
 			
 			if (type instanceof UidFieldType) {
 				values.put(type.getId(), value.toLowerCase());
-				// least hacky way to support this without creating a language out of templates
+				// simplest way to support this without creating a language out of templates
 				values.put(type.getId() + UIDComposite.WITHOUT_0X_PREFIX, 
 						UIDComposite.getWithout0x(value).toLowerCase());
 			}

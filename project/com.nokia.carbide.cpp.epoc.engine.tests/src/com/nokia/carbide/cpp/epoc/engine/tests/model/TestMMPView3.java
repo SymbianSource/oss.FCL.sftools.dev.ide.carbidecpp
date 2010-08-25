@@ -17,24 +17,26 @@
 
 package com.nokia.carbide.cpp.epoc.engine.tests.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.osgi.framework.Version;
+
 import com.nokia.carbide.cdt.builder.DefaultMMPViewConfiguration;
 import com.nokia.carbide.cdt.builder.DefaultViewParserConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
-
-import org.eclipse.core.runtime.*;
-import org.osgi.framework.Version;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Test MMP view manipulation
@@ -54,8 +56,7 @@ public class TestMMPView3 extends BaseMMPViewTest {
 		// we need to have a fixed idea of the SDK for these tests (even when workspace isn't running)
 		sdk = null;
 		if (!Platform.isRunning()) {
-			sdk = SymbianSDKFactory.createInstance("S60_3rd", "c:\\symbian\\9.1\\S60_3rd", "com.nokia.s60", 
-					new Version(9,0,0), null, null, false);
+			sdk = SymbianSDKFactory.createInstance("S60_3rd", "c:\\symbian\\9.1\\S60_3rd", new Version(9,0,0));
 			// add to memory for standalone test, hopefully only affecting my system
 			SDKCorePlugin.getSDKManager().addSDK(sdk);
 		} else {
@@ -68,9 +69,9 @@ public class TestMMPView3 extends BaseMMPViewTest {
 			}
 		}
 		if (sdk != null) {
-			winscwContext = new SymbianBuildContext(sdk, "WINSCW", "UDEB");
-			armv5Context = new SymbianBuildContext(sdk, "ARMV5", "UDEB");
-			gcceContext = new SymbianBuildContext(sdk, "GCCE", "UREL");
+			winscwContext = new BuildContextSBSv1(sdk, "WINSCW", "UDEB");
+			armv5Context = new BuildContextSBSv1(sdk, "ARMV5", "UDEB");
+			gcceContext = new BuildContextSBSv1(sdk, "GCCE", "UREL");
 			buildContexts.add(winscwContext);
 			buildContexts.add(armv5Context);
 			buildContexts.add(gcceContext);

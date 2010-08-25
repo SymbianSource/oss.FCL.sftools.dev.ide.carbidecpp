@@ -197,7 +197,7 @@ public class BldInfEditor extends CarbideFormEditor implements
 			editorContext.bldInfView = null;
 		}
 		BldInfEditorViewConfiguration viewConfig = new BldInfEditorViewConfiguration(
-				editorContext.activeBuildConfig, getProject());
+				editorContext.activeBuildConfig.getBuildContext(), getProject());
 		editorContext.bldInfView = editorContext.bldInfModel.createView(viewConfig);						
 	}
 	

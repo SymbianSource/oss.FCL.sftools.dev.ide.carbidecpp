@@ -113,8 +113,7 @@ public class BldInfImportWrapper {
         		project.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, isSBSv2);
         		
         		// TODO pass PKG file path to postProjectCreatedActions, currently passing null
-        		
-        		
+     
         		ProjectCorePlugin.postProjectCreatedActions(project, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
 
         		if (monitor.isCanceled()) {

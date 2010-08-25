@@ -22,6 +22,7 @@ package com.nokia.carbide.cdt.builder;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.core.resources.IProject;
 
+import com.nokia.carbide.cdt.builder.extension.ICarbidePrefsModifier;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 
@@ -82,5 +83,13 @@ public interface ICarbideBuildManager {
 	 * @param newInfo a copy of the old info with changes applied
 	 */
 	public void setProjectInfo(ICarbideProjectInfo newInfo);
+	
+	/**
+	 * Retrieve the ICarbidePrefsModifier interface to allow getting and setting
+	 * of certain preferences by ID. This only sets values in memory, does not write
+	 * to disk.
+	 * @return ICarbidePrefsModifier
+	 */
+	ICarbidePrefsModifier getPrefsModifier();
 	
 }

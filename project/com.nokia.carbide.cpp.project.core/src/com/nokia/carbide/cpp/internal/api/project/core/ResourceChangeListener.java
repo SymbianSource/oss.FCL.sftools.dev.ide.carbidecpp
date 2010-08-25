@@ -454,7 +454,7 @@ public class ResourceChangeListener implements IResourceChangeListener {
 							}
 
 							// check the extensions
-							BldInfViewPathHelper helper = new BldInfViewPathHelper(infView, cpi.getDefaultConfiguration());
+							BldInfViewPathHelper helper = new BldInfViewPathHelper(infView, cpi.getDefaultConfiguration().getBuildContext());
 							for (IExtension extension : infView.getAllExtensions()) {
 								IPath path = infPathHelper.convertToProject(helper.convertExtensionTemplateToFilesystem(extension.getTemplatePath()));
 								if (path != null) {
@@ -939,7 +939,7 @@ public class ResourceChangeListener implements IResourceChangeListener {
 							}
 
 							// check the extensions
-							BldInfViewPathHelper helper = new BldInfViewPathHelper(infView, cpi.getDefaultConfiguration());
+							BldInfViewPathHelper helper = new BldInfViewPathHelper(infView, cpi.getDefaultConfiguration().getBuildContext());
 							List<IExtension> extensions = infView.getExtensions();
 							for (Iterator<IExtension> iter = extensions.iterator(); iter.hasNext();) {
 								IPath path = infPathHelper.convertToProject(helper.convertExtensionTemplateToFilesystem(iter.next().getTemplatePath()));

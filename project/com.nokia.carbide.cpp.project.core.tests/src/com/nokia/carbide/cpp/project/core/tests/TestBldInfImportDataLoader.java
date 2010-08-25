@@ -37,7 +37,7 @@ import com.nokia.carbide.cpp.api.test.support.gen.InfImportTestData.BuildConfigT
 import com.nokia.carbide.cpp.api.test.support.gen.InfImportTestData.InfComponentType;
 import com.nokia.carbide.cpp.api.test.support.gen.InfImportTestData.MakMakeRefType;
 import com.nokia.carbide.cpp.api.test.support.xml.BldInfImportDataLoader;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.project.utils.BldInfImportWrapper;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
@@ -88,7 +88,7 @@ public class TestBldInfImportDataLoader extends TestCase {
 			for (BuildConfigType currConfigData : currInfData.getBuildConfigurations().getBuildConfig()){
 				String plat = currConfigData.getPlatform();
 				String target = currConfigData.getTarget().getName();
-				SymbianBuildContext context = new SymbianBuildContext(sdk, plat, target);
+				BuildContextSBSv1 context = new BuildContextSBSv1(sdk, plat, target);
 				buildConfigs.add(context);
 			}
 			

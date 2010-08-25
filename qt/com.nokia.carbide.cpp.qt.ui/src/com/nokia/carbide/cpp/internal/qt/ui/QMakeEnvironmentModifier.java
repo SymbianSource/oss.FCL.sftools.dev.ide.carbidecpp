@@ -40,7 +40,7 @@ public class QMakeEnvironmentModifier implements IQMakeEnvironmentModifier {
 			if (cpi != null) {
 				ICarbideBuildConfiguration config = cpi.getDefaultConfiguration();
 				if (config != null) {
-					ISymbianSDK sdk = config.getSDK();
+					ISymbianSDK sdk = config.getBuildContext().getSDK();
 					if (sdk != null) {
 						// set EPOCROOT for the SDK of the current build configuration
 						IPath epocRoot = new Path(sdk.getEPOCROOT());

@@ -12,11 +12,11 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
-import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+
+import com.nokia.carbide.cpp.sdk.core.ISBVCatalog;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 /**
  * This factory creates SBV catalogs. 

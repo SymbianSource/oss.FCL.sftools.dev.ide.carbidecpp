@@ -28,6 +28,7 @@ import java.util.List;
 import org.eclipse.cdt.core.ICExtensionReference;
 import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
+import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.cdt.core.settings.model.extension.CConfigurationData;
 import org.eclipse.cdt.core.settings.model.extension.CConfigurationDataProvider;
 import org.eclipse.core.resources.IFolder;
@@ -39,8 +40,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.core.runtime.jobs.Job;
+import org.osgi.framework.Version;
 
-import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
@@ -56,8 +57,17 @@ import com.nokia.carbide.cdt.internal.builder.SISBuilderInfo;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.CarbideBuilderConfigInfoType;
 import com.nokia.carbide.cdt.internal.builder.gen.CarbideBuildConfig.ConfigurationType;
 import com.nokia.carbide.cdt.internal.builder.xml.CarbideBuildConfigurationLoader;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildArgumentsInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv2;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildConfigInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2BuilderInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
 
 /**
  * Main interface point with CDT with regards to our build configurations.  Note that
@@ -109,6 +119,7 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		return baseData;
 	}
 
+	@SuppressWarnings("restriction")
 	@Override
 	public CConfigurationData loadConfiguration(ICConfigurationDescription des,
 			IProgressMonitor monitor) throws CoreException {
@@ -119,9 +130,24 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 				throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK, "Project " + project.getName() + " is not a valid Carbide project.", null));
 			}
 			
-			// find the configuration that matches the id (sdk, platform, target)
-			String configId = des.getConfiguration().getId();
-			ISymbianBuildContext context = SymbianBuildContext.getBuildContextFromDisplayName(configId);
+			ISymbianBuildContext context = null;
+			if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)){
+				
+				context = loadSBSv2Configuration(des, monitor);
+				
+				if (context == null){
+					throw new CoreException(new Status(IStatus.ERROR,
+							CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK,
+							"Unable to load Carbide settings for project "
+									+ project.getProject().getName(), null));
+				}
+			} else {
+				// Presume it's SBSv1
+				// find the configuration that matches the id (sdk, platform, target)
+				String configId = des.getConfiguration().getId();
+				context = BuildContextSBSv1.getBuildContextFromDisplayName(configId);
+			}
+			
 			if (context == null) {
 				throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK, "SDK specified in project " + project.getName() + " is not installed, please set it up from project property", null));
 			}
@@ -138,6 +164,75 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 		}
 
 		return null;
+	}
+
+	@SuppressWarnings("restriction")
+	private ISymbianBuildContext loadSBSv2Configuration(ICConfigurationDescription des, 
+														IProgressMonitor monitor) {
+		
+		ICStorageElement rootStorage;
+		try {
+			rootStorage = des.getStorage(CarbideBuildConfiguration.CARBIDE_STORAGE_ID, false);
+		} catch (CoreException e) {
+			return null;
+		}
+		String configID = des.getConfiguration().getId();
+		String buidAlias = null;
+		String platform = null;
+		String target = null;
+		String displayString = null;
+		String sdkID = null;
+		if (rootStorage != null) {
+			for (ICStorageElement se : rootStorage.getChildren()) {
+				if (se.getName().equals(
+						ISBSv2BuildContext.SBSV2_DATA_ID)) {
+					
+					SBSv2BuilderInfo sbsv2BuilderInfo = new SBSv2BuilderInfo();
+					sbsv2BuilderInfo.loadFromStorage(se);
+					platform = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATRRIB_CONFIG_BASE_PLATFORM);
+					target = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_CONFIG_TARGET);
+					buidAlias = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_BUILD_ALIAS);
+					displayString = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_CONFIG_DISPLAY_STRING);				
+					sdkID = sbsv2BuilderInfo.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_SDK_ID);
+				}
+			}
+		} else {
+			return null;
+		}
+		
+		ISymbianSDK sdk = null;
+		if (!configID.startsWith(ISBSv2BuildContext.BUILDER_ID)){
+			// pre-C3 (Carbide 2.x) project, get SDK id from config name
+			if (displayString == null){
+				displayString = configID;
+			} 
+			if (sdkID == null){
+				sdkID = BuildContextSBSv2.getSDKIDFromV1ConfigName(displayString);
+			}
+			if (platform == null){
+				platform = BuildContextSBSv2.getPlatformFromV1ConfigName(displayString);
+			}
+			if (target == null){
+				target = BuildContextSBSv2.getTargetFromV1ConfigName(displayString);
+			}
+			if (buidAlias == null){
+				buidAlias = BuildContextSBSv2.getBuildAliasFromV1ConfigName(displayString);
+			}
+		}
+		if (sdkID != null){
+			sdk = SDKCorePlugin.getSDKManager().getSDK(sdkID, true);
+			if (sdk != null){
+				return new BuildContextSBSv2(sdk, platform, target, buidAlias, displayString, configID);
+			} else {
+				ISymbianSDK deadSDK = SymbianSDKFactory.createInstance(sdkID, ISymbianSDK.BAD_EPOCROOT, new Version("9.5"));
+				SDKCorePlugin.getSDKManager().addSDK(deadSDK);
+				
+				return new BuildContextSBSv2(deadSDK, platform, target, buidAlias, displayString, configID);
+			}
+		}
+		
+		return null;
+		
 	}
 
 	@Override
@@ -175,12 +270,14 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 	protected static void convertSettingsData(IProject project, CarbideBuilderConfigInfoType buildConfigType) {
 		
 		if (buildConfigType.getVersion() == CarbideBuildConfigurationLoader.SETTINGS_VERSION_0) {
-			// Iteraate through all the configurations and convert from version 0 to 1.
+			// Iterate through all the configurations and convert from version 0 to 1.
 			// Reset all PATH, EPOCROOT, and MW* variables set back to their defaults
 			// as they are computed dynamically now.
 			for (Iterator i = buildConfigType.getConfiguration().iterator(); i.hasNext();) {
 				ConfigurationType currConfig = (ConfigurationType)i.next();
-				ISymbianBuildContext context = SymbianBuildContext.getBuildContextFromDisplayName(currConfig.getName());
+				
+				@SuppressWarnings("restriction")
+				ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(currConfig.getName());
 				IEnvironmentVarsInfo envSettings = new EnvironmentVarsInfo(project, context, currConfig.getEnvVars());
 				List<IEnvironmentVariable> varsFromSettings = envSettings.getModifiedEnvVarsListFromSettings();
 				List<IEnvironmentVariable> updatedEnvList = new ArrayList<IEnvironmentVariable>();
@@ -305,7 +402,8 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 					for (Iterator i = oldConfigInfo.getConfiguration().iterator(); i.hasNext();) {
 						ConfigurationType currConfig = (ConfigurationType)i.next();
 						
-		    			ISymbianBuildContext context = SymbianBuildContext.getBuildContextFromDisplayName(currConfig.getName());
+		    			@SuppressWarnings("restriction")
+						ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(currConfig.getName());
 						if (context != null) {
 							configs.add(context);
 						}
@@ -340,8 +438,9 @@ public class CarbideConfigurationDataProvider extends CConfigurationDataProvider
 				    			EnvironmentVarsInfo oldEnvVars = new EnvironmentVarsInfo(project, context, currConfig.getEnvVars());
 				    			buildConfiguration.setEnvironmentVarsInfo(new EnvironmentVarsInfo2(oldEnvVars));
 				    			
+				    			if (context instanceof ISBSv1BuildContext)
 				    			if (wasVerboseChecked) {
-				    				buildConfiguration.setBuildArgumentsInfo(new BuildArgumentsInfo("", "", "-v", "", "", "", "", "", "", "-v", "-v"));
+				    				((ISBSv1BuildContext)context).setBuildArgumentsInfo(new BuildArgumentsInfo("", "", "-v", "", "", "", "", "", "", "-v", "-v"));
 				    			}
 				    			
 								buildConfiguration.saveConfiguration(false);

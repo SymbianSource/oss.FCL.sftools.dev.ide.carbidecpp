@@ -24,6 +24,7 @@ import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.cdt.core.settings.model.extension.CConfigurationData;
+import org.eclipse.cdt.internal.core.settings.model.CProjectDescriptionManager;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -302,6 +303,10 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 		ICConfigurationDescription config = projectDescription.getActiveConfiguration();
 		if (config != null) {
 			CConfigurationData data = config.getConfigurationData();
+			if (data == null){
+				ICConfigurationDescription[] config2 = projectDescription.getConfigurations();
+				data = config2[0].getConfigurationData();
+			}
 			if (data instanceof BuildConfigurationData) {
 				return ((BuildConfigurationData)data).getConfiguration();
 			}
@@ -322,6 +327,9 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	}
 	
 	public IPath getAbsoluteBldInfPath(){
+		if (projectRelativeBldInfPath.isAbsolute()){
+			return projectRelativeBldInfPath;
+		}
 		return CarbideBuilderPlugin.getProjectRoot(projectTracker.getProject()).append(projectRelativeBldInfPath);
 	}
 	
@@ -330,12 +338,10 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	}
 
 	public IPath getWorkspaceRelativeBldInfPath(){
+		if (projectRelativeBldInfPath.isAbsolute()){
+			return projectRelativeBldInfPath;
+		}
 		return new Path(projectTracker.getProject().getName()).append(projectRelativeBldInfPath);
-	}
-
-	public String getMMPTargetFile(){
-		// now deprecated in 1.3
-		return "";
 	}
 	
 	public IProject getProject(){

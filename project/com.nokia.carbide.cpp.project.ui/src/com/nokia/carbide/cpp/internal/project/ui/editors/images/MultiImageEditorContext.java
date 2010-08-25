@@ -132,7 +132,7 @@ public class MultiImageEditorContext extends MultiImageEditorContextBase impleme
 			this.generatedExtension = "mif"; //$NON-NLS-1$
 			this.imagePathHelper = new ImageMakefileViewPathHelper(
 					(IImageMakefileView) view, 
-					new ISymbianBuildContext[] { getBuildContext() });
+					new ISymbianBuildContext[] { getCarbideBuildConfiguration().getBuildContext() });
 		}
 		
 		commonInit();
@@ -367,7 +367,7 @@ public class MultiImageEditorContext extends MultiImageEditorContextBase impleme
 	public boolean supportsHeaderOnlyFlag() {
 		if (imageFileType == MBM_FILE) {
 			// flag added in 9.2
-			ISymbianBuildContext buildContext = getBuildContext();
+			ISymbianBuildContext buildContext = getCarbideBuildConfiguration().getBuildContext();
 			if (buildContext == null)
 				return false;
 			Version version = buildContext.getSDK().getOSVersion();

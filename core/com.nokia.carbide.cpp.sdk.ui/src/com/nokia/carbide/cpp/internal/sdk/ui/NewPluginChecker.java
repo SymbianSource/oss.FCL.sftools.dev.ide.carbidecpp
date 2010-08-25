@@ -16,21 +16,25 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.ui;
 
-import com.nokia.carbide.cpp.internal.sdk.core.model.DynamicFeatureInstaller;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
-import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
+import java.io.File;
+import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 
-import java.io.File;
-import java.util.List;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.sdk.core.model.DynamicFeatureInstaller;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 @SuppressWarnings("restriction")
 public class NewPluginChecker {
@@ -50,25 +54,26 @@ public class NewPluginChecker {
 				boolean installed = false;
 				boolean oneSDKWasScanned = false;
 				for (ISymbianSDK sdk : sdkList) {
-					
-					if (sdk.isPreviouslyScanned() == false) {
-						oneSDKWasScanned = true;
-						// XML was parsed, now try to run the feature installer
-						sdk.setPreviouslyScanned(true);
-						File featureDir = new File(sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR);
-						try {
-							DynamicFeatureInstaller installer = new DynamicFeatureInstaller(featureDir, null);
-							if (installer.install()) {
-								installed = true;
+					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+					if (sbsv1BuildInfo != null) {
+						if (sbsv1BuildInfo.isPreviouslyScanned() == false) {
+							oneSDKWasScanned = true;
+							// XML was parsed, now try to run the feature installer
+							sbsv1BuildInfo.setPreviouslyScanned(true);
+							File featureDir = new File(sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR);
+							try {
+								DynamicFeatureInstaller installer = new DynamicFeatureInstaller(featureDir, null);
+								if (installer.install()) {
+									installed = true;
+								}
+							} catch (Exception e) {
+								// Boog 8383: We should fail silently, since this will not break anything and may SDKs will not have any documentation
+								// Otherwise, these errors will be logged every time this check is done (workspace is opened)
+								// Originally, this was used to install MBS build support, but now is only used for SDK documentation
+		//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
 							}
-						} catch (Exception e) {
-							// Boog 8383: We should fail silently, since this will not break anything and may SDKs will not have any documentation
-							// Otherwise, these errors will be logged every time this check is done (workspace is opened)
-							// Originally, this was used to install MBS build support, but now is only used for SDK documentation
-	//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
 						}
 					}
-					
 				}
 				
 				if (oneSDKWasScanned) {

@@ -73,6 +73,7 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
@@ -80,6 +81,7 @@ import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.LanguageSelectionDialog;
 import com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage;
@@ -128,7 +130,7 @@ public class PreprocessHandler extends AbstractHandler {
 			        			e.printStackTrace();
 			        		}
 
-			        		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, CarbideCPPBuilder.getParserIdArray(buildConfig.getErrorParserId()), cpi.getINFWorkingDirectory());
+			        		CarbideCommandLauncher launcher = new CarbideCommandLauncher(project, monitor, buildConfig.getErrorParserList(), cpi.getINFWorkingDirectory());
 							launcher.showCommand(true);
 
 							String cppTool = "cpp" + HostOS.EXE_EXT; //$NON-NLS-1$
@@ -189,14 +191,15 @@ public class PreprocessHandler extends AbstractHandler {
 							}
 							
 							// add the compiler prefix file if any
-							IPath compilerPrefix = buildConfig.getCompilerPrefixFile();
+							IPath compilerPrefix = buildConfig.getBuildContext().getCompilerPrefixFile();
 							if (compilerPrefix != null) {
 								args.add("-include"); //$NON-NLS-1$
 				        		args.add("\"" + compilerPrefix.toOSString() + "\""); //$NON-NLS-1$ //$NON-NLS-2$
 							}
 
 							// add the sdk prefix file if any
-							File sdkPrefix = buildConfig.getSDK().getPrefixFile();
+							File sdkPrefix = buildConfig.getBuildContext().getPrefixFromVariantCfg().toFile();
+							
 							if (sdkPrefix != null && sdkPrefix.exists()) {
 								args.add("-include"); //$NON-NLS-1$
 				        		args.add("\"" + sdkPrefix.getAbsolutePath() + "\""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -404,19 +407,18 @@ public class PreprocessHandler extends AbstractHandler {
 	private List<String> getMacros(ICarbideBuildConfiguration buildConfig, final IPath filePath, final IProgressMonitor monitor) {
 		final List<String> macros = new ArrayList<String>();
 		
-		// platform macros
-		for (String platMacro : buildConfig.getSDK().getPlatformMacros(buildConfig.getPlatformString())) {
-			macros.add("__" + platMacro + "__"); //$NON-NLS-1$ //$NON-NLS-2$
+		List<IDefine> buildMacros = buildConfig.getBuildContext().getBuildMacros();
+		for (IDefine define : buildMacros){
+			macros.add(define.getName());
 		}
 		
-		// built in macros
-		for (String builtinMacro : buildConfig.getBuiltinMacros()) {
-			macros.add(builtinMacro);
+		List<IDefine> metaDataMacros = buildConfig.getBuildContext().getMetadataMacros();
+		for (IDefine define : metaDataMacros){
+			macros.add(define.getName());
 		}
 		
-		// vendor macros (e.g. __SERIES60_3x__)
-		for (String builtinMacro : buildConfig.getSDK().getVendorSDKMacros()) {
-			macros.add(builtinMacro);
+		if (((CarbideBuildConfiguration)buildConfig).hasSTDCPPSupport()){
+			macros.add("__SYMBIAN_STDCPP_SUPPORT__");
 		}
 		
 		IProject project = buildConfig.getCarbideProject().getProject();
@@ -429,14 +431,14 @@ public class PreprocessHandler extends AbstractHandler {
 			
 			// target type macro (e.g. __DLL__)
 			EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-					new DefaultMMPViewConfiguration(project, buildConfig, new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData mmpData) {
 						String targetType = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETTYPE);
 						if (targetType != null) {
 							targetType = targetType.toUpperCase();
-							macros.add(targetType);
+							macros.add("__" + targetType + "__");
 						}
 						
 						// mmp macros

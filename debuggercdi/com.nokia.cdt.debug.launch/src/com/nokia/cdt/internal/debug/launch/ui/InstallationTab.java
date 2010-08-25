@@ -54,6 +54,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
@@ -420,7 +421,7 @@ public class InstallationTab extends CLaunchConfigurationTab implements ICProjec
 			        	for (ICarbideBuildConfiguration buildConfig : cpi.getBuildConfigurations()) {
 			        		if (buildConfig.getDisplayString().equals(buildConfigName)) {
 			        			// enable the controls for EKA2 configs
-			        			if (buildConfig.getSDK().isEKA2()) {
+			        			if (buildConfig.getSDK().getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2)) {
 			        				puLabel.setVisible(true);
 			        				puPath.setVisible(true);
 			        				puLink.setVisible(true);

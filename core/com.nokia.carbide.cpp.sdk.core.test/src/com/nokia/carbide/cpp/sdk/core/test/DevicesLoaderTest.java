@@ -16,6 +16,12 @@
 */
 package com.nokia.carbide.cpp.sdk.core.test;
 
+import java.util.Iterator;
+
+import org.eclipse.emf.common.util.EList;
+import org.osgi.framework.Version;
+
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
@@ -23,11 +29,6 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SymbianSDKFactory;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
-
-import org.eclipse.emf.common.util.EList;
-import org.osgi.framework.Version;
-
-import java.util.Iterator;
 
 /**
  * NOTE: this test expects all three methods to be run in order.
@@ -59,13 +60,13 @@ public class DevicesLoaderTest extends BaseDeviceModifierTest {
 		
 		Version osVersion = new Version("9.1");
 		Version sdkVersion = new Version("3.0");
-		ISymbianSDK sdk = SymbianSDKFactory.createInstance(S60_SDKID, M_DRIVE, ISymbianSDK.SERIES60_SDK_NAME, osVersion, "", sdkVersion, true);
+		ISymbianSDK sdk = SymbianSDKFactory.createInstance(S60_SDKID, M_DRIVE, osVersion);
 		DevicesLoader.updateDevice(sdk, devicesFile.toURI().toURL());
 		
-		sdk = SymbianSDKFactory.createInstance(TV_SDKID, P_DRIVE, ISymbianSDK.TECHVIEW_SDK_NAME, osVersion, "", sdkVersion, false);
+		sdk = SymbianSDKFactory.createInstance(TV_SDKID, P_DRIVE, osVersion);
 		DevicesLoader.updateDevice(sdk, devicesFile.toURI().toURL());
 		
-		sdk = SymbianSDKFactory.createInstance(UIQ3_SDKID, UIQ3_EPOCROOT, ISymbianSDK.UIQ_SDK_NAME, osVersion, "", sdkVersion, false);
+		sdk = SymbianSDKFactory.createInstance(UIQ3_SDKID, UIQ3_EPOCROOT, osVersion);
 		DevicesLoader.updateDevice(sdk, devicesFile.toURI().toURL());	
 	}
 	

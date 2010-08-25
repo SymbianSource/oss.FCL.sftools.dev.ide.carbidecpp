@@ -50,7 +50,7 @@ import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
@@ -202,7 +202,7 @@ public class LaunchPlugin extends AbstractUIPlugin {
 			}
 			
 			// just check the platform for the default config
-			if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+			if (buildConfig.getPlatformString().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 				isX86 = true;
 			}
 

@@ -33,6 +33,8 @@ public class AllTests {
 		suite.addTestSuite(SymbianContextTest.class);
 		suite.addTestSuite(TestSDKChangeListener.class);
 		suite.addTestSuite(TestDevicesXMLListener.class);
+		suite.addTestSuite(TestCarbideSDKCache.class);
+		suite.addTestSuite(TestSBSv2BuildContext.class);
 		//$JUnit-END$
 		return suite;
 	}

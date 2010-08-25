@@ -220,7 +220,7 @@ public class LibrarySectionPart extends SectionPart {
 	
 	@SuppressWarnings("unchecked") //$NON-NLS-1$
 	protected void addButtonPressed() {
-		Set<String> sdkLibraries = EpocEngineHelper.getSDKLibrariesForBuildContext(editorContext.activeBuildConfig);
+		Set<String> sdkLibraries = EpocEngineHelper.getSDKLibrariesForBuildContext(editorContext.activeBuildConfig.getBuildContext());
 		// remove already included libraries from the list so we don't show them as candidates for adding
 		List<String> includedList = (List<String>) tableViewer.getInput();
 		sdkLibraries.removeAll(includedList);

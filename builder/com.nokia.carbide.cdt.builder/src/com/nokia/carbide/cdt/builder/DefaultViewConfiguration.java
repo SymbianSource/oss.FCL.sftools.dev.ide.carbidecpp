@@ -20,7 +20,12 @@ import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.model.IViewConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.model.IViewParserConfiguration;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
 import org.eclipse.core.resources.IProject;
@@ -43,7 +48,7 @@ public class DefaultViewConfiguration implements IViewConfiguration {
 	public DefaultViewConfiguration(ICarbideProjectInfo projectInfo) {
 		Check.checkArg(projectInfo);
 		this.project = projectInfo.getProject();
-		this.context = projectInfo.getDefaultConfiguration();
+		this.context = projectInfo.getDefaultConfiguration().getBuildContext();
 		this.bldInfPath = null;
 		this.viewFilter = new AllNodesViewFilter();
 		wrapViewFilter();
@@ -198,23 +203,15 @@ public class DefaultViewConfiguration implements IViewConfiguration {
 	public Collection<IDefine> getMacros() {
 		List<IDefine> macros = new ArrayList<IDefine>();
 		if (context != null) {
-			
-			if (context.getSBSv2Alias() != null){
-				macros.add(DefineFactory.createDefine("SBSV2", null));
+			ISymbianSDK sdk = context.getSDK();
+
+			for (IDefine metaDataMacro : context.getMetadataMacros()) {
+				macros.add(metaDataMacro);
 			}
 			
 			for (IDefine macro : context.getVariantHRHDefines()) {
 				macros.add(macro);
 			}
-			
-			for (String platMacro : context.getSDK().getPlatformMacros(context.getPlatformString())) {
-				macros.add(DefineFactory.createDefine(platMacro.trim(), platMacro.trim()));
-			}
-			
-			for (String vendorMacro : context.getSDK().getVendorSDKMacros()){
-				macros.add(DefineFactory.createDefine(vendorMacro.trim(), vendorMacro.trim()));
-			}
-			
 		}
 		macros.addAll(extraMacros);
 		

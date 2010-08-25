@@ -116,7 +116,7 @@ public class PathsAndSymbolsTabComposite extends Composite {
 			String macrosFile = cpi.getMacrosFile();
 			if (macrosFile != null && macrosFile.length() > 0) {
 				MacroScanner scanner = new MacroScanner(
-						new DefaultIncludeFileLocator(buildConfig.getCarbideProject().getProject(), buildConfig),
+						new DefaultIncludeFileLocator(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext()),
 						DefaultModelDocumentProvider.getInstance(), 
 						DefaultTranslationUnitProvider.getInstance());
 				scanner.scanFile(new File(macrosFile));
@@ -256,7 +256,7 @@ public class PathsAndSymbolsTabComposite extends Composite {
 		
 		ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(buildConfig.getCarbideProject().getProject());
 		if (projDes != null) {
-			ICConfigurationDescription configDes = projDes.getConfigurationById(buildConfig.getDisplayString());
+			ICConfigurationDescription configDes = projDes.getConfigurationById(buildConfig.getBuildContext().getConfigurationID());
 			if (configDes != null) {
 				CConfigurationData configData = configDes.getConfigurationData();
 				if (configData != null) {

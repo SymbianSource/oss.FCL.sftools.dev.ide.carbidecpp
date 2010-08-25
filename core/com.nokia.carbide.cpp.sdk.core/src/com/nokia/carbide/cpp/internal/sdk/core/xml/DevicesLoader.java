@@ -109,11 +109,11 @@ public class DevicesLoader {
 		boolean deviceExists = false;
 		for (Iterator i = devicesList.iterator(); i.hasNext();) {
 			DeviceType currDevice = (DeviceType)i.next();
-			 if (currDevice.getId().equals(sdk.getUniqueId())){
+			 if (currDevice.getId().equals(sdk.getUniqueId()) ||
+				 currDevice.getEpocroot().toLowerCase().equals(sdk.getEPOCROOT().toLowerCase())){
 				 deviceExists = true;
 				 currDevice.setEpocroot(sdk.getEPOCROOT());
 				 currDevice.setId(sdk.getUniqueId());
-				 currDevice.setName(sdk.getName());
 				 if (currDevice.getUserdeletetable() != null){
 					 currDevice.setUserdeletable(currDevice.getUserdeletetable());
 				 }
@@ -132,12 +132,7 @@ public class DevicesLoader {
 			DeviceType newDeviceEntry = DevicesFactory.eINSTANCE.createDeviceType();
 			newDeviceEntry.setId(sdk.getUniqueId());
 			newDeviceEntry.setEpocroot(sdk.getEPOCROOT());
-			newDeviceEntry.setName(sdk.getName());
-			if (sdk.isDefaultSDK() == true){
-				newDeviceEntry.setDefault(DefaultType.YES_LITERAL);
-			} else {
-				newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
-			}
+			newDeviceEntry.setDefault(DefaultType.NO_LITERAL);
 			newDeviceEntry.setUserdeletable("no");
 			newDeviceEntry.setUserdeletetable(null); // just to be sure it doens't get written out
 			devicesList.add(newDeviceEntry); // Add the new/modified config to the list so new data is written			
@@ -172,15 +167,7 @@ public class DevicesLoader {
 		// Set the input sdk paramater's default to whatever it's default value is
 		for (Iterator i = devicesList.iterator(); i.hasNext();) {
 			DeviceType currDevice = (DeviceType)i.next();
-			 if (currDevice.getId().equals(sdk.getUniqueId())){
-				 if (sdk.isDefaultSDK()){
-					 currDevice.setDefault(DefaultType.YES_LITERAL);
-				 } else {
-					 currDevice.setDefault(DefaultType.NO_LITERAL);
-				 }
-			 }else {
-				 currDevice.setDefault(DefaultType.NO_LITERAL);
-			 }
+			currDevice.setDefault(DefaultType.NO_LITERAL);
 		}
 		
 		// write to disk

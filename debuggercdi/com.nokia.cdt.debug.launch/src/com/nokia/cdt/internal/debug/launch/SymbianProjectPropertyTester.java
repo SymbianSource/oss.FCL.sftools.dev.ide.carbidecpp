@@ -31,7 +31,7 @@ import org.eclipse.core.runtime.IPath;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 
 /**
  * A property tester that determines if a file is an executable.
@@ -109,7 +109,7 @@ public class SymbianProjectPropertyTester extends PropertyTester {
 					if (cpi != null) {
 						ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 						// just check the platform for the default config
-						if (buildConfig != null && buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+						if (buildConfig.getPlatformString().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 							return true;
 						}
 					}

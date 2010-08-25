@@ -52,6 +52,7 @@ import org.eclipse.ui.dialogs.PreferencesUtil;
 import org.eclipse.ui.dialogs.PropertyPage;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.internal.api.builder.ui.MMPSelectionUI;
 import com.nokia.carbide.cdt.internal.api.builder.ui.MMPSelectionUI.FileInfo;
@@ -355,7 +356,9 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 
     		// get the list of normal and test project extensions
     		List<ISymbianBuildContext> buildConfigList = new ArrayList<ISymbianBuildContext>();
-			buildConfigList.addAll(cpi.getBuildConfigurations());
+			for (ICarbideBuildConfiguration config : cpi.getBuildConfigurations()){
+				buildConfigList.add(config.getBuildContext());
+			}
 
     		enableOrDisableControls();
         }
@@ -398,7 +401,11 @@ public class CarbideCPPProjectSettingsPage extends PropertyPage {
 		selectionUI.setLayoutData(gridData);
 		
 		// set the data
-		selectionUI.setBldInfFile(cpi.getAbsoluteBldInfPath(), cpi.getBuildConfigurations(), CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()));
+		List<ISymbianBuildContext> buildContexts = new ArrayList<ISymbianBuildContext>();
+		for (ICarbideBuildConfiguration config : cpi.getBuildConfigurations()){
+			buildContexts.add(config.getBuildContext());
+		}
+		selectionUI.setBldInfFile(cpi.getAbsoluteBldInfPath(), buildContexts, CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()));
 		
 		// set checked state
 		selectionUI.setAllChecked(false);

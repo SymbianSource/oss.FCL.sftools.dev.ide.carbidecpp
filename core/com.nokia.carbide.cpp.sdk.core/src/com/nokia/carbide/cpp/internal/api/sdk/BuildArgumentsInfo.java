@@ -14,12 +14,12 @@
 * Description: 
 *
 */
-package com.nokia.carbide.cdt.builder;
+package com.nokia.carbide.cpp.internal.api.sdk;
 
-import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 
-/*
+/**
  * Wrapper for the build arguments settings in Carbide Build Configuration preferences
  */
 public class BuildArgumentsInfo implements IBuildArgumentsInfo {
@@ -64,7 +64,7 @@ public class BuildArgumentsInfo implements IBuildArgumentsInfo {
 		this.abldCleanArgs = ""; //$NON-NLS-1$
 		this.abldFreezeArgs = ""; //$NON-NLS-1$
 
-		if (sdk.isEKA2()) {
+		if (sdk.getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2)) {
 			this.abldFreezeArgs = "-r"; //$NON-NLS-1$
 			
 		}

@@ -27,11 +27,13 @@ import org.osgi.framework.BundleContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ICarbideDevicesXMLChangeListener;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.ui.SBSv1PlatformFilterComposite;
-import com.nokia.carbide.cpp.internal.sdk.ui.NewPluginChecker;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.ui.SDKUIPreferenceConstants;
-import com.nokia.carbide.cpp.sdk.core.*;
-import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.QueryWithTristatePrefDialog;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -58,10 +60,11 @@ public class SDKUIPlugin extends AbstractUIPlugin implements IStartup, ICarbideD
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		NewPluginChecker.checkForNewlyInstalledPlugins(getWorkbench());
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		sdkMgr.setPlatformList(SBSv1PlatformFilterComposite.getPlatFilterPrefsStore());	
+		if (HostOS.IS_WIN32){
+			((SDKManager)sdkMgr).setPlatformList(SBSv1PlatformFilterComposite.getPlatFilterPrefsStore());
+		}
 	}
 	
 	

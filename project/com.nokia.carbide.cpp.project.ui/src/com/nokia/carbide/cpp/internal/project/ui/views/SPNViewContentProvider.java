@@ -16,40 +16,105 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.views;
 
-import com.nokia.carbide.cdt.builder.*;
-import com.nokia.carbide.cdt.builder.project.*;
-import com.nokia.carbide.cpp.epoc.engine.*;
-import com.nokia.carbide.cpp.epoc.engine.image.*;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.*;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
-import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.*;
-import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
-import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.DependencyScanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Set;
 
-import org.eclipse.cdt.core.model.*;
+import org.eclipse.cdt.core.model.CModelException;
+import org.eclipse.cdt.core.model.CoreModel;
+import org.eclipse.cdt.core.model.CoreModelUtil;
+import org.eclipse.cdt.core.model.ElementChangedEvent;
+import org.eclipse.cdt.core.model.ICElement;
+import org.eclipse.cdt.core.model.ICElementDelta;
+import org.eclipse.cdt.core.model.ICProject;
+import org.eclipse.cdt.core.model.IElementChangedListener;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.cdt.internal.core.model.ExternalTranslationUnit;
 import org.eclipse.cdt.ui.CElementGrouping;
 import org.eclipse.cdt.ui.CElementSorter;
 import org.eclipse.core.filesystem.URIUtil;
-import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IAdapterFactory;
+import org.eclipse.core.runtime.IAdapterManager;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.ui.*;
+import org.eclipse.ui.IMemento;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IViewSite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 import org.eclipse.ui.model.IWorkbenchAdapter;
+import org.eclipse.ui.model.WorkbenchAdapter;
 
-import java.io.*;
-import java.util.*;
+import com.nokia.carbide.cdt.builder.BldInfViewPathHelper;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.DefaultImageMakefileViewConfiguration;
+import com.nokia.carbide.cdt.builder.DefaultMMPViewConfiguration;
+import com.nokia.carbide.cdt.builder.DefaultViewConfiguration;
+import com.nokia.carbide.cdt.builder.EMMPPathContext;
+import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
+import com.nokia.carbide.cdt.builder.ImageMakefileViewPathHelper;
+import com.nokia.carbide.cdt.builder.MMPViewPathHelper;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideConfigurationChangedListener;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectPropertyChangedListener;
+import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cpp.epoc.engine.BldInfDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
+import com.nokia.carbide.cpp.epoc.engine.ImageMakefileDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.image.IBitmapSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IBitmapSourceReference;
+import com.nokia.carbide.cpp.epoc.engine.image.IImageSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IMultiImageSource;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfData;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMMPReference;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakMakeReference;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference;
+import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPAIFInfo;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultModelDocumentProvider;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefaultTranslationUnitProvider;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IIncludeFileLocator;
+import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
+import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.preprocessor.DependencyScanner;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 /**
  * Content provider for the SymbianProjectNavigatorView
@@ -684,7 +749,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 			        }
 
 					EpocEnginePlugin.runWithBldInfData(cpi.getWorkspaceRelativeBldInfPath(), 
-						new DefaultViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+						new DefaultViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 						new BldInfDataRunnableAdapter() {
 
 							public Object run(IBldInfData view) {
@@ -845,7 +910,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 								
 								// get the list of extension makefiles
 								BldInfViewPathHelper pathHelper = new BldInfViewPathHelper(view, 
-										cpi.getDefaultConfiguration());
+										cpi.getDefaultConfiguration().getBuildContext());
 								
 								Set<IPath> visitedPaths = new HashSet<IPath>();
 										
@@ -1299,7 +1364,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	        final ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
 	        final IFile mmpFile = parentFile;
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData data) {
@@ -1407,7 +1472,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 
 			final ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData view) {
@@ -1473,7 +1538,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	        	return resources;
 	        
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData view) {
@@ -1697,7 +1762,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	        	return includes;
 
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					private MMPViewPathHelper helper = new MMPViewPathHelper(cpi.getDefaultConfiguration());
@@ -1776,7 +1841,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	        	return mbmContainers;
 
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData view) {
@@ -1856,7 +1921,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	        	return documents;
 
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData view) {
@@ -1901,7 +1966,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	        	return defs;
 
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData view) {
@@ -1959,7 +2024,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	        	return mbmSources;
 
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData view) {
@@ -2041,9 +2106,13 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 
 					public Object run(IImageMakefileData data) {
 						List<ICarbideBuildConfiguration> configs = cpi.getBuildConfigurations();
+						List<ISymbianBuildContext> buildContexs = new ArrayList<ISymbianBuildContext>();
+						for (ICarbideBuildConfiguration config : configs){
+							buildContexs.add(config.getBuildContext());
+						}
 						ImageMakefileViewPathHelper helper = new ImageMakefileViewPathHelper(
 								data, 
-								(ICarbideBuildConfiguration[]) configs.toArray(new ICarbideBuildConfiguration[configs.size()])); 
+								(ISymbianBuildContext[]) configs.toArray(new ISymbianBuildContext[buildContexs.size()])); 
 						List<IMultiImageSource> images = data.getMultiImageSources();
 						for (IMultiImageSource image : images) {
 							if (image.getTargetFilePath().equals(targetFilePath)) {
@@ -2171,7 +2240,7 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	        	return aifs;
 
 			EpocEnginePlugin.runWithMMPData(parentFile.getFullPath(), 
-					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration(), new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(project, cpi.getDefaultConfiguration().getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData view) {
@@ -2260,7 +2329,20 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
         if (info != null) {
     		IPath infPath = info.getProjectRelativeBldInfPath();
     		if (infPath != null) {
-        		IFile file = getIFileFromBldInfViewPath(project, infPath);
+    			IFile file = null;
+    			if (infPath.isAbsolute()){
+    				// Make sure to get the project relative location if the inf path is absolute.
+    				// This means the project has linked resources
+    				// TODO: Just using for prototyping with using linked resources....
+    				// XXX: This is still not working, as the path is relative to the workspace and
+    				// hence it's wrong. Seems we need to change the container for the SPN to take
+    				// a bld.inf as an absolute path???
+    				IFile infFile = ResourcesPlugin.getWorkspace().getRoot().getFile(infPath);
+    				children.add(infFile);
+    				return children.toArray();
+    			} else {
+    				file = getIFileFromBldInfViewPath(project, infPath);
+    			}
         		if (file != null) {
         			children.add(containerFactory.getBldInfContainer(file, true));
 
@@ -2447,6 +2529,11 @@ public class SPNViewContentProvider extends BaseWorkbenchContentProvider
 	}
 
 	protected IFile getIFileFromBldInfViewPath(IProject project, IPath pathFromBldInfView) {
+		
+		if (pathFromBldInfView.isAbsolute()){
+			IWorkspace workspace= ResourcesPlugin.getWorkspace();
+			return workspace.getRoot().getFile(pathFromBldInfView);
+		}
 		EpocEnginePathHelper helper = new EpocEnginePathHelper(project);
 		IPath resolvedProjectRelativePath = helper.convertToProject(pathFromBldInfView);
 		if (resolvedProjectRelativePath != null)

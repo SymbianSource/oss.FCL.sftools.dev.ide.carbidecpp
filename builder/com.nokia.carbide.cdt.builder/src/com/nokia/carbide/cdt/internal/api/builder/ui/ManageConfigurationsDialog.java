@@ -17,6 +17,7 @@
 package com.nokia.carbide.cdt.internal.api.builder.ui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.ICheckStateListener;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -34,6 +36,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -52,21 +55,25 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
 import com.nokia.carbide.cdt.internal.builder.ui.CarbideCPPBuilderUIHelpIds;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.qt.core.QtConfigFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKFilter;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetTreeNode;
 import com.nokia.cpp.internal.api.utils.core.Check;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
+@SuppressWarnings("restriction")
 public class ManageConfigurationsDialog extends TrayDialog {
 	
 	protected ContainerCheckedTreeViewer properSdkViewer;
-	protected ContainerCheckedTreeViewer missingSdkViewer;
 	private FilteringContentProviderWrapper filteringContentProviderWrapper;
 	private final ICarbideProjectInfo cpi;
 	
@@ -142,12 +149,14 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		this.cpi = cpi;
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 		
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!sdkMgr.checkDevicesXMLSynchronized()){
-			if (sdkMgr instanceof ISDKManagerInternal){
-				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
-				sdkMgrInternal.fireDevicesXMLChanged();
-			}	
+		if (HostOS.IS_WIN32){
+			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
+				if (sdkMgr instanceof ISDKManagerInternal){
+					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
+					sdkMgrInternal.fireDevicesXMLChanged();
+				}	
+			}
 		}
 	}
 	
@@ -184,7 +193,28 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		
 		properSdkViewer = new ContainerCheckedTreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
 		properSdkViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
-		properSdkViewer.setLabelProvider(new LabelProvider());
+		
+		class SDKNodeLabelProvider extends LabelProvider implements IColorProvider {
+
+			public Color getForeground(Object element) {
+				if (element instanceof BuildTargetTreeNode){
+					BuildTargetTreeNode treeNode = (BuildTargetTreeNode)element;
+					if (treeNode.getValue() instanceof ISymbianSDK){
+						if (treeNode.toString().contains(BuildTargetTreeNode.SDK_NODE_ERROR_EPOCROOT_INVALID)){
+							return WorkbenchUtils.getSafeShell().getDisplay().getSystemColor(SWT.COLOR_RED);
+						}
+					}
+				}
+				
+				return null;
+			}
+
+			public Color getBackground(Object element) {
+				return null;
+			}
+		}
+		
+		properSdkViewer.setLabelProvider(new SDKNodeLabelProvider());
 		TreeNodeContentProvider treeNodeContentProvider = new TreeNodeContentProvider();
 		filteringContentProviderWrapper = 
 			new FilteringContentProviderWrapper(treeNodeContentProvider);
@@ -202,39 +232,33 @@ public class ManageConfigurationsDialog extends TrayDialog {
 			final Label uninstalledSdkConfigLabel = new Label(container, SWT.NONE);
 			uninstalledSdkConfigLabel.setToolTipText(Messages.getString("ManageConfigurationsDialog.Unavailable_Config_Label_ToolTip")); //$NON-NLS-1$
 			uninstalledSdkConfigLabel.setText(Messages.getString("ManageConfigurationsDialog.Unavailable_SDks_and_Configs")); //$NON-NLS-1$
-			missingSdkViewer = new ContainerCheckedTreeViewer(container, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.BORDER);
-			missingSdkViewer.getTree().setLayoutData(new GridData(GridData.FILL_BOTH));
-			missingSdkViewer.setLabelProvider(new LabelProvider());
-			filteringContentProviderWrapper = 
-				new FilteringContentProviderWrapper(treeNodeContentProvider);
-			missingSdkViewer.setContentProvider(filteringContentProviderWrapper);
-			missingSdkViewer.setInput(brokenTreeInput);
-			propagateMissingSdkTree();
-			missingSdkViewer.addCheckStateListener(new ICheckStateListener() {
-				public void checkStateChanged(CheckStateChangedEvent event) {
-					// Disclose the tree if the user selected the parent node
-					Object obj = event.getElement();
-					if (obj instanceof BrokenConfigurationInProjectTreeNode){
-						BrokenConfigurationInProjectTreeNode bttn = (BrokenConfigurationInProjectTreeNode)obj;
-						missingSdkViewer.setExpandedState(bttn, true);
-					}
-					validatePage();
-				}
-			});			
 		}
 
 		final Label sdkStaticHelp = new Label(parent, SWT.WRAP);
 		sdkStaticHelp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		sdkStaticHelp.setText(Messages.getString("ManageConfigurationsDialog.Select_config_help_text")); //$NON-NLS-1$
 		
-		Link fLink = new Link(parent, SWT.WRAP);
-		fLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		fLink.setText(Messages.getString("ManageConfigurationsDialog.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-		fLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-		fLink.addSelectionListener(new SelectionAdapter() {
+		Link configPrefLink = new Link(parent, SWT.WRAP);
+		configPrefLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		configPrefLink.setText(Messages.getString("ManageConfigurationsDialog.Select_Filtering_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		configPrefLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		configPrefLink.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				// I don't see a way to open it to a specific tab, only the page
 				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage", null, null, 0).open()){ //$NON-NLS-1$
+					drawSDKConfigTree();
+				}
+			}
+		});
+		
+		Link sdkLink = new Link(parent, SWT.WRAP);
+		sdkLink.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+		sdkLink.setText(Messages.getString("ManageConfigurationsDialog.Select_SymbianSDKs_Prefs_Link")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		sdkLink.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
+		sdkLink.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				// I don't see a way to open it to a specific tab, only the page
+				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferencePage", null, null, 0).open()){ //$NON-NLS-1$
 					drawSDKConfigTree();
 				}
 			}
@@ -249,7 +273,12 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		boolean sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject());
 	
 		properSdkViewer.setContentProvider(filteringContentProviderWrapper);
-		properSdkViewer.setInput(BuildTargetTreeNode.getTreeViewerInput(sbsv2Project));
+		BuildTargetTreeNode[] sdkConfigTreeNodes = BuildTargetTreeNode.getTreeViewerInput(sbsv2Project);
+		if (sbsv2Project){
+			replaceFilteredConfigsFromProject(sdkConfigTreeNodes);
+		}
+		
+		properSdkViewer.setInput(sdkConfigTreeNodes);
 		propagateSdkTree();
 		properSdkViewer.addCheckStateListener(new ICheckStateListener() {
 			public void checkStateChanged(CheckStateChangedEvent event) {
@@ -262,6 +291,122 @@ public class ManageConfigurationsDialog extends TrayDialog {
 				validatePage();
 			}
 		});
+		
+	}
+
+	/**
+	 * When displaying build configs there may be configurations in the project that may not be displayed
+	 * We add those back in so they reside in the checked tree viewer in case the user wants to remove them.
+	 * @param sdkConfigTreeNodes
+	 */
+	private void replaceFilteredConfigsFromProject(BuildTargetTreeNode[] sdkConfigTreeNodes) {
+		List<ICarbideBuildConfiguration> bldConfigs = cpi.getBuildConfigurations();
+		
+		HashMap<BuildTargetTreeNode, List<ISymbianBuildContext>> missingConfigMap = new HashMap<BuildTargetTreeNode, List<ISymbianBuildContext>>();
+		for (ICarbideBuildConfiguration config : bldConfigs){
+			boolean foundConfig = false;
+			// Add in configs that are only defined in the project and not the
+			// suggested filtered config cache
+			for (BuildTargetTreeNode sdkConfigNode : sdkConfigTreeNodes){
+				ISymbianSDK sdk = sdkConfigNode.getSymbianSDK();
+				if (!sdk.getUniqueId().equals(config.getSDK().getUniqueId())){
+					continue; // not in this SDK, don't bother looking at all configs
+				} else {
+					// Found the right SDK, now check and see if the config exists
+					TreeNode[] configNodes = sdkConfigNode.getChildren();
+					if (configNodes != null){
+						for (TreeNode childConfig : configNodes){
+							if (childConfig == null){
+								continue;
+							}
+							if (childConfig.getValue() instanceof ISymbianBuildContext){
+								ISymbianBuildContext context = (ISymbianBuildContext)(childConfig.getValue());
+								if (config.getBuildContext().equals(context)){
+									foundConfig = true;
+									break;
+								}
+							}
+						}
+					}
+					if (!foundConfig){
+						// save config off, we'll add it back in later
+						List<ISymbianBuildContext> contextsToAdd = new ArrayList<ISymbianBuildContext>();
+						if (null == missingConfigMap.get(sdkConfigNode)){
+							contextsToAdd.add(config.getBuildContext());
+						} else {
+							contextsToAdd = missingConfigMap.get(sdkConfigNode);
+							contextsToAdd.add(config.getBuildContext());
+						}
+						missingConfigMap.put(sdkConfigNode, contextsToAdd);
+						
+					}
+				}
+			}			
+		}
+		
+		for (BuildTargetTreeNode sdkNode : missingConfigMap.keySet()){
+			List<ISymbianBuildContext> configsToAdd = missingConfigMap.get(sdkNode);
+			TreeNode[] oldConfigNodes = sdkNode.getChildren();
+			if (oldConfigNodes == null || oldConfigNodes.length == 0){
+				continue;
+			}
+			TreeNode[] newConfigNodes = new TreeNode[oldConfigNodes.length + configsToAdd.size()];
+			int index = 0;
+			// build up the old list....
+			for (TreeNode newConfigNode : oldConfigNodes){
+				if (newConfigNode == null){
+					continue;
+				}
+				if (newConfigNode.getValue() instanceof ISymbianBuildContext){
+					ISymbianBuildContext context = (ISymbianBuildContext)(newConfigNode.getValue());
+					newConfigNodes[index++] = new TreeNode(context) {
+						@Override
+						public String toString() {
+							ISymbianBuildContext context = (ISymbianBuildContext)getValue();
+							String sdkId = context.getSDK().getUniqueId();
+							String newDisplayString = stripSDKIDFromConfigName(context.getDisplayString(), sdkId);
+							if (context instanceof ISBSv2BuildContext){
+								ISBSv2BuildContext v2Context = (ISBSv2BuildContext)context;
+								if (v2Context.getConfigQueryData() == null){
+									newDisplayString += " ERROR: " + "Unable to load configuration data because the query to sbs failed."; // $NON-NLS-N$
+								}
+								else if (v2Context.getConfigQueryData().getConfigurationErrorMessage() != null && 
+									v2Context.getConfigQueryData().getConfigurationErrorMessage().length() > 0){
+									newDisplayString += " ERROR: " + v2Context.getConfigQueryData().getConfigurationErrorMessage();
+								}
+							} 
+							return newDisplayString;
+						}
+					};
+				}
+			}
+			
+			// ... then add the project specific items...
+			for (ISymbianBuildContext newContext : configsToAdd){
+				newConfigNodes[index++] = new TreeNode(newContext) {
+					@Override
+					public String toString() {
+						ISymbianBuildContext context = (ISymbianBuildContext)getValue();
+						String sdkId = context.getSDK().getUniqueId();
+						String newDisplayString = stripSDKIDFromConfigName(context.getDisplayString(), sdkId);
+						if (context instanceof ISBSv2BuildContext){
+							ISBSv2BuildContext v2Context = (ISBSv2BuildContext)context;
+							if (v2Context.getConfigQueryData() == null){
+								newDisplayString += " ERROR: " + "Unable to load configuration data because the query to sbs failed."; // $NON-NLS-N$
+							}
+							else if (v2Context.getConfigQueryData().getConfigurationErrorMessage() != null && 
+								v2Context.getConfigQueryData().getConfigurationErrorMessage().length() > 0){
+								newDisplayString += " ERROR: " + v2Context.getConfigQueryData().getConfigurationErrorMessage();
+							}
+						} 
+						return newDisplayString;
+					}
+				};
+			}
+			
+			sdkNode.setChildren(newConfigNodes);
+			
+		}
 		
 	}
 
@@ -309,17 +454,19 @@ public class ManageConfigurationsDialog extends TrayDialog {
 						ISymbianBuildContext buildContext = (ISymbianBuildContext)currConfigNode.getValue();
 						for (ICarbideBuildConfiguration currExistingConfig : buildConfigList){
 							boolean checkIt = false;
-							checkIt = currExistingConfig.equals(buildContext);
+							checkIt = currExistingConfig.getBuildContext().equals(buildContext);
 							if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()) &&
-											!checkIt && currExistingConfig.getSBSv2Alias() == null){
+											!checkIt){
 								
-								// extra check to see if we're using SBSv2 and config display name is older SBSv1 style
-								if (buildContext.getTargetString().equals(currExistingConfig.getTargetString()) &&
-									buildContext.getPlatformString().equals(currExistingConfig.getPlatformString()) &&
-									buildContext.getSDK().getUniqueId().equals(currExistingConfig.getSDK().getUniqueId() )
-									&& buildContext.getSBSv2Alias() != null && buildContext.getSBSv2Alias().split("_").length == 2){
-									
-									checkIt = true;
+								if (buildContext instanceof ISBSv2BuildContext){
+									ISBSv2BuildContext v2Context = (ISBSv2BuildContext)buildContext;
+									ISBSv2BuildContext currV2Context = (ISBSv2BuildContext)currExistingConfig.getBuildContext();
+									// extra check to see if we're using SBSv2 and config display name is older SBSv1 style
+									if (currV2Context.getConfigID().startsWith(ISBSv2BuildContext.BUILDER_ID)){
+										if (v2Context.getConfigID().equals(currV2Context.getConfigID())	){
+											checkIt = true;
+										}
+									}
 								}
 							}
 							if (checkIt){
@@ -334,19 +481,6 @@ public class ManageConfigurationsDialog extends TrayDialog {
 			}
 		}
 		properSdkViewer.refresh();
-	}
-	
-	private void propagateMissingSdkTree() {
-		TreeItem[] items = missingSdkViewer.getTree().getItems();
-		// all nodes in this tree are select, as the tree only reflect selected config with bad SDK
-		for (int i=0; i<items.length; i++) {
-			TreeNode sdkNode = (TreeNode)items[i].getData();
-			if (sdkNode.getValue() instanceof ISymbianSDK) {
-				missingSdkViewer.setExpandedState(sdkNode, true);
-				missingSdkViewer.setChecked(sdkNode, true);		
-			}
-		}
-		missingSdkViewer.refresh();		
 	}
 	
 	private void saveConfigurations(){
@@ -366,7 +500,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 				ISymbianBuildContext context = (ISymbianBuildContext)node.getValue();
 				// Now check to see if the config already exists, if not create a new one
 				for (ICarbideBuildConfiguration currExistingConfig : buildConfigList){
-					if (currExistingConfig.equals(context)){
+					if (currExistingConfig.getBuildContext().equals(context)){
 						configAlreadyExists = true;
 						break;
 					}
@@ -390,24 +524,26 @@ public class ManageConfigurationsDialog extends TrayDialog {
 				TreeNode sdkNode = (TreeNode)currTreeItem.getData();
 				if (sdkNode.getValue() instanceof ISymbianSDK) {
 					TreeNode[] configNode = sdkNode.getChildren();
-					for (TreeNode currConfigNode : configNode){
-						if (currConfigNode.getValue() instanceof ISymbianBuildContext){
-							// if the current config is already a config set it to checked.
-							ISymbianBuildContext buildContext = (ISymbianBuildContext)currConfigNode.getValue();
-							if (currExistingConfig.equals(buildContext)){
-								// The configuration is in both the tree viewer and the .settings
-								// Now find out if it's checked. If it's not checked remove it
-								if (!properSdkViewer.getChecked(currConfigNode)){
-									ICarbideBuildConfiguration config = cpm.getNamedConfiguration(buildContext.getDisplayString());
-									if (config == null){
-										config = cpm.getNamedConfiguration(currExistingConfig.getDisplayString());
-									}
-									if (config != null){
-										cpm.deleteConfiguration(config);
-										break;
-									}
-									
-								} 
+					if (configNode != null){
+						for (TreeNode currConfigNode : configNode){
+							if (currConfigNode.getValue() instanceof ISymbianBuildContext){
+								// if the current config is already a config set it to checked.
+								ISymbianBuildContext buildContext = (ISymbianBuildContext)currConfigNode.getValue();
+								if (currExistingConfig.getBuildContext().equals(buildContext)){
+									// The configuration is in both the tree viewer and the .settings
+									// Now find out if it's checked. If it's not checked remove it
+									if (!properSdkViewer.getChecked(currConfigNode)){
+										ICarbideBuildConfiguration config = cpm.getNamedConfiguration(buildContext.getDisplayString());
+										if (config == null){
+											config = cpm.getNamedConfiguration(currExistingConfig.getDisplayString());
+										}
+										if (config != null){
+											cpm.deleteConfiguration(config);
+											break;
+										}
+										
+									} 
+								}
 							}
 						}
 					}
@@ -415,28 +551,13 @@ public class ManageConfigurationsDialog extends TrayDialog {
 			}
 		}
 		
-		// now look for dead SDK config we removed
-		if (missingSdkViewer != null) {
-			TreeItem[] items = missingSdkViewer.getTree().getItems();
-			for (TreeItem currentTreeItem : items) {
-				TreeNode sdkNode = (TreeNode)currentTreeItem.getData();
-				if (sdkNode.getValue() instanceof ISymbianSDK) {
-					TreeNode[] configNode = sdkNode.getChildren();
-					for (TreeNode currConfigNode : configNode){
-						if (missingSdkViewer.getChecked(currConfigNode) == false) {
-							ISymbianBuildContext buildContext = (ISymbianBuildContext)currConfigNode.getValue();
-							ICarbideBuildConfiguration config = cpm.getNamedConfiguration(buildContext.getDisplayString());	
-							if (config != null) {
-								cpm.deleteConfiguration(config);
-							}
-						}
-					}
-				}
-			}			
-		}
-		
 		// now apply any changes
 		cpm.saveChanges();
 	}
+	
+	private static String stripSDKIDFromConfigName(String configName, String sdkID){
+		return configName.replace("[" + sdkID + "]", "");
+	}
 
+	
 }

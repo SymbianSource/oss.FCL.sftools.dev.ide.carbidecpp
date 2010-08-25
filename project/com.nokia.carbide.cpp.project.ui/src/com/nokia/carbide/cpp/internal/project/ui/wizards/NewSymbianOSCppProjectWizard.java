@@ -26,6 +26,7 @@ import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.ui.TemplateSDKsFilter;
 import com.nokia.carbide.cpp.internal.project.ui.Messages;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.project.ui.sharedui.NewProjectPage;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -34,6 +35,7 @@ import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
 import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
 import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 import com.nokia.carbide.internal.api.templatewizard.ui.TemplateWizard;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 /**
  * Wizard for creating Symbian OS C++ project
@@ -51,13 +53,15 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 		setTemplateFilter(new TemplateSDKsFilter());
 		setWindowTitle(Messages.getString("NewSymbianOSCppProjectWizard.WindowTitle")); //$NON-NLS-1$
 		
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		if (!sdkMgr.checkDevicesXMLSynchronized()){
-			if (sdkMgr instanceof ISDKManagerInternal){
-				ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
-				sdkMgrInternal.fireDevicesXMLChanged();
+		if (HostOS.IS_WIN32){
+			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
+				if (sdkMgr instanceof ISDKManagerInternal){
+					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
+					sdkMgrInternal.fireDevicesXMLChanged();
+				}
+				
 			}
-			
 		}
 	}
 

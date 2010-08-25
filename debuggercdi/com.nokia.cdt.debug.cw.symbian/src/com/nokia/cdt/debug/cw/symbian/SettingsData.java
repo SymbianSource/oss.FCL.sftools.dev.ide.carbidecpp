@@ -57,8 +57,9 @@ import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
@@ -254,13 +255,11 @@ public class SettingsData {
 
 				// make sure the selected build configuration of the current project
 				// is an emulator build, otherwise warn them that we can't set default values.
-				if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) == 0) {
+				if (buildConfig.getPlatformString().compareTo(ISBSv1BuildContext.EMULATOR_PLATFORM) == 0) {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());
 
 					if (isEmulatorRequired(buildConfig, mainExeHostPath, mainExeWorkspaceRelativeMMPPath)) {
-						IPath releaseRoot = buildConfig.getSDK().getReleaseRoot();
-						String winscwudeb = releaseRoot.toOSString() + File.separator + "WINSCW" + File.separator + buildConfig.getTargetString(); //$NON-NLS-1$ //$NON-NLS-2$
-
+						String winscwudeb = buildConfig.getSDK().getReleaseRoot().toOSString() + File.separator + "WINSCW" + File.separator + buildConfig.getTargetString(); //$NON-NLS-1$ //$NON-NLS-2$
 						String emulatorPath = winscwudeb + File.separator + "epoc.exe"; //$NON-NLS-1$
 						configuration.setAttribute(DebuggerCommonData.Host_App_Path, getCanonicalPath(emulatorPath));			
 					}
@@ -359,7 +358,7 @@ public class SettingsData {
 
 				// make sure the selected build configuration of the current project is not an emulator build
 				// otherwise warn them that we can't set default values.
-				if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) != 0) {
+				if (buildConfig.getPlatformString().compareTo(ISBSv1BuildContext.EMULATOR_PLATFORM) != 0) {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());
 					configuration.setAttribute(PreferenceConstants.J_PN_RemoteProcessToLaunch, mainExeTargetPath == null ? "" : PathUtils.convertPathToWindows(mainExeTargetPath));
 				} else {
@@ -394,7 +393,7 @@ public class SettingsData {
 
 				// make sure the selected build configuration of the current project is not an emulator build
 				// otherwise warn them that we can't set default values.
-				if (buildConfig.getPlatformString().compareTo(ISymbianBuildContext.EMULATOR_PLATFORM) != 0) {
+				if (buildConfig.getPlatformString().compareTo(ISBSv1BuildContext.EMULATOR_PLATFORM) != 0) {
 					configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, mainExeHostPath == null ? "" : mainExeHostPath.toOSString());					
 				} else {
 					displayWarningDialog(Messages.getString("SettingsData.37")); //$NON-NLS-1$
@@ -465,7 +464,7 @@ public class SettingsData {
 				ICarbideBuildConfiguration buildConfig = cpi.getDefaultConfiguration();
 				
 				String defaultTargetPath = "C:\\"; //$NON-NLS-1$
-				if (buildConfig.getSDK().isEKA2()) {
+				if (buildConfig.getSDK().getSupportedFeatures().contains(ISymbianSDKFeatures.IS_EKA2)) {
 					// C:\\sys\bin for eka2
 					defaultTargetPath += "sys\\bin\\"; //$NON-NLS-1$
 				}
@@ -772,11 +771,8 @@ public class SettingsData {
 		for (ISymbianSDK currSDK : sdkList){
 			if (new Path(currSDK.getEPOCROOT()).isPrefixOf(mainExeHostPath))
 			{
-			       // Apparently this only works correctly with the S60 emulator.
-		        if (!currSDK.isS60() &&
-		        		!currSDK.getFamily().equalsIgnoreCase(ISymbianSDK.TECHVIEW_FAMILY_ID))
-		        	return true;
-		        
+			    // Apparently this only works correctly with the S60 emulator.
+				
 				if ("exe".equalsIgnoreCase(mainExeHostPath.getFileExtension())) { //$NON-NLS-1$
 					Version version = currSDK.getOSVersion();
 					if (!(version.getMajor() == 9 && version.getMinor() == 1)) {

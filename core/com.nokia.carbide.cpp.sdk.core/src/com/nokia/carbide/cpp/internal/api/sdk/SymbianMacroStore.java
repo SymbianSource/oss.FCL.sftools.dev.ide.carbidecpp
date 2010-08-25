@@ -178,19 +178,31 @@ public class SymbianMacroStore {
     }
     
     /**
-     * Get a list of Macros for a given OS. Format will just be the name (e.g. "FOO")
+     * Get a list of Macros for a given OS. Format will just be the name (e.g. "FOO").
      * @param osVersion - A version object. Only the major and minor rev are checked.
      * @param branch - An OS branch (e.g. 'a' or 'b') or an empty string if none.
      * @return A full list of define macro names (no values). Returns an empty list if the OS version is not in the store
+     * @deprecated - use getOSMacros(Version osVersion)
      */
     public List<String> getOSMacros(Version osVersion, String branch){
+    	return getOSMacros(osVersion);
+    }
+    
+    /**
+     * Get a list of Macros for a given OS. Format will just be the name (e.g. "FOO").
+     * @param osVersion - A version object. Only the major and minor rev are checked.
+     * @param branch - An OS branch (e.g. 'a' or 'b') or an empty string if none.
+     * @return A full list of define macro names (no values). Returns an empty list if the OS version is not in the store
+     * @deprecated - use {@link ISymbianBuildContext#getVariantHRHDefines()}
+     */
+    public List<String> getOSMacros(Version osVersion){
     	List<String> osMacroList = new ArrayList<String>();
     	
     	String majStr = String.valueOf(osVersion.getMajor());
     	String minStr = String.valueOf(osVersion.getMinor());
     	if (majStr.length() > 0 && minStr.length() > 0){
     		String osVerStr =  majStr + "." + minStr;
-    		osMacroList = osMacros.get(osVerStr + branch);
+    		osMacroList = osMacros.get(osVerStr);
     	}
     	
     	if (osMacroList == null){
@@ -199,6 +211,7 @@ public class SymbianMacroStore {
     	return osMacroList;
     	
     }
+    
     
     /**
      * Get a hash map of all the platforms and their associated macros for a given OS version

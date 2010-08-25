@@ -15,6 +15,7 @@ package com.nokia.carbide.cpp.sdk.core;
 import java.io.File;
 import java.util.List;
 
+import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.core.runtime.IPath;
 
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
@@ -30,17 +31,7 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 public interface ISymbianBuildContext {
 	
 	/**
-	 * Platform constants
-	 */
-	public static final String EMULATOR_PLATFORM = "WINSCW";
-	public static final String GCCE_PLATFORM = "GCCE";
-	public static final String ARMV5_PLATFORM = "ARMV5";
-	public static final String ARMV6_PLATFORM = "ARMV6";
-	public static final String ARMV5_ABIV2_PLATFORM = "ARMV5_ABIV2";
-	public static final String ARMV6_ABIV2_PLATFORM = "ARMV6_ABIV2";
-	
-	/**
-	 * DEFAULT suffix to use for components that are specified as variant, but don't buid as variants. For example, plain ARMV5, when specified as
+	 * DEFAULT suffix to use for components that are specified as variant, but don't build as variants. For example, plain ARMV5, when specified as
 	 * as a FEATUREVARIANT, will build as ARMV5.DEFAULT
 	 * @since 2.0
 	 */
@@ -66,15 +57,6 @@ public interface ISymbianBuildContext {
 	 */
 	public String getPlatformString();
 	
-	/**
-	 * For Symbian Bianry Variation, platforms will be names <plat>.<variation>
-	 * So in some cases you need to know only the platforms that the variant is based on.
-	 * For example, a build platform name of "armv5.myvariant" will return "armv5".
-	 * @return The base platform string.
-	 * @see isSymbianBinaryVariation()
-	 * @since 2.0
-	 */
-	public String getBasePlatformForVariation();
 	
 	/**
 	 * The debug or release target the platform is building for.
@@ -91,10 +73,9 @@ public interface ISymbianBuildContext {
 	
 	/**
 	 * Get the implicit directory searched for *.def files by the DEFFILE statement.
-	 * @param isASSP true if targeting ASSP
 	 * @return bare directory name (e.g. 'BWINS', 'BMARM', 'EABI')
 	 */
-	public String getDefaultDefFileDirectoryName(boolean isASSP);
+	public String getDefaultDefFileDirectoryName();
 	
 	/**
 	 * Get the prefix file used at build time.  This usually provides
@@ -104,27 +85,35 @@ public interface ISymbianBuildContext {
 	public IPath getCompilerPrefixFile();
 
 	/**
-	 * Returns the list of all vendor specific C/C++ macros for this SDK.  The list of macros is defined in
-	 * the variant configuration file inside \epoc32\tools\variant.cfg (or \epoc32\tools\spp_variant.cfg
-	 * for platform variation SDKs).  The file itself contains an HRH file entry and may also contain macro definitions
-	 * thereafter.
+	 * Get the full path to the prefix file defined under \epoc32\tools\variant\variant.cfg
+	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
+	 * @since 3.0
+	 */
+	public IPath getPrefixFromVariantCfg();
+	
+	/**
+	 * Returns the list of all vendor specific C/C++ macros for this SDK.  This is the result of preprocessing
+	 * the HRH file defined under /epoc32/tools/variant/variant.cfg
 	 * @return a list of macros which may be empty.
 	 */
 	public List<IDefine> getVariantHRHDefines();
 	
 	/**
-	 * Returns the list of all header files recursively included by the SDK prefix file.  Note that the list of
+	 * Returns the list of all header files recursively included by the SDK prefix file (defined in /epoc32/tools/variant/variant.cfg).  Note that the list of
 	 * files could be different for different context's since the platform can potentially change the list of include
 	 * paths.
 	 * @return a list of header files which may be empty
+	 * @since 3.0
 	 */
-	public List<File> getPrefixFileIncludes();
+	public List<File> getVariantHRHIncludes();
 
 	/**
-	 * Returns the list of compiler macros from the compiler prefix file (if any).
+	 * Returns the list of compiler macros from the compiler prefix file (if any). This is the result
+	 * of preprocessing the actual compiler pre-include file, e.g. rvct.h or gcce.h. WINSCW platform builds will return an empty list.
 	 * @return a list of macros which may be empty.
+	 * @since 3.0
 	 */
-	public List<IDefine> getCompilerMacros();
+	public List<IDefine> getCompilerPreincludeDefines();
 	
 	/**
 	 * For platforms that are building with Symbian Binary Variation, this suffix will be included in the configuration name
@@ -135,17 +124,49 @@ public interface ISymbianBuildContext {
 	public String getBuildVariationName();
 	
 	/**
-	 * Is the current build context building as a Symbian Binary Variation? Not to be confused with BSF.
-	 * @return true if this is a binary variant build
-	 * @since 2.0
+	 * Load build context specific configuration settings
+	 * @param ICStorageElement - a child of CARBIDE_STORAGE_ID ("CarbideConfigurationDataProvider") in .cproject data
+	 * @since 3.0
+	 *
 	 */
-	public boolean isSymbianBinaryVariation();
+	public void loadConfigurationSettings(ICStorageElement se);
 	
 	/**
-	 * Retrieve the build-able configuration; a valid command that cab be passed with Raptor's -c parameter.
-	 * This should not be used and should return null for abld-configurations.
-	 * @return the configuration name, or null if none.
+	 * Save build context specific configuration settings
+	 * @param ISymbianBuildContext 
+	 * @param ICStorageElement - a child of CARBIDE_STORAGE_ID ("CarbideConfigurationDataProvider") in .cproject data
+	 * @since 3.0
 	 */
-	public String getSBSv2Alias();
+	public void saveConfigurationSettings(ICStorageElement se, ISymbianBuildContext ISymbianBuildContext);
+	
+	/**
+	 * Get the <cconfiguration/> 'id' attribute for this configuration (from .cproject file). This is an ISymbianBuildContext wrapper.
+	 * @return String
+	 * @since 3.0
+	 */
+	String getConfigurationID();
+	
+	/**
+	 * This is the list of macros used to preprocess CPP source files.
+	 * @return a list of defines.
+	 * @since 
+	 */
+	List<IDefine> getBuildMacros();
+	
+	/**
+	 * This is the list of macros used to preprocess Symbian build files (bld.inf & mmp)
+	 * @return a list of defines
+	 * @since 3.0
+	 */
+	List<IDefine> getMetadataMacros();
+	
+	/**
+	 * Get a list of macros specific to the given target type, e.g. "__EXE__" or "__DLL__"
+	 * @param targettype
+	 * @return list of macro strings, may be empty
+	 * @since 3.0
+	 */
+	IDefine getTargetTypeMacro(String targettype);
+	
 	
 }

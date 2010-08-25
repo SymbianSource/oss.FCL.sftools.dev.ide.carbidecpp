@@ -29,7 +29,6 @@ public class SymbianSDKs {
 	
 	private static final String KEY_SDK_ID = "KEY_SDK_ID";
 	private static final String KEY_SDK_EPOCROOT = "KEY_SDK_EPOCROOT";
-	private static final String KEY_SDK_NAME = "KEY_SDK_NAME";
 	
 	static private ISDKManager getSDKManager(){
 		return SDKCorePlugin.getSDKManager();
@@ -41,11 +40,9 @@ public class SymbianSDKs {
 		for (ISymbianSDK sdk : sdkList){
 			Map<String,String> mp = new HashMap<String, String>();
 			mp.put(KEY_SDK_ID, sdk.getUniqueId());
-			mp.put(KEY_SDK_NAME, sdk.getName());
 			mp.put(KEY_SDK_EPOCROOT, sdk.getEPOCROOT());
 			sdkMapArray.add(mp);
 		}
-		
 		
 		return sdkMapArray.toArray(new HashMap<?, ?>[sdkMapArray.size()]);
 	}

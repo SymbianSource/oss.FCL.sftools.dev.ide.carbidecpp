@@ -24,8 +24,19 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.swt.widgets.TreeItem;
 
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
+import com.nokia.carbide.cpp.sdk.core.IBSFCatalog;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 public class ImporterBuildTargetsPage extends BuildTargetsPage {
 
@@ -67,7 +78,18 @@ public class ImporterBuildTargetsPage extends BuildTargetsPage {
 						for (int i=0; i<items.length; i++) {
 							TreeNode node = (TreeNode)items[i].getData();
 							if (node.getValue() instanceof ISymbianSDK && node.getValue() == sdk) {
-								if (sdkMgr.getBSFScannerEnabled() || sdk.getBSFCatalog().getVirtualVariantPlatforms().length > 0){
+								IBSFCatalog bsfCatalog = null;
+								ISBSv1BuildInfo sbsv1BuildInfo = null;
+								if (SBSv2Utils.enableSBSv1Support()){
+									sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+								}
+								
+								ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+								if (sbsv1BuildInfo != null) {
+									// SBSv1 only
+									bsfCatalog = sbsv1BuildInfo.getBSFCatalog();
+								}
+								if (HostOS.IS_WIN32 && (((SDKManager)sdkMgr).getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0))){
 									// Check and see if any of the configs in the SDK
 									// match any configuration that has been selected before
 									// for this SDK.
@@ -121,11 +143,18 @@ public class ImporterBuildTargetsPage extends BuildTargetsPage {
 			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 			for (ISymbianBuildContext currContext : selectedConfigs){
 				ISymbianSDK sdk = currContext.getSDK();
-				if (sdk.getBSFCatalog().getVirtualVariantPlatforms().length > 0 || sdkMgr.getBSFScannerEnabled()){
-					// this setting needs to be persisted.
-					settingsNeedUpdate = true;
-					selectedConfigsToSave.add(currContext);
-				}
+				IBSFCatalog bsfCatalog = null;
+				if (currContext instanceof ISBSv1BuildContext) {
+					// SBSv1 only
+					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+					bsfCatalog = sbsv1BuildInfo.getBSFCatalog();
+				
+					if (((SDKManager)sdkMgr).getBSFScannerEnabled() || (bsfCatalog != null && bsfCatalog.getVirtualVariantPlatforms().length > 0)){
+						// this setting needs to be persisted.
+						settingsNeedUpdate = true;
+						selectedConfigsToSave.add(currContext);
+					}
+				} 
 			}
 			if (settingsNeedUpdate) {
 				// Iterate through all the persisted configs and don't add those that have the same

@@ -48,7 +48,7 @@ public class DefaultGNUMakefileViewConfiguration implements
 	 * The build context may be null.
 	 */
 	public DefaultGNUMakefileViewConfiguration(ICarbideProjectInfo info, IViewFilter viewFilter) {
-		this(info.getProject(), info.getDefaultConfiguration(), viewFilter);
+		this(info.getProject(), info.getDefaultConfiguration().getBuildContext(), viewFilter);
 	}
 	
 	/**

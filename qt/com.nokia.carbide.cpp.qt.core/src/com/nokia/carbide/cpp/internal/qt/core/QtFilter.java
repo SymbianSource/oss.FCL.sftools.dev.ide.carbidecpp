@@ -18,20 +18,22 @@ package com.nokia.carbide.cpp.internal.qt.core;
 
 import java.io.File;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.viewers.IFilter;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 
 public abstract class QtFilter implements IFilter {
 
 	protected File getLibFile(ISymbianBuildContext context) {
-
-		if (context.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
-			return context.getSDK().getReleaseRoot().append(context.getPlatformString()).
+		IPath releaseRoot = context.getSDK().getReleaseRoot();
+		if (context.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
+			return releaseRoot.append(context.getPlatformString()).
 			append(context.getTargetString()).append("QtCore.dll").toFile(); //$NON-NLS-1$
 		} else {
 			// for non-emulator targets, check in the armv5/lib directory (ARMV5 and GCCE)
-			return context.getSDK().getReleaseRoot().append("armv5/lib/QtCore.lib").toFile(); //$NON-NLS-1$
+			return releaseRoot.append("armv5/lib/QtCore.lib").toFile(); //$NON-NLS-1$
 		}
 	}
 	

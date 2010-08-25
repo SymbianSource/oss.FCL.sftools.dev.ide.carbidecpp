@@ -40,6 +40,7 @@ import org.osgi.framework.Version;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.codescanner.CSPlugin;
 import com.nokia.carbide.cpp.internal.codescanner.Messages;
 import com.nokia.carbide.cpp.internal.codescanner.config.CSConfigSettings;
@@ -68,6 +69,7 @@ import com.nokia.carbide.cpp.internal.codescanner.gen.Kbdata.ParameterType;
 import com.nokia.carbide.cpp.internal.codescanner.gen.Kbdata.SolutionType;
 import com.nokia.carbide.cpp.internal.codescanner.gen.Kbdata.SymptomType;
 import com.nokia.carbide.cpp.internal.codescanner.xml.CSKbdataXMLLoader;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 /**
@@ -392,8 +394,9 @@ public class CSKbManager {
 			List<ICarbideBuildConfiguration> buildConfigList = projectInfo.getBuildConfigurations();
 			for (Iterator<ICarbideBuildConfiguration> iterator = buildConfigList.iterator(); iterator.hasNext();) {
 				ICarbideBuildConfiguration buildConfig = iterator.next();
-				ISymbianSDK sdk = buildConfig.getSDK();
-				Version version = sdk.getSDKVersion();
+				// TODO: What is SDK version used for for codescanner?
+//				Version version = buildConfig.getSDK().getSDKVersion();
+				Version version = new Version("5.0.0");
 				sdkVersions.add(version);
 			}
 		}

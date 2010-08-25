@@ -16,21 +16,31 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
-import com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.cpp.internal.api.utils.core.Logging;
+import java.util.ArrayList;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.model.ICProject;
-import org.eclipse.cdt.core.settings.model.*;
-import org.eclipse.core.runtime.*;
+import org.eclipse.cdt.core.settings.model.ICConfigurationDescription;
+import org.eclipse.cdt.core.settings.model.ICProjectDescription;
+import org.eclipse.cdt.core.settings.model.ICStorageElement;
+import org.eclipse.cdt.core.settings.model.WriteAccessException;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Plugin;
 
-import java.util.ArrayList;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
+import com.nokia.carbide.cdt.internal.api.builder.CarbideConfigurationDataProvider;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.cpp.internal.api.utils.core.Logging;
 
 public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbideProjectModifier {
 

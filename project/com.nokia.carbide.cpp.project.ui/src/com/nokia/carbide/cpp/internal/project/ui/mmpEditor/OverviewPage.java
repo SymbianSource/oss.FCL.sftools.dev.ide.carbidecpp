@@ -21,7 +21,10 @@ import java.util.List;
 
 import org.eclipse.jface.dialogs.IPageChangedListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
-import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.viewers.ArrayContentProvider;
+import org.eclipse.jface.viewers.ComboViewer;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -29,7 +32,11 @@ import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.IManagedForm;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
@@ -44,13 +51,18 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
-import com.nokia.carbide.cpp.internal.project.ui.editors.common.*;
+import com.nokia.carbide.cpp.internal.project.ui.editors.common.ControlHandler;
+import com.nokia.carbide.cpp.internal.project.ui.editors.common.FormUtilities;
 import com.nokia.carbide.cpp.internal.project.ui.mmpEditor.commands.EMMPListSelector;
 import com.nokia.carbide.cpp.internal.project.ui.mmpEditor.commands.EMMPStringValueSelector;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.cpp.internal.api.utils.core.*;
-import com.nokia.cpp.internal.api.utils.ui.*;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
+import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 import com.nokia.cpp.internal.api.utils.ui.editor.FormEditorEditingContext;
 import com.swtdesigner.ResourceManager;
 import com.swtdesigner.SWTResourceManager;
@@ -340,9 +352,18 @@ public class OverviewPage extends MMPEditorFormPage {
 	
 	void refresh() {
 		if (getPartControl() != null) {
+			
 			ISymbianSDK sdk = editorContext.activeBuildConfig.getSDK();
 			List<String> supportedTargetTypes = new ArrayList<String>();
-			List<String> sdkTypes = sdk.getSupportedTargetTypes();
+			List<String> sdkTypes = new ArrayList<String>();
+			if (editorContext.activeBuildConfig.getBuildContext() instanceof ISBSv1BuildContext){
+				ISBSv1BuildInfo sbsv1BuildInfo = ((ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER));
+				sdkTypes = sbsv1BuildInfo.getSupportedTargetTypes();
+			} else if (editorContext.activeBuildConfig.getBuildContext() instanceof ISBSv2BuildContext){
+				ISBSv2BuildContext sbsv2BuildContext = ((ISBSv2BuildContext)editorContext.activeBuildConfig.getBuildContext());
+				sdkTypes = sbsv2BuildContext.getSupportedTargettypes();
+			}
+			
 			// this could come back empty if a devkit is not completely installed
 			if (sdkTypes != null) {
 				supportedTargetTypes.addAll(sdkTypes);

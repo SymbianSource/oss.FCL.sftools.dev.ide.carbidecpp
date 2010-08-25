@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 
 import com.nokia.carbide.cpp.internal.api.sdk.BuildPlat;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
 import com.nokia.carbide.cpp.internal.sdk.ui.SDKUIPreferenceConstants;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
@@ -96,7 +97,7 @@ public class SBSv1PlatformFilterComposite extends Composite {
 		bldPlatList = getPlatFilterPrefsStore();
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		enableBSFScanner.setSelection(sdkMgr.getBSFScannerEnabled());
+		enableBSFScanner.setSelection(((SDKManager)sdkMgr).getBSFScannerEnabled());
 		
 		for (BuildPlat currBldPlat : bldPlatList) {
 			if (currBldPlat.getPlatName().equals("WINSCW")){ //$NON-NLS-1$
@@ -120,7 +121,7 @@ public class SBSv1PlatformFilterComposite extends Composite {
 		IPreferenceStore prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		sdkMgr.enableBSFScanner(prefsStore.getBoolean(SDKUIPreferenceConstants.ENABLE_BSF_SCANNER));
+		((SDKManager)sdkMgr).enableBSFScanner(prefsStore.getBoolean(SDKUIPreferenceConstants.ENABLE_BSF_SCANNER));
 		
 		buildPlatList.add(new BuildPlat("WINSCW", BuildPlat.EKA2_IDENTIFIER, prefsStore.getBoolean(SDKUIPreferenceConstants.PLAT_EKA2_WINSCW)));
 		buildPlatList.add(new BuildPlat("ARMV5",  BuildPlat.EKA2_IDENTIFIER, prefsStore.getBoolean(SDKUIPreferenceConstants.PLAT_EKA2_ARMV5)));
@@ -129,7 +130,7 @@ public class SBSv1PlatformFilterComposite extends Composite {
 
 		buildPlatList.add(new BuildPlat("GCCE", BuildPlat.EKA2_IDENTIFIER, prefsStore.getBoolean(SDKUIPreferenceConstants.PLAT_EKA2_GCCE)));
 		
-		sdkMgr.setPlatformList(buildPlatList);
+		((SDKManager)sdkMgr).setPlatformList(buildPlatList);
 		
 		return buildPlatList;
 	}

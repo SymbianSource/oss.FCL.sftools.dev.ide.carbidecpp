@@ -61,14 +61,6 @@ public class BuilderUtilsPropertyTester extends PropertyTester {
 					if (!CarbideBuilderPlugin.getBuildManager().isCarbideProject(file.getProject())) {
 						return false;
 					}
-					
-					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(file.getProject())) {
-						Version sbsVers = SDKCorePlugin.getSDKManager().getSBSv2Version(false);
-						if (sbsVers.compareTo(SDKCorePlugin.getSDKManager().getMinimumSupportedSBSv2Version()) >= 0)
-							return true;
-						else
-							return false;
-					}
 				}
 				return true;
 			}

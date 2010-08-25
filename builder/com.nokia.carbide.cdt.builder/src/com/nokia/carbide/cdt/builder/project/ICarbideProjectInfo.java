@@ -52,11 +52,12 @@ public interface ICarbideProjectInfo {
 	public static final int ACTION_LINK_ONLY = 1;
 	public static final int ACTION_COMPILE_AND_LINK = 2;
 
+
 	/**
 	 * Load all the configurations associated with this project. If this is a new project,
 	 * then a dummy .settings file will be created which can be used to generate new build
 	 * configurations.
-	 * @return A list of ICarbideBuildConfiguration objects, which may be empty
+	 * @return A copy of the list of ICarbideBuildConfiguration objects, which may be empty. Modifying the result does not affect the project.
 	 */
 	public List<ICarbideBuildConfiguration> getBuildConfigurations();
 	
@@ -82,7 +83,7 @@ public interface ICarbideProjectInfo {
 	
 	/**
 	 * Check whether or not all components of the inf are built or subcomponents.
-	 * Building from inf means that only 'abld build' is invoked rather than invoking 'abld build' on specific MMP and makefiles
+	 * Building from inf means that the build system is invoked on a single bld.inf, rather than build steps for individual MMPs
 	 * @return true when building from bld.inf
 	 */
 	public boolean isBuildingFromInf();
@@ -104,14 +105,6 @@ public interface ICarbideProjectInfo {
 	 * @return IPath
 	 */
 	public IPath getWorkspaceRelativeBldInfPath();
-	
-	/**
-	 * Get the name of the MMP file that is used to calculate the target output (final artifact) for setting up launch configurations
-	 * @return
-	 * 
-	 * @deprecated no longer used in 1.3.  now returns an empty string.
-	 */
-	public String getMMPTargetFile();
 	
 	/**
 	 * Get the IProject for the Carbide.c++ project.

@@ -10,11 +10,13 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.project.utils.BldInfImportWrapper;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class ImporterScritpingUtils {
 
@@ -116,12 +118,16 @@ public class ImporterScritpingUtils {
 				// Validate target and context strings against ISymbianBuildContext
 //				AssertTestCase.assertTrue("!Invalid build target, should be ARMV5, GCCE, WINSCW, etc.. but was: " + buildTarget, validateBuildTarget(buildTarget));
 //				AssertTestCase.assertTrue("!Invalid build context, should be UREL or UDEB, but was: " + buildContext, validateBuildContext(buildContext));
-				ISymbianBuildContext context = new SymbianBuildContext(sdk, buildTarget, buildContext);
+				BuildContextSBSv1 context = new BuildContextSBSv1(sdk, buildTarget, buildContext);
 				selectedConfigs.add(context);		
 			}
 		}
 		else {
-			selectedConfigs = sdk.getFilteredBuildConfigurations();
+			selectedConfigs = new ArrayList<ISymbianBuildContext>();
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+			selectedConfigs.addAll(sbsv1BuildInfo.getFilteredBuildConfigurations());
+			selectedConfigs.addAll(sbsv1BuildInfo.getFilteredBuildConfigurations());
 		}
 		return selectedConfigs;
 	}

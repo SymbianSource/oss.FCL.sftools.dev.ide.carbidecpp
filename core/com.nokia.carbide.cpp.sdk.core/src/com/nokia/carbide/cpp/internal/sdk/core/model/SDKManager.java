@@ -12,11 +12,9 @@
 */
 package com.nokia.carbide.cpp.internal.sdk.core.model;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
@@ -25,22 +23,23 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.cdt.utils.WindowsRegistry;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.osgi.framework.Version;
 
+import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DefaultType;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DeviceType;
+import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesFactory;
 import com.nokia.carbide.cpp.internal.sdk.core.gen.Devices.DevicesType;
 import com.nokia.carbide.cpp.internal.sdk.core.xml.DevicesLoader;
+import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKEnvInfoFailureException;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -54,7 +53,12 @@ public class SDKManager extends AbstractSDKManager {
 	private static final String WINDOWS_SYSTEM_ROOT_KEY = "SystemRoot";
 
 	private static final String EMPTY_DEVICES_XML_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><devices version=\"1.0\"></devices>";
-	
+
+	private static final String QMAKE_FILE = "epoc32/tools/qt/qmake" + HostOS.EXE_EXT; //$NON-NLS-1$
+	private static final String MIFCONV_FILE = "epoc32/tools/mifconv" + HostOS.EXE_EXT; //$NON-NLS-1$
+	private static final String ABLD_FILE = "epoc32/tools/abld.pl"; //$NON-NLS-1$
+	private static final long VALID_ABLD_SIZE = 1024;
+
 	static boolean hasPromptedForDevicesXML = false; // make sure we only ask once at startup if devices.xml does not exist
 	long devicesXLMLastModified;
 	
@@ -70,85 +74,63 @@ public class SDKManager extends AbstractSDKManager {
 	
 	public SDKManager() {
 		super();
-		checkPerlInstallation();
-		
 	}
 	
-	protected boolean doScanSDKs() {
-		
+	protected boolean doScanSDKs(IProgressMonitor monitor) {
+		boolean result = true;
 		DevicesType devicesType;
 		try {
 			File devicesFile = getDevicesXMLFile();
 
 			if (devicesFile == null || !devicesFile.exists()) {
-				// There is no devices.xml. Ask the user if he/she wants to
-				// add it
-				if (hasPromptedForDevicesXML == false) {
-					hasPromptedForDevicesXML = true;
-					doAsynchPromptCreateDevicesXML();
+				// It's ok if there is no devices.xml. 
+				// Raptor based SDKs no longer depends on it.
+			} else {
+				devicesXLMLastModified = devicesFile.lastModified();
+				devicesType = DevicesLoader.loadDevices(devicesFile.toURL());
+				EList devices = devicesType.getDevice();
+				for (Iterator iter = devices.iterator(); iter.hasNext();) {
+					SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
+					sdk.addSupportedFeature(ISymbianSDKFeatures.IS_FROM_DEVICES_XML);
+					sdkList.add(sdk);
 				}
-				return false; // no devices.xml file..
 			}
-
-			devicesXLMLastModified = devicesFile.lastModified();
-			devicesType = DevicesLoader.loadDevices(devicesFile.toURL());
-			EList devices = devicesType.getDevice();
-			for (Iterator iter = devices.iterator(); iter.hasNext();) {
-				SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
-				sdkList.add(sdk);
-			}
-
-			return true;
 		} catch (Exception e) {
-			logError("Failed to scan SDKs", e);
-			return false;
+			logError("Failed to scan devices.xml", e);
+			result = false;
 		}
-	}
 
+		scanCarbideSDKCache();
+		doScanDrives(monitor);
+		return result;
+	}
 
 	public void updateSDK(ISymbianSDK sdk) {
-		try {
-			File devicesFile = getDevicesXMLFile();
-			
-			// If file does not exist exception will catch it
-			DevicesLoader.updateDevice(sdk, devicesFile.toURL());
-			updateCarbideSDKCache();
-			
-		} catch (Exception e) { 
-			// must catch and rethrow as unchecked exception this 
-			// because no throws clause in API method
-			throw new RuntimeException(e);
-		}
-	}
-	
-	public void setDefaultSDK(ISymbianSDK sdk){
-		try {
-			File devicesFile = getDevicesXMLFile();
-			
-			synchronized(sdkList)
-			{
-				for (ISymbianSDK currSDK : sdkList){
-					if (!currSDK.getUniqueId().equals(sdk.getUniqueId())){
-						currSDK.setIsDefaultSDK(false);  // set all to false, except the input one
-					}
-				}
-			}
-			
-			DevicesLoader.setDefaultDevice(sdk, devicesFile.toURL());
-			updateCarbideSDKCache();
-			
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+		if (((SymbianSDK)sdk).getSupportedFeatures().contains(ISymbianSDKFeatures.IS_FROM_DEVICES_XML)) {
+			try {
+				File devicesFile = getDevicesXMLFile();
 
+				if (devicesFile == null || !devicesFile.exists()) {
+					// There is no devices.xml. Ask the user if he/she wants to
+					// add it
+					doAsynchPromptCreateDevicesXML();
+					return;
+				}
+
+				// If file does not exist exception will catch it
+				DevicesLoader.updateDevice(sdk, devicesFile.toURL());
+				
+			} catch (Exception e) { 
+				// must catch and rethrow as unchecked exception this 
+				// because no throws clause in API method
+				throw new RuntimeException(e);
+			}
+		}
+		updateCarbideSDKCache();
+	}
 	
 	protected boolean doRemoveSDK(String sdkId) {
-		// Now actually remove it from the file...
+		// Now actually remove it from devices.xml...
 		DevicesType devicesType;
 		try {
 			File devicesFile = getDevicesXMLFile();
@@ -168,7 +150,7 @@ public class SDKManager extends AbstractSDKManager {
 			
 			return true;
 		} catch (Exception e) {
-			logError("Failed to remove SDK", e);
+			logError("Failed to remove SDK from devices.xml", e);
 		}
 		return false;
 		
@@ -192,8 +174,8 @@ public class SDKManager extends AbstractSDKManager {
 		// registry entry exists, check existence of file
 		regPath = regPath.append(DEVICES_FILE_NAME);
 		if (!regPath.toFile().exists()){
-			String errMsg = MessageFormat.format("Devices.xml does not exist at: {0}", regPath);
-			logError(errMsg, null);
+//			String errMsg = MessageFormat.format("Devices.xml does not exist at: {0}", regPath);
+//			logError(errMsg, null);
 			return null;
 		}
 		
@@ -216,6 +198,13 @@ public class SDKManager extends AbstractSDKManager {
 		return deviceDirPath.append(DEVICES_FILE_NAME).toFile();
 	}
 	
+	/**
+	 * Getting installation path of CSL (GCCE) Arm Toolchain from the registry.
+	 * The method also check that the all required tools exist.
+	 * @return Path to tool binaries under installation path directory, 
+	 *         successful. Otherwise throws an exception.
+	 * @throws SDKEnvInfoFailureException 
+	 */
 	public String getCSLArmToolchainInstallPathAndCheckReqTools() throws SDKEnvInfoFailureException{
 		
 		String installPath = null;
@@ -225,17 +214,15 @@ public class SDKManager extends AbstractSDKManager {
 			installPath = wr.getLocalMachineValue(CSL_ARM_TOOLCHAIN_REG_PATH, 
 													 CSL_ARM_TOOLCHAIN_REG_KEY);			
 		} catch (Exception e) {			
-			//TODO: Localise
 			String errMsg = "Could not read registry for local machine key: '" +  CSL_ARM_TOOLCHAIN_REG_PATH 
-								+ " (" + e.getMessage() +").";
+								+ " (" + e.getMessage() +")."; //$NON-NLS-N$
 			throw new SDKEnvInfoFailureException(errMsg);
 		}
 		
 		if (!new File(installPath).exists()){
-			//TODO: Localise
 			String errMsg = "CSL Arm Toolchain installation path pointed by registry key '" 
 							+  CSL_ARM_TOOLCHAIN_REG_PATH 
-							+ "' does not exist.";
+							+ "' does not exist."; //$NON-NLS-N$
 			throw new SDKEnvInfoFailureException(errMsg);
 		}
 
@@ -252,9 +239,8 @@ public class SDKManager extends AbstractSDKManager {
 			toolPathName = gcceToolDir + "\\" + toolName;
 			
 			if (!new File(toolPathName).exists()){
-				//TODO: Localise
 				String errMsg = "Required tool from CSL Arm Toolchain is missing: " 
-								+ toolPathName;
+								+ toolPathName; //$NON-NLS-N$
 				throw new SDKEnvInfoFailureException(errMsg);
 			}			
 		}
@@ -305,42 +291,15 @@ public class SDKManager extends AbstractSDKManager {
 		return false;
 	}
 	
-	protected void checkPerlInstallation(){
-		
-		Runtime rt=Runtime.getRuntime();
-		
-		// check for Perl
-		try {
-			Process p = rt.exec("perl.exe -v");
-			
-			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			String overallOutput = null;
-			String stdErrLine = null;
-			while ((stdErrLine = br.readLine()) != null) {
-				overallOutput += stdErrLine;
-			}
-			
-			if (overallOutput != null && !overallOutput.contains("v5.6.1")){
-				ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.WARNING, SDKCorePlugin.PLUGIN_ID, IStatus.WARNING, "Perl v5.6.1 was not detected. Some SDKs do not work with other Perl versions.", null));
-			}
-			
-			p.destroy();
-			
-		}
-		catch (IOException e) {
-			//	report error to PDE log
-			ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Perl was not found on the PATH environment variable. Some tools will not function properly. Perl 5.6.1 is recommended for Carbide use (free download at www.activestate.com).", e));
-		 	// Report dialog since this is always fatal for future work and the error log
-			// may be hidden
-			PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-				public void run() {
-					IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-					MessageDialog.openError(window.getShell(), "Missing Perl", "Perl was not found on your PATH. The Symbian build tools cannot work successfully without Perl. Please install Perl (v5.6.1 recommended).");
-				}
-			});
-		}
-	}
 	
+	/**
+	 * Checks to see if the devices.xml on disk contains the same current information
+	 * as what we have in the sdk list. When not synchronized, when an SDK is add or removed
+	 * outside of Carbide for example, this means an SDK rescan operation is needed.
+	 * @return true if synchronized (no rescan needed), otherwise false (not up to date). Will also return true when devices.xml does not exist
+	 * @see ISDKManager.fireDevicesXMLChanged
+	 * @since 2.0
+	 */ 
 	public boolean checkDevicesXMLSynchronized(){
 		if (devicesXLMLastModified == 0){
 			return true; // no devices.xml file
@@ -376,27 +335,19 @@ public class SDKManager extends AbstractSDKManager {
 					e.printStackTrace();
 				}
 				
-				if (localSDKList.size() != sdkList.size()){
-					needsRescan = true;
-				} else {
-					for (ISymbianSDK sdk : localSDKList){
-						ISymbianSDK currSDK = getSDK(sdk.getUniqueId(), false);
-						if (currSDK == null){
-							// sdk id has been changed
-							needsRescan = true;
-							break;
-						}
-						// check that the data are the same.
-						// Other than the 'id' attrib, all we really care is whether or not
-						// the EPOCROOT or vendor 'name' has changed.
-						if (!sdk.getEPOCROOT().equalsIgnoreCase(currSDK.getEPOCROOT())){
-							needsRescan = true;
-							break;
-						}
-						if (!sdk.getName().equalsIgnoreCase(currSDK.getName())){
-							needsRescan = true;
-							break;
-						}
+				for (ISymbianSDK sdk : localSDKList){
+					ISymbianSDK currSDK = getSDK(sdk.getUniqueId(), false);
+					if (currSDK == null){
+						// sdk id has been changed
+						needsRescan = true;
+						break;
+					}
+					// check that the data are the same.
+					// Other than the 'id' attrib, all we really care is whether or not
+					// the EPOCROOT or vendor 'name' has changed.
+					if (!sdk.getEPOCROOT().equalsIgnoreCase(currSDK.getEPOCROOT())){
+						needsRescan = true;
+						break;
 					}
 				}
 				
@@ -414,6 +365,127 @@ public class SDKManager extends AbstractSDKManager {
 
 	@Override
 	protected boolean isEPOCRootFixed() {
+		return true;
+	}
+
+	/**
+	 * Scan system drives for installed SDKs
+	 */
+	protected void doScanDrives(IProgressMonitor monitor) {
+		File[] drives = getSystemDrives();
+		monitor.beginTask("Scanning system drives for installed SDKs", drives.length);
+		for (File drive : drives) {
+			if (!isEPOCRoot(drive)) {
+				continue;
+			}
+
+			String sdkId = getUniqueSDKId(drive);
+			DeviceType deviceType = DevicesFactory.eINSTANCE.createDeviceType();
+			deviceType.setAlias(drive.toString());
+			deviceType.setDefault(DefaultType.NO_LITERAL);
+			deviceType.setEpocroot(drive.getAbsolutePath());
+			deviceType.setId(sdkId);
+			deviceType.setName("com.nokia.s60");
+			deviceType.setToolsroot(drive.getAbsolutePath());
+			deviceType.setUserdeletable("false");
+			deviceType.setUserdeletetable("false");
+			ISymbianSDK sdk = new SymbianSDK(deviceType);
+			if (sdk.getOSVersion().toString().equals("0.0")) {
+				((SymbianSDK)sdk).setOSVersion(new Version("9.5"));
+			}
+
+			if (!isSupportedSDK(sdk)) {
+				continue;
+			}
+
+			if (isInSDKList(sdk)) {
+				continue;
+			}
+
+			sdkList.add(sdk);
+			monitor.worked(1);
+			if (monitor.isCanceled()) {
+				monitor.done();
+				return;
+			}
+		}
+		monitor.done();
+	}
+
+	private File[] getSystemDrives() {
+		if (HostOS.IS_WIN32) {
+			return File.listRoots();
+		}
+		return new File[0];
+	}
+
+	private String getUniqueSDKId(File drive) {
+		String sdkId = drive.toString().charAt(0) + "_SDK";
+		int suffice = 1;
+		while (!isUniqueSDKId(sdkId)) {
+			sdkId = drive.toString().charAt(0) + "_SDK" + suffice;
+			suffice++;
+		}
+		return sdkId;
+	}
+
+	private boolean hasAbldSupport(ISymbianSDK sdk) {
+		File abld = new File(sdk.getEPOCROOT(), ABLD_FILE);
+		if (abld.exists()) {
+			long size = abld.length();
+			if (size >= VALID_ABLD_SIZE)
+				return true;
+		}
+		return false;
+	}
+
+	private boolean hasQmake(ISymbianSDK sdk) {
+		File qmake = new File(sdk.getEPOCROOT(), QMAKE_FILE);
+		if (qmake.exists()) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean hasRaptor(ISymbianSDK sdk) {
+		File mifconv = new File(sdk.getEPOCROOT(), MIFCONV_FILE);
+		if (mifconv.exists()) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isEPOCRoot(File drive) {
+		IPath epocInclude = new Path(drive.getAbsolutePath()).append("epoc32").append("include");
+		if (epocInclude.toFile().exists()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	private boolean isInSDKList(ISymbianSDK sdk) {
+		for (ISymbianSDK entry : sdkList) {
+			if (entry.getEPOCROOT().equalsIgnoreCase(sdk.getEPOCROOT())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private boolean isSupportedSDK(ISymbianSDK sdk) {
+		if (!hasAbldSupport(sdk) || hasQmake(sdk) || hasRaptor(sdk)) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean isUniqueSDKId(String sdkId) {
+		for (ISymbianSDK sdk : sdkList){
+			if (sdk.getUniqueId().equalsIgnoreCase(sdkId)){
+				return false;
+			}
+		}
 		return true;
 	}
 }

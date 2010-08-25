@@ -31,12 +31,11 @@ public interface IMMPViewConfiguration extends IViewConfiguration {
 	
 	/**
 	 * Get the default directory used for .def file exports.
-	 * @param isASSP true if this is an ASSP build
 	 * @return 	the name of the directory used for platform-specific defs
 	 * (e.g. "BWINS", "EABI", ...).  This directory, if present, is removed from 
 	 * the path before setting DEFFILE.  May be null if unknown.
 	 */
-	String getDefaultDefFileBase(boolean isASSP);
+	String getDefaultDefFileBase();
 	
 	/**
 	 * Tell if this is an emulator build.  Used for .def filepath calculation.

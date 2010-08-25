@@ -135,7 +135,7 @@ public class AIFOutputFileParametersComposite extends Composite {
 				emptyIfNull(aifInfo.getResource()),
 				EMMPPathContext.AIF_SOURCE,
 				editorContext.getMMPViewPathHelper(),
-				editorContext.getBuildContext(),
+				editorContext.getCarbideBuildConfiguration(),
 				editorContext.getRSSFiles(),
 				new String[] { "*.rss" }, //$NON-NLS-1$
 				Messages.getString("AIFOutputFileParametersComposite.ResourceFilePathLabel")); //$NON-NLS-1$

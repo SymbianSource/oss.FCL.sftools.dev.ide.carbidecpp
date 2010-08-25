@@ -16,35 +16,77 @@
 */
 package com.nokia.carbide.cdt.internal.builder;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import org.eclipse.cdt.make.core.makefile.*;
+import org.eclipse.cdt.make.core.makefile.ICommand;
+import org.eclipse.cdt.make.core.makefile.IMacroDefinition;
+import org.eclipse.cdt.make.core.makefile.IRule;
+import org.eclipse.cdt.make.core.makefile.ITargetRule;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
-import org.eclipse.jface.dialogs.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
+import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.*;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
-import com.nokia.carbide.cdt.builder.*;
+import com.nokia.carbide.cdt.builder.BuilderPreferenceConstants;
+import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
+import com.nokia.carbide.cdt.builder.DefaultGNUMakefileViewConfiguration;
+import com.nokia.carbide.cdt.builder.DefaultMMPViewConfiguration;
+import com.nokia.carbide.cdt.builder.DefaultViewConfiguration;
+import com.nokia.carbide.cdt.builder.EpocEngineHelper;
+import com.nokia.carbide.cdt.builder.EpocEnginePathHelper;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
-import com.nokia.carbide.cdt.builder.project.*;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPChangedActionDialog;
-import com.nokia.carbide.cdt.internal.builder.ui.TrackDependenciesQueryDialog;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPChangedActionDialog.MMPChangedAction;
-import com.nokia.carbide.cpp.epoc.engine.*;
+import com.nokia.carbide.cdt.internal.builder.ui.TrackDependenciesQueryDialog;
+import com.nokia.carbide.cpp.epoc.engine.BldInfViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
+import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
 import com.nokia.carbide.cpp.epoc.engine.model.IModel;
 import com.nokia.carbide.cpp.epoc.engine.model.IModelProvider;
 import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfView;
 import com.nokia.carbide.cpp.epoc.engine.model.makefile.IMakefileView;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
-import com.nokia.carbide.cpp.sdk.core.*;
+import com.nokia.carbide.cpp.sdk.core.IBSFPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISBVPlatform;
+import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -98,14 +140,18 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		areWeManagingTheMakeFiles = shouldManageMakeFiles(buildConfig);
 
 		// if variant BSF, let them know the other platforms that will be built as a result
-		IBSFPlatform[] bsfPlatforms = buildConfig.getSDK().getBSFCatalog().getAdditionalBuiltPlatforms(buildConfig.getPlatformString());
-		if (bsfPlatforms.length > 0) {
-			String plats = "";
-			for (IBSFPlatform plat : bsfPlatforms) {
-				plats = ", " + plat.getName();
+		ISymbianSDK sdk = buildConfig.getSDK();
+		ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+		if (sbsv1BuildInfo != null) {
+			IBSFPlatform[] bsfPlatforms = sbsv1BuildInfo.getBSFCatalog().getAdditionalBuiltPlatforms(buildConfig.getPlatformString());
+			if (bsfPlatforms.length > 0) {
+				String plats = "";
+				for (IBSFPlatform plat : bsfPlatforms) {
+					plats = ", " + plat.getName();
+				}
+				plats = plats.replaceFirst(", ", "");
+				launcher.writeToConsole("\n***Additionally built platforms: " + plats + "\n");
 			}
-			plats = plats.replaceFirst(", ", "");
-			launcher.writeToConsole("\n***Additionally built platforms: " + plats + "\n");
 		}
 	}
 	
@@ -116,18 +162,20 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	public boolean buildComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
 		areWeManagingTheMakeFiles = shouldManageMakeFiles(buildConfig);
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;
 		}
 		
 		String componentName = componentPath.removeFileExtension().lastSegment();
 		String buildPlatform = "";
-		if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+		if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 				 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), componentPath)){
 			buildPlatform = buildConfig.getPlatformString().toLowerCase();
-		} else {
-			buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+		} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+			buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 		}
 		
 		// need to run individual build steps when managing makefiles or doing concurrent builds
@@ -143,7 +191,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			}
 			args.add(EXPORT_CMD);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -179,7 +227,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildPlatform);
 			args.add(componentName);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 				args.add(arg);
 			}
 
@@ -203,7 +251,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getTargetString().toLowerCase());
 			args.add(componentName);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 				args.add(arg);
 			}
 
@@ -227,7 +275,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getTargetString().toLowerCase());
 			args.add(componentName);
 
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 				args.add(arg);
 			}
 
@@ -250,7 +298,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getTargetString().toLowerCase());
 			args.add(componentName);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 				args.add(arg);
 			}
 
@@ -276,7 +324,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(buildConfig.getTargetString().toLowerCase());
 			argsList.add(componentName);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -298,18 +346,19 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	public boolean cleanComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
 		areWeManagingTheMakeFiles = shouldManageMakeFiles(buildConfig);
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;
 		}
 
 		String componentName = componentPath.removeFileExtension().lastSegment();
 		String buildPlatform = "";
-		if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+		if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 				 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), componentPath)){
 			buildPlatform = buildConfig.getPlatformString().toLowerCase();
-		} else {
-			buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+		} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+				buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 		}
 		
 		SubMonitor progress = SubMonitor.convert(monitor, 2);
@@ -340,7 +389,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		argsList.add(buildConfig.getTargetString().toLowerCase());
 		argsList.add(componentName);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -361,18 +410,19 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	public boolean freezeComponent(ICarbideBuildConfiguration buildConfig, IPath componentPath, boolean isTest, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
 		areWeManagingTheMakeFiles = shouldManageMakeFiles(buildConfig);
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return false;
 		}
 
 		String componentName = componentPath.removeFileExtension().lastSegment();
 		String buildPlatform = "";
-		if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+		if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 				 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), componentPath)){
 			buildPlatform = buildConfig.getPlatformString().toLowerCase();
-		} else {
-			buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+		} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+			buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 		}
 		
 		// run abld makefile platform for each component to be built if needed
@@ -393,7 +443,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		argsList.add(buildPlatform);
 		argsList.add(componentName);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -425,7 +475,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		}
 
 		List<ISymbianBuildContext> buildConfigList = new ArrayList<ISymbianBuildContext>(1);
-		buildConfigList.add(buildConfig);
+		buildConfigList.add(buildConfig.getBuildContext());
 
 		List<IPath> normalMakMakePaths = new ArrayList<IPath>();
 		List<IPath> testMakMakePaths = new ArrayList<IPath>();
@@ -520,7 +570,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			modelProvider.releaseSharedModel(model);
 
 			IPath objectDir = null;
-			if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+			if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 				 EpocEngineHelper.hasFeatureVariantKeyword(cpi, fullMMPPath)){
 				// if symbian binary variation, then the object file dir will be in sub-directory with <md5>/udeb/<obj>
 				// The platform can only be a variant if the MMP file has FEATUREVARIANT keyword && The platform is ARMV5-based.
@@ -597,7 +647,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final List<IPath> rules = new ArrayList<IPath>();
 		
 		EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new MMPDataRunnableAdapter() {
 
 				public Object run(IMMPData mmpData) {
@@ -608,12 +658,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 						IPath targetP = new Path(targetPath).makeRelative().addTrailingSeparator();
 						targetPath = targetP.toOSString();
 					} else {
-						// for EKA1 just leave empty.  for EKA2 use sys\bin\
-						if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-							targetPath = "sys\\bin\\"; //$NON-NLS-1$
-						} else {
-							targetPath = ""; //$NON-NLS-1$
-						}
+						// for EKA2 use sys\bin\
+						targetPath = "sys\\bin\\"; //$NON-NLS-1$
 					}
 
 					String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\Data\\z\\"; //$NON-NLS-1$
@@ -710,13 +756,14 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		// add the following to the top of the the Deps_GenDependsL subroutine in makdeps.pm
 		String change = "\r\n\t# Carbide.c++ change.  See CARBIDE_CHANGES.TXT for more details.\r\n\tif ($ENV{CARBIDE_NO_DEPENDENCIES}) {\r\n\t\treturn;\r\n\t}\r\n";
 
+		IPath toolsPath = sdk.getToolsPath();
 		boolean updated = false;
 		try {
-			File mdFile = sdk.getToolsPath().append("makdeps.pm").toFile();
+			File mdFile = toolsPath.append("makdeps.pm").toFile();
 			RandomAccessFile makDepsFile = new RandomAccessFile(mdFile, "rw");
 			
 			// back up the file first
-			File backupFile = sdk.getToolsPath().append("makdeps.pmbak").toFile();
+			File backupFile = toolsPath.append("makdeps.pmbak").toFile();
 			if (backupFile.createNewFile()) {
 				FileUtils.copyFile(mdFile, backupFile);
 			}
@@ -753,7 +800,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		}
 		
 		// now create the CARBIDE_CHANGES.TXT file
-		File ourFile = sdk.getToolsPath().append(CARBIDE_CHANGES_FILE).toFile();
+		File ourFile = toolsPath.append(CARBIDE_CHANGES_FILE).toFile();
 		try {
 			if (!ourFile.createNewFile()) {
 				return false;
@@ -781,6 +828,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	
 	public boolean buildAllComponents(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		//TODO: do we really want to bail if abld returns an error?  is this the keepgoing flag?  see what the command line builds do.
 		// they bail on an individual build step, but keep building the other steps even if there's an error and keepgoing is not specified
 		
@@ -811,7 +860,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getPlatformString().toLowerCase());
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -835,7 +884,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					argsList.add(buildConfig.getPlatformString().toLowerCase());
 					argsList.add(buildConfig.getTargetString().toLowerCase());
 					
-					for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+					for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 						argsList.add(arg);
 					}
 					
@@ -881,7 +930,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		List<String> args = new ArrayList<String>();
 		args.add(EXPORT_CMD);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 			args.add(arg);
 		}
 		
@@ -916,7 +965,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(LIBRARY_CMD);
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -936,7 +985,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -956,7 +1005,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -975,7 +1024,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -997,7 +1046,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(TEST_CMD);
 			args.add(EXPORT_CMD);
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1020,7 +1069,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(LIBRARY_CMD);
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1041,7 +1090,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1062,7 +1111,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1082,7 +1131,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			args.add(buildConfig.getPlatformString().toLowerCase());
 			args.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 				args.add(arg);
 			}
 			
@@ -1101,6 +1150,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	
 	public boolean buildComponentSubset(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		// need to run individual build steps when managing makefiles or doing concurrent builds
 		if (!areWeManagingTheMakeFiles && !buildConfig.getCarbideProject().isConcurrentBuildingEnabled()) {
 			// not using our dependency stuff.  just call abld [test] build.  note that we need
@@ -1123,13 +1174,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : normalMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				List<String> argsList = new ArrayList<String>();
@@ -1138,7 +1189,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1155,13 +1206,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : testMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				List<String> argsList = new ArrayList<String>();
@@ -1171,7 +1222,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldBuildArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1216,7 +1267,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		List<String> argsList = new ArrayList<String>();
 		argsList.add(EXPORT_CMD);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -1250,13 +1301,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : normalMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1264,7 +1315,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildPlatform);
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1282,13 +1333,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : normalMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1297,7 +1348,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1315,13 +1366,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : normalMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1330,7 +1381,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1346,13 +1397,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			// run abld final platform target for each component
 			for (IPath path : normalMakMakePaths) {
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1361,7 +1412,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1380,7 +1431,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		argsList.add(TEST_CMD);
 		argsList.add(EXPORT_CMD);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -1400,13 +1451,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : testMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1415,7 +1466,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildPlatform);
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldLibraryArgs().split(" ")) {
 					argsList.add(arg);
 				}
 
@@ -1433,13 +1484,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : testMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1449,7 +1500,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) {
 					argsList.add(arg);
 				}
 
@@ -1467,13 +1518,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : testMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1483,7 +1534,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) {
 					argsList.add(arg);
 				}
 
@@ -1500,13 +1551,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : testMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1516,7 +1567,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) {
 					argsList.add(arg);
 				}
 
@@ -1538,6 +1589,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		SubMonitor progress = SubMonitor.convert(monitor, 5);
 		progress.setTaskName("Cleaning " + buildConfig.getDisplayString());
 
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();	
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return;
 		}
@@ -1572,7 +1625,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			argsList.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1596,7 +1649,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			argsList.add(buildConfig.getTargetString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1618,7 +1671,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(CLEAN_CMD);
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getBldmakeCleanArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getBldmakeCleanArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1636,6 +1689,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		SubMonitor progress = SubMonitor.convert(monitor, 3 + normalMakMakePaths.size() + testMakMakePaths.size());
 		progress.setTaskName("Cleaning " + buildConfig.getDisplayString());
 
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return;
 		}
@@ -1669,13 +1724,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : normalMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				List<String> argsList = new ArrayList<String>();
@@ -1684,7 +1739,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1711,7 +1766,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getTargetString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1732,7 +1787,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(CLEAN_CMD);
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getBldmakeCleanArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getBldmakeCleanArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1749,7 +1804,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		SubMonitor progress = SubMonitor.convert(monitor, 4);
 		progress.setTaskName("Freezing " + buildConfig.getDisplayString());
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return;
 		}
@@ -1775,7 +1831,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(FREEZE_CMD);
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1798,7 +1854,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			argsList.add(FREEZE_CMD);
 			argsList.add(buildConfig.getPlatformString().toLowerCase());
 			
-			for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 				argsList.add(arg);
 			}
 			
@@ -1818,7 +1874,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		SubMonitor progress = SubMonitor.convert(monitor, 2 + normalMakMakePaths.size() + testMakMakePaths.size());
 		progress.setTaskName("Freezing " + buildConfig.getDisplayString());
-
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		
 		if (!CarbideCPPBuilder.generateBldmakeMakefilesIfNecessary(buildConfig, launcher)) {
 			return;
 		}
@@ -1844,13 +1901,13 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			for (IPath path : normalMakMakePaths) {
 				
 				String buildPlatform = "";
-				if ( buildConfig.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+				if ( buildConfig.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), path)) {
 					
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
-				} else {
-					buildPlatform = buildConfig.getBasePlatformForVariation().toLowerCase();
+				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
+					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				List<String> argsList = new ArrayList<String>();
@@ -1858,7 +1915,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildPlatform);
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -1884,7 +1941,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				argsList.add(buildConfig.getPlatformString().toLowerCase());
 				argsList.add(path.removeFileExtension().lastSegment());
 				
-				for (String arg : buildConfig.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
+				for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFreezeArgs().split(" ")) {
 					argsList.add(arg);
 				}
 				
@@ -2095,7 +2152,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		argsList.add(buildConfig.getTargetString().toLowerCase());
 		argsList.add(componentName);
 		
-		for (String arg : buildConfig.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
+		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldCleanArgs().split(" ")) {
 			argsList.add(arg);
 		}
 		
@@ -2261,12 +2319,12 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			}
 			
 			// we need to check the variant hrh files as well
-			File prefixFile = config.getSDK().getPrefixFile();
+			File prefixFile = config.getBuildContext().getPrefixFromVariantCfg().toFile();
 			if (prefixFile != null && prefixFile.lastModified() > oldestMakefileTimestamp) {
 				return true;
 			}
 
-			for (File file : config.getPrefixFileIncludes()) {
+			for (File file : config.getBuildContext().getVariantHRHIncludes()) {
 				if (file.lastModified() > oldestMakefileTimestamp) {
 					return true;
 				}
@@ -2275,7 +2333,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			// all make files exist.  now make sure the oldest of them is newer than the bld.inf or any of its includes
 			final long finalOldestMakefileTimestamp = oldestMakefileTimestamp;
 			Boolean regenerate = (Boolean)EpocEnginePlugin.runWithBldInfView(bldInfPath,
-					new DefaultViewConfiguration(config, bldInfPath, new AcceptedNodesViewFilter()), 
+					new DefaultViewConfiguration(config.getBuildContext(), bldInfPath, new AcceptedNodesViewFilter()), 
 					new BldInfViewRunnableAdapter() {
 						public Object run(IBldInfView view) {
 							for (IPath file : view.getReferencedFiles()) {
@@ -2303,12 +2361,12 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			ICarbideProjectInfo cpi = config.getCarbideProject();
 			IPath workingDir = cpi.getINFWorkingDirectory();
 
-			launcher.setErrorParserManager(workingDir, CarbideCPPBuilder.getParserIdArray(config.getErrorParserId()));
+			launcher.setErrorParserManager(workingDir, config.getErrorParserList());
 			launcher.writeToConsole("\n***Generating abld makefile.\n");
 
 			// delete the *.uid.cpp file if it exists so it gets regenerated.  makmake won't regenerate it if only an mmp include
 			// file has changed.  see bug #4590 for details.
-			if (config.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+			if (config.getPlatformString().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 				File uidFile = new Path(getMakefileForMMP(config, componentPath).getAbsolutePath()).removeFileExtension().addFileExtension("UID.CPP").toFile();
 				if (uidFile.exists()) {
 					uidFile.delete();
@@ -2325,18 +2383,19 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			}
 			
 			String buildPlatform = "";
-			if ( config.getPlatformString().startsWith(ISymbianBuildContext.ARMV5_PLATFORM) &&
+			if ( config.getPlatformString().startsWith(ISBSv1BuildContext.ARMV5_PLATFORM) &&
 					 EpocEngineHelper.hasFeatureVariantKeyword(config.getCarbideProject(), componentPath)){
 				buildPlatform = config.getPlatformString().toLowerCase();
-			} else {
-				buildPlatform = config.getBasePlatformForVariation().toLowerCase();
+			} else if (config.getBuildContext() instanceof ISBSv1BuildContext) {
+				buildPlatform = ((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 			}
 			
 			abldArgs.add(MAKEFILE_CMD); //$NON-NLS-1$
 			abldArgs.add(buildPlatform);
 			abldArgs.add(componentPath.removeFileExtension().lastSegment());
 			
-			for (String arg : config.getBuildArgumentsInfo().getAbldMakefileArgs().split(" ")) {
+			ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)config.getBuildContext();
+			for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldMakefileArgs().split(" ")) {
 				abldArgs.add(arg);
 			}
 			
@@ -2358,7 +2417,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				} catch (CoreException e) {
 					CarbideBuilderPlugin.log(e);
 					e.printStackTrace();
-					//TODO is this enough?
 				}
 			}
 		}
@@ -2382,12 +2440,12 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final long makefileTimestamp = makefile.lastModified();
 		
 		// we need to check the variant hrh files as well
-		File prefixFile = config.getSDK().getPrefixFile();
+		File prefixFile = config.getBuildContext().getPrefixFromVariantCfg().toFile();
 		if (prefixFile != null && prefixFile.lastModified() > makefileTimestamp) {
 			return true;
 		}
 
-		for (File file : config.getPrefixFileIncludes()) {
+		for (File file : config.getBuildContext().getVariantHRHIncludes()) {
 			if (file.lastModified() > makefileTimestamp) {
 				return true;
 			}
@@ -2395,7 +2453,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		// see if the makefile is newer than the mmp and all of its includes
 		Boolean regenerate = (Boolean)EpocEnginePlugin.runWithMMPData(componentPath,
-				new DefaultMMPViewConfiguration(cpi.getProject(), config, new AcceptedNodesViewFilter()), 
+				new DefaultMMPViewConfiguration(cpi.getProject(), config.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new MMPDataRunnableAdapter() {
 					public Object run(IMMPData data) {
 						for (IPath path : data.getReferencedFiles()) {
@@ -2465,12 +2523,12 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		final long makefileTimestamp = makefile.lastModified();
 		
 		// we need to check the variant hrh files as well
-		File prefixFile = config.getSDK().getPrefixFile();
+		File prefixFile = config.getBuildContext().getPrefixFromVariantCfg().toFile();
 		if (prefixFile != null && prefixFile.lastModified() > makefileTimestamp) {
 			return true;
 		}
 		
-		for (File file : config.getPrefixFileIncludes()) {
+		for (File file : config.getBuildContext().getVariantHRHIncludes()) {
 			if (file.lastModified() > makefileTimestamp) {
 				return true;
 			}
@@ -2478,7 +2536,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		// see if the makefile is newer than the mmp and all of its includes
 		Boolean regenerate = (Boolean)EpocEnginePlugin.runWithMMPData(componentPath,
-				new DefaultMMPViewConfiguration(cpi.getProject(), config, new AcceptedNodesViewFilter()), 
+				new DefaultMMPViewConfiguration(cpi.getProject(), config.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new MMPDataRunnableAdapter() {
 					public Object run(IMMPData data) {
 						for (IPath path : data.getReferencedFiles()) {
@@ -2547,11 +2605,11 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 		String platformName = "";
 		if (EpocEngineHelper.hasFeatureVariantKeyword(config.getCarbideProject(), componentPath)){
 			platformName = config.getPlatformString().toUpperCase();
-		} else {
-			platformName = config.getBasePlatformForVariation();
+		} else if (config.getBuildContext() instanceof ISBSv1BuildContext) {
+			platformName = ((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation();
 		}
 		
-		makefilePath = makefilePath.append(config.getBasePlatformForVariation().toUpperCase());
+		makefilePath = makefilePath.append(((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation().toUpperCase());
 
 		// and the makefile has the form MMPNAME.PLATFORM
 		makefilePath = makefilePath.append(mmpName + "." + platformName);
@@ -2607,7 +2665,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		// .d for everything but WINSCW
 		String dependencyFileExt = "d";
-		if (config.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+		if (config.getPlatformString().equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 			dependencyFileExt = "dep";
 		}
 
@@ -2624,7 +2682,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 
 		// now add the -MD switch to the compiler args
 		final String platform = config.getPlatformString();
-		if (platform.equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+		if (platform.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 			// append the -MD and -gccdep switches to the CWFLAGS macro
 			IMacroDefinition[] macros = view.getAllMacroDefinitions("CWFLAGS");
 			if (macros.length < 1) {
@@ -2639,7 +2697,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 			macroText = macroText + " -MD -gccdep" + view.getEOL();
 			view.replaceDirective(macro, macroText);
 			
-		} else if (platform.equals(ISymbianBuildContext.GCCE_PLATFORM)) {
+		} else if (platform.equals(ISBSv1BuildContext.GCCE_PLATFORM)) {
 			// append the -MD switch to the CCFLAGS macro.  there may be more than one so take the last one
 			IMacroDefinition[] macros = view.getAllMacroDefinitions("CCFLAGS");
 			if (macros.length < 1) {
@@ -2747,7 +2805,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				newRule = newRule + "\t" + cpp + " -undef -M -nostdinc ";
 
 				// add the compiler prefix file if any
-				IPath compilerPrefix = config.getCompilerPrefixFile();
+				IPath compilerPrefix = config.getBuildContext().getCompilerPrefixFile();
 				if (compilerPrefix != null) {
 					newRule = newRule + "-include \"" + compilerPrefix.toOSString() + "\" "; 
 				}
@@ -2778,7 +2836,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				// find the macros we need to pass, and replace the -u switch with them
 				String macros = null;
 
-				if (platform.equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+				if (platform.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 					// the macros are listed in the CWDEFS macro
 					IMacroDefinition[] defs = view.getAllMacroDefinitions("CWDEFS");
 					if (defs.length != 1) {
@@ -2793,7 +2851,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					macros = macros.replaceAll("\"", "");
 					macros = macros.replaceAll("-d ", "-D");
 
-				} else if (platform.equals(ISymbianBuildContext.GCCE_PLATFORM)) {
+				} else if (platform.equals(ISBSv1BuildContext.GCCE_PLATFORM)) {
 					// the macros are listed in the CCDEFS macro
 					IMacroDefinition[] defs = view.getAllMacroDefinitions("CCDEFS");
 					if (defs.length != 1) {
@@ -2835,8 +2893,11 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				}
 
 				// add the compiler prefix file if any
-				ISBVPlatform sbvPlatform = config.getSDK().getSBVCatalog().findPlatform(config.getPlatformString());
-				File sdkPrefix = config.getSDK().getPrefixFile();
+				ISymbianSDK sdk = config.getSDK();
+				ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+				ISBVPlatform sbvPlatform = sbsv1BuildInfo.getSBVCatalog().findPlatform(config.getPlatformString());
+				File sdkPrefix = config.getBuildContext().getPrefixFromVariantCfg().toFile();
+
 				if (sbvPlatform != null){
 					// might be an alternate HRH file to use
 					IPath varVarHRH = sbvPlatform.getBuildVariantHRHFile();
@@ -2849,7 +2910,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					newRule = newRule + "-include \"" + sdkPrefix.getAbsolutePath() + "\" "; 
 				}
 
-				
 				newRule += " -o " + depFilePath + view.getEOL();
 				
 				// for some reason cpp.exe doesn't like paths without the drive letter when working on a subst'ed drive.
@@ -2906,8 +2966,8 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					}
 					
 					boolean moveDepFile = false;
-					if (!platform.equals(ISymbianBuildContext.EMULATOR_PLATFORM) &&
-							!platform.equals(ISymbianBuildContext.GCCE_PLATFORM)) {
+					if (!platform.equals(ISBSv1BuildContext.EMULATOR_PLATFORM) &&
+							!platform.equals(ISBSv1BuildContext.GCCE_PLATFORM)) {
 
 							// some form of ARMV5|6
 							moveDepFile = true;
@@ -2919,9 +2979,9 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					}
 					
 					String plat = "";
-					if (platform.equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+					if (platform.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 						plat = "winscw";
-					} else if (platform.equals(ISymbianBuildContext.GCCE_PLATFORM)) {
+					} else if (platform.equals(ISBSv1BuildContext.GCCE_PLATFORM)) {
 						plat = "gcce";
 					}
 					
@@ -2938,7 +2998,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					
 					// fix for bug #7748.  we may need to update the listing rule as well since it could generate
 					// a dependency file
-					if (!platform.equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+					if (!platform.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 						// only non-WINSCW platforms are affected
 						rule = view.findRuleForTarget(new Path(rule.getTarget().toString()).removeFileExtension().addFileExtension("lis").toOSString(), true);
 						if (rule != null) {
@@ -3056,4 +3116,6 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 	public IPath getMakefileDirectory(ICarbideBuildConfiguration config) {
 		return new Path(config.getSDK().getEPOCROOT()).append(EPOC_BUILD_DIR).append(config.getCarbideProject().getAbsoluteBldInfPath().removeLastSegments(1).setDevice(null));
 	}
+	
+	
 }

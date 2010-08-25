@@ -16,36 +16,85 @@
 */
 package com.nokia.carbide.cdt.builder;
 
-import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
-import com.nokia.carbide.cdt.builder.project.*;
-import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
-import com.nokia.carbide.cdt.internal.builder.ISBSv2BuildConfigInfo;
-import com.nokia.carbide.cpp.epoc.engine.*;
-import com.nokia.carbide.cpp.epoc.engine.image.*;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.*;
-import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
-import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
-import com.nokia.carbide.cpp.epoc.engine.model.mmp.*;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
-import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
-import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
-import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.*;
-import com.nokia.cpp.internal.api.utils.core.*;
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
+import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
+import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
+import com.nokia.carbide.cdt.internal.builder.CarbideProjectInfo;
+import com.nokia.carbide.cpp.epoc.engine.BldInfDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.BldInfViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
+import com.nokia.carbide.cpp.epoc.engine.ImageMakefileDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.MMPViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.PKGViewRunnableAdapter;
+import com.nokia.carbide.cpp.epoc.engine.image.IBitmapSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IImageSource;
+import com.nokia.carbide.cpp.epoc.engine.image.IMultiImageSource;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfData;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IBldInfView;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExport;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IExtension;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMMPReference;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakMakeReference;
+import com.nokia.carbide.cpp.epoc.engine.model.bldinf.IMakefileReference;
+import com.nokia.carbide.cpp.epoc.engine.model.makefile.image.IImageMakefileData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPLanguage;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.EMMPStatement;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPAIFInfo;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPBitmap;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPData;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPResource;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPView;
+import com.nokia.carbide.cpp.epoc.engine.model.mmp.IMMPViewConfiguration;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.AllNodesViewFilter;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildConfigInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGEmbeddedSISFile;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGInstallFile;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.IPKGView;
+import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.PKGModelHelper;
+import com.nokia.cpp.internal.api.utils.core.CommonPathFinder;
+import com.nokia.cpp.internal.api.utils.core.FileUtils;
+import com.nokia.cpp.internal.api.utils.core.Logging;
+import com.nokia.cpp.internal.api.utils.core.PathUtils;
+import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 public class EpocEngineHelper {
 
@@ -93,6 +142,7 @@ public class EpocEngineHelper {
 		monitor.beginTask("Scanning bld.inf for mmp and make files", buildConfigs.size());
 
 		try {
+			
 			// let cache know we're iterating a lot
 			SymbianBuildContextDataCache.startProjectOperation();
 			
@@ -369,7 +419,9 @@ public class EpocEngineHelper {
 					&& context.getSDK().getEPOCROOT() != null
 					&& new File(context.getSDK().getEPOCROOT()).exists()) {
 				defaultContext = context;
-				if (defaultContext.getSDK().getPrefixFile() != null)
+				ISymbianSDK sdk = defaultContext.getSDK();
+				
+				if (context.getPrefixFromVariantCfg() != null)
 					break;
 			}
 		}
@@ -650,7 +702,7 @@ public class EpocEngineHelper {
 		final Set<IPath> tempNormalProjects = new LinkedHashSet<IPath>();
 		for (final ICarbideBuildConfiguration buildConfig : buildConfigs) {
 			EpocEnginePlugin.runWithBldInfData(cpi.getWorkspaceRelativeBldInfPath(), 
-					new DefaultViewConfiguration(project, buildConfig, new AcceptedNodesViewFilter()), 
+					new DefaultViewConfiguration(project, buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 					new BldInfDataRunnableAdapter() {
 						public Object run(IBldInfData data) {
 							for (IMakMakeReference normalRef : data.getMakMakeReferences()) {
@@ -692,7 +744,7 @@ public class EpocEngineHelper {
 		}
 		
 		exePath = (String)EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfDataRunnableAdapter() {
 					public Object run(IBldInfData data) {
 						String exePath  = ""; //$NON-NLS-1$
@@ -702,7 +754,7 @@ public class EpocEngineHelper {
 						if (mmps.length == 1) {
 							final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmps[0].getPath());
 							exePath = (String)EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-									new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()),
+									new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 									new MMPDataRunnableAdapter() {
 
 									public Object run(IMMPData mmpData) {
@@ -713,17 +765,15 @@ public class EpocEngineHelper {
 											return null;
 										}
 
-										String releasePlatform = buildConfig.getSDK().getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
-										IPath path = buildConfig.getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
-
-										// if targetpath is non-null and this is an EKA1 emulator config then add it
-										if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
-											if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
-												String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
-												if (targetPath != null) {
-													path = path.append("z").append(targetPath); //$NON-NLS-1$
-												}
-											}
+										ISymbianSDK sdk = buildConfig.getSDK();
+										ISymbianBuildContext context = buildConfig.getBuildContext();
+										IPath path;
+										if (context instanceof ISBSv2BuildContext) {
+											path = new Path(((ISBSv2BuildContext)context).getConfigQueryData().getOutputPathString());
+										} else {
+											ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+											String releasePlatform = sbsv1BuildInfo.getBSFCatalog().getReleasePlatform(buildConfig.getPlatformString());
+											path = sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(buildConfig.getTargetString().toLowerCase());
 										}
 
 										// adapt to variant, if needed
@@ -736,7 +786,9 @@ public class EpocEngineHelper {
 										}
 										
 										exePath = targetPath.toOSString();
+
 										return exePath;
+
 									}
 							});
 						}
@@ -782,7 +834,7 @@ public class EpocEngineHelper {
 		final ICarbideBuildConfiguration buildConfig = info.getDefaultConfiguration();
 		
 		exePath = (IPath)EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfDataRunnableAdapter() {
 					public Object run(IBldInfData data) {
 						IPath exePath  = null;
@@ -792,7 +844,7 @@ public class EpocEngineHelper {
 						if (mmps.length == 1) {
 							final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmps[0].getPath());
 							exePath = (IPath)EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-									new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()),
+									new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 									new MMPDataRunnableAdapter() {
 									public Object run(IMMPData mmpData) {
 										IPath exePath = null;
@@ -860,7 +912,8 @@ public class EpocEngineHelper {
 
 					// adapt the exe filename to the variant, if any
 					IPath tempPath = null;
-					if (isVariantBldInf(cpi.getAbsoluteBldInfPath()) || isFeatureVariantMMP(mmpData, cpi.getProject())) {
+					if ((isVariantBldInf(cpi.getAbsoluteBldInfPath()) || isFeatureVariantMMP(mmpData, cpi.getProject()))
+							&& !CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject())) {
 						tempPath = getBinaryVariantTargetName(mmpData, PathUtils.createPath(exePath), cpi.getProject());
 						if (tempPath == null){
 							return null; 
@@ -868,20 +921,45 @@ public class EpocEngineHelper {
 						exePath = tempPath.lastSegment();
 					}
 					
-					IPath path = buildConfig.getTargetOutputDirectory();
-					
-					// if targetpath is non-null and this is an EKA1 emulator config then add it
-					if (buildConfig.getPlatformString().equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
-						if (buildConfig.getSDK().getOSVersion().getMajor() < 9) {
-							String targetPath = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGETPATH);
-							if (targetPath != null) {
-								path = path.append("z").append(targetPath); //$NON-NLS-1$
-							}
+					IPath path = null;
+					if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject()) && 
+							isFeatureVariantMMP(mmpData, cpi.getProject())){
+						
+						path = buildConfig.getTargetOutputDirectory();
+						
+					} else {
+						// Not a variant
+						path = buildConfig.getTargetOutputDirectory();
+						if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject())){
+							// For SBSv2, it's not a variant, so it goes under the standard output dir
+							path = stripVariationFolder(path);
 						}
+						
 					}
 					path = path.append(exePath);
 					
 					return path;
+				}
+
+				private IPath stripVariationFolder(IPath path) {
+					if (!path.toOSString().contains(".")){
+						return path;
+					}
+					String[] segments = path.segments();
+					int segmentCount = path.segmentCount();
+					path = path.removeFirstSegments(segmentCount);
+					int count = 0;
+					path = path.addTrailingSeparator();
+					for (String segment : segments){
+						if (count == segmentCount - 2 && segment.contains(".")){
+							path = path.append(segment.split("\\.")[0]);
+						} else {
+							path = path.append(segment);
+						}
+						count ++;
+					}
+					return path;
+					
 				}
 		});								
 	}
@@ -916,9 +994,7 @@ public class EpocEngineHelper {
 						// if the target path is not set then by default it will usually
 						// be left blank.  for EKA2 though binaries need to go in \sys\bin\
 						exePath = Path.ROOT.setDevice("C:"); //$NON-NLS-1$
-						if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-							exePath = exePath.append("sys/bin/"); //$NON-NLS-1$
-						}
+						exePath = exePath.append("sys/bin/"); //$NON-NLS-1$
 						String targetName = mmpData.getSingleArgumentSettings().get(EMMPStatement.TARGET);
 						if  (targetName != null) {
 							exePath = exePath.append(targetName);
@@ -985,7 +1061,7 @@ public class EpocEngineHelper {
 		final ICarbideBuildConfiguration buildConfig = info.getDefaultConfiguration();
 		
 		EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfDataRunnableAdapter() {
 
 				public Object run(IBldInfData data) {
@@ -994,7 +1070,7 @@ public class EpocEngineHelper {
 					if (mmps.length == 1) {
 						final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmps[0].getPath());
 						EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-								new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()),
+								new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 								new MMPDataRunnableAdapter() {
 
 								public Object run(IMMPData mmpData) {
@@ -1045,12 +1121,8 @@ public class EpocEngineHelper {
 		if (targetPathStr != null) {
 			targetPath = PathUtils.createPath(targetPathStr).makeAbsolute();
 		} else {
-			// for EKA1 just leave empty.  for EKA2 use sys\bin\
-			if (buildConfig.getSDK().getOSVersion().getMajor() > 8) {
-				targetPath = new Path("/sys/bin/"); //$NON-NLS-1$
-			} else {
-				targetPath = Path.ROOT; //$NON-NLS-1$
-			}
+			//for EKA2 use sys\bin\
+			targetPath = new Path("/sys/bin/"); //$NON-NLS-1$
 		}
 	
 		IPath dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).append("/data/z/"); //$NON-NLS-1$
@@ -1151,12 +1223,11 @@ public class EpocEngineHelper {
 
 		final ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		EpocEnginePlugin.runWithBldInfView(cpi.getWorkspaceRelativeBldInfPath(),
-				new DefaultViewConfiguration(cpi.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(cpi.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfViewRunnableAdapter() {
 
 					public Object run(IBldInfView view) {
 						EpocEnginePathHelper helper = new EpocEnginePathHelper(buildConfig);
-						
 						final String dataZDir = buildConfig.getSDK().getReleaseRoot().removeLastSegments(1).toOSString() + "\\data\\z\\"; //$NON-NLS-1$
 
 						for (IMakefileReference ref : view.getAllMakefileReferences()) {
@@ -1280,7 +1351,7 @@ public class EpocEngineHelper {
 			
 			if (mmpName.toUpperCase().equals(mmpName2.toUpperCase())){
 				EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-						new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+						new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 						new MMPDataRunnableAdapter() {
 
 						public Object run(IMMPData mmpData) {
@@ -1629,7 +1700,7 @@ public class EpocEngineHelper {
 		final IPath workspaceRelativeldInfPath = buildConfig.getCarbideProject().getWorkspaceRelativeBldInfPath();
 
 		EpocEnginePlugin.runWithBldInfData(workspaceRelativeldInfPath,
-			new DefaultViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+			new DefaultViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 			new BldInfDataRunnableAdapter() {
 
 				public Object run(IBldInfData data) {
@@ -1660,7 +1731,7 @@ public class EpocEngineHelper {
 		final List<String> macros = new ArrayList<String>();
 		
 		EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new MMPDataRunnableAdapter() {
 
 				public Object run(IMMPData mmpData) {
@@ -1692,7 +1763,7 @@ public class EpocEngineHelper {
 			IPath mmp, final ICarbideBuildConfiguration buildConfiguration,
 			final List<File> userPaths, final List<File> systemPaths) {
 		IMMPViewConfiguration viewConfiguration = new DefaultMMPViewConfiguration(
-				project, buildConfiguration, new AcceptedNodesViewFilter());
+				project, buildConfiguration.getBuildContext(), new AcceptedNodesViewFilter());
 		
 		final IPath epocRoot = new Path(buildConfiguration.getSDK().getEPOCROOT());
 		EpocEnginePlugin.runWithMMPData(new Path(project.getName()).append(mmp), 
@@ -1742,14 +1813,27 @@ public class EpocEngineHelper {
 	 */
 	public static IPath[] getLibDirectoriesForBuildContext(ISymbianBuildContext buildContext) {
 		ArrayList<IPath> dirList = new ArrayList<IPath>();
-		ISymbianSDK sdk = buildContext.getSDK();
-		IPath releaseRoot = sdk.getReleaseRoot();
+		IPath releaseRoot = buildContext.getSDK().getReleaseRoot();
 		String platformString = buildContext.getPlatformString();
 		boolean isDebug = ISymbianBuildContext.DEBUG_TARGET.equals(buildContext.getTargetString());
 		// TODO is this correct, what about ARMv6?
-		boolean isARMv5 = ISymbianBuildContext.ARMV5_PLATFORM.equals(platformString) ||
-		ISymbianBuildContext.ARMV5_ABIV2_PLATFORM.equals(platformString);
-		boolean isGCCE = ISymbianBuildContext.GCCE_PLATFORM.equals(platformString);
+		boolean isARMv5 = false;
+		boolean isGCCE = false;
+		
+		if (buildContext instanceof ISBSv1BuildContext) {
+			isARMv5 = ISBSv1BuildContext.ARMV5_PLATFORM.equals(platformString) ||
+			ISBSv1BuildContext.ARMV5_ABIV2_PLATFORM.equals(platformString);
+			isGCCE = ISBSv1BuildContext.GCCE_PLATFORM.equals(platformString);
+		} else if (buildContext instanceof ISBSv2BuildContext){
+			String alias = ((ISBSv2BuildContext)buildContext).getSBSv2Alias();
+			if (alias.toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_ARM)){
+				isARMv5 = true;
+			}
+			if (alias.toUpperCase().contains(ISBSv2BuildContext.TOOLCHAIN_GCCE)){
+				isGCCE = true;
+			}
+		}
+		
 		if (isARMv5 || isGCCE) {
 			if (isDebug) {
 				dirList.add(releaseRoot.append("armv5/udeb/")); //$NON-NLS-1$
@@ -1819,15 +1903,22 @@ public class EpocEngineHelper {
 		final ICarbideBuildConfiguration buildConfig = info.getDefaultConfiguration();
 		final List<IPath>mmpPaths = new ArrayList<IPath>();
 		EpocEnginePlugin.runWithBldInfData(info.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+				new DefaultViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 				new BldInfDataRunnableAdapter() {
 
 					public Object run(IBldInfData infView) {
 						for (final IMMPReference mmp : infView.getAllMMPReferences()) {
-								final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmp.getPath());
+							
+								IPath workspaceRelativeMMPPath1 = null;
+								if (info.getProjectRelativeBldInfPath().isAbsolute()){
+									workspaceRelativeMMPPath1 = mmp.getPath();
+								} else {
+									workspaceRelativeMMPPath1 = new Path(info.getProject().getName()).append(mmp.getPath());
+								}
 								
+								final IPath workspaceRelativeMMPPath = workspaceRelativeMMPPath1;
 								EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
-										new DefaultMMPViewConfiguration(info.getProject(), buildConfig, new AcceptedNodesViewFilter()),
+										new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 										new MMPDataRunnableAdapter() {
 
 										public Object run(IMMPData mmpData) {
@@ -1927,7 +2018,7 @@ public class EpocEngineHelper {
 		final ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		
 		EpocEnginePlugin.runWithBldInfData(cpi.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(cpi, buildConfig), 
+				new DefaultViewConfiguration(cpi, buildConfig.getBuildContext()), 
 				new BldInfDataRunnableAdapter() {
 
 					public Object run(IBldInfData infView) {
@@ -2013,7 +2104,7 @@ public class EpocEngineHelper {
 				continue;
 			
 			EpocEnginePlugin.runWithMMPData(mmpPath, 
-					new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig, new AcceptedNodesViewFilter()), 
+					new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
 					new MMPDataRunnableAdapter() {
 
 					public Object run(IMMPData mmpData) {
@@ -2150,9 +2241,11 @@ public class EpocEngineHelper {
 		if (cpi != null){
 			ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
 			if (defaultConfig != null){
-				if (defaultConfig.getBuildVariationName().length() > 0 && 
+				if (defaultConfig.getBuildContext().getBuildVariationName().length() > 0 && 
 					mmpData.getFlags().contains(EMMPStatement.FEATUREVARIANT)) {
-					
+					isFeatureVariant = true;
+				} else if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project) &&
+						mmpData.getFlags().contains(EMMPStatement.FEATUREVARIANT)){
 					isFeatureVariant = true;
 				}
 			}
@@ -2238,10 +2331,11 @@ public class EpocEngineHelper {
 	}
 	
 	/**
-	 * Get the MD5 hash for a configuration if it is a true binary variation.
+	 * Get the MD5 hash for a configuration if it is a true binary variation. This is for abld buidler only.
 	 * @param config - The Carbide build configuration to check against
 	 * @param mmpFullPath - The path to the MMP file that builds the binary
 	 * @return A string of the MD5 hash. Returns an empty string if the configuration is not a binary variant or cannot be determined.
+	 * @deprecated - ABLD support to be removed vFuture
 	 */
 	static public String getMD5HashForBinaryVariant(final ICarbideBuildConfiguration config, final IPath mmpFullPath){
 		
@@ -2263,7 +2357,13 @@ public class EpocEngineHelper {
 		});								
 	}
 	
-	
+	/**
+	 * NOTE: This only works for ABLD. Not SBSv2/Raptor!
+	 * @param mmpData
+	 * @param config
+	 * @return
+	 * @deprecated - Abld support to be be removed vFuture
+	 */
 	private static File getMakeFileForSymbianBinaryVariant(IMMPData mmpData, ICarbideBuildConfiguration config){
 		
 		IPath makefileDir = CarbideCPPBuilder.getBuilderMakefileDir(config);
@@ -2272,8 +2372,13 @@ public class EpocEngineHelper {
 		mmpFile = mmpFile.removeFileExtension();
 		String mmpRootName = mmpFile.lastSegment();
 		String plat = config.getPlatformString();
-		String basePlat = config.getBasePlatformForVariation();
-		String variantPlat = config.getBuildVariationName();
+		String basePlat = "";
+		if (config.getBuildContext() instanceof ISBSv2BuildConfigInfo){
+			basePlat = ((ISBSv1BuildContext)config.getBuildContext()).getBasePlatformForVariation();
+		} else {
+			basePlat = config.getPlatformString();
+		}
+		String variantPlat = config.getBuildContext().getBuildVariationName();
 		
 		if (variantPlat.length() == 0){
 			plat = plat + "." + ISymbianBuildContext.DEFAULT_VARIANT;
@@ -2287,13 +2392,14 @@ public class EpocEngineHelper {
 	}
 	
 	/**
-	 * Get the MD5 hash value for an existing configuration by parsing its makefile.
+	 * Get the MD5 hash value for an existing configuration by parsing its makefile. Should only be used for ABLD build system.
 	 * @param makefile - The build makefile to parse to check for the MD5
 	 * @param config - The build configuration to check under
 	 * @return The string for the MD5 hash. An empty string if it cannot be determined.
+	 * @deprecated - abld support to be removed
 	 */
 	private static String getMD5VariantFromMakefile(File makefile, ICarbideBuildConfiguration config){
-		// TODO: We can also use the .vmap in the release folder as well.
+		// We could also use the .vmap in the release folder as well.
 		// we can parse the makefile and get the variant name for each in the comments:
 		//
 		//# FeatureVariantURELLabel d41d8cd98f00b204e9800998ecf8427e
@@ -2309,7 +2415,7 @@ public class EpocEngineHelper {
 			}
 			
 			String searchString = "";
-			if (config.getTargetString().equals(SymbianBuildContext.DEBUG_TARGET)){
+			if (config.getTargetString().equals(BuildContextSBSv1.DEBUG_TARGET)){
 				searchString = "# FeatureVariantUDEBLabel";
 			} else {
 				searchString = "# FeatureVariantURELLabel";
@@ -2405,7 +2511,7 @@ public class EpocEngineHelper {
 	 */
 	public static void addIncludedFilesFromBldInf(ICarbideProjectInfo projectInfo, ICarbideBuildConfiguration buildConfig, IPath bldinfPath, final Collection<IPath> pathList) {
 		DefaultViewConfiguration viewConfig = buildConfig != null ?
-				new DefaultViewConfiguration(projectInfo, buildConfig) :
+				new DefaultViewConfiguration(projectInfo, buildConfig.getBuildContext()) :
 					new DefaultViewConfiguration(projectInfo);
 		EpocEnginePlugin.runWithBldInfData(bldinfPath, 
 				viewConfig, 
@@ -2454,7 +2560,7 @@ public class EpocEngineHelper {
 		final List<IPath> filePaths = new ArrayList<IPath>();
 		
 		PKGModelHelper.runWithPKGView(pkgPath, 
-				new DefaultViewConfiguration(buildConfig.getCarbideProject(), buildConfig), 
+				new DefaultViewConfiguration(buildConfig.getCarbideProject(), buildConfig.getBuildContext()), 
 				new PKGViewRunnableAdapter() {
 
 				public Object run(IPKGView view) {
@@ -2623,7 +2729,7 @@ public class EpocEngineHelper {
 		final ICarbideProjectInfo cpi = buildConfig.getCarbideProject();
 		
 		EpocEnginePlugin.runWithBldInfData(cpi.getWorkspaceRelativeBldInfPath(), 
-				new DefaultViewConfiguration(cpi, buildConfig), 
+				new DefaultViewConfiguration(cpi, buildConfig.getBuildContext()), 
 				new BldInfDataRunnableAdapter() {
 
 					public Object run(IBldInfData infView) {
@@ -2660,4 +2766,50 @@ public class EpocEngineHelper {
 		
 		return paths;
 	}
+	
+	/**
+	 * Retrieves all macros used for indexing a given ICarbideBuildConfiguration.
+	 * @param config - The CarbideBuildConfiguration
+	 * @param mmpFiles - null if for all MMPs in the project
+	 * @return list of IDefine
+	 * @since 3.0
+	 */
+	public static List<IDefine> getGlobalDefinesForConfiguration(ICarbideBuildConfiguration config, List<IPath> mmpFiles){
+		
+		List<IDefine> projectDefines = config.getCompileTimeMacros();
+		
+		if (mmpFiles == null){
+			// get all macros from all mmps
+			mmpFiles = getMMPFilesForProject(config.getCarbideProject());
+		}
+		
+		for (IPath mmpPath : mmpFiles){
+			if (hasSTDCPPSupport(config.getCarbideProject(), mmpPath)){
+				projectDefines.add(DefineFactory.createDefine("__SYMBIAN_STDCPP_SUPPORT__"));
+				break;
+			}
+		}
+		
+		if (((CarbideProjectInfo)config.getCarbideProject()).shouldUseMMPMacros()){
+			// Only return the macros from the mmps if project pref Macro Settings
+			// is enabled (Use preprocessor symbols....)
+			for (IPath mmpPath : mmpFiles) {
+				
+				List<String> mmpMacros = getMMPMacrosForBuildConfiguration(
+						mmpPath, config);
+				for (String macro : mmpMacros) {
+					// Symbian docs say they are converted to upper case always
+					projectDefines.add(DefineFactory.createDefine(macro.toUpperCase()));
+				}
+			}
+		}
+		
+		List<String> targetTypes = getTargetTypesForBuildConfiguration(config);	
+		if (targetTypes.size() > 0){
+			projectDefines.add(config.getBuildContext().getTargetTypeMacro(targetTypes.get(0)));
+		}
+			 
+		return projectDefines;
+	}
+	
 }

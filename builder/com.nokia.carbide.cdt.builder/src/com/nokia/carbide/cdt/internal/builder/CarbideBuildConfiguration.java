@@ -31,59 +31,57 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 
-import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
-import com.nokia.carbide.cdt.builder.project.IBuildArgumentsInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
-import com.nokia.carbide.cdt.builder.project.IROMBuilderInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.carbide.cdt.internal.api.builder.SISBuilderInfo2;
-import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.DefineFactory;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.SDKManagerInternalAPI;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.TrackedResource;
 
-public class CarbideBuildConfiguration extends SymbianBuildContext implements ICarbideBuildConfiguration {
+@SuppressWarnings("deprecation")
+public class CarbideBuildConfiguration implements ICarbideBuildConfiguration {
 	
 	static final String NOT_INSTALLED = "(SDK not found)"; //$NON-NLS-1$
 
-	protected static final String CARBIDE_STORAGE_ID = "CarbideConfigurationDataProvider"; //$NON-NLS-1$
+	public static final String CARBIDE_STORAGE_ID = "CarbideConfigurationDataProvider"; //$NON-NLS-1$
 	protected final static String SIS_BUILDER_DATA_ID = "SIS_BUILDER_DATA_ID"; //$NON-NLS-1$
 	protected final static String ENV_VAR_DATA_ID = "ENV_VAR_DATA_ID"; //$NON-NLS-1$
-	protected final static String ARGUMENTS_DATA_ID = "ARGUMENTS_DATA_ID"; //$NON-NLS-1$
 	protected final static String ROM_BUILDER_DATA_ID = "ROM_BUILDER_DATA_ID"; //$NON-NLS-1$
 	
-	// SBSv2 only config settings 
-	protected final static String SBSV2_DATA_ID = "SBSV2_DATA_ID"; //$NON-NLS-1$ 
-	
+	protected ISymbianBuildContext context;
 	protected TrackedResource projectTracker;
 	protected List<ISISBuilderInfo> sisBuilderInfoList;
 	protected EnvironmentVarsInfo2 envVarsInfo;
-	protected BuildArgumentsInfo buildArgumentsInfo;
+	
 	protected BuildConfigurationData buildConfigData;
-	protected ROMBuilderInfo romBuilderInfo;
-	protected SBSv2BuilderInfo sbsv2BuilderInfo;
+	
 	protected boolean rebuildNeeded;
 	
 	public CarbideBuildConfiguration(IProject project, ISymbianBuildContext context) {
-		super(context.getSDK(), context.getPlatformString(), context.getTargetString(), context.getSBSv2Alias());
+		this.context = context;
 		projectTracker = new TrackedResource(project);
 		sisBuilderInfoList = new ArrayList<ISISBuilderInfo>(0);
 		envVarsInfo = new EnvironmentVarsInfo2(project, context);
-		buildArgumentsInfo = new BuildArgumentsInfo(getSDK());
+		
 		buildConfigData = new BuildConfigurationData(this);
-		romBuilderInfo = new ROMBuilderInfo(getSDK());
-		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(project)){
-			sbsv2BuilderInfo = new SBSv2BuilderInfo(context);
-		}
+		
 		rebuildNeeded = true;
 	}
 	
@@ -102,15 +100,11 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 					}
 				} else if (se.getName().equals(ENV_VAR_DATA_ID)) {
 					envVarsInfo.loadFromStorage(se);
-				} else if (se.getName().equals(ARGUMENTS_DATA_ID)) {
-					loadBuildArgsFromStorage(se);
-				} else if (se.getName().equals(ROM_BUILDER_DATA_ID)) {
-					romBuilderInfo.loadFromStorage(se);
-				} else if (se.getName().equals(SBSV2_DATA_ID)){
-					if (sbsv2BuilderInfo != null){
-						sbsv2BuilderInfo.loadFromStorage(se);
-					}
-				}
+				} 
+				
+				// Load build context specific settings.
+				getBuildContext().loadConfigurationSettings(se);
+				
 			}
 		} else {
 			throw new CoreException(new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, IStatus.OK, "Unable to load Carbide settings for project " + projectTracker.getProject().getName() + ", " + getDisplayString(), null));
@@ -128,115 +122,9 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 			}
 			
 			envVarsInfo.saveToStorage(rootStorage.createChild(ENV_VAR_DATA_ID));
-			saveBuildArgsToStorage(rootStorage.createChild(ARGUMENTS_DATA_ID));
-			romBuilderInfo.saveToStorage(rootStorage.createChild(ROM_BUILDER_DATA_ID));
 			
-			if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){ 
-				sbsv2BuilderInfo.saveToStorage(rootStorage.createChild(SBSV2_DATA_ID)); 
-			}
-		}
-	}
-	
-	private void loadBuildArgsFromStorage(ICStorageElement rootStorage) {
-		String value = rootStorage.getAttribute(BuildArgumentsInfo.BLDMAKEBLDFILESARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.bldmakeBldFilesArgs = value;
-		}
-		
-		value = rootStorage.getAttribute(BuildArgumentsInfo.BLDMAKECLEANARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.bldmakeCleanArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDBUILDARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldBuildArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDEXPORTARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldExportArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDMAKEFILEARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldMakefileArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDLIBRARYARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldLibraryArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDRESOURCEARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldResourceArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDTARGETARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldTargetArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDFINALARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldFinalArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDCLEANARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldCleanArgs = value;
-		}
-
-		value = rootStorage.getAttribute(BuildArgumentsInfo.ABLDFREEZEARGSSTORAGE);
-		if (value != null) {
-			buildArgumentsInfo.abldFreezeArgs = value;
-		}
-	}
-	
-	public void saveBuildArgsToStorage(ICStorageElement rootStorage) {
-		if (buildArgumentsInfo.bldmakeBldFilesArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.BLDMAKEBLDFILESARGSSTORAGE, buildArgumentsInfo.bldmakeBldFilesArgs);
-		}
-
-		if (buildArgumentsInfo.bldmakeCleanArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.BLDMAKECLEANARGSSTORAGE, buildArgumentsInfo.bldmakeCleanArgs);
-		}
-
-		if (buildArgumentsInfo.abldBuildArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDBUILDARGSSTORAGE, buildArgumentsInfo.abldBuildArgs);
-		}
-
-		if (buildArgumentsInfo.abldExportArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDEXPORTARGSSTORAGE, buildArgumentsInfo.abldExportArgs);
-		}
-
-		if (buildArgumentsInfo.abldMakefileArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDMAKEFILEARGSSTORAGE, buildArgumentsInfo.abldMakefileArgs);
-		}
-
-		if (buildArgumentsInfo.abldLibraryArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDLIBRARYARGSSTORAGE, buildArgumentsInfo.abldLibraryArgs);
-		}
-
-		if (buildArgumentsInfo.abldResourceArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDRESOURCEARGSSTORAGE, buildArgumentsInfo.abldResourceArgs);
-		}
-
-		if (buildArgumentsInfo.abldTargetArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDTARGETARGSSTORAGE, buildArgumentsInfo.abldTargetArgs);
-		}
-
-		if (buildArgumentsInfo.abldFinalArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDFINALARGSSTORAGE, buildArgumentsInfo.abldFinalArgs);
-		}
-
-		if (buildArgumentsInfo.abldCleanArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDCLEANARGSSTORAGE, buildArgumentsInfo.abldCleanArgs);
-		}
-
-		if (buildArgumentsInfo.abldFreezeArgs.trim().length() > 0) {
-			rootStorage.setAttribute(BuildArgumentsInfo.ABLDFREEZEARGSSTORAGE, buildArgumentsInfo.abldFreezeArgs);
+			// Save build context specific settings.
+			this.getBuildContext().saveConfigurationSettings(rootStorage, getBuildContext());
 		}
 	}
 	
@@ -255,7 +143,8 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		try {
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(projectTracker.getProject());
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(getDisplayString());
+			
+				ICConfigurationDescription configDes = projDes.getConfigurationById(getBuildContext().getConfigurationID());
 				if (configDes != null) {
 					// save the CDT project description.  this saves all configs but that's the
 					// only thing CDT allows at this point.
@@ -270,7 +159,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 
 		return false;
 	}
-	
+
 	public List<ISISBuilderInfo> getSISBuilderInfoList() {
 		return sisBuilderInfoList;
 	}
@@ -289,51 +178,30 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		}
 	}
 		
-	public int getErrorParserId(){
+	private int getErrorParserId(){
 		String plat = this.getPlatformString();
 		
-		if (this.getSBSv2Alias() != null && this.getSBSv2Alias().toUpperCase().contains(ISymbianBuildContext.GCCE_PLATFORM)){
-			return ERROR_PARSERS_GCCE;
-		}
-		
-		if (plat.equals(ISymbianBuildContext.EMULATOR_PLATFORM)){
-			return ERROR_PARSERS_WINSCW;
-		} else if (plat.startsWith("ARMV")){
-			return ERROR_PARSERS_ARMVx;
-		} else if (plat.equals(ISymbianBuildContext.GCCE_PLATFORM)){
-			return ERROR_PARSERS_GCCE;
+		if (context instanceof ISBSv2BuildContext){
+			String toolChain = ((ISBSv2BuildContext)context).getToolChain();
+			if (toolChain.equalsIgnoreCase(ISBSv2BuildContext.TOOLCHAIN_ARM)){
+				return ERROR_PARSERS_ARMVx;
+			} else if (toolChain.equalsIgnoreCase(ISBSv2BuildContext.TOOLCHAIN_GCCE)){
+				return ERROR_PARSERS_GCCE;
+			} else if (toolChain.equalsIgnoreCase(ISBSv2BuildContext.TOOLCHAIN_WINSCW)){
+				return ERROR_PARSERS_WINSCW;
+			} 
+		} else {
+			// SBSV1
+			if (plat.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)){
+				return ERROR_PARSERS_WINSCW;
+			} else if (plat.startsWith("ARMV")){
+				return ERROR_PARSERS_ARMVx;
+			} else if (plat.equals(ISBSv1BuildContext.GCCE_PLATFORM)){
+				return ERROR_PARSERS_GCCE;
+			}
 		}
 	
 		return ERROR_PARSERS_ALL;  
-	}
-
-	public List<String> getBuiltinMacros() {
-		List<String> macros = new ArrayList<String>();
-		
-		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
-			macros.add("SBSV2"); //$NON-NLS-1$
-		}
-		
-		// add the macros that should always be defined
-		macros.add("__SYMBIAN32__"); //$NON-NLS-1$
-		macros.add("_UNICODE"); //$NON-NLS-1$
-		
-		ISymbianSDK sdk = getSDK();
-		if (sdk != null && sdk.getOSVersion().getMajor() >= 9) {
-			macros.add("__SUPPORT_CPP_EXCEPTIONS__"); //$NON-NLS-1$
-		}
-		
-		if (getTargetString().equals(DEBUG_TARGET)) {
-			macros.add("_DEBUG"); //$NON-NLS-1$
-		} else {
-			macros.add("NDEBUG"); //$NON-NLS-1$
-		}
-		
-		if (hasSTDCPPSupport()){
-			macros.add("__SYMBIAN_STDCPP_SUPPORT__");
-		}
-		
-		return macros;
 	}
 
 	public CConfigurationData getBuildConfigurationData() {
@@ -358,7 +226,7 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 	public static String toMarkedConfig(String config) {
 		if (config == null)
 			return null;
-		if (SDKManagerInternalAPI.getMissingSdk(SymbianBuildContext.getSDKIDFromConfigName(config)) != null) {
+		if (SDKManagerInternalAPI.getMissingSdk(BuildContextSBSv1.getSDKIDFromConfigName(config)) != null) {
 			return badSdkString() + config;
 		}
 		return config;
@@ -374,34 +242,63 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		return config;
 	}
 
-	public IBuildArgumentsInfo getBuildArgumentsInfo() {
-		return (IBuildArgumentsInfo)buildArgumentsInfo;
+	public IPath getTargetOutputDirectory() {
+		if (context instanceof ISBSv2BuildContext){
+			if (((ISBSv2BuildContext) context).getConfigQueryData() != null){
+				return new Path(((ISBSv2BuildContext)context).getConfigQueryData().getOutputPathString());
+			} else {
+				return new Path("/" + SBSv2QueryUtils.BAD_EPOCROOT);
+			}
+		} else {
+			ISymbianSDK sdk = getSDK();
+			ISBSv1BuildContext v1Context = (ISBSv1BuildContext)context;
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			String releasePlatform = sbsv1BuildInfo.getBSFCatalog().getReleasePlatform(v1Context.getBasePlatformForVariation());
+			return sdk.getReleaseRoot().append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
+		} 
+	}
+ 	
+	public boolean getRebuildNeeded() {
+		return rebuildNeeded;
 	}
 	
-	public BuildArgumentsInfo getBuildArgumentsInfoCopy() {
-		return new BuildArgumentsInfo(buildArgumentsInfo);
+	public void setRebuildNeeded(boolean value) {
+		rebuildNeeded = value;
+	}
+
+	public ISymbianSDK getSDK() {
+		return context.getSDK();
+	}
+
+	public String getPlatformString() {
+		return context.getPlatformString();
+	}
+
+	public String getTargetString() {
+		return context.getTargetString();
+	}
+
+	public String getDisplayString() {
+		return context.getDisplayString();
+	}
+
+	public ISymbianBuildContext getBuildContext() {
+		return context;
 	}
 	
-	public void setBuildArgumentsInfo(BuildArgumentsInfo buildArgumentsInfo) {
-		this.buildArgumentsInfo = buildArgumentsInfo;
-	}
-
-	public IROMBuilderInfo getROMBuildInfo() {
-		return romBuilderInfo;
-	}
-
-	public ISBSv2BuildConfigInfo getSBSv2BuildConfigInfo(){
-		return sbsv2BuilderInfo;
-	}
-
-	private boolean hasSTDCPPSupport() {
+	/**
+	 * Check that at least one MMP in the project configuration has stdcpp support keyword
+	 * @return
+	 * @since 3.0
+	 */
+	public boolean hasSTDCPPSupport() {
 		
-		ICarbideProjectInfo cpi = getCarbideProject();
+		ICarbideProjectInfo cpi = this.getCarbideProject();
 		
 		List<ISymbianBuildContext> buildConfig = new ArrayList<ISymbianBuildContext>();
 		List<IPath> normalMakMakePaths = new ArrayList<IPath>();
 		List<IPath> testMakMakePaths = new ArrayList<IPath>();
-		buildConfig.add(this);
+		buildConfig.add(this.getBuildContext());
 		EpocEngineHelper.getMakMakeFiles(cpi.getAbsoluteBldInfPath(), buildConfig, normalMakMakePaths, testMakMakePaths, new NullProgressMonitor());
 		
 		for (IPath mmpPath : normalMakMakePaths){
@@ -413,28 +310,17 @@ public class CarbideBuildConfiguration extends SymbianBuildContext implements IC
 		return false;
 	}
 
-	public ISBSv2BuildConfigInfo getSBSv2ConfigInfo() {
-		return sbsv2BuilderInfo;
-	}
-
-	public IPath getTargetOutputDirectory() {
-		String releasePlatform = getSDK().getBSFCatalog().getReleasePlatform(getBasePlatformForVariation());
-		if (CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(getCarbideProject().getProject())){
-			// Test is this is an SBSv2 build binary variant (changes the output directory)
-			ISBSv2BuildConfigInfo sbsv2Info = getSBSv2BuildConfigInfo();
-			if ( sbsv2Info != null && SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT)) != null && !releasePlatform.contains(".") ){
-				releasePlatform = releasePlatform + SBSv2Utils.getVariantOutputDirModifier(sbsv2Info.getSBSv2Setting(ISBSv2BuildConfigInfo.ATTRIB_SBSV2_VARIANT));
-			}
-		}
-		return getSDK().getReleaseRoot().append(releasePlatform.toLowerCase()).append(getTargetString().toLowerCase());
-	}
- 	
-	public boolean getRebuildNeeded() {
-		return rebuildNeeded;
-	}
-	
-	public void setRebuildNeeded(boolean value) {
-		rebuildNeeded = value;
+	public List<IDefine> getCompileTimeMacros() {
+		
+		List<IDefine> defines = new ArrayList<IDefine>();
+		
+		defines.addAll(context.getBuildMacros());
+		defines.addAll(context.getCompilerPreincludeDefines());
+		defines.addAll(context.getVariantHRHDefines());
+		defines.addAll(context.getMetadataMacros());
+		
+		return defines;
+		
 	}
 	
 }

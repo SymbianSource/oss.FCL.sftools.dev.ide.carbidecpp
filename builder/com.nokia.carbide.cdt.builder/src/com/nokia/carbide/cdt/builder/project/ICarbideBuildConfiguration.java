@@ -20,8 +20,10 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IPath;
 
-import com.nokia.carbide.cdt.builder.BuildArgumentsInfo;
+import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
+import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 
 /**
  * An ICarbideBuildConfiguration interface represents on buildable target for a project. A single
@@ -29,7 +31,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
  *
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
+public interface ICarbideBuildConfiguration {
 
 	/** Integer identifier for the set of parser to be used for building the WINSCW platform */
     public static final int ERROR_PARSERS_WINSCW = 1;
@@ -47,8 +49,9 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
     public static final int ERROR_PARSERS_ALL = 99;
 	
 	/**
-	 * Get a list of error parser ID's
+	 * Get a list of error parser ID's for this configuration.
 	 * @return A full list of error parser IDs. Returns an empty array if none are specified
+	 * @see {@link CarbideCPPBuilder#getParserIdArray(int)}
 	 */
 	String[] getErrorParserList();
 
@@ -66,29 +69,7 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	 */
 	List<ISISBuilderInfo> getSISBuilderInfoList();
 	
-	/**
-	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
-	 * This only applies when building with SBSv1 (bldmake, abld)
-	 * @return IBuildArgumentsInfo instance, never null
-	 * 
-	 * @deprecated use 
-	 */
-	IBuildArgumentsInfo getBuildArgumentsInfo();
-	
-	/**
-	 * Get the (abld)build arguments info.  Contains pref settings from the Arguments tab.
-	 * This only applies when building with SBSv1 (bldmake, abld)
-	 * @return A copy of BuildArgumentsInfo instance, never null
-	 */
-	BuildArgumentsInfo getBuildArgumentsInfoCopy();
-	
-	/**
-	 * Set the build arguments info for SBSv2 build arguments. This only sets values in memory, does
-	 * not write settings to disk. See 
-	 * @return IBuildArgumentsInfo instance, never null
-	 */
-	void setBuildArgumentsInfo(BuildArgumentsInfo bldArgInfo);
-	
+
 	/**
 	 * Get the parent Carbide project of this configuration.
 	 * @return ICarbideProjectInfo
@@ -101,34 +82,6 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	 */
 	IEnvironmentVarsInfo getEnvironmentVarsInfo();
 	
-	/**
-	 * Get the id that specifies the array of error parsers to use for a given build platform.
-	 * @return The integer ID of the parser to be use.
-	 * @see CarbideCPPBuilder.getParserIds(int id)
-	 */
-	int getErrorParserId();
-	
-	/**
-	 * Returns the list of all built in macros for this configuration
-	 * <p>
-	 * Macros will be just a name, e.g. "_DEBUG", "__SYMBIAN32__", etc..
-	 * </p>
-	 *
-	 * @return a list of macros which may be empty.
-	 */
-	List<String> getBuiltinMacros();
-	
-	/**
-	 * Returns the ROM builder info from the ROM Builder tab.
-	 * @return
-	 */
-	IROMBuilderInfo getROMBuildInfo();
-	
-	/**
-	 * Compares two configurations to see if their display names are equivalent.
-	 */
-	boolean equals(Object obj);
-	
 	/** Get the full path of the release directory into the SDK where binaries are built
 	 *  NOTE: This does not account for whether or not a project has the FEATUREVARIANT keyword
 	 * @return IPath
@@ -136,5 +89,39 @@ public interface ICarbideBuildConfiguration extends ISymbianBuildContext {
 	 * @since 2.6
 	 */
 	IPath getTargetOutputDirectory();
+	
+	/**
+	 * Retrieve the build context specific info.
+	 * @return ISymbianBuildContext
+	 * @since 3.0
+	 */
+	ISymbianBuildContext getBuildContext();
+	
+	/** ISymbianBuildContext wrapper
+	 *  @since 3.0 */
+	String getDisplayString();
+	
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
+	ISymbianSDK getSDK();
+	
+	/** ISymbianBuildContext wrapper 
+	 * @since 3.0 */
+	String getPlatformString();
+	
+	/** ISymbianBuildContext wrapper
+	 * @since 3.0 */
+	String getTargetString();
+	
+	/**
+	 * Provides a list of macros suitable for preprocessing a CPP source file. This includes
+	 * macros from the compiler prefix, Symbian HRH, buit-in build macros, and metadata macros.
+	 * Note: If you don't want the macro values from the preincludes, you should use the methods
+	 * directly under ISymbianBuildContext for more specificity.
+	 * @return a list of macro defines
+	 * @since 3.0
+	 */
+	List<IDefine> getCompileTimeMacros();
+	
 	
 }

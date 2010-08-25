@@ -46,9 +46,11 @@ import org.eclipse.core.runtime.jobs.Job;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.ICarbideBuildManager;
+import com.nokia.carbide.cdt.builder.extension.ICarbidePrefsModifier;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectModifier;
+import com.nokia.carbide.cdt.internal.api.builder.ui.CarbidePrefsModifier;
 import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.cpp.internal.api.utils.core.FileUtils;
@@ -70,9 +72,15 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 	private Map<IProject, ICarbideProjectInfo> projectInfoMap = new HashMap<IProject, ICarbideProjectInfo>();
 	private MultiResourceChangeListenerDispatcher resourceChangedListener = new MultiResourceChangeListenerDispatcher();
 	
+	ICarbidePrefsModifier clientPrefsModifier;
+	
 	
 	public CarbideBuildManager() {
 		SDKCorePlugin.getSDKManager().addInstalledSdkChangeListener(this);
+		
+		if (clientPrefsModifier == null){
+			clientPrefsModifier = new CarbidePrefsModifier();
+		}
 	}
 	
 	public boolean isCarbideProject(IProject project) {
@@ -389,20 +397,27 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 				CarbideBuilderPlugin.getDefault().getPreferenceStore().setValue(CONVERTED_SRC_MAPPINGS_2X_TO_3X, true);
 			}
 
-			synchronized(projectInfoMap){
-				for (IProject currPrj : projectInfoMap.keySet()){
-					try {
-					ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(currPrj);
-					if (projDes != null) {
-						CCorePlugin.getDefault().setProjectDescription(currPrj, projDes, true, null);
-					}
-					} catch (CoreException e) {
-						e.printStackTrace();
-						CarbideBuilderPlugin.log(e);
-					}
-				}
-			}
+			// TODO: This is causing deadlocks with the indexer and generally when other project info is being retrieved
+			// Need to consider what this is actually doing and why it even needs to be here.
+			
+//			synchronized(projectInfoMap){
+//				for (IProject currPrj : projectInfoMap.keySet()){
+//					try {
+//					ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(currPrj);
+//					if (projDes != null) {
+//						CCorePlugin.getDefault().setProjectDescription(currPrj, projDes, true, null);
+//					}
+//					} catch (CoreException e) {
+//						e.printStackTrace();
+//						CarbideBuilderPlugin.log(e);
+//					}
+//				}
+//			}
 		}
+	}
+	
+	public ICarbidePrefsModifier getPrefsModifier(){
+		return clientPrefsModifier;
 	}
 
 }

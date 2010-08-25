@@ -16,14 +16,21 @@
 */
 package com.nokia.carbide.cpp.epoc.engine.tests;
 
-import com.nokia.carbide.cpp.sdk.core.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import junit.framework.TestCase;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-import java.util.*;
-
-import junit.framework.TestCase;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
+import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
+import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -68,7 +75,11 @@ public class TestsPlugin extends Plugin {
 	 */
 	public static List<ISymbianBuildContext> getUsableBuildConfigs() {
 		for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()) {
-			List<ISymbianBuildContext> contexts = sdk.getUnfilteredBuildConfigurations();
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
+			ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+			List<ISymbianBuildContext> contexts = new ArrayList<ISymbianBuildContext>();
+			contexts.addAll(sbsv1BuildInfo.getAllBuildConfigurations());
+			contexts.addAll(sbsv2BuildInfo.getAllBuildConfigurations());
 			if (contexts.size() > 0) {
 				return contexts.subList(0, Math.min(contexts.size(), 8));
 			}

@@ -14,7 +14,7 @@
 * Description: 
 *
 */
-package com.nokia.carbide.cdt.internal.builder;
+package com.nokia.carbide.cpp.internal.api.sdk;
 
 /**
  * Interface to SBSv2 build configuration specific data
@@ -26,7 +26,7 @@ public interface ISBSv2BuildConfigInfo {
 	public final static String ATTRIB_CONFIG_TARGET = "CONFIG_TARGET"; //$NON-NLS-1$ 
 	public final static String ATTRIB_SBSV2_BUILD_ALIAS = "SBSV2_BUILD_ALIAS"; //$NON-NLS-1$ 
 	public final static String ATTRIB_SBSV2_CONFIG_DISPLAY_STRING = "SBSV2_CONFIG_DISPLAY_STRING"; //$NON-NLS-1$ 
-	public final static String ATTRIB_SBSV2_VARIANT = "ATTRIB_SBSV2_VARIANT";
+	public final static String ATTRIB_SBSV2_SDK_ID = "ATTRIB_SBSV2_SDK_ID";
 	
 	/** Retrieve a specfic .cproject SBSv2 data value from a given ID */
 	String getSBSv2Setting(String id);

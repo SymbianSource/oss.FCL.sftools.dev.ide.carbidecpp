@@ -40,7 +40,7 @@ public class DefaultImageMakefileViewConfiguration extends DefaultGNUMakefileVie
 	 * The build context may not be null.
 	 */
 	public DefaultImageMakefileViewConfiguration(ICarbideProjectInfo info, IViewFilter viewFilter) {
-		super(info.getProject(), info.getDefaultConfiguration(), viewFilter);
+		super(info.getProject(), info.getDefaultConfiguration().getBuildContext(), viewFilter);
 	}
 	
 	/**

@@ -48,7 +48,7 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContext;
+import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -153,7 +153,8 @@ public class BuildPKGCommandHandler extends AbstractHandler {
 				bldMakeLauncher.showCommand(true);
 				String defaultConfigName = cpi.getDefaultBuildConfigName();
 				ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
-				ISymbianBuildContext context = SymbianBuildContext.getBuildContextFromDisplayName(defaultConfigName);
+				// TODO: YUCKY!!!
+				ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(defaultConfigName);
 				
 				bldMakeLauncher.startTimingStats();
 				

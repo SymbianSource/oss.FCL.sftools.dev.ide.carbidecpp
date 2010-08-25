@@ -299,7 +299,10 @@ public class ViewDataCache<OwnedModel extends IOwnedModel, Model extends IModel,
 			if (DEBUG_VERBOSE) {
 				System.out.println("Found entry for " + key); //$NON-NLS-1$
 			}
-			cacheHits.put(key, cacheHits.get(key) + 1);
+			if ((cacheHits.get(key) != null)){
+				cacheHits.put(key, cacheHits.get(key) + 1);
+			}
+			
 			data = statefulData.second;
 		}
 		return data;

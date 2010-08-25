@@ -87,7 +87,16 @@ public class SymbianBuildContextDataCache {
 	 * @return
 	 */
 	private static String getBuildContextKey(ISymbianBuildContext context) {
-		String key = context.getPlatformString() + "/" + context.getTargetString() + "/";
+		String key;
+		if (context instanceof ISBSv2BuildContext) {
+			// use config ID instead of platform + target since
+			// platform and target can be the same for different build contexts
+			ISBSv2BuildContext v2Context = (ISBSv2BuildContext) context;
+			key = v2Context.getConfigID() + "/";
+		}
+		else {
+			key = context.getPlatformString() + "/" + context.getTargetString() + "/";
+		}
 		ISymbianSDK sdk = context.getSDK();
 		if (sdk != null)
 			key += sdk.getEPOCROOT();
@@ -102,6 +111,7 @@ public class SymbianBuildContextDataCache {
 	private ExternalFileInfoCollection compilerPrefixFileInfo = null; 
 	private List<File> systemIncludes;
 	private ISymbianSDK sdk;
+	private ISymbianBuildContext context;
 	private IPath compilerPrefixFile;
 
 	private String platformString;
@@ -109,17 +119,28 @@ public class SymbianBuildContextDataCache {
 	private String displayString;
 
 	private String contextKey;
-	
+
+	/**
+	 * One of {@link ISymbianBuilderID}
+	 */
+	private String builderId;
+
 	private boolean changed;
 
 	private File cacheFile;
 
 	private SymbianBuildContextDataCache(ISymbianBuildContext context) {
 		if (DEBUG) System.out.println("Creating cache for " + context.getDisplayString());
+		this.context = context;
 		this.platformString = context.getPlatformString();
 		this.displayString = context.getDisplayString();
 		this.sdk = context.getSDK();
 		this.contextKey = getBuildContextKey(context);
+		if (context instanceof ISBSv1BuildContext) {
+			builderId = ISymbianBuilderID.SBSV1_BUILDER;
+		} else {
+			builderId = ISymbianBuilderID.SBSV2_BUILDER;
+		}
 	}
 
 	/* (non-Javadoc)
@@ -166,15 +187,21 @@ public class SymbianBuildContextDataCache {
 
 			List<IDefine> macros = new ArrayList<IDefine>();
 			Map<String, IDefine> namedMacros = new HashMap<String, IDefine>();
-			File prefixFile = sdk.getPrefixFile();
+			
+			File prefixFile = null;
+			if (context.getPrefixFromVariantCfg() != null){
+				prefixFile = context.getPrefixFromVariantCfg().toFile();
+			}
+			
+			ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
 			
 			if (prefixFile == null){
 				// Check that the prefix file may have become available since the SDK was scanned last.
 				// This can happen, for e.g., if the user opens the IDE _then_ does a subst on a drive that already has an SDK entry.
-				IPath prefixCheck = ((SymbianSDK)sdk).getPrefixFromVariantCfg();
+				IPath prefixCheck = context.getPrefixFromVariantCfg();
 				if (prefixCheck != null){
 					prefixFile = prefixCheck.toFile();
-					sdk.setPrefixFile(prefixCheck);
+					((SymbianSDK)sdk).setPrefixFile(prefixCheck, builderId);
 				}
 			}
 			
@@ -186,23 +213,28 @@ public class SymbianBuildContextDataCache {
 				// Always add epoc32/include to the search path as this is implicit for includes in the HRH
 				systemPaths.add(new File(sdk.getEPOCROOT() + "epoc32/include"));
 				
-				// add any BSF/SBV includes so the headers are picked up from the correct location
-				IBSFPlatform bsfPlat = sdk.getBSFCatalog().findPlatform(platformString);
-				ISBVPlatform sbvPlat = sdk.getSBVCatalog().findPlatform(platformString);
-				if (bsfPlat != null) {
-					for (IPath path : bsfPlat.getSystemIncludePaths()) {
-						systemPaths.add(path.toFile());
-					}
-				} else if (sbvPlat != null) {
-					LinkedHashMap<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
-					Set<IPath> set = platPaths.keySet();
-					for (IPath path : set) {
-						String pathType = platPaths.get(path);
-						if (pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_PREPEND) || pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_SET)){
+				if (buildInfo instanceof ISBSv1BuildInfo) {
+					// add any BSF/SBV includes so the headers are picked up from the correct location
+					// SBSv1 only
+					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)buildInfo;
+					IBSFPlatform bsfPlat = sbsv1BuildInfo.getBSFCatalog().findPlatform(platformString);
+					ISBVPlatform sbvPlat = sbsv1BuildInfo.getSBVCatalog().findPlatform(platformString);
+
+					if (bsfPlat != null) {
+						for (IPath path : bsfPlat.getSystemIncludePaths()) {
 							systemPaths.add(path.toFile());
 						}
+					} else if (sbvPlat != null) {
+						LinkedHashMap<IPath, String> platPaths = sbvPlat.getBuildIncludePaths();
+						Set<IPath> set = platPaths.keySet();
+						for (IPath path : set) {
+							String pathType = platPaths.get(path);
+							if (pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_PREPEND) || pathType.equalsIgnoreCase(ISBVView.INCLUDE_FLAG_SET)){
+								systemPaths.add(path.toFile());
+							}
+						}
 					}
-				}
+				} 
 				
 				MacroScanner scanner = new MacroScanner(
 						new BasicIncludeFileLocator(null, systemPaths.toArray(new File[systemPaths.size()])),
@@ -230,18 +262,20 @@ public class SymbianBuildContextDataCache {
 					hrhFilesParsed.add(inc);
 				}
 				
-				List<String> variantCFGMacros = new ArrayList<String>();
-				variantCFGMacros = sdk.getVariantCFGMacros();
-				for (String cfgMacros : variantCFGMacros){
-					// we don't want duplicate macros, so check to see if it's already there.
-					IDefine existingMacro = namedMacros.get(cfgMacros);
-					if (existingMacro != null) {
-						macros.remove(existingMacro);
+				if (buildInfo instanceof ISBSv1BuildInfo) {
+					// SBSv2 does not parse the variant.cfg file to collect macros.
+					List<String> variantCFGMacros = ((ISBSv1BuildContext)context).getVariantCFGMacros();
+					for (String cfgMacros : variantCFGMacros){
+						// we don't want duplicate macros, so check to see if it's already there.
+						IDefine existingMacro = namedMacros.get(cfgMacros);
+						if (existingMacro != null) {
+							macros.remove(existingMacro);
+						}
+						
+						IDefine macro = DefineFactory.createSimpleFreeformDefine(cfgMacros);
+						macros.add(macro);
+						namedMacros.put(macro.getName(), macro);
 					}
-					
-					IDefine macro = DefineFactory.createSimpleFreeformDefine(cfgMacros);
-					macros.add(macro);
-					namedMacros.put(macro.getName(), macro);
 				}
 			} 
 			
@@ -270,7 +304,8 @@ public class SymbianBuildContextDataCache {
 		// we assume that the prefix file will not change often,
 		// (if at all) for a build context, so dump the cache if the prefix file changes.
 		
-		if (compilerPrefixFile != null && !compilerPrefixFile.equals(prefixFile)) {
+		if (compilerPrefixFile != null && prefixFile != null && 
+			!compilerPrefixFile.equals(prefixFile)) {
 			compilerPrefixFileInfo = null;
 		}
 		
@@ -324,6 +359,22 @@ public class SymbianBuildContextDataCache {
 						compilerPrefixFileInfo.setFiles(files);
 				}
 				
+				if (context instanceof ISBSv2BuildContext) {
+					// add macros from raptor query
+					ISBSv2BuildContext v2Context = (ISBSv2BuildContext) context;
+					ISBSv2ConfigQueryData configData = v2Context.getConfigQueryData();
+					if (configData != null) {
+						Map<String, String> buildMacros = configData.getBuildMacros();
+						if (buildMacros != null) {
+							for (Iterator<String> itr = buildMacros.keySet().iterator(); itr.hasNext(); ) { 
+								String name = itr.next();
+								String value = buildMacros.get(name);
+								macros.add(DefineFactory.createDefine(name, value));
+							}
+						}
+					}
+				}
+
 				compilerPrefixMacros = macros;
 				
 				saveCacheFile();
@@ -354,8 +405,15 @@ public class SymbianBuildContextDataCache {
 		
 		if (DEBUG) System.out.println("Scanning include paths for " + displayString);
 		
-		IBSFPlatform bsfplatform = sdk.getBSFCatalog().findPlatform(platformString);
-		ISBVPlatform sbvPlatform = sdk.getSBVCatalog().findPlatform(platformString);
+		IBSFPlatform bsfplatform = null;
+		ISBVPlatform sbvPlatform = null;
+		ISDKBuildInfo buildInfo = sdk.getBuildInfo(builderId);
+		if (buildInfo instanceof ISBSv1BuildInfo) {
+			// SBSv1 only
+			ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)buildInfo;
+			bsfplatform = sbsv1BuildInfo.getBSFCatalog().findPlatform(platformString);
+			sbvPlatform = sbsv1BuildInfo.getSBVCatalog().findPlatform(platformString);
+		} 
 
 		// look in the epoc32 directory of the SDK
 		IPath includePath = sdk.getIncludePath();
@@ -386,7 +444,7 @@ public class SymbianBuildContextDataCache {
 			}
 			else {
 				// legacy behavior 
-				if (platformString.equals(ISymbianBuildContext.EMULATOR_PLATFORM)) {
+				if (platformString.equals(ISBSv1BuildContext.EMULATOR_PLATFORM)) {
 					dir = new File(includeDir, "wins"); //$NON-NLS-1$
 					if (dir.exists() && dir.isDirectory()) {
 						systemIncludes.add(dir);
@@ -419,7 +477,10 @@ public class SymbianBuildContextDataCache {
 		}
 		
 		// also search files in same folder as variant.hrh
-		File prefix = sdk.getPrefixFile();
+		File prefix = null;
+		if (context.getPrefixFromVariantCfg() != null){
+			prefix = context.getPrefixFromVariantCfg().toFile();
+		}
 		if (sbvPlatform != null){
 			// might be an alternate HRH file to use
 			IPath varVarHRH = sbvPlatform.getBuildVariantHRHFile();
@@ -427,7 +488,7 @@ public class SymbianBuildContextDataCache {
 				prefix = varVarHRH.toFile();
 			} 
 		}
-		if (prefix != null) {
+		if (prefix != null && prefix.getParentFile() != null) {
 			systemIncludes.add(prefix.getParentFile());
 		}
 		
