@@ -68,18 +68,15 @@ public class ExportWizard extends Wizard implements IExportWizard {
 	}
 
 	private Collection<String> getInitialFeatureIds() {
-		// make sure it exists if not written already
-		File file = P2Utils.getInitialFeaturesFile();
-		if (!file.exists()) {
-			P2Utils.writeFeaturesToFile(file);
-		}
-		
 		Collection<FeatureInfo> installedFeatures = null;
-		try {
-			ImportExportData data = Streamer.readFromXML(new FileInputStream(file));
-			installedFeatures = data.getFeatureInfos();
-		} catch (Exception e) {
-			Activator.logError(Messages.ExportWizard_ReadInstalledFeaturesError + file, e);
+		File file = P2Utils.getInitialFeaturesFile();
+		if (file.exists()) {
+			try {
+				ImportExportData data = Streamer.readFromXML(new FileInputStream(file));
+				installedFeatures = data.getFeatureInfos();
+			} catch (Exception e) {
+				Activator.logError(Messages.ExportWizard_ReadInstalledFeaturesError + file, e);
+			}
 		}
 		
 		Collection<String> featureIds = new ArrayList<String>();
