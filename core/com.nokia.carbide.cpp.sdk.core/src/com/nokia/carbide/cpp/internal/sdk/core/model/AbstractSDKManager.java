@@ -499,7 +499,8 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 	
 	public void fireInstalledSdkChanged(SDKChangeEventType eventType) {
-		for (ICarbideInstalledSDKChangeListener l : listeners) {
+		ListenerList<ICarbideInstalledSDKChangeListener> lList = listeners;
+		for (ICarbideInstalledSDKChangeListener l : lList) {
 			l.installedSdkChanged(eventType);
 		}
 	}

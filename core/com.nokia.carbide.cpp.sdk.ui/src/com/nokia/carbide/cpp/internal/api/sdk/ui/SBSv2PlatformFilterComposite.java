@@ -48,6 +48,7 @@ import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.internal.sdk.ui.AddSBSv2ProductVariant;
 import com.nokia.carbide.cpp.internal.sdk.ui.Messages;
+import com.nokia.carbide.cpp.sdk.core.ICarbideInstalledSDKChangeListener;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
@@ -67,6 +68,13 @@ public class SBSv2PlatformFilterComposite extends Composite {
 	private Button refreshButton;
 	private Button addVariantButton;
 	private Button removeVariantButton;
+
+	private ICarbideInstalledSDKChangeListener sdkListener = new ICarbideInstalledSDKChangeListener() {
+		public void installedSdkChanged(SDKChangeEventType eventType) {
+			// refresh locally cached SBSv2 data whenever there is any change to SDK list
+			refreshLocalSBSCacheData();			
+		}
+	};
 
 	SBSv2PlatformFilterComposite(Composite parent) {
 		super(parent, SWT.NONE);
@@ -123,8 +131,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 				refreshButton.setEnabled(false);
 				refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonScanningText")); //$NON-NLS-1$
 				SBSv2QueryUtils.removeAllCachedQueries();
-				clearLocalSBSCacheData();
-				initTable();
+				refreshLocalSBSCacheData();
 				
 				for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
 					((SBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER)).clearDataFromBuildCache();
@@ -133,12 +140,6 @@ public class SBSv2PlatformFilterComposite extends Composite {
 				refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonText")); //$NON-NLS-1$
 				refreshButton.setEnabled(true);
 			}
-			
-			private void clearLocalSBSCacheData(){
-				aliasMap.clear();
-				productVariantList.clear();
-			}
-			
 			
 		});
 		
@@ -216,6 +217,13 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		});
 		
 		initTable();
+		SDKCorePlugin.getSDKManager().addInstalledSdkChangeListener(sdkListener);
+	}
+
+	@Override
+	public void dispose() {
+		SDKCorePlugin.getSDKManager().removeInstalledSdkChangeListener(sdkListener);
+		super.dispose();
 	}
 
 	public void performOk() {
@@ -291,7 +299,13 @@ public class SBSv2PlatformFilterComposite extends Composite {
 			}
 		}
 	}
-	
+
+	private void refreshLocalSBSCacheData() {
+		aliasMap.clear();
+		productVariantList.clear();
+		initTable();
+	}
+
 	public void setDefaults(){
 		initTable();
 		for (TableItem item : buildAliasTableViewer.getTable().getItems()) {
