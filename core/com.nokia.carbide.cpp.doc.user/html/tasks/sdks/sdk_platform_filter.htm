@@ -4,17 +4,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
-<title>SDK Platform Filter</title>
+<title>Build Configuration Filtering</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
 <script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
 </head>
 <body >
-<h2> Platform Filtering Preferences </h2>
-<p> Use the <img src="../../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage)")'>
-Platform Filtering Preferences</a> tabs in the <b>Preferences</b> window to select which platforms are visible when creating new projects or build configurations. </p>
+<h2> Build Configuration Filtering </h2>
+<p> Use the <img src="../../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.sdk.ui.sdk_platform_filter_page)")'>
+Build Configuration Filtering</a> preference panel in the <b>Preferences</b> window to select which platforms are visible when creating new projects or build configurations. </p>
 <h3>SBSv2 tab</h3>
 <p>Use the <strong>SBSv2</strong> tab to select  configurations for that build system. SBSv2 is the prefered build system for the most current SDKs.</p>
-<p align="center"><img src="images/wnd_sdk_platform_filter_sbsv2.png" alt="SBSv2 tab" width="719" height="554"></p>
+<p align="center"><img src="images/wnd_sdk_platform_filter_sbsv2.png" alt="SBSv2 tab" width="719" height="646"></p>
 <p align="center" class="figure">Figure 1. Platform Filtering Preferences page (SBSv2 tab)</p>
 <h5>Table 1 <span class="figure">Platform Filtering Preferences</span> &mdash; SBSv2 items</h5>
 <table width="100%"  border="0" cellpadding="2" cellspacing="0">
@@ -23,21 +23,25 @@ Platform Filtering Preferences</a> tabs in the <b>Preferences</b> window to sele
         <th width="57%" scope="col">Explanation</th>
     </tr>
     <tr>
-        <td><b>SBSv2 Configuration Filter</b></td>
+        <td><b>Default Configurations</b></td>
         <td><p>Select platform build targets to be displayed for OS 9.5 and later when creating new projects and build configurations. BSF&rsquo;s  are gone in SBSv2.&nbsp; All build  configurations (platform/target), including the built-in platforms (WISNCW,  ARMV5), are declared in xml files in the <span class="code">\sbs\lib\config</span> directory.</p>
-                <p>Build targets include:</p>
-            <ul>
-                    <li>armv5_udeb</li>
-                <li>armv5_urel</li>
-                <li>armv6_udeb</li>
-                <li>armv6_urel</li>
-                <li>armv7_udeb</li>
-                <li>armv7_urel</li>
-                <li>armv9e_udeb</li>
-                <li>armv9e_urel</li>
-                <li>winscw_udeb</li>
-                <li>winscw_urel</li>
-            </ul></td>
+            </td>
+    </tr>
+    <tr>
+        <td><strong>Product Variant Configurations</strong></td>
+        <td>Lists all the known variants created for the selected build configuration.</td>
+    </tr>
+    <tr>
+        <td><strong>Rescan Default Configurations</strong></td>
+        <td>Click to rescan for sbs and build configurations in the installed SDKs.</td>
+    </tr>
+    <tr>
+        <td><strong>Add Variant</strong></td>
+        <td>Adds a variant build to the selected build configuration. SDK must support variant builds for this to work.</td>
+    </tr>
+    <tr>
+        <td><strong>Remove Variant</strong></td>
+        <td>Removes the selected variant from the list of available variants.</td>
     </tr>
     <tr>
         <td><strong>Refresh</strong></td>
@@ -79,7 +83,7 @@ Platform Filtering Preferences</a> tabs in the <b>Preferences</b> window to sele
 <h4>Related references </h4>
 <ul>
   <li><a href="../WorkingwithSDKs.html">Working with SDKs</a></li>
-  <li><a href="../../reference/pref_carb_sdk_preference.html">SDK Preferences Panel </a> </li>
+  <li><a href="../../reference/pref_carb_sdk_preference.html">Symbian SDKs panel </a> </li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

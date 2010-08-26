@@ -3,7 +3,7 @@
    <intro>
  Follow these steps to create and debug a Symbian project and using an emulator. using the S60 EPOC Emulator.
    </intro>
-   <item title="Verify a Symbian SDK is available" dialog="true" skip="true" href="/com.nokia.carbide.cpp.doc.user/html/reference/SDKPreferences.html">
+   <item title="Verify a Symbian SDK is available" dialog="true" skip="true" href="/com.nokia.carbide.cpp.doc.user/html/reference/pref_carb_symbian_sdk.htm">
       <description>
          Use the SDK Preferences panel to verify a supported Symbian SDK is installed. If not, you&apos;ll need to download a supported SDK and install it before continuing.
       </description>

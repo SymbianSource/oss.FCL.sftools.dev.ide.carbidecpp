@@ -115,7 +115,6 @@
       </topic>
     </topic>
     <topic label="Working with SDKs"					href="html/tasks/WorkingwithSDKs.html" >
-      <topic label="SDK Preferences (deprecated)"					href="html/reference/SDKPreferences.html" />
       <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
       <topic label="Adding an SDK"					href="html/tasks/sdks/sdk_add.htm" >
         <topic label="Adding SDKs"					href="html/tasks/sdks/sdk_add.htm" />

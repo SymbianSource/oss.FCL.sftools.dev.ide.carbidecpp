@@ -47,6 +47,13 @@
 		 <cheatsheet
            composite="false"
 		   category="com.nokia.carbide.how_to.cheatsheets"
+           contentFile="html/cheatsheets/how_to_find_n_add_extensions.xml"
+           id="com.nokia.carbide.cpp.doc.user.add_extensions"
+           name="Find and Add Extensions"/>
+
+		 <cheatsheet
+           composite="false"
+		   category="com.nokia.carbide.how_to.cheatsheets"
            contentFile="html/cheatsheets/how_to_customize_code_styles.xml"
            id="com.nokia.carbide.cpp.doc.user.customize_code_styles"
            name="Customize Code Styles"/>
