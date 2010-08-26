@@ -87,6 +87,7 @@ public interface ISymbianSDK {
 	 * Feature IDs are defined in ISymbianSDKFeatures.
 	 * @return set of features
 	 * @since 3.0
+	 * @see {@link ISymbianSDKFeatures}
 	 */
 	@SuppressWarnings("rawtypes")
 	Set getSupportedFeatures();
