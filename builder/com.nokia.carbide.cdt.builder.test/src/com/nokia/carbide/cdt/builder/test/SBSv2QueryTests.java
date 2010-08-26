@@ -24,7 +24,6 @@ import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
@@ -33,7 +32,7 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class SBSv2QueryTests extends BaseTest {
 	
-	private boolean printTimingStats = true;
+	//private boolean printTimingStats = true;
 	
 	private long startTime;
 	
