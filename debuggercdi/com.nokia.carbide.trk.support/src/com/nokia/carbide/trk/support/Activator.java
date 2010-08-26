@@ -22,8 +22,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerConsts;
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
 import com.nokia.carbide.trk.support.status.ConnectionStatusReconciler;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
