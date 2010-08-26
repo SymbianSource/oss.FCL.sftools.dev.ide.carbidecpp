@@ -36,7 +36,8 @@ public class SBSv2QueryTests extends BaseTest {
 	
 	private long startTime;
 	
-	private final String SDK_ID1 = "K_92_WK12"; // SDK with additional aliases and products
+	//private final String SDK_ID1 = "Nokia_Symbian3_SDK_v0.9"; // SDK with additional aliases and products
+	private final String SDK_ID1 = "K_92_WK12";
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -70,7 +71,8 @@ public class SBSv2QueryTests extends BaseTest {
 		assertNotNull(sbsv2BuildInfo);
 		
 		List<ISymbianBuildContext> buildContexts = sbsv2BuildInfo.getFilteredBuildConfigurations();
-		assertEquals(6, buildContexts.size());
+		// WINSCW UREL is filtered out from default b/c it does not exist for current test SDK
+		assertEquals(5, buildContexts.size());
 		
 		for (ISymbianBuildContext context : buildContexts){
 			assertTrue(context instanceof ISBSv2BuildContext);
