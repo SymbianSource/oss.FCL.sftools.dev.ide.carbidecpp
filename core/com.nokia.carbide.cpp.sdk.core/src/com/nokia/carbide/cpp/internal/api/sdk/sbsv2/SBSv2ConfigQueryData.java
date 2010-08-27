@@ -1,5 +1,6 @@
 package com.nokia.carbide.cpp.internal.api.sdk.sbsv2;
 
+import java.io.File;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -180,6 +181,11 @@ public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
 										Node valueNode = attribs.getNamedItem("value");
 										if (valueNode != null) {
 											value = valueNode.getNodeValue();
+										}
+										if (name.equals("__PRODUCT_INCLUDE__")){
+											File f = new File(value.replaceAll("\"", ""));
+											if (!f.exists())
+												continue; // Don't add a product include for non-existent HRH
 										}
 										buildMacros.put(name, value);
 									} else if (buildChild.getNodeName().equals("preinclude")){
