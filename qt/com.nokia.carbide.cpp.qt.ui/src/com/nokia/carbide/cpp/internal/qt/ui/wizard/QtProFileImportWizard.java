@@ -38,6 +38,7 @@ import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKUtils;
@@ -57,6 +58,7 @@ public class QtProFileImportWizard extends Wizard implements IImportWizard {
 	private QtProFileSelectionPage proFileSelectionPage;
 	private QtImporterBuildTargetsPage buildTargetsPage;
 
+	private static final String CARBIDE_QTPRO_IMFPORTER_FEATURE = "CARBIDE_QTPRO_IMPORTER"; //$NON-NLS-1$
 
 	public QtProFileImportWizard() {
 		super();
@@ -156,6 +158,8 @@ public class QtProFileImportWizard extends Wizard implements IImportWizard {
 		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
 		job.schedule();
 
+		FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(CARBIDE_QTPRO_IMFPORTER_FEATURE);
+		
 		return true;
 	}
 	 

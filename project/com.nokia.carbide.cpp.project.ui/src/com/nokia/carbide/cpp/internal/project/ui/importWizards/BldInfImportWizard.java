@@ -39,6 +39,7 @@ import org.eclipse.ui.IWorkbench;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
@@ -56,6 +57,7 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 	private MMPSelectionPage mmpSelectionPage;
 	private ProjectPropertiesPage projectPropertiesPage;
 
+	private static final String CARBIDE_BLDINF_IMFPORTER_FEATURE = "CARBIDE_BLDINF_IMPORTER"; //$NON-NLS-1$
 
 	public BldInfImportWizard() {
 		super();
@@ -161,6 +163,8 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
 		job.schedule();
 
+		FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(CARBIDE_BLDINF_IMFPORTER_FEATURE);
+		
 		return true;
 	}
 	 
