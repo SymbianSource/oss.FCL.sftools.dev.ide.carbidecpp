@@ -36,7 +36,7 @@ public class SBSv2QueryTests extends BaseTest {
 	
 	private long startTime;
 	
-	//private final String SDK_ID1 = "Nokia_Symbian3_SDK_v0.9"; // SDK with additional aliases and products
+	//private final String SDK_ID1 = "s3"; // SDK with additional aliases and products
 	private final String SDK_ID1 = "K_92_WK12";
 	
 	@Override
@@ -85,7 +85,13 @@ public class SBSv2QueryTests extends BaseTest {
 				System.out.println("Config " + sbsv2Context.getSBSv2Alias() + " had error, cannot fully test: " + sbsv2Context.getConfigQueryData().getConfigurationErrorMessage());
 			}
 			
-			assertTrue(sbsv2Context.getConfigQueryData().getTargettypes().size() > 0);
+			if (sbsv2Context.getConfigQueryData().getConfigurationErrorMessage() == null || 
+				sbsv2Context.getConfigQueryData().getConfigurationErrorMessage().length() == 0 ){
+				// If there is an error in a configuration we know there won't be any target types
+				assertTrue(sbsv2Context.getConfigQueryData().getTargettypes().size() > 0);
+			} else {
+				assertFalse(sbsv2Context.getConfigQueryData().getTargettypes() == null);
+			}
 		}
 	}
 		
