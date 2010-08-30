@@ -394,7 +394,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	 */
 	public IPath getPrefixFromVariantCfg(){
 		ISBSv2BuildInfo sbsv2BldInfo = ((ISBSv2BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER));
-		if (sbsv2BldInfo.getPrefixFromVariantCfg().toOSString().length() == 0){
+		if (sbsv2BldInfo.getPrefixFromVariantCfg()== null || sbsv2BldInfo.getPrefixFromVariantCfg().toOSString().length() == 0){
 			return null;
 		}
 		return sbsv2BldInfo.getPrefixFromVariantCfg();
