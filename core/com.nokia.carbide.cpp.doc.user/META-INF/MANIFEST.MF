@@ -7,3 +7,4 @@ Bundle-Vendor: Nokia
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.help,
  org.eclipse.ui.cheatsheets
+Bundle-ActivationPolicy: lazy

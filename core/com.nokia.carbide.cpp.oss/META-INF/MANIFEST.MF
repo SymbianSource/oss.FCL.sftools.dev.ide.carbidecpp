@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: OSS Plug-in
-Bundle-SymbolicName: com.nokia.carbide.cpp.oss
+Bundle-Name: OSS
+Bundle-SymbolicName: com.nokia.carbide.cpp.oss;singleton:=true
 Bundle-Version: 1.4.0.qualifier
 Bundle-Vendor: Nokia
+Bundle-ActivationPolicy: lazy
