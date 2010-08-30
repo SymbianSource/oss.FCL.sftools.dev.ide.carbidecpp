@@ -135,13 +135,15 @@ public class SBSv2PlatformFilterComposite extends Composite {
 			public void widgetSelected(SelectionEvent e) {
 				refreshButton.setEnabled(false);
 				refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonScanningText")); //$NON-NLS-1$
+				
+//				for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
+//					((SBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER)).clearDataFromBuildCache();
+//				}
 				SBSv2QueryUtils.removeAllCachedQueries();
+				
 				refreshLocalSBSCacheData();
-				
-				for (ISymbianSDK sdk : SDKCorePlugin.getSDKManager().getSDKList()){
-					((SBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER)).clearDataFromBuildCache();
-				}
-				
+
+				SBSv2QueryUtils.flushAllSBSv2Caches();
 				refreshButton.setText(Messages.getString("SBSv2PlatformFilterComposite.RefreshButtonText")); //$NON-NLS-1$
 				refreshButton.setEnabled(true);
 			}
@@ -320,6 +322,7 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		if (customVariantListViewer != null) {
 			customVariantListViewer.setInput(savedVariants);
 		}
+		
 	}
 
 	private void refreshLocalSBSCacheData() {

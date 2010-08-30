@@ -482,5 +482,19 @@ public class SBSv2QueryUtils {
 	public static void removeCachedConfigurations() {
 		SDKCacheUtils.getCache().removeCache(CONFIG_CACHE_KEY, true);
 	}
+	
+	/**
+	 * Write all SBSv2 caches.
+	 */
+	public static void flushAllSBSv2Caches(){
+		try {
+			SDKCacheUtils.getCache().flushCache(ALIAS_CACHE_KEY);
+			SDKCacheUtils.getCache().flushCache(PRODUCT_CACHE_KEY);
+			SDKCacheUtils.getCache().flushCache(CONFIG_CACHE_KEY);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 
 }
