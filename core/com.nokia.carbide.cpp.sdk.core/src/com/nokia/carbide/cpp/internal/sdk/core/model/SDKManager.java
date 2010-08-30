@@ -54,7 +54,10 @@ public class SDKManager extends AbstractSDKManager {
 
 	private static final String EMPTY_DEVICES_XML_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><devices version=\"1.0\"></devices>";
 
+	/** Older kits put qmake under the tools/qt folder. */
 	private static final String QMAKE_FILE = "epoc32/tools/qt/qmake" + HostOS.EXE_EXT; //$NON-NLS-1$
+	/** Newer kits put qmake under the tools folder */
+	private static final String QMAKE_FILE_LOCATION2 = "epoc32/tools/qmake" + HostOS.EXE_EXT; //$NON-NLS-1$
 	private static final String MIFCONV_FILE = "epoc32/tools/mifconv" + HostOS.EXE_EXT; //$NON-NLS-1$
 	private static final String ABLD_FILE = "epoc32/tools/abld.pl"; //$NON-NLS-1$
 	private static final long VALID_ABLD_SIZE = 1024;
@@ -440,10 +443,17 @@ public class SDKManager extends AbstractSDKManager {
 	}
 
 	private boolean hasQmake(ISymbianSDK sdk) {
-		File qmake = new File(sdk.getEPOCROOT(), QMAKE_FILE);
+		File qmake = new File(sdk.getEPOCROOT(), QMAKE_FILE_LOCATION2);
 		if (qmake.exists()) {
 			return true;
 		}
+		
+		// try alternate (old) location
+		qmake = new File(sdk.getEPOCROOT(), QMAKE_FILE);
+		if (qmake.exists()) {
+			return true;
+		}
+		
 		return false;
 	}
 

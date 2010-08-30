@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.emf.ecore.xmi,
  org.eclipse.ui.ide,
  com.nokia.cpp.utils.core,
- com.nokia.cpp.utils.ui
+ com.nokia.cpp.utils.ui,
+ com.nokia.carbide.cpp.featureTracker;bundle-version="3.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.internal.api.template.engine,
  com.nokia.carbide.internal.api.templatewizard.ui,

@@ -188,7 +188,17 @@ public class ProjectPropertiesTest extends TestCase {
 		assertEquals(3, cpi.getBuildConfigurations().size());
 		
 		ICarbideBuildConfiguration defConfig = cpi.getDefaultConfiguration();
-		assertEquals(stockBuildConfigs.get(1).getDisplayString(), defConfig.getDisplayString());
+		
+		boolean foundConfigFromStock = false;
+		for (ISymbianBuildContext context : stockBuildConfigs){
+			if (defConfig.getDisplayString().equals(context.getDisplayString())){
+				foundConfigFromStock = true;
+				break;
+			}
+		}
+		
+		assertTrue(foundConfigFromStock);
+		
 	}
 	
 	// Test the reading and writing of the default configuration
@@ -197,10 +207,15 @@ public class ProjectPropertiesTest extends TestCase {
 		assertEquals(3, cpm.getBuildConfigurations().size());
 		
 		ICarbideBuildConfiguration defConfig = cpm.getDefaultConfiguration();
-		assertEquals(stockBuildConfigs.get(1).getDisplayString(), defConfig.getDisplayString());
 		
 		// make another configuration the default one...
-		ICarbideBuildConfiguration newDefaultConfig = cpm.getNamedConfiguration(stockBuildConfigs.get(2).getDisplayString());
+		ICarbideBuildConfiguration newDefaultConfig = null;
+		for (ISymbianBuildContext context : stockBuildConfigs){
+			if (context.getTargetString().equalsIgnoreCase("udeb") && context.getPlatformString().equalsIgnoreCase("armv5")){
+				newDefaultConfig = cpm.getNamedConfiguration(context.getDisplayString());
+				break;
+			}
+		}
 		assertNotNull(newDefaultConfig);
 		cpm.setDefaultConfiguration(newDefaultConfig);
 		cpm.saveChanges();
@@ -210,7 +225,17 @@ public class ProjectPropertiesTest extends TestCase {
 
 		// Check to see that we got the new default config
 		defConfig = cpi.getDefaultConfiguration();
-		assertEquals(stockBuildConfigs.get(2).getDisplayString(), defConfig.getDisplayString());
+
+		boolean foundConfigFromStock = false;
+		for (ISymbianBuildContext context : stockBuildConfigs){
+			if (defConfig.getDisplayString().equals(context.getDisplayString())){
+				foundConfigFromStock = true;
+				break;
+			}
+		}
+		
+		assertTrue(foundConfigFromStock);
+		
 	}
 	
 	public void testWritePKGData(){

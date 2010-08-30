@@ -38,6 +38,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.TableItem;
 
@@ -71,8 +72,12 @@ public class SBSv2PlatformFilterComposite extends Composite {
 
 	private ICarbideInstalledSDKChangeListener sdkListener = new ICarbideInstalledSDKChangeListener() {
 		public void installedSdkChanged(SDKChangeEventType eventType) {
-			// refresh locally cached SBSv2 data whenever there is any change to SDK list
-			refreshLocalSBSCacheData();			
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					// refresh locally cached SBSv2 data whenever there is any change to SDK list
+					refreshLocalSBSCacheData();			
+				}
+			});
 		}
 	};
 
@@ -217,12 +222,11 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		});
 		
 		initTable();
-		SDKCorePlugin.getSDKManager().addInstalledSdkChangeListener(sdkListener);
+		addListeners();
 	}
 
 	@Override
 	public void dispose() {
-		SDKCorePlugin.getSDKManager().removeInstalledSdkChangeListener(sdkListener);
 		super.dispose();
 	}
 
@@ -240,6 +244,19 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		}
 		
 		SBSv2Utils.setSBSv2FilteredConfigs(checkedConfigs.toArray(new String[checkedConfigs.size()]));
+		removeListeners();
+	}
+	
+	public void performCancel() {
+		removeListeners();
+	}
+	
+	private void addListeners() {
+		SDKCorePlugin.getSDKManager().addInstalledSdkChangeListener(sdkListener);
+	}
+	
+	private void removeListeners() {
+		SDKCorePlugin.getSDKManager().removeInstalledSdkChangeListener(sdkListener);
 	}
 	
 	private void initTable() {
@@ -284,19 +301,24 @@ public class SBSv2PlatformFilterComposite extends Composite {
 		}
 		
 		Collections.sort(sbsAliases);
-		buildAliasTableViewer.setInput(sbsAliases);
-		customVariantListViewer.setInput(savedVariants);
 		
-		// uncheck all configs to init
-		buildAliasTableViewer.setAllChecked(false);
-		
-		for (String config : checkedConfigsFromStore) {
-			for (TableItem item : buildAliasTableViewer.getTable().getItems()) {
-				if (item.getText().equals(config) && !item.getText().contains(".")) {
-					buildAliasTableViewer.setChecked(item.getData(), true);
-					break;
+		if (buildAliasTableViewer != null) {
+			buildAliasTableViewer.setInput(sbsAliases);
+			// uncheck all configs to init
+			buildAliasTableViewer.setAllChecked(false);
+			
+			for (String config : checkedConfigsFromStore) {
+				for (TableItem item : buildAliasTableViewer.getTable().getItems()) {
+					if (item.getText().equals(config) && !item.getText().contains(".")) {
+						buildAliasTableViewer.setChecked(item.getData(), true);
+						break;
+					}
 				}
 			}
+		}
+		
+		if (customVariantListViewer != null) {
+			customVariantListViewer.setInput(savedVariants);
 		}
 	}
 

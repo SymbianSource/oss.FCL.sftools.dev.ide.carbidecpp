@@ -18,13 +18,15 @@
 
 package com.nokia.carbide.internal.api.templatewizard.ui;
 
-import com.nokia.carbide.internal.api.template.engine.TemplateEngine;
-import com.nokia.carbide.template.engine.*;
-import com.nokia.carbide.templatewizard.TemplateWizardPlugin;
-import com.nokia.cpp.internal.api.utils.core.Check;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.WorkspaceJob;
-import org.eclipse.core.runtime.*;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.jface.viewers.IFilter;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -33,7 +35,15 @@ import org.eclipse.jface.wizard.WizardSelectionPage;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.wizards.newresource.BasicNewResourceWizard;
 
-import java.util.*;
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
+import com.nokia.carbide.internal.api.template.engine.TemplateEngine;
+import com.nokia.carbide.template.engine.DialogSettingsPersistedStorage;
+import com.nokia.carbide.template.engine.ILoadedTemplate;
+import com.nokia.carbide.template.engine.ILoadedTemplateUI;
+import com.nokia.carbide.template.engine.IPersistedSettingStorage;
+import com.nokia.carbide.template.engine.ITemplate;
+import com.nokia.carbide.templatewizard.TemplateWizardPlugin;
+import com.nokia.cpp.internal.api.utils.core.Check;
 
 public abstract class TemplateWizard extends BasicNewResourceWizard {
 
@@ -43,6 +53,8 @@ public abstract class TemplateWizard extends BasicNewResourceWizard {
 	private boolean hideFilterCheckbox;
 	private ChooseTemplatePage chooseTemplatePage;
 
+	private static final String CARBIDE_INF_PROJECT_WIZ_FEATURE = "CARBIDE_INF_PROJECT_WIZARD"; //$NON-NLS-1$
+	
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection currentSelection) {
 		super.init(workbench, currentSelection);
@@ -99,6 +111,8 @@ public abstract class TemplateWizard extends BasicNewResourceWizard {
 		job.setUser(true);
 		job.setRule(getJobSchedulingRule());
 		job.schedule();
+		
+		FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(CARBIDE_INF_PROJECT_WIZ_FEATURE);
 		
 	    return true;
 	}

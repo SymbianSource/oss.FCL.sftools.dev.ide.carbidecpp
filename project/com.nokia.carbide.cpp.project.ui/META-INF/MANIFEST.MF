@@ -30,7 +30,8 @@ Require-Bundle: org.eclipse.ui,
  com.nokia.carbide.cpp.ui,
  org.eclipse.ui.navigator,
  org.eclipse.ui.navigator.resources,
- org.eclipse.core.filesystem;bundle-version="1.2.0"
+ org.eclipse.core.filesystem;bundle-version="1.2.0",
+ com.nokia.carbide.cpp.featureTracker;bundle-version="3.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.project.ui,
  com.nokia.carbide.cpp.internal.project.ui.actions,
