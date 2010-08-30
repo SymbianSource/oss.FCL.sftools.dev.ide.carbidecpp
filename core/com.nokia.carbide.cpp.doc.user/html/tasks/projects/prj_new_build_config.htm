@@ -6,25 +6,60 @@
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>Adding/Removing Build Configurations</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {
+	color: #EE0000;
+	font-weight: bold;
+}
+-->
+</style>
 </head>
 <body >
 <h2>Adding/Removing Build Configurations</h2>
-<p>Use the <b>Properties for &lt;<em>project_name</em>&gt;</b> window to manage the active or build configurations associated with a project. In the <b>Active Configuration</b> group you can select which build configuration is current active as well as choose which build configurations appear in the Build Configurations sub-menu as choices. </p>
+<p>Use the <b>Add/Remove Carbide Build Configurations </b>dialog  to manage the build configurations associated with a project. The choices presented in this dialog are the result of installed <a href="../../reference/pref_carb_symbian_sdk.htm">Symbian SDKs</a> and the variant builds associated with them as chosen in the <a href="../sdks/sdk_platform_filter.htm">Configuration Filtering Preferences</a> panel.</p>
 <div class="step">
   <h4>Adding/Removing a Build Configuration </h4>
   <ol>
-    <li>Open Carbide Build Configuration panel in the project's Properties window
-      <p>Select the <b>Project &gt; Properties</b> menu item or right-click the project name in the <a href="../../reference/view_proj_explorer.htm">Project Explorer</a> view, then select <b>Properties</b>. The project <b>Properties for <em>&lt;project_name&gt;</em></b> window appears. Then select Carbide Build Configurations. </p>    
-      <p align="center"><img src="images/panel_active_config.png" width="801" height="350" alt=""/></p>
-      <p class="figure">Figure 1 - Active Configuration group in project Properties window </p></li>
-    <li>Click Manage... in the Active Configuration group (Figure 1)
-      <p>The <b>Add/Remove Carbide Build Configuration </b> window appears (Figure 2). Use the <b>Add/Remove Carbide Build Configuration</b> window to manage the build configurations that appear on the Build Configurations sub-menu for the current project. You can also  click the <b>Manage configurations for the current project</b> icon (<img src="images/icon_manage_project_configs.png" width="16" height="16" align="absmiddle">) on the toolbar to open this dialog. </p>
+    <li>With a project selected in the Project Explorer view choose one of the following to open the <strong>Add/Remove Carbide Build Configuration</strong> window:<br>
+        <br>
     </li>
-    </ol>
+      <table width="800" border="0" cellpadding="2" cellspacing="0">
+          <tr valign="top">
+              <th width="221" class="Cell"><div align="left">From the ...</div></th>
+              <th width="584" class="Cell"><div align="left">Do the following...</div></th>
+          </tr>
+          <tr valign="top">
+              <td class="Cell"><b>Menu bar</b></td>
+              <td class="Cell"> Click the <strong>Project &gt; Manage Configuration &gt; Manage...</strong> menu option.</td>
+          </tr>
+          <tr valign="top">
+              <td class="Cell"><b>Toolbar</b></td>
+              <td class="Cell">Click the <b>Manage configurations for the current project</b> icon (<img src="images/icon_manage_project_configs.png" alt="" width="16" height="16" align="absmiddle">) on the toolbar</td>
+          </tr>
+          <tr valign="top">
+              <td class="Cell"><b>Project</b></td>
+              <td class="Cell"><ol>
+                  <li>Right-click the project              
+                  <li>Select Properties</li>
+                  <li>Click Carbide.c++ &gt; Build Configurations in the properties list.</li>
+                  <li>Click Manage... in the Active Configuration section.</li>
+              </ol></td>
+          </tr>
+      </table>
+      <br>
+      <p>The <b>Add/Remove Carbide Build Configurations </b> window appears (Figure 1).</p>
+      <li>Select the build configurations used by the project
+          <p>Use the <b>Add/Remove Carbide Build Configuration</b> window to manage the build configurations for the current project. Checkmarked items appear in the build configuration list while unchecked items do not.</p>
+          <p>SDKs or build configurations shown in <span class="style1">RED</span> indicate a problem with that item. An error message is appended to the item to aid you in solving the problem.</p>
+      </li>
   <p align="center"><img src="images/wnd_add_build_config_manager.png" width="650" height="500" alt="" /></p>
-  <blockquote>
-      <p class="figure">Figure 2 - Window for managing build configurations</p>
-  </blockquote>
+  <p class="figure">Figure 1 - Window for managing build configurations<br>
+      </p>
+      <p>Click the <a href="../sdks/sdk_platform_filter.htm">Build Configuration Filtering Preferences</a> link to set which SDKs and configurations should appear in the dialog.</p>
+      <p>Click the <a href="../../reference/pref_carb_symbian_sdk.htm">Symbian SDK</a> link to open the <a href="../../reference/pref_carb_symbian_sdk.htm"></a> related preference panel.</p>
+      <li>Click OK to set the selected projects  build configurations.</li>
+    </ol>
 </div>
 <h5>Related concepts</h5>
 <ul>

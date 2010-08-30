@@ -47,13 +47,6 @@
 		 <cheatsheet
            composite="false"
 		   category="com.nokia.carbide.how_to.cheatsheets"
-           contentFile="html/cheatsheets/how_to_find_n_add_extensions.xml"
-           id="com.nokia.carbide.cpp.doc.user.add_extensions"
-           name="Find and Add Extensions"/>
-
-		 <cheatsheet
-           composite="false"
-		   category="com.nokia.carbide.how_to.cheatsheets"
            contentFile="html/cheatsheets/how_to_customize_code_styles.xml"
            id="com.nokia.carbide.cpp.doc.user.customize_code_styles"
            name="Customize Code Styles"/>
@@ -85,6 +78,13 @@
            contentFile="html/cheatsheets/how_to_customize_export_settings.xml"
            id="com.nokia.carbide.cpp.doc.user.customize_export_settings"
            name="Share my Settings..."/>
+
+		 <cheatsheet
+           composite="false"
+		   category="com.nokia.carbide.how_to.cheatsheets"
+           contentFile="html/cheatsheets/how_to_find_n_add_extensions.xml"
+           id="com.nokia.carbide.cpp.doc.user.add_extensions"
+           name="Find and Add Extensions"/>
 
    </extension>
 
@@ -119,15 +119,31 @@
             id="com.nokia.carbide.cpp.doc.user.stop_mode"
             name="Stop Mode On-Device Debugging" />
 			
-          <cheatsheet
-            category="com.nokia.carbide.ide.cheatsheets"
-            composite="false"
-            contentFile="$nl$/html/cheatsheets/getStarted_cs.xml"
-            id="com.nokia.carbide.cpp.doc.user.cheatsheet1176819414"
-             name="Creating and debugging an application project" />
-
    </extension>
 
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+         
+         <!-- CREATE A PLATSIM CATEGORY -->
+		<category
+			id="com.nokia.platsim.cheatsheets"
+			name="PlatSim" />
+            
+         <!-- ADD PLATSIM TOPICS TO CATEGORY -->
+		<cheatsheet
+			category="com.nokia.platsim.cheatsheets"
+			contentFile="html/cheatsheets/platsim_create_images.xml"
+			id="com.nokia.platsim.platsim_create_images"
+			name="Creating images in PlatSim" />
+			
+		<cheatsheet
+			category="com.nokia.platsim.cheatsheets"
+			contentFile="html/cheatsheets/platsim_debugging.xml"
+			id="com.nokia.platsim.platsim_debugging"
+			name="PlatSim debugging in Carbide.c++" />
+			
+   </extension>
+   
 	<!--
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
