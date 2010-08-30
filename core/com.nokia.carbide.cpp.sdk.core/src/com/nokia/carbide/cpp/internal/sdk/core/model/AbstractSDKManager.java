@@ -318,6 +318,9 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				sdk = SymbianSDKFactory.createInstance(id, 
 						   entry.getEpocRoot(),
 						   osVersion);
+				if (isInSDKList(sdk)) {
+					continue;
+				}
 				((SymbianSDK)sdk).setEnabled(entry.isEnabled());
 				synchronized (sdkList) {
 					sdkList.add(sdk);
@@ -346,6 +349,13 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			flushSDKCache();
 		}
 	}
+
+	/**
+	 * Check whether an SDK already exist in SDK list.
+	 * @param sdk - SDK to be checked
+	 * @return true if SDK already exist in SDK list, false otherwise
+	 */
+	abstract protected boolean isInSDKList(ISymbianSDK sdk);
 
 	/**
 	 * Tell whether EPOCROOT can be changed for a given ISymbianSDK

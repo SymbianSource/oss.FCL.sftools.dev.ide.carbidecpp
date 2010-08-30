@@ -97,6 +97,9 @@ public class SDKManager extends AbstractSDKManager {
 				for (Iterator iter = devices.iterator(); iter.hasNext();) {
 					SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
 					sdk.addSupportedFeature(ISymbianSDKFeatures.IS_FROM_DEVICES_XML);
+					if (isInSDKList(sdk)) {
+						continue;
+					}
 					sdkList.add(sdk);
 				}
 			}
@@ -484,7 +487,8 @@ public class SDKManager extends AbstractSDKManager {
 		}
 	}
 
-	private boolean isInSDKList(ISymbianSDK sdk) {
+	@Override
+	protected boolean isInSDKList(ISymbianSDK sdk) {
 		for (ISymbianSDK entry : sdkList) {
 			if (entry.getEPOCROOT().equalsIgnoreCase(sdk.getEPOCROOT())) {
 				return true;
