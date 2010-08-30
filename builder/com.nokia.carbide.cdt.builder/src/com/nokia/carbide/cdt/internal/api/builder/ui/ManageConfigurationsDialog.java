@@ -151,6 +151,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		
 		if (HostOS.IS_WIN32){
 			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+			((SDKManager)sdkMgr).ensureSystemDrivesSynchronized();
 			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
 				if (sdkMgr instanceof ISDKManagerInternal){
 					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;

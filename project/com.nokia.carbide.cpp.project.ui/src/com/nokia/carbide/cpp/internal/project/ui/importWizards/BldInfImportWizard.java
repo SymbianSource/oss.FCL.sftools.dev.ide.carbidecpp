@@ -71,6 +71,7 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		if (HostOS.IS_WIN32){
+			((SDKManager)sdkMgr).ensureSystemDrivesSynchronized();
 			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
 				if (sdkMgr instanceof ISDKManagerInternal){
 					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;

@@ -61,6 +61,8 @@ public class SDKManager extends AbstractSDKManager {
 	private static final String MIFCONV_FILE = "epoc32/tools/mifconv" + HostOS.EXE_EXT; //$NON-NLS-1$
 	private static final String ABLD_FILE = "epoc32/tools/abld.pl"; //$NON-NLS-1$
 	private static final long VALID_ABLD_SIZE = 1024;
+	
+	private File[] systemDrives;
 
 	static boolean hasPromptedForDevicesXML = false; // make sure we only ask once at startup if devices.xml does not exist
 	long devicesXLMLastModified;
@@ -366,6 +368,14 @@ public class SDKManager extends AbstractSDKManager {
 		}
 	}
 
+	public void ensureSystemDrivesSynchronized() {
+		if (HostOS.IS_WIN32) {
+			if (systemDrives != null && getSystemDrives().length > systemDrives.length) {
+				scanSDKs();
+			}
+		}
+	}
+
 	@Override
 	protected boolean isEPOCRootFixed() {
 		return true;
@@ -375,7 +385,7 @@ public class SDKManager extends AbstractSDKManager {
 	 * Scan system drives for installed SDKs
 	 */
 	protected void doScanDrives(IProgressMonitor monitor) {
-		File[] drives = getSystemDrives();
+		File[] drives = systemDrives = getSystemDrives();
 		monitor.beginTask("Scanning system drives for installed SDKs", drives.length);
 		for (File drive : drives) {
 			if (!isEPOCRoot(drive)) {
