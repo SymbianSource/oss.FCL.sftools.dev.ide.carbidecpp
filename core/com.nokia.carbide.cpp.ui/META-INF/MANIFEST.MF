@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Carbide.c++ UI Plugin
+Bundle-Name: Carbide.c++ UI
 Bundle-SymbolicName: com.nokia.carbide.cpp.ui;singleton:=true
 Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: com.nokia.carbide.cpp.ui.CarbideUIPlugin
