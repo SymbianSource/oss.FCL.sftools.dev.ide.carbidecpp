@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Common Carbide Help Plugin
+Bundle-Name: Common Carbide Help
 Bundle-SymbolicName: com.nokia.carbide.help.common;singleton:=true
 Bundle-Version: 1.4.0.qualifier
 Bundle-Vendor: Nokia
