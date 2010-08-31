@@ -37,7 +37,6 @@ import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
@@ -102,8 +101,6 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 		// way the project setting will be set to build bld.inf.
 		final List<String> components = mmpSelectionPage.areAllMakMakeReferencesChecked() ? new ArrayList<String>(0) : mmpSelectionPage.getSelectedMakMakeReferences();
 
-		final List<String> refs = getSelectedMakMakeReferences();
-		
 		final List<ISymbianBuildContext> selectedConfigs = getSelectedConfigs();
 
 		// run this in a workspace job
@@ -111,25 +108,6 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 			@Override
 			public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 				monitor.beginTask(Messages.BldInfImportWizard_CreatingProjectJobName, IProgressMonitor.UNKNOWN);
-
-				// write the debug target mmp setting - use the last mmp in
-				// the list of selected mak make files.
-				// We also need to check for project test mmpfiles and add that only if the project is only comprised of test mmp files
-				String debugMMP = ""; //$NON-NLS-1$
-				boolean hasOneNormalMMP = false; // Don't add test mmp if there's a regular MMP
-				for (String ref : refs) {
-					if (ref.toLowerCase().endsWith(".mmp")){
-						hasOneNormalMMP = true;
-						debugMMP = ref;
-					}
-					
-					if (hasOneNormalMMP == false){
-						if (ref.toLowerCase().endsWith(".mmp " + ICarbideProjectInfo.TEST_COMPONENT_LABEL)) { //$NON-NLS-1$
-			    			debugMMP = ref;
-		    				debugMMP = debugMMP.substring(0, debugMMP.indexOf( " " + ICarbideProjectInfo.TEST_COMPONENT_LABEL));
-			    		}
-					}
-				} // for
 
 				IProject newProject = null;
 				if (isLinkedProject){
@@ -143,9 +121,9 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
     			newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(useSBSv2Builder()));
 
     			if (isLinkedProject){
-    				ProjectCorePlugin.postProjectCreatedActions(newProject, absoluteInfPath, selectedConfigs, components, debugMMP, null, monitor);
+    				ProjectCorePlugin.postProjectCreatedActions(newProject, absoluteInfPath, selectedConfigs, components, null, null, monitor);
     			} else {
-    				ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
+    				ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, null, null, monitor);
     			}
         		
         		if (monitor.isCanceled()) {
