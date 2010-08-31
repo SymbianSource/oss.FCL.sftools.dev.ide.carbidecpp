@@ -37,6 +37,7 @@ import java.util.List;
  */
 public class NewSymbianOSCppClassWizard extends TemplateWizard {
 	
+	private static final String SOS_CLASS_WIZARD_FEATURE = "SOS_CLASS_WIZARD"; //$NON-NLS-1$
 	private static final String ID = "com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppClassWizard"; 
 	private ChooseProjectPage chooseProjectPage;
 	private ClassNameAndLocationPage chooseClassLocationPage;
@@ -108,5 +109,10 @@ public class NewSymbianOSCppClassWizard extends TemplateWizard {
 	@Override
 	public String getProcessingTitle() {
 		return Messages.getString("NewSymbianOSCppClassWizard.ProcessTitle"); //$NON-NLS-1$
+	}
+
+	@Override
+	public String getFeatureName() {
+		return SOS_CLASS_WIZARD_FEATURE;
 	}
 }

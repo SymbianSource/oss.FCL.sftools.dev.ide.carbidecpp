@@ -26,6 +26,7 @@ import com.nokia.carbide.internal.api.templatewizard.ui.IWizardDataPage;
 public class NewQtCppProjectWizard extends NewSymbianOSCppProjectWizard {
 	
 	private static final String ID = "com.nokia.carbide.cpp.qt.ui.wizard.NewQtCppProjectWizard"; //$NON-NLS-1$
+	private static final String QT_PROJECT_WIZARD_FEATURE = "QT_PROJECT_WIZARD"; //$NON-NLS-1$
 
 	private QtModulesPage modulesPage;
 	
@@ -53,8 +54,13 @@ public class NewQtCppProjectWizard extends NewSymbianOSCppProjectWizard {
 		return pagesAfterTemplateChoice;
 	}
 
-    @Override
+	@Override
 	public String getWizardId() {
 		return ID;
+	}
+
+	@Override
+	public String getFeatureName() {
+		return QT_PROJECT_WIZARD_FEATURE;
 	}
 }

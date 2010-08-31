@@ -42,6 +42,7 @@ import com.nokia.cpp.internal.api.utils.core.HostOS;
  */
 public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 	
+	private static final String SOS_PROJECT_WIZARD_FEATURE = "SOS_PROJECT_WIZARD"; //$NON-NLS-1$
 	private static final String ID = "com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"; //$NON-NLS-1$
 	protected List<IWizardDataPage> pagesAfterTemplateChoice;
 	protected BuildTargetsPage buildTargetsPage;
@@ -125,5 +126,10 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 	public boolean performFinish() {
     	newProjectPage.saveDialogSettings();
 		return super.performFinish();
+	}
+
+	@Override
+	public String getFeatureName() {
+		return SOS_PROJECT_WIZARD_FEATURE;
 	}
 }

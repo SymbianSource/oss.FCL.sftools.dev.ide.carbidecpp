@@ -53,8 +53,6 @@ public abstract class TemplateWizard extends BasicNewResourceWizard {
 	private boolean hideFilterCheckbox;
 	private ChooseTemplatePage chooseTemplatePage;
 
-	private static final String CARBIDE_INF_PROJECT_WIZ_FEATURE = "CARBIDE_INF_PROJECT_WIZARD"; //$NON-NLS-1$
-	
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection currentSelection) {
 		super.init(workbench, currentSelection);
@@ -112,7 +110,10 @@ public abstract class TemplateWizard extends BasicNewResourceWizard {
 		job.setRule(getJobSchedulingRule());
 		job.schedule();
 		
-		FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(CARBIDE_INF_PROJECT_WIZ_FEATURE);
+		String featureName = getFeatureName();
+		if (featureName != null && !featureName.isEmpty()) {
+			FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(featureName);
+		}
 		
 	    return true;
 	}
@@ -262,6 +263,8 @@ public abstract class TemplateWizard extends BasicNewResourceWizard {
 	
 	public abstract String getProcessingTitle();
 	
+	public abstract String getFeatureName();
+
 	public void notifyTemplateChanged() {
 		// nothing to do in base class
 	}
