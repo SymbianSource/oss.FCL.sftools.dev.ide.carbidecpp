@@ -82,6 +82,11 @@ public enum EMMPStatement {
 	STDCPP("STDCPP", IMMPParserConfiguration.FLAG_STATEMENT), //$NON-NLS-1$
 	NOSTDCPP("NOSTDCPP", IMMPParserConfiguration.FLAG_STATEMENT), //$NON-NLS-1$
 	
+	/**
+	 * @since 3.0
+	 */
+	TRACES("TRACES", IMMPParserConfiguration.FLAG_STATEMENT), //$NON-NLS-1$
+	
 	HEADER("HEADER", IMMPParserConfiguration.FLAG_STATEMENT, "RESOURCE|BITMAP"), //$NON-NLS-1$ //$NON-NLS-2$
 	HEADERONLY("HEADERONLY", IMMPParserConfiguration.FLAG_STATEMENT, "RESOURCE|BITMAP"), //$NON-NLS-1$ //$NON-NLS-2$
 	
