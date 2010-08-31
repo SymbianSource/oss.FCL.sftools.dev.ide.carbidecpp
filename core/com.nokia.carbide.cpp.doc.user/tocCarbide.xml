@@ -31,6 +31,7 @@
 		  <topic label="Creating DLL Projects" 						href="html/projects/tutorials/new_proj_dll_example_01.htm" />
 		  <topic label="Building the DLL Project" 					href="html/projects/tutorials/new_proj_dll_example_02.htm" />
 		  <topic label="Debugging a DLL Project"					href="html/projects/tutorials/new_proj_dll_example_03.htm" />
+      	  <topic label="Debugging DLLs with Any Process"			href="html/tasks/projects/prj_debug_dlls_any_process.htm" />
 		</topic>
 		<topic label="Remote Target Debugging (Run-mode)"			href="html/projects/tutorials/run_mode_debug_example_00.htm" >
 		  <topic label="Connect remote device to PC" 				href="html/projects/tutorials/run_mode_debug_example_01.htm" />
@@ -278,7 +279,7 @@
     -->
         
       <topic href="html/tasks/projects/prj_debug_dlls.htm" label="Debugging DLLs"></topic>
-      <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching to a Symbian OS Process"></topic>
+      <topic href="html/tasks/processes/attach_to_process.htm" label="Attaching to a Process"></topic>
       <topic href="html/tasks/start/carbide_debugging.htm" label="Debugging a Symbian OS Program"></topic>
       <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data View"></topic>
         
@@ -323,9 +324,11 @@
       </topic>
     </topic>
     <topic label="Debugging variations"                     href="html/concepts/debugger_about.htm" >
-      <topic label="Emulation Debugging"			        href="html/concepts/emulators.htm" />
-      <topic label="Debugging DLLs"						href="html/tasks/projects/prj_debug_dlls.htm" />
+      <topic label="Attaching to a Process"					href="html/tasks/processes/attach_to_process.htm" />
+      <topic label="Auto-Targeting of Executables"			href="html/concepts/autotargeting.htm" />
+      <topic label="Debugging DLLs"							href="html/tasks/projects/prj_debug_dlls.htm" />
       <topic label="Debugging in ROM"		                href="html/tasks/projects/prj_debug_rom.htm" />
+      <topic label="Emulation Debugging"			        href="html/concepts/emulators.htm" />
     </topic>
 
       <topic label="Troubleshooting" 						href="html/tasks/trk/trk_troubleshooting.htm"/>

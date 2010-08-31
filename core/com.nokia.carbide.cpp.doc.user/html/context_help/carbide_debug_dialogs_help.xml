@@ -41,7 +41,7 @@
 		<description>Use the Symbian OS Data view to view processes, threads, chunks, and library information</description>
 		<topic label="Symbian OS Data"						href="html/reference/view_symbian_kernel.htm" />
 		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
-		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_to_process.htm" />
 	</context>
 
 	<!-- Symbian OS Data View Overview pane -->
@@ -49,7 +49,7 @@
 		<description>The Overview pane displays kernel objects by their heirarchical owner relationship</description>
 		<topic label="Symbian OS Data Overview"				href="html/reference/view_symbian_kernel.htm#overview" />
 		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
-		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_to_process.htm" />
 	</context>
 
 		<!-- Symbian OS Data View Processes pane -->
@@ -57,7 +57,7 @@
 		<description>The Processes pane lists processes in the target's Symbian OS</description>
 		<topic label="Symbian OS Processes"					href="html/reference/view_symbian_kernel.htm#processes" />
 		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
-		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_to_process.htm" />
 	</context>
 
 		<!-- Symbian OS Data View Thread pane -->
@@ -65,7 +65,7 @@
 		<description>The Threads pane lists threads in the target's Symbian OS</description>
 		<topic label="Symbian OS Threads"						href="html/reference/view_symbian_kernel.htm#threads" />
 		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
-		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_to_process.htm" />
 	</context>
 		
 	<!-- Symbian OS Data View Chunk pane -->
@@ -73,7 +73,7 @@
 		<description>The Chunks pane lists chunks in the target's Symbian OS</description>
 		<topic label="Symbian OS Chunks"						href="html/reference/view_symbian_kernel.htm#chunks" />
 		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
-		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_to_process.htm" />
 	</context>
 
 	<!-- Symbian OS Data View Library pane -->
@@ -81,7 +81,7 @@
 		<description>The Libraries pane lists libraries in the target's Symbian OS</description>
 		<topic label="Symbian OS Library List"					href="html/reference/view_symbian_kernel.htm#Library" />
 		<topic label="Setting Symbian OS View Refresh Rate"  href="html/tasks/debugger/view_symbian_kernel_set.htm" />
-		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Attach to Symbian OS Process"         href="html/tasks/processes/attach_to_process.htm" />
 	</context>
 
 		
@@ -166,14 +166,14 @@
 	<!-- LAUNCH.ATTACH -->
 	<context id="attach_main" >
 		<description>Create an Attach to Process launch configuration.</description>
-		<topic label="Attach to Process"  					href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Attach to Process"  					href="html/tasks/processes/attach_to_process.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 	</context>
 	
 	<!-- ATTACH TO PROCESS WINDOW -->
 	<context id="attach_choose_process" >
 		<description>Attaching to a process on the target device.</description>
-		<topic label="Attach to Process"  					href="html/tasks/processes/attach_debugger_to_process.htm" />
+		<topic label="Attach to Process"  					href="html/tasks/processes/attach_to_process.htm" />
 		<topic label="Symbian OS Data view"  				href="html/reference/view_symbian_kernel.htm" />
 		<topic label="Creating Launch Configurations"		href="html/tasks/projects/prj_debug_config.htm" />
 	</context>

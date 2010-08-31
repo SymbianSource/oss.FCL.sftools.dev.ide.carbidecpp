@@ -13,7 +13,7 @@
 	</entry>
 
     <entry keyword="Attaching to a Symbian OS Process ">
-	   <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching debugger to Symbian OS Process"/>
+	   <topic href="html/tasks/processes/attach_to_process.htm" label="Attaching debugger to Symbian OS Process"/>
 	</entry>
 
 <!-- B -->
@@ -491,7 +491,7 @@
 	</entry>
 
 	<entry keyword="Processes">
-	   <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching debugger to Symbian OS Process"/>
+	   <topic href="html/tasks/processes/attach_to_process.htm" label="Attaching debugger to Symbian OS Process"/>
 	</entry>
 
     <entry keyword="Projects">
