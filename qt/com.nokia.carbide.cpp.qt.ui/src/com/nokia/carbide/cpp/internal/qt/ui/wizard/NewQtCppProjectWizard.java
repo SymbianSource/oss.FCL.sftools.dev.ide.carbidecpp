@@ -33,11 +33,13 @@ public class NewQtCppProjectWizard extends NewSymbianOSCppProjectWizard {
 	public NewQtCppProjectWizard() {
 		super();
 		setWindowTitle(Messages.NewQtCppProjectWizard_title);
+		setNeedsProgressMonitor(true);
 	}
 
     @Override
 	public List<IWizardDataPage> getPagesAfterTemplateChoice() {
 		if (pagesAfterTemplateChoice == null) {
+			setNeedsProgressMonitor(true);
 			pagesAfterTemplateChoice = new ArrayList<IWizardDataPage>();
 
 			newProjectPage = new NewProjectPage(Messages.NewQtCppProjectWizard_title, Messages.NewQtCppProjectWizard_desc);

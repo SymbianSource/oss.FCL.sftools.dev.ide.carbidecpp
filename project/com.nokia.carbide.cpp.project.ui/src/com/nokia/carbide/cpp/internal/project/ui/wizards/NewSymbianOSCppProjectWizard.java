@@ -22,6 +22,8 @@ import java.util.List;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.ui.TemplateSDKsFilter;
@@ -50,6 +52,7 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 
 	public NewSymbianOSCppProjectWizard() {
 		super();
+		setNeedsProgressMonitor(true);
 		setFilterCheckboxLabel(Messages.getString("NewSymbianOSCppProjectWizard.FilterCheckboxLabel")); //$NON-NLS-1$
 		setTemplateFilter(new TemplateSDKsFilter());
 		setWindowTitle(Messages.getString("NewSymbianOSCppProjectWizard.WindowTitle")); //$NON-NLS-1$
@@ -80,11 +83,18 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 			String description = Messages.getString("NewSymbianOSCppProjectWizard.NewProjectPageDesc"); //$NON-NLS-1$
 			newProjectPage = new NewProjectPage(title, description);
 			pagesAfterTemplateChoice.add(newProjectPage);
+			setNeedsProgressMonitor(true);
 			buildTargetsPage = new ProjectWizardBuildTargetsPage(this);
 			pagesAfterTemplateChoice.add(buildTargetsPage);
 			notifyTemplateChanged();
 		}
 		return pagesAfterTemplateChoice;
+	}
+
+	@Override
+	public void init(IWorkbench workbench, IStructuredSelection currentSelection) {
+		super.init(workbench, currentSelection);
+		setNeedsProgressMonitor(true);
 	}
 
 	@Override
