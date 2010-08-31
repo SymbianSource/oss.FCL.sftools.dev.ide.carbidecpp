@@ -111,7 +111,7 @@ public abstract class TemplateWizard extends BasicNewResourceWizard {
 		job.schedule();
 		
 		String featureName = getFeatureName();
-		if (featureName != null && !featureName.isEmpty()) {
+		if (featureName != null && featureName.length() > 0) {
 			FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(featureName);
 		}
 		
