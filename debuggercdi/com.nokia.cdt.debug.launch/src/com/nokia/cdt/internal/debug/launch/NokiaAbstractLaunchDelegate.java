@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.eclipse.cdt.core.model.CModelException;
 import org.eclipse.cdt.core.model.IBinary;
@@ -36,10 +35,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.core.runtime.jobs.IJobManager;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -209,49 +205,19 @@ public abstract class NokiaAbstractLaunchDelegate extends
 	 */
 	protected IPath[] getOtherExecutables(ICProject project, IPath exePath,
 			ILaunchConfiguration config, IProgressMonitor monitor) throws CModelException {
-		ArrayList<IPath> targetedBinaries = new ArrayList<IPath>();
-		targetedBinaries.addAll(getBldInfExecutables(project, exePath, config, monitor));
-		return (IPath[]) targetedBinaries.toArray(new IPath[targetedBinaries
-				.size()]);
-	}
-
-	/**
-	 * Returns list of executables that are built as part of the bld inf file.
-	 * Excludes the exe specified in the launch configuration.
-	 * @param monitor 
-	 * 
-	 * @return
-	 */
-	protected List<IPath> getBldInfExecutables(ICProject project,
-			IPath mainExePath, ILaunchConfiguration config, IProgressMonitor monitor) {
-		// Target imported executables in the project
-		ArrayList<IPath> infExecutables = new ArrayList<IPath>();
-
+		List<IPath> targetedBinaries = new ArrayList<IPath>();
+		
 		try {
-
-			String executablesToTarget = ExecutablesTab.getExecutablesToTarget(config, monitor);
+			targetedBinaries.addAll(ExecutablesTab.getExecutablesToTarget(config, monitor));
 			
-			if (executablesToTarget.length() > 0) {
-				StringTokenizer tokenizer = new StringTokenizer(executablesToTarget,
-						","); //$NON-NLS-1$
-				while (tokenizer.hasMoreTokens()) {
-					String exe = tokenizer.nextToken();
-					String enabled = tokenizer.nextToken();
-
-					Path exePath = new Path(exe);
-					if (enabled.compareTo("0") == 0 //$NON-NLS-1$
-							|| exePath.lastSegment().equalsIgnoreCase(
-									mainExePath.lastSegment())) {
-						continue;
-					}
-					infExecutables.add(exePath);
-				}
+			// remove the main exe if it exists
+			if (targetedBinaries.contains(exePath)) {
+				targetedBinaries.remove(exePath);
 			}
-		} catch (CoreException ce) {
-			return infExecutables;
+		} catch (CoreException e) {
 		}
 
-		return infExecutables;
+		return (IPath[]) targetedBinaries.toArray(new IPath[targetedBinaries.size()]);
 	}
 
 	/**

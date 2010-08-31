@@ -231,16 +231,43 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 		}
 	}
 
-	public static String getExecutablesToTarget(ILaunchConfiguration config, IProgressMonitor monitor) throws CoreException {
+	public static List<IPath> getExecutablesToTarget(ILaunchConfiguration config, IProgressMonitor monitor) throws CoreException {
+		List<IPath> executables = new ArrayList<IPath>();
+		
 		int targetingRule = config.getAttribute(SettingsData.LCS_ExecutableTargetingRule, SettingsData.LCS_ExeTargetingRule_AllInSDK);
 		String filesString = ""; //$NON-NLS-1$
 		if (targetingRule == SettingsData.LCS_ExeTargetingRule_ExeList) {
 			filesString = config.getAttribute(PreferenceConstants.J_PN_ExecutablesToDebug, ""); //$NON-NLS-1$			
 		} else {
-			List<ExeFileToDebug> exeFiles = ExecutablesTab.getExecutablesToTarget(targetingRule, config, monitor);
-			filesString = ExecutablesTab.getExeFilesAsString(exeFiles.toArray(new ExeFileToDebug[exeFiles.size()]));
+			List<ExeFileToDebug> exeFiles = getExecutablesToTarget(targetingRule, config, monitor);
+			filesString = getExeFilesAsString(exeFiles.toArray(new ExeFileToDebug[exeFiles.size()]));
 		}
-		return filesString;
+		
+		if (filesString.length() > 0) {
+			StringTokenizer tokenizer = new StringTokenizer(filesString, ","); //$NON-NLS-1$
+			while (tokenizer.hasMoreTokens()) {
+				String exePath = tokenizer.nextToken();
+				String enabled = tokenizer.nextToken();
+				try {
+					int enabledVal = Integer.parseInt(enabled);
+					if (enabledVal != 0) {
+						IPath path = new Path(exePath);
+						if (!executables.contains(path)) {
+							executables.add(path);
+						}
+					}
+				} catch (NumberFormatException e) {
+				}
+			}
+		}
+		
+		// add in the main executable for the launch config
+		IPath mainExePath = new Path(config.getAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, ""));
+		if (!executables.contains(mainExePath)) {
+			executables.add(mainExePath);
+		}
+		
+		return executables;
 	}
 
 	private static String getExeFilesAsString(ExeFileToDebug[] files) {
@@ -269,37 +296,6 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 			configuration.setAttribute(
 					PreferenceConstants.J_PN_SymbolLoadingRule,
 					PreferenceConstants.J_PV_SymbolLoadingRule_Auto);
-		
-		// get the current program name because it needs to be set to some executable to target
-		String programName = null;
-		try {
-			programName = AbstractCLaunchDelegate.getProgramName(configuration);
-		} catch (CoreException e) {
-		}
-		
-		// only do this when the current program name is not empty.  if it is, we'll be changing it
-		// which causes the apply button to become enabled which is not expected behavior.  this will
-		// be called later if/when they do specify the main program, so we'll make sure then that it's
-		// actually being targeted.
-		if (programName != null && programName.length() > 0) {
-			boolean resetProgramName = true;
-			// check to see if the current program name is one of the executables to target
-			for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
-				if (exeFileToDebug.getExePath().equalsIgnoreCase(programName)) {
-					resetProgramName = false;
-					break;
-				}
-			}
-			if (resetProgramName) {
-				// ensure one of the enabled files to target is set as the program name
-				for (ExeFileToDebug exeFileToDebug : executablesToTarget) {
-					if (exeFileToDebug.getEnabled()) {
-						configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, exeFileToDebug.getExePath());
-						break;
-					}
-				}
-			}
-		}
 	}
 
 	private static List<ExeFileToDebug> getExecutablesForTheProject(ILaunchConfiguration configuration) {
@@ -328,7 +324,7 @@ public class ExecutablesTab extends CLaunchConfigurationTab implements IExecutab
 		return files;
 	}
 
-	static public List<ExeFileToDebug> getExecutablesToTarget(int targetingRule, ILaunchConfiguration launchConfig, IProgressMonitor monitor) {
+	private static List<ExeFileToDebug> getExecutablesToTarget(int targetingRule, ILaunchConfiguration launchConfig, IProgressMonitor monitor) {
 		List<ExeFileToDebug> files = new ArrayList<ExeFileToDebug>();
 
 		if (targetingRule == SettingsData.LCS_ExeTargetingRule_All) {
