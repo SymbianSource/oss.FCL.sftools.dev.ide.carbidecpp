@@ -113,7 +113,7 @@
 		<topic label="Creating a Launch Configuration"	href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Launch Configurations"			href="html/concepts/launch_configuration.htm" />
 		<topic label="Launch Configuration Filter"		href="html/reference/launch_configuration_filter.htm" />
-		<topic label="Carbide Project Settings"		    href="html/reference/build_properties/pane_project_settings.htm" />
+		<topic label="Carbide Project Settings"		    href="html/reference/build_properties/prop_carb_project_settings.htm" />
 	</context>
 
 	<context id="wizard_summary_page" >
@@ -322,9 +322,9 @@
 	<!-- PROJECT PROPERTY DIALOG                                        -->
 	<context id="property_dialog_context" >
 		<description>Carbide specific project settings.</description>
-		<topic label="Carbide Build Configurations"		href="html/reference/build_properties/pane_build_config.htm" />
-		<topic label="Macro Settings"					href="html/reference/build_properties/pane_macro_settings.htm" />
-		<topic label="Project Settings"					href="html/reference/build_properties/pane_project_settings.htm" />
+		<topic label="Carbide Build Configurations"		href="html/reference/build_properties/prop_carb_build_config.htm" />
+		<topic label="Macro Settings"					href="html/reference/build_properties/prop_carb_macro_settings.htm" />
+		<topic label="Project Settings"					href="html/reference/build_properties/prop_carb_project_settings.htm" />
 	</context>
 	
 

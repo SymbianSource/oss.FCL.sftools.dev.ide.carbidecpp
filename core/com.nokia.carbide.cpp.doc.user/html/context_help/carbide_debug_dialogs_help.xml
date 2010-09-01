@@ -290,7 +290,7 @@
 		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
 		<topic label="Launch Configuration Overview"  		href="html/projects/launch/launch_configs_overview.htm" />
 		<topic label="Launch Configuration Filter"			href="html/reference/launch_configuration_filter.htm" />
-		<topic label="Carbide Project Settings"		    	href="html/reference/build_properties/pane_project_settings.htm" />
+		<topic label="Carbide Project Settings"		    	href="html/reference/build_properties/prop_carb_project_settings.htm" />
 	</context>
 
 	<context id="wizard_summary_page" >
