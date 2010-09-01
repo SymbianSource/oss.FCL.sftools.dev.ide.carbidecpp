@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
 import com.nokia.carbide.cpp.internal.ui.SharedImages;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
@@ -31,6 +32,8 @@ public class CarbideUIPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "com.nokia.carbide.cpp.ui";
+
+	private static final String CARBIDE_IDE_FEATURE = "CARBIDE_IDE"; //$NON-NLS-1$
 
 	// The shared instance
 	private static CarbideUIPlugin plugin;
@@ -50,6 +53,8 @@ public class CarbideUIPlugin extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+
+		FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(CARBIDE_IDE_FEATURE);
 	}
 
 	/*
