@@ -52,7 +52,6 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 
 	public NewSymbianOSCppProjectWizard() {
 		super();
-		setNeedsProgressMonitor(true);
 		setFilterCheckboxLabel(Messages.getString("NewSymbianOSCppProjectWizard.FilterCheckboxLabel")); //$NON-NLS-1$
 		setTemplateFilter(new TemplateSDKsFilter());
 		setWindowTitle(Messages.getString("NewSymbianOSCppProjectWizard.WindowTitle")); //$NON-NLS-1$
@@ -94,7 +93,6 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 	@Override
 	public void init(IWorkbench workbench, IStructuredSelection currentSelection) {
 		super.init(workbench, currentSelection);
-		setNeedsProgressMonitor(true);
 	}
 
 	@Override

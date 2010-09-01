@@ -33,7 +33,6 @@ public class NewQtCppProjectWizard extends NewSymbianOSCppProjectWizard {
 	public NewQtCppProjectWizard() {
 		super();
 		setWindowTitle(Messages.NewQtCppProjectWizard_title);
-		setNeedsProgressMonitor(true);
 	}
 
     @Override
