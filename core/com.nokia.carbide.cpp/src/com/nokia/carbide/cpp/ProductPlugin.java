@@ -22,7 +22,6 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
 import com.nokia.carbide.internal.discovery.ui.wizard.P2Utils;
 
 /**
@@ -30,8 +29,6 @@ import com.nokia.carbide.internal.discovery.ui.wizard.P2Utils;
  */
 public class ProductPlugin extends AbstractUIPlugin {
 
-	private static final String CARBIDE_IDE_FEATURE = "CARBIDE_IDE"; //$NON-NLS-1$
-	
 	//The shared instance.
 	private static ProductPlugin plugin;
 	
@@ -47,12 +44,11 @@ public class ProductPlugin extends AbstractUIPlugin {
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
+
 		File file = P2Utils.getInitialFeaturesFile();
 		if (!file.exists()) {
 			P2Utils.writeFeaturesToFile(file);
 		}
-
-		FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(CARBIDE_IDE_FEATURE);
 	}
 
 	/**

@@ -58,6 +58,7 @@ public class TemplatePagesNode implements IWizardNode {
 			Image defaultPageImage = parentWizard.getDefaultPageImage();
 			ImageDescriptor imageDescriptor = ImageDescriptor.createFromImage(defaultPageImage);
 			setDefaultPageImageDescriptor(imageDescriptor);
+			setNeedsProgressMonitor(true);
 			
 			ILoadedTemplateUI selectedLoadedTemplateUI = parentWizard.getSelectedTemplateUI();
 			selectedLoadedTemplateUI.initExtraPagesProvider(parentWizard, 

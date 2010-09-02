@@ -38,6 +38,7 @@ public class NewQtCppProjectWizard extends NewSymbianOSCppProjectWizard {
     @Override
 	public List<IWizardDataPage> getPagesAfterTemplateChoice() {
 		if (pagesAfterTemplateChoice == null) {
+			setNeedsProgressMonitor(true);
 			pagesAfterTemplateChoice = new ArrayList<IWizardDataPage>();
 
 			newProjectPage = new NewProjectPage(Messages.NewQtCppProjectWizard_title, Messages.NewQtCppProjectWizard_desc);

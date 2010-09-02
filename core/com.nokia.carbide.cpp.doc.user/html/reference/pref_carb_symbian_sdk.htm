@@ -16,7 +16,7 @@
    <body>
 <h2>Symbian SDKs</h2>
 <p>Use the <img src="../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=com.nokia.carbide.cpp.sdk.ui.sdk_prefs_page)")'>
-   Symbian SDKs</a> page in the <b>Preferences</b> window to view which installed SDKs are available to projects during an import. If the SDK is properly configured for SBSv2 you may never need to view this preference panel.</p>
+   Symbian SDKs</a> preference panel in the <b>Preferences</b> window to view the installed SDKs that are available for creating projects during an import. If the SDK is properly configured for SBSv2 you may never need to view this preference panel.</p>
 <p>One thing to note is that Carbde.c++ no longer requires the <span class="code">devices.xml</span> file to recognize and use SDKs. Insteads it now caches this information for later use. If the SDK contains an entry for the <span class="code">devices.xml</span> Carbide will use it.</p>
 <p>To
     access <strong>Symbian SDKs</strong> preferences preference panel, select <b>Window &gt; Preferences &gt; Carbide.c++ &gt; Symbian SDKs</b>. </p>
@@ -27,22 +27,23 @@
    <tr valign="top"><th width="221" class="Cell">Name</th><th width="584" class="Cell">Function</th></tr>
          <tr valign="top">
            <td class="Cell"><b>Symbian SDK's</b></td>
-           <td class="Cell"><p>Lists all the installed and recognized SDKs supported by the IDE. Only SDKs supported by the IDE are included in the list. </p>
+           <td class="Cell"><p>Lists all the installed and recognized SDKs that are supported by the IDE. SDKs no longer supported will not be shown. You can double-click on any <b>SDK ID</b> or <b>Location</b> entry to directly edit the fields information.</p>
              <p>Checked SDKs indicate build configurations available for creating projects. Unchecked SDKs are not displayed when creating new projects. </p>
-             <p>SDKs shown in <span class="style2">red</span>  indicate  a problem, usually no <span class="code">EPOCROOT</span> or missing build configurations. </p>
-           <p>Click on a SDK name to see its EPOCROOT location and build configuration status in the SDK Information area. </p></td>
+             <p>SDKs shown in <span class="style2">RED</span>  indicate  a problem, usually no <span class="code">EPOCROOT</span> or unsupported Symbian OS version. </p>
+           <p>Click on a SDK name to see its <span class="code">EPOCROOT</span> location and build configuration status in the SDK Information area. </p>
+           </td>
         </tr>
          <tr valign="top">
              <td class="Cell"><b>Add </b></td>
-             <td class="Cell"><p>Click to <a href="../tasks/sdks/sdk_add.htm">add</a> an SDK to the <b>Available Symbian OS SDKs</b> list.</p></td>
+             <td class="Cell"><p>Click to <a href="../tasks/sdks/sdk_add.htm">add</a> an SDK to the <b>Symbian SDKs</b> list.</p></td>
          </tr>
          <tr valign="top">
            <td class="Cell"><b>Delete </b></td>
-           <td class="Cell">Click to remove the selected SDK from the Available Symbian OS SDK's list. </td>
-         </tr>
+           <td class="Cell">Click to remove the selected SDK from the <b>Symbian SDKs</b> list. </td>
+       </tr>
          <tr valign="top">
            <td class="Cell"><b>Properties</b></td>
-           <td class="Cell"><p>Click to view and edit the <a href="../tasks/sdks/sdk_view_properties.htm">properties</a> of the currently selected SDK in the <b>Available Symbian OS SDKs</b> list.</p>           </td>
+           <td class="Cell"><p>Click to view and edit the <a href="../tasks/sdks/sdk_view_properties.htm">properties</a> of the currently selected SDK in the <b>Symbian SDKs</b> list.</p>           </td>
      </tr>
          <tr valign="top">
            <td class="Cell"><p><b>Rescan All SDKs</b></p>           </td>
@@ -55,7 +56,6 @@
        
        <li><a href="../tasks/WorkingwithSDKs.html">Working with SDKs</a></li>
        <li><a href="../tasks/sdks/sdk_add.htm">Adding an SDK</a></li>
-       <li><a href="../tasks/RmvngandVwngPropsosSDK.html">SDK Properties</a></li>
   </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

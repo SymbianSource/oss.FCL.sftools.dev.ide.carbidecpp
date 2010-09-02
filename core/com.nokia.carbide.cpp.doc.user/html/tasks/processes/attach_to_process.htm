@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Attaching to a Process</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body >
+<h2>Attaching  to a Process</h2>
+<div>
+  <p>Use a <b>Symbian OS Attach to Process</b> launch configuration to attach the debugger to an already running Symbian OS process or thread on a target device. This is useful for debugging DLLs where the main process is unknown or for servers running in RAM in a client-server relationship where the client relies on the presence of the server process to operate.</p>
+  <p>One common debugging DLL use case is when the developer doesn't know which process calls the DLL. This makes it difficult to debug the DLL because you doesn't know which process to attach to nor start. Carbide enables DLL debugging  by simply attaching the DLL to any running process as long as the DLL is included in the <a href="../../reference/view_executables.htm">Executables</a> view.</p>
+  <p>You can also attach to a process in the <a href="../../reference/view_symbian_kernel.htm">Symbian OS Data</a> view when debugging.</p>
+  <p class="note"><b>NOTE</b> You cannot attach to a process running on the emulator. It must be a target device running the Symbian OS and the TRK debug agent.</p>
+  <p>When attempting to find a process the debugger  uses the UID3  to locate the process. </p>
+  <div class="step">
+    <h4>Attaching to any Running Process</h4>
+    <ol>
+      <li>In the <a href="../../reference/view_executables.htm">Executables</a> view, click the Import an executable file icon (<img src="../../images/icons/btn_import_executables.png" alt="Import an executable icon" width="18" height="15" align="absmiddle">) to add an executable to the Executables view for debugging.
+          <p>The executable added appears in the <a href="../../reference/view_proj_explorer.htm">Project Explorer</a> view under an <b>Executables</b> project. This group includes all executables listed in the <b>Executables</b> view that are not linked to any project in the workspace.</p>
+          <p align="center"><img src="../projects/images/attach_to_process_proj_explorer.png" alt="Project Explorer Executables project" width="267" height="267"></p>
+          <p class="figure">Figure 1 -<b> Executables list in Project Explorer view</b></p>
+          <p class="note"><b>NOTE</b> The executable must include symbolics in order for debugging to work.</p>
+      </li>
+      <li>Click Debug (<img src="../../projects/images/icon_debug.png" alt="Debug icon" width="17" height="17" align="absmiddle">) to launch the <a href="../../projects/launch/wiz_new_launch_config.htm">New Configuration Launch Wizard</a>.</li>
+      <p>Select the Symbian OS Attach to Process launch configuration option and fill in the requested information.</p>
+      <p align="center"><img src="../projects/images/attach_to_process_launch_config.png" alt="Attach to Process launch config" width="641" height="312"></p>
+      <p class="figure">Figure 2 -<b> Attach to Process</b> launch configuration</p>
+      <li>Click Debug.</li>
+      <p>The <b>Attach to Process </b>dialog appears. Click a column title to sort the processes in ascending or descending order to help you locate a specific process or use the filter text box to show specific processes. </p>
+      <p align="center"><img src="images/sos_processes_choose_thread.png" width="300" height="375" /></p>
+      <p class="figure">Figure 3 -<b> Attach to Process</b> window </p>
+      <li>Select a process, click OK.</li>
+      <p>In this example we've linked the <span class="code">prefs.dll</span> program to the process <span class="code">BlackFlag.exe</span> on the device. The <b>Attach to Process </b>dialog closes. Open the <a href="../../reference/view_symbian_kernel.htm">Symbian OS Data</a> view to show the process and thread information.</p>
+      <p class="note"><b>NOTE</b> Terminating an Attach to Process session actually kills the process on the device. This means you must restart the process on the device in order to attach to it again. </p>
+    </ol>
+</div>
+<h5>Related references</h5>
+<ul>
+  <li><a href="../../debugger/debug/viewing_debug.htm">Debug View</a></li>
+  <li><a href="../../reference/wnd_debug_configuration.htm">Debug Window </a></li>
+  <li><a href="../../reference/view_symbian_kernel.htm">Symbian OS View</a> </li>
+  <li><a href="../projects/prj_debug_dlls_any_process.htm">Debugging DLLs with any Process</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

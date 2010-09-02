@@ -121,20 +121,22 @@
 			
    </extension>
 
+	<!-- CREATED FOR SDK DOCS, NOT NEEDED IN CARBIDE
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
          
-         <!-- CREATE A PLATSIM CATEGORY -->
+         <!-- CREATE A PLATSIM CATEGORY
 		<category
 			id="com.nokia.platsim.cheatsheets"
 			name="PlatSim" />
             
-         <!-- ADD PLATSIM TOPICS TO CATEGORY -->
+         <!-- ADD PLATSIM TOPICS TO CATEGORY
+		 
 		<cheatsheet
 			category="com.nokia.platsim.cheatsheets"
 			contentFile="html/cheatsheets/platsim_create_images.xml"
 			id="com.nokia.platsim.platsim_create_images"
-			name="Creating images in PlatSim" />
+			name="Creating images for PlatSim" />
 			
 		<cheatsheet
 			category="com.nokia.platsim.cheatsheets"
@@ -143,6 +145,7 @@
 			name="PlatSim debugging in Carbide.c++" />
 			
    </extension>
+    -->
    
 	<!--
    <extension

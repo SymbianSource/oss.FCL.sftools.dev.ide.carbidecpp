@@ -19,9 +19,13 @@
 package com.nokia.carbide.cpp.sdk.ui.shared;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.operation.IRunnableContext;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.TreeNode;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
@@ -112,60 +116,81 @@ public class BuildTargetTreeNode extends TreeNode {
 	 * from the SDK preferences page.  Only enabled SDK's are used.  Each SDK node will
 	 * have build configurations for children appropriate for the SDK.  These configurations
 	 * are filtered based on the platform filtering preference panel.
-	 * @return
-	 */
-	public static BuildTargetTreeNode[] getTreeViewerInput() {
-		return getTreeViewerInput(false);
-	}
-
-	/**
-	 * Gets the list of SDK tree nodes for use in a tree viewer.  The SDK's are gathered
-	 * from the SDK preferences page.  Only enabled SDK's are used.  Each SDK node will
-	 * have build configurations for children appropriate for the SDK.  These configurations
-	 * are filtered based on the platform filtering preference panel.
 	 * @param sbsv2Project true if this is an SBSv2 project which affects how the build
 	 * configuration list is calculated
+	 * @param IRunnableContext - a runnable context for which to update a progress monitor. Cannot be null.
 	 * @return array of BuildTargetTreeNode, or null
 	 * @since 1.4
 	 */
-	public static BuildTargetTreeNode[] getTreeViewerInput(boolean sbsv2Project) {
-		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
-		List<ISymbianSDK> sdkList = sdkMgr.getSDKList();
-		if (sdkList == null)
-			return null;
+	public static BuildTargetTreeNode[] getTreeViewerInput(final boolean sbsv2Project, IRunnableContext runnableContext) {
 		
-		List<ISymbianSDK> sdkListCopy = new ArrayList<ISymbianSDK>();
-		// Only add SDKs that are enabled
-		for (ISymbianSDK currSDK : sdkList){
-			if (currSDK.isEnabled()){
-				sdkListCopy.add(currSDK);
-			}
-		}
+		final List<BuildTargetTreeNode> assembledInput = new ArrayList<BuildTargetTreeNode>();
 		
-		if (sbsv2Project) {
-			// filter non-SBSv2 supported SDK's
-			sdkListCopy = SBSv2Utils.getSupportedSDKs(sdkListCopy);
-		}
-		
-		BuildTargetTreeNode[] input = new BuildTargetTreeNode[sdkListCopy.size()];
-		int index = 0;
-		for (ISymbianSDK sdk : sdkListCopy) {
+		try {
+			runnableContext.run(true, false, new IRunnableWithProgress(){
+
+				public void run(IProgressMonitor monitor)
+						throws InvocationTargetException, InterruptedException {
+					
+					String msgPrefix = "Building SDK/Configuration Model: "; //$NON-NLS-N$
+					
+					ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+					List<ISymbianSDK> sdkList = sdkMgr.getSDKList();
+					monitor.beginTask(msgPrefix, sdkList.size() + 2);
+					if (sdkList == null)
+						return;
+					
+					monitor.worked(1);
+					List<ISymbianSDK> sdkListCopy = new ArrayList<ISymbianSDK>();
+					// Only add SDKs that are enabled
+					for (ISymbianSDK currSDK : sdkList) {
+						if (currSDK.isEnabled()) {
+							sdkListCopy.add(currSDK);
+						}
+					}
+
+					if (sbsv2Project) {
+						// filter non-SBSv2 supported SDK's
+						sdkListCopy = SBSv2Utils.getSupportedSDKs(sdkListCopy);
+					}
+
+					BuildTargetTreeNode[] input = new BuildTargetTreeNode[sdkListCopy
+							.size()];
+					int index = 0;
+					monitor.worked(1);
+					for (ISymbianSDK sdk : sdkListCopy) {
+						monitor.worked(1);
+						monitor.setTaskName(msgPrefix + sdk.getUniqueId());
+						BuildTargetTreeNode treeNode = new BuildTargetTreeNode(
+								sdk, sbsv2Project);
+						if (treeNode.getChildren() != null || sbsv2Project) {
+							input[index++] = treeNode;
+						}
+					}
+
+					// Filter out any SDKs that don't have configs
+					monitor.worked(1);
+					for (BuildTargetTreeNode currNode : input) {
+						if (currNode != null) {
+							assembledInput.add(currNode);
+						}
+					}
+					monitor.done();
+				}
 			
-			BuildTargetTreeNode treeNode = new BuildTargetTreeNode(sdk, sbsv2Project);
-			if (treeNode.getChildren() != null || sbsv2Project){
-				input[index++] = treeNode;
-			}
+			
+			});
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		
-		// Filter out any SDKs that don't have configs
-		BuildTargetTreeNode[] realInput = new BuildTargetTreeNode[index];
-		index = 0;
-		for (BuildTargetTreeNode currNode : input) {
-			if (currNode != null){
-				realInput[index++] = currNode;
-			}
+		if (assembledInput.size() == 0){
+			return null;
 		}
-		return realInput;
+
+		return assembledInput.toArray(new BuildTargetTreeNode[assembledInput.size()]);
 	}
 	
 	private static String stripSDKIDFromConfigName(String configName, String sdkID){

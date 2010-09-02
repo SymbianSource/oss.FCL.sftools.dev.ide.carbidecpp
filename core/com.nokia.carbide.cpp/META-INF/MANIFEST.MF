@@ -15,8 +15,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.cdt.core,
  com.nokia.carbide.discovery.ui;bundle-version="1.0.0",
- org.eclipse.equinox.p2.ui;bundle-version="2.0.0",
- com.nokia.carbide.cpp.featureTracker
+ org.eclipse.equinox.p2.ui;bundle-version="2.0.0"
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp,
  com.nokia.carbide.cpp.logging

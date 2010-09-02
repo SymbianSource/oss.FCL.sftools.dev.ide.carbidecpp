@@ -6,7 +6,7 @@ a#carbide-whatsnew img { background-image : url(images/carbide_new.png); }
 a#carbide-whatsnew :hover img { background-image : url(images/carbide_new_hov.png); }
 
 a#carbide-sample img { background-image : url(images/carbide_sample.png); }
-a#carbide-sample:hover img { background-image : url(../images/carbide_sample_hov.png); }
+a#carbide-sample:hover img { background-image : url(images/carbide_sample_hov.png); }
 
 a#carbide-tutorial img { background-image : url(images/carbide_tutorial.png); }
 a#carbide-tutorial:hover img { background-image : url(images/carbide_tutorial_hov.png); }

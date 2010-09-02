@@ -439,7 +439,7 @@ public class BuildTargetsPage extends WizardPage implements IWizardDataPage {
 			}
 
 			if (setInput) {
-		        viewer.setInput(BuildTargetTreeNode.getTreeViewerInput(useSBSv2Builder));
+		        viewer.setInput(BuildTargetTreeNode.getTreeViewerInput(useSBSv2Builder, getContainer()));
 			}
 
 			if (!inited) {
