@@ -113,11 +113,14 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		public void aboutToRun(IJobChangeEvent event) {}
 		public void done(IJobChangeEvent event) {
 			fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
+			// Notify any plugins that want to know if the SDKManager has scanned plugins.
+			if (!sdkHookExtenstionsNotified) {
+				notifySDKManagerLoaded();
+				sdkHookExtenstionsNotified = true;
+			}
 		}
 	};
 
-		
-	
 	public AbstractSDKManager() {
 		macroStore = SymbianMacroStore.getInstance();
 		scanJob = new Job ("Scan for installed SDKs") {
@@ -186,11 +189,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		
 		updateCarbideSDKCache();
 		
-		// Notify any plugins that want to know if the SDKManager has scanned plugins.
-		if (!sdkHookExtenstionsNotified) {
-			notifySDKManagerLoaded();
-			sdkHookExtenstionsNotified = true;
-		}
 		if (monitor.isCanceled()) {
 			return Status.CANCEL_STATUS;
 		}
@@ -231,6 +229,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			if (sdkList.size() < 1) {
 				ensureScannedSDKs();
 			}
+					
 			List<ISymbianSDK> listCopy = new ArrayList<ISymbianSDK>(sdkList);
 			return listCopy;			
 		}
