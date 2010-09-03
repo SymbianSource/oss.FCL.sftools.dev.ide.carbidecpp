@@ -276,16 +276,6 @@ public class ProjectUIPlugin extends AbstractUIPlugin implements IStartup {
 		store.setValue(PreferenceConstants.PREF_KEEP_PROJECTS_IN_SYNC, keepInSync);
 	}
 	
-	public static boolean supportLinkedResources() {
-		IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
-		return store.getBoolean(PreferenceConstants.PREF_SUPPORT_LINKED_RESOURCES);
-	}
-	
-	public static void setSupportLinkedResources(boolean supported) {
-		IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
-		store.setValue(PreferenceConstants.PREF_SUPPORT_LINKED_RESOURCES, supported);
-	}
-	
 	public static int getAddFilesToProjectOption() {
 		IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
 		return store.getInt(PreferenceConstants.PREF_ADDED_FILES_OPTION);
