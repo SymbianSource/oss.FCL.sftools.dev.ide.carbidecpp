@@ -125,12 +125,12 @@
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
          
-         <!-- CREATE A PLATSIM CATEGORY
+          CREATE A PLATSIM CATEGORY
 		<category
 			id="com.nokia.platsim.cheatsheets"
 			name="PlatSim" />
-            
-         <!-- ADD PLATSIM TOPICS TO CATEGORY
+         
+          ADD PLATSIM TOPICS TO CATEGORY
 		 
 		<cheatsheet
 			category="com.nokia.platsim.cheatsheets"
