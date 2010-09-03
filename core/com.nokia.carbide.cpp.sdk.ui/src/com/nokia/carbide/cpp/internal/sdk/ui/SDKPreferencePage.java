@@ -181,6 +181,7 @@ public class SDKPreferencePage
 			((SymbianSDK)sdk).setEPOCROOT(value.toString());
 			SDKCorePlugin.getSDKManager().updateSDK(sdk);
 			getViewer().refresh();
+			updateSDKStatus(sdk);
 		}
 	}
 

@@ -19,9 +19,11 @@
 package com.nokia.carbide.internal.discovery.ui.wizard;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -61,8 +63,29 @@ public class ExportWizard extends Wizard implements IExportWizard {
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
 		setDefaultPageImageDescriptor(Activator.getImageDescriptor("icons\\install_wiz.gif")); //$NON-NLS-1$
 		setWindowTitle(Messages.ExportWizard_Title);
-		exportPage = new ExportPage();
+		exportPage = new ExportPage(getInitialFeatureIds());
 		addPage(exportPage);
+	}
+
+	private Collection<String> getInitialFeatureIds() {
+		Collection<FeatureInfo> installedFeatures = null;
+		File file = P2Utils.getInitialFeaturesFile();
+		if (file.exists()) {
+			try {
+				ImportExportData data = Streamer.readFromXML(new FileInputStream(file));
+				installedFeatures = data.getFeatureInfos();
+			} catch (Exception e) {
+				Activator.logError(Messages.ExportWizard_ReadInstalledFeaturesError + file, e);
+			}
+		}
+		
+		Collection<String> featureIds = new ArrayList<String>();
+		if (installedFeatures != null) {
+			for (FeatureInfo featureInfo : installedFeatures) {
+				featureIds.add(featureInfo.getId());
+			}
+		}
+		return featureIds;
 	}
 
 }

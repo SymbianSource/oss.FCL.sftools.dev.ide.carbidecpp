@@ -125,10 +125,11 @@ public class RemoteConnectionsActivator extends AbstractUIPlugin {
 		Registry instance = Registry.instance();
 		instance.loadExtensions();
 		instance.loadConnections();
-		fireToggleServicesTestingListener(getShouldTestServices());
 		
 		new WhenWorkbenchIsVisibleThread(new Runnable() {
 			public void run() {
+				fireToggleServicesTestingListener(getShouldTestServices());
+
 				if (!ignoreAgentLoadErrors())
 					checkPrerequisites();
 				

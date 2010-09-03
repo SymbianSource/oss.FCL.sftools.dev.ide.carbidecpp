@@ -92,6 +92,14 @@ public class BuildPlatformFilterPage extends PreferencePage implements IWorkbenc
 		return super.performOk();
 	}
 
+	public boolean performCancel() {
+		if (sbsv2Tab != null) {
+			sbsv2Tab.performCancel();
+		}
+
+		return super.performCancel();
+	}
+
 	@Override
 	protected void performApply() {
 		performOk();

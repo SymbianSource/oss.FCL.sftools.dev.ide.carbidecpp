@@ -6,48 +6,30 @@
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>Installing an SDK</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
-</head>
+<style type="text/css">
+<!--
+.style1 {font-size: 1em}
+-->
+</style></head>
 <body >
 <h2>Installing an SDK</h2>
-<p>To create projects an SDK must be installed. If more than one SDK is installed one must be specified as the default.</p>
+<p>To create projects to create and develop Symbian OS programs at least one Software Development Kit (SDK) must be installed and recognized by Carbide.</p>
 <div class="step">
 <h4><a name="runSDK" id="runSDK"> </a>Installing an SDK</h4>
-<p>The following SDKs can be downloaded from Nokia at: <a href="http://www.forum.nokia.com/Tools_Docs_and_Code/">http://www.forum.nokia.com/</a>.</p>
+<p>Download the following SDKs from Nokia at: <a href="http://www.forum.nokia.com/Tools_Docs_and_Code/">http://www.forum.nokia.com/</a>.</p>
 <ol>
-  <li>Install at least one of the following SDKs using the install directions that accompany the SDK:
+        <li>Install   one of the following SDKs using the install directions that accompany it:    </li>
     <ul>
-      <li>Nokia Symbian^3</li>
-      <li>Nokia Qt for SDK 1.0</li>
-      <li>S60 5th Edition v1.0</li>
-      </ul>
-  </li>
-  <li>Set the default SDK to use for projects
-    <ol type="A">
-      <li>In Carbide.c++
-        <ol type="i">
-          <li>Click Window &gt; Preferences &gt; Carbide.c++ &gt; SDK Preferences to open the SDK Preferences panel</li>
-          <li>Select the SDK and click SDK Properties to open the SDK Properties dialog</li>
-          <li>Set the Default SDK value to Yes</li>
-          <li>Close all the dialogs</li>
-        </ol>
-      </li>
-      <li>In a command-line prompt:
-        <ol type="i">
-          <li>Set the default device devkit by typing on the command line:<br>
-            <br />
-  &gt; <span class="code">devices &ndash;setdefault @device id: name</span></li>
-          <p>The device id and name can be found in the devices.xml file. For example, for a Techview 9.2 kit you might type<br>
-              <br />
-            <span class="code">&gt; devices &ndash;setdefault @ SymbianOS_92_2006_wk40:com.symbian.techview</span></p>
-          <li>Now ensure the default device is set by entering:<br>
-            <br />
-  &gt; <span class="code">devices</span></li>
-          </ol>
-      </li>
-      <li>Make sure the correct SDK default is set.</li>
-      </ol>
-  </li>
-  </ol>
+          <li>Nokia Symbian^4</li>
+            <li>Nokia Symbian^3</li>
+            <li>Nokia Qt for SDK 1.0</li>
+            <li>S60 5th Edition v1.0</li>
+        </ul>
+    <li><span class="style1">Launch Carbide.c++</span></li>
+    </ol>
+<blockquote>
+    <p><span class="style1">The next time you create a project the new SDK is available as an option. This happens because every time Carbide launches it searches for newly installed SDKs and adds them to a cache file for later use. You can review which SDKs are installed by opening the <a href="../../reference/pref_carb_symbian_sdk.htm">Symbian SDKs</a> preference panel.</span></p>
+    </blockquote>
 </div>
 
 <h5>Other references</h5>

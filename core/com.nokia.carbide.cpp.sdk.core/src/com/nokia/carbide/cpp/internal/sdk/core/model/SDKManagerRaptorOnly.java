@@ -135,7 +135,17 @@ public class SDKManagerRaptorOnly extends AbstractSDKManager {
 	public void updateSDK(ISymbianSDK sdkId) {
 		updateCarbideSDKCache();
 	}
-	
+
+	@Override
+	protected boolean isInSDKList(ISymbianSDK sdk) {
+		for (ISymbianSDK entry : sdkList) {
+			if (entry.getEPOCROOT().equalsIgnoreCase(sdk.getEPOCROOT())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	@Override
 	protected boolean isEPOCRootFixed() {
 		return false;

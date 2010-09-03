@@ -113,11 +113,14 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		public void aboutToRun(IJobChangeEvent event) {}
 		public void done(IJobChangeEvent event) {
 			fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
+			// Notify any plugins that want to know if the SDKManager has scanned plugins.
+			if (!sdkHookExtenstionsNotified) {
+				notifySDKManagerLoaded();
+				sdkHookExtenstionsNotified = true;
+			}
 		}
 	};
 
-		
-	
 	public AbstractSDKManager() {
 		macroStore = SymbianMacroStore.getInstance();
 		scanJob = new Job ("Scan for installed SDKs") {
@@ -186,11 +189,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		
 		updateCarbideSDKCache();
 		
-		// Notify any plugins that want to know if the SDKManager has scanned plugins.
-		if (!sdkHookExtenstionsNotified) {
-			notifySDKManagerLoaded();
-			sdkHookExtenstionsNotified = true;
-		}
 		if (monitor.isCanceled()) {
 			return Status.CANCEL_STATUS;
 		}
@@ -231,6 +229,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			if (sdkList.size() < 1) {
 				ensureScannedSDKs();
 			}
+					
 			List<ISymbianSDK> listCopy = new ArrayList<ISymbianSDK>(sdkList);
 			return listCopy;			
 		}
@@ -318,6 +317,9 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				sdk = SymbianSDKFactory.createInstance(id, 
 						   entry.getEpocRoot(),
 						   osVersion);
+				if (isInSDKList(sdk)) {
+					continue;
+				}
 				((SymbianSDK)sdk).setEnabled(entry.isEnabled());
 				synchronized (sdkList) {
 					sdkList.add(sdk);
@@ -346,6 +348,13 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 			flushSDKCache();
 		}
 	}
+
+	/**
+	 * Check whether an SDK already exist in SDK list.
+	 * @param sdk - SDK to be checked
+	 * @return true if SDK already exist in SDK list, false otherwise
+	 */
+	abstract protected boolean isInSDKList(ISymbianSDK sdk);
 
 	/**
 	 * Tell whether EPOCROOT can be changed for a given ISymbianSDK
@@ -499,7 +508,8 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 	
 	public void fireInstalledSdkChanged(SDKChangeEventType eventType) {
-		for (ICarbideInstalledSDKChangeListener l : listeners) {
+		ListenerList<ICarbideInstalledSDKChangeListener> lList = listeners;
+		for (ICarbideInstalledSDKChangeListener l : lList) {
 			l.installedSdkChanged(eventType);
 		}
 	}
@@ -646,7 +656,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 	}
 
 	protected void clearSDKCache() {
-		SDKCacheUtils.getCache().removeCache(SDK_MANAGER_CACHE_KEY, false);
+		SDKCacheUtils.getCache().removeCache(SDK_MANAGER_CACHE_KEY, true);
 	}
 
 	protected void flushSDKCache() {

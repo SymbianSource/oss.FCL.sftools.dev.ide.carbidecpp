@@ -37,8 +37,8 @@ import org.eclipse.ui.IImportWizard;
 import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
-import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
+import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
 import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.project.core.ProjectCorePlugin;
@@ -56,6 +56,7 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 	private MMPSelectionPage mmpSelectionPage;
 	private ProjectPropertiesPage projectPropertiesPage;
 
+	private static final String CARBIDE_BLDINF_IMFPORTER_FEATURE = "CARBIDE_BLDINF_IMPORTER"; //$NON-NLS-1$
 
 	public BldInfImportWizard() {
 		super();
@@ -69,6 +70,7 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		if (HostOS.IS_WIN32){
+			((SDKManager)sdkMgr).ensureSystemDrivesSynchronized();
 			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
 				if (sdkMgr instanceof ISDKManagerInternal){
 					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
@@ -87,7 +89,6 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
     	
 		final String projectName = projectPropertiesPage.getProjectName();
 		final IPath rootDirectory = projectPropertiesPage.getRootDirectory();
-		final boolean isLinkedProject = projectPropertiesPage.linkedResourcesEnabled();
 		
 		// calculate the project relative path to the bld.inf file.
 		IPath absoluteBldInfPath = new Path(getBldInfFile());
@@ -99,8 +100,6 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 		// way the project setting will be set to build bld.inf.
 		final List<String> components = mmpSelectionPage.areAllMakMakeReferencesChecked() ? new ArrayList<String>(0) : mmpSelectionPage.getSelectedMakMakeReferences();
 
-		final List<String> refs = getSelectedMakMakeReferences();
-		
 		final List<ISymbianBuildContext> selectedConfigs = getSelectedConfigs();
 
 		// run this in a workspace job
@@ -109,41 +108,14 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 			public IStatus runInWorkspace(IProgressMonitor monitor) throws CoreException {
 				monitor.beginTask(Messages.BldInfImportWizard_CreatingProjectJobName, IProgressMonitor.UNKNOWN);
 
-				// write the debug target mmp setting - use the last mmp in
-				// the list of selected mak make files.
-				// We also need to check for project test mmpfiles and add that only if the project is only comprised of test mmp files
-				String debugMMP = ""; //$NON-NLS-1$
-				boolean hasOneNormalMMP = false; // Don't add test mmp if there's a regular MMP
-				for (String ref : refs) {
-					if (ref.toLowerCase().endsWith(".mmp")){
-						hasOneNormalMMP = true;
-						debugMMP = ref;
-					}
-					
-					if (hasOneNormalMMP == false){
-						if (ref.toLowerCase().endsWith(".mmp " + ICarbideProjectInfo.TEST_COMPONENT_LABEL)) { //$NON-NLS-1$
-			    			debugMMP = ref;
-		    				debugMMP = debugMMP.substring(0, debugMMP.indexOf( " " + ICarbideProjectInfo.TEST_COMPONENT_LABEL));
-			    		}
-					}
-				} // for
-
 				IProject newProject = null;
-				if (isLinkedProject){
-					newProject = ProjectCorePlugin.createProject(projectName, null);
-					newProject.getFolder(rootDirectory.lastSegment()).createLink(rootDirectory.toFile().toURI(), IResource.BACKGROUND_REFRESH, new NullProgressMonitor());
-				} else {
-					newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
-				}
+				newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
+				
         		monitor.worked(1);
         		
     			newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(useSBSv2Builder()));
 
-    			if (isLinkedProject){
-    				ProjectCorePlugin.postProjectCreatedActions(newProject, absoluteInfPath, selectedConfigs, components, debugMMP, null, monitor);
-    			} else {
-    				ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, debugMMP, null, monitor);
-    			}
+    			ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, null, null, monitor);
         		
         		if (monitor.isCanceled()) {
 	    			// the user canceled the import so delete the project
@@ -161,6 +133,8 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 		job.setRule(ResourcesPlugin.getWorkspace().getRoot());
 		job.schedule();
 
+		FeatureUseTrackerPlugin.getFeatureUseProxy().useFeature(CARBIDE_BLDINF_IMFPORTER_FEATURE);
+		
 		return true;
 	}
 	 

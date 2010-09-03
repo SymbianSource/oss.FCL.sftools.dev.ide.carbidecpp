@@ -10,4 +10,9 @@ SOURCES   += $(baseName)_reg.rss \
 FORMS	  += $(baseName).ui
 RESOURCES +=
 
-symbian:TARGET.UID3 = $(uid3)
+symbian: {
+	TARGET.UID3 = $(uid3)
+	MMP_RULES += DEBUGGABLE_UDEBONLY 
+}
+
+

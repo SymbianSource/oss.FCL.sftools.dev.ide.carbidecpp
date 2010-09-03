@@ -142,6 +142,9 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 		if (sbsv2Alias.toUpperCase().contains(TOOLCHAIN_GCCE) ||
 			sbsv2Alias.toUpperCase().contains(TOOLCHAIN_ARM)) {
 			if (configQueryData != null) {
+				if (configQueryData.getBuildPrefix() != null && !(new File(configQueryData.getBuildPrefix()).exists())){
+					this.configQueryData = setConfigQueryData(sdk, getSBSv2Alias());
+				}
 				return new Path(configQueryData.getBuildPrefix());
 			}
 		} 
@@ -160,7 +163,7 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 
 	public List<IDefine> getCompilerPreincludeDefines() {
 		IPath prefixFile = getCompilerPrefixFile();
-		if (prefixFile == null || !prefixFile.toFile().exists()) {
+		if (prefixFile == null) {
 			return getCachedData().getCompilerMacros(null);
 		}
 		
@@ -391,11 +394,15 @@ public class BuildContextSBSv2 implements ISBSv2BuildContext {
 	 */
 	public IPath getPrefixFromVariantCfg(){
 		ISBSv2BuildInfo sbsv2BldInfo = ((ISBSv2BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER));
+		if (sbsv2BldInfo.getPrefixFromVariantCfg()== null || sbsv2BldInfo.getPrefixFromVariantCfg().toOSString().length() == 0){
+			return null;
+		}
 		return sbsv2BldInfo.getPrefixFromVariantCfg();
 	}
 
 	public List<IDefine> getBuildMacros() {
 		ISBSv2BuildInfo sbsv2BldInfo = ((ISBSv2BuildInfo)getSDK().getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER));
+		
 		Map<String, String> buildMacroMap = sbsv2BldInfo.getBuildMacros(getSBSv2Alias());
 		List<IDefine> defines = new ArrayList<IDefine>();
 		for (String macroName : buildMacroMap.keySet()){

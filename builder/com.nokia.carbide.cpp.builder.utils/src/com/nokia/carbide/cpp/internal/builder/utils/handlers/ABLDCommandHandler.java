@@ -181,7 +181,7 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 		args.add(buildConfig.getPlatformString().toLowerCase());
 		args.add(buildConfig.getTargetString().toLowerCase());
 		
-		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig;
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
 		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldTargetArgs().split(" ")) { //$NON-NLS-1$
 			args.add(arg);
 		}
@@ -193,7 +193,7 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 		List<String> args = new ArrayList<String>();
 		args.add("export"); //$NON-NLS-1$
 		
-		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig;
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
 		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldExportArgs().split(" ")) { //$NON-NLS-1$
 			args.add(arg);
 		}
@@ -207,7 +207,7 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 		args.add(buildConfig.getPlatformString().toLowerCase());
 		args.add(buildConfig.getTargetString().toLowerCase());
 		
-		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig;
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
 		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldResourceArgs().split(" ")) { //$NON-NLS-1$
 			args.add(arg);
 		}
@@ -221,7 +221,7 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 		args.add(buildConfig.getPlatformString().toLowerCase());
 		args.add(buildConfig.getTargetString().toLowerCase());
 		
-		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig;
+		ISBSv1BuildContext sbsv1Context = (ISBSv1BuildContext)buildConfig.getBuildContext();
 		for (String arg : sbsv1Context.getBuildArgumentsInfo().getAbldFinalArgs().split(" ")) { //$NON-NLS-1$
 			args.add(arg);
 		}

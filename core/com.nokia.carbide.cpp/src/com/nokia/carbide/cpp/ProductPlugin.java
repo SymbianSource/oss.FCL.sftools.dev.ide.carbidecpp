@@ -16,12 +16,13 @@
 */
 package com.nokia.carbide.cpp;
 
+import java.io.File;
+
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerConsts;
-import com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin;
+import com.nokia.carbide.internal.discovery.ui.wizard.P2Utils;
 
 /**
  * The main plugin class to be used in the desktop.
@@ -44,7 +45,10 @@ public class ProductPlugin extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 
-		FeatureUseTrackerPlugin.getFeatureUseProxy().startUsingFeature(FeatureUseTrackerConsts.CARBIDE_IDE);
+		File file = P2Utils.getInitialFeaturesFile();
+		if (!file.exists()) {
+			P2Utils.writeFeaturesToFile(file);
+		}
 	}
 
 	/**

@@ -547,9 +547,9 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 				return;
 			}
 			// not there, check winscw
-			String winscwURELFullPathStr = getEPOCROOT();
-			winscwURELFullPathStr += WINSCW_UREL_DIR;
-			IPath winscwURELPath = new Path(winscwURELFullPathStr);
+			String winscwUDEBFullPathStr = getEPOCROOT();
+			winscwUDEBFullPathStr += WINSCW_UDEB_DIR;
+			IPath winscwURELPath = new Path(winscwUDEBFullPathStr);
 			if (winscwURELPath != null && winscwURELPath.toFile().exists()){
 				if (winscwURELPath.append("avkon.dll").toFile().exists()){
 					sdkFeatures.add(ISymbianSDKFeatures.IS_AVKON_SUPPORTED);

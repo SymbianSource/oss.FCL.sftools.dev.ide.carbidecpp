@@ -194,7 +194,9 @@ public class ConnectionsView extends ViewPart {
 	private void refreshViewer() {
 		Display.getDefault().asyncExec(new Runnable() {
 			public void run() {
-				if (nameEditor != null && nameEditor.isActivated()) {
+				if (nameEditor != null && nameEditor.getControl() != null &&
+					!nameEditor.getControl().isDisposed() &&
+					nameEditor.isActivated()) {
 					refreshPending = true;
 					return;
 				}

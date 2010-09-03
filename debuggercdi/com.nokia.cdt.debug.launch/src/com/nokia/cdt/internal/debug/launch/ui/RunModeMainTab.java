@@ -16,13 +16,12 @@
 */
 package com.nokia.cdt.internal.debug.launch.ui;
 
-import java.util.StringTokenizer;
-
 import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -180,23 +179,14 @@ public class RunModeMainTab extends CarbideMainTab implements IResourceChangeLis
 		// main target if its in the list of target executables
 		if (isRemoteTextValid(remoteText.getText()) == null) {
 			try {
-				Path processToLaunch = new Path(remoteText.getText());				
-				Path mainExePath = new Path(config.getAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, ""));
+				IPath processToLaunch = new Path(remoteText.getText());
+				IPath mainExePath = new Path(config.getAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, ""));
 				if (!processToLaunch.lastSegment().equalsIgnoreCase(mainExePath.lastSegment())) {
 					// passing null as the monitor should be ok as its not really being used.
-					String executablesToTarget = ExecutablesTab.getExecutablesToTarget(config, null);					
-					if (executablesToTarget != null && executablesToTarget.length() > 0) {
-						StringTokenizer tokenizer = new StringTokenizer(executablesToTarget, ","); //$NON-NLS-1$
-						while (tokenizer.hasMoreTokens()) {
-							String exe = tokenizer.nextToken();
-							String enabled = tokenizer.nextToken();
-			
-							Path exePath = new Path(exe);
-							if (enabled.compareTo("1") == 0 //$NON-NLS-1$
-									&& exePath.lastSegment().equalsIgnoreCase(processToLaunch.lastSegment())) {
-								config.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, exePath.toOSString());
-								break;
-							}
+					for (IPath exe : ExecutablesTab.getExecutablesToTarget(config, null)) {
+						if (exe.lastSegment().equalsIgnoreCase(processToLaunch.lastSegment())) {
+							config.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, exe.toOSString());
+							break;
 						}
 					}
 				}

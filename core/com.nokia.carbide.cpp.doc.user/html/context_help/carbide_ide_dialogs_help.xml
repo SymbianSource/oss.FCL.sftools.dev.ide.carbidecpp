@@ -26,16 +26,16 @@
 	<!-- Carbide Project Settings page -->
 	<context id="project_properties_page" >
 		<description>Use the Carbide Project Settings window to specify project build options.</description>
-		<topic label="Carbide Project Settings"		              href="html/reference/build_properties/pane_project_settings.htm" />
-		<topic label="Carbide Build Configurations"				  href="html/reference/build_properties/pane_build_config.htm" />
-		<topic label="Macro Settings"				  			  href="html/reference/build_properties/pane_macro_settings.htm" />
+		<topic label="Carbide Project Settings"		              href="html/reference/build_properties/prop_carb_project_settings.htm" />
+		<topic label="Carbide Build Configurations"				  href="html/reference/build_properties/prop_carb_build_config.htm" />
+		<topic label="Macro Settings"				  			  href="html/reference/build_properties/prop_carb_macro_settings.htm" />
 		<topic label="Building Projects"			              href="html/tasks/projects/prj_build.htm" />
 	</context>
 
 	<!-- Carbide Build Configurations Page -->
 	<context id="project_configurations_page" >
 		<description>The Carbide Build Configurations page allows you to specify SIS file options and environment variable settings for the selected build configuration</description>
-		<topic label="Carbide Build Configurations"					href="html/reference/build_properties/pane_build_config.htm" />
+		<topic label="Carbide Build Configurations"					href="html/reference/build_properties/prop_carb_build_config.htm" />
 		<topic label="SIS Builder"									href="html/reference/build_properties/pane_build_config_sis.htm" />
 		<topic label="SBSv2"										href="html/reference/build_properties/pane_build_config_sbsv2.htm" />
 		<topic label="Environment"									href="html/reference/build_properties/pane_build_config_env.htm" />
@@ -48,9 +48,9 @@
 	<!-- Carbide Build Manage Configurations Page -->
 	<context id="manage_configurations_dialog" >
 		<description>Add or Remove build configurations to current project</description>
-		<topic label="Carbide Build Configurations"				   	href="html/reference/build_properties/pane_build_config.htm" />
+		<topic label="Carbide Build Configurations"				   	href="html/reference/build_properties/prop_carb_build_config.htm" />
 		<topic label="Adding/Removing Build Configurations"	   		href="html/tasks/projects/prj_new_build_config.htm" />
-		<topic label="Carbide Macro Settings"	   					href="html/reference/build_properties/pane_macro_settings.htm" />
+		<topic label="Carbide Macro Settings"	   					href="html/reference/build_properties/prop_carb_macro_settings.htm" />
 	</context>
 
 	<!-- Carbide Build Preference Page (added v1.3) -->
@@ -75,8 +75,8 @@
 	<!-- Carbide Macro Settings panel (added v1.3) -->
 	<context id="macro_settings_page" >
 		<description>Set project macros options</description>
-		<topic label="Carbide Macro Settings"	   		href="html/reference/build_properties/pane_macro_settings.htm" />
-		<topic label="Carbide Build Configurations"		href="html/reference/build_properties/pane_build_config.htm" />
+		<topic label="Carbide Macro Settings"	   		href="html/reference/build_properties/prop_carb_macro_settings.htm" />
+		<topic label="Carbide Build Configurations"		href="html/reference/build_properties/prop_carb_build_config.htm" />
 	</context>
 
 	<!-- Dependency Tracking (added v2.1) -->
@@ -382,7 +382,6 @@
 		<topic label="Adding SDKs" 							href="html/tasks/sdks/sdk_add.htm" />
 		<topic label="Searching SDKs" 						href="html/tasks/sdks/sdk_search.htm" />
 		<topic label="Viewing SDK Properties" 				href="html/tasks/sdks/sdk_view_properties.htm" />
-		<topic label="Adding Symbian Custom Kits" 			href="html/tasks/sdks/sdk_add_custkits.htm" />
 	</context>
 
 	<!-- SDK Preferences panel: SDK Add dialog -->
@@ -398,7 +397,6 @@
 		<description>Use the SDK Properties window to examine the properties associated with the currently selected SDK in the SDK Preferences panel.</description>
 		<topic label="SDK Properties"				href="html/tasks/sdks/sdk_view_properties.htm" />
 		<topic label="Symbian SDKs"  						href="html/reference/pref_carb_symbian_sdk.htm" />
-		<topic label="Adding Symbian Custom Kits"	href="html/tasks/sdks/sdk_add_custkits.htm" />
 	</context>
 
 	<!-- Carbide.c++ > Platform Filtering Preferences panel -->

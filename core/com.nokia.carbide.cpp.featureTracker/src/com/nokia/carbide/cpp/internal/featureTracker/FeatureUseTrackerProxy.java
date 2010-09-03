@@ -37,20 +37,14 @@ public class FeatureUseTrackerProxy implements IFeatureUseTracker {
 	private List<IFeatureUseTracker> featureClients = new ArrayList<IFeatureUseTracker>();
 	private boolean featureClientInited;
 
-	public void startUsingFeature(String featureName) {
+	public void useFeature(String featureName) {
 		if (!featureClientInited) {
 			checkForClients();
 			featureClientInited = true;
 		}
 
 		for (IFeatureUseTracker client : featureClients) {
-			client.startUsingFeature(featureName);
-		}
-	}
-
-	public void stopUsingFeature(String featureName) {
-		for (IFeatureUseTracker client : featureClients) {
-			client.stopUsingFeature(featureName);
+			client.useFeature(featureName);
 		}
 	}
 	

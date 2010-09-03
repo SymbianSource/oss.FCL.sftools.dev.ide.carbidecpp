@@ -13,7 +13,7 @@
 	</entry>
 
     <entry keyword="Attaching to a Symbian OS Process ">
-	   <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching debugger to Symbian OS Process"/>
+	   <topic href="html/tasks/processes/attach_to_process.htm" label="Attaching debugger to Symbian OS Process"/>
 	</entry>
 
 <!-- B -->
@@ -104,8 +104,8 @@
 <!-- C -->
 
 	<entry keyword="Carbide">
-       <topic label="build configurations"		href="html/reference/build_properties/pane_build_config.htm"/>
-       <topic label="project settings"			href="html/reference/build_properties/pane_project_settings.htm"/>
+       <topic label="build configurations"		href="html/reference/build_properties/prop_carb_build_config.htm"/>
+       <topic label="project settings"			href="html/reference/build_properties/prop_carb_project_settings.htm"/>
 	</entry>
 
 
@@ -491,7 +491,7 @@
 	</entry>
 
 	<entry keyword="Processes">
-	   <topic href="html/tasks/processes/attach_debugger_to_process.htm" label="Attaching debugger to Symbian OS Process"/>
+	   <topic href="html/tasks/processes/attach_to_process.htm" label="Attaching debugger to Symbian OS Process"/>
 	</entry>
 
     <entry keyword="Projects">
@@ -571,7 +571,6 @@
 	<entry keyword="SDKs">
 	   <topic href="html/reference/pref_carb_symbian_sdk.htm" />
 	   <topic href="html/tasks/sdks/sdk_add.htm" />
-	   <topic href="html/tasks/sdks/sdk_add_custkits.htm" label="Adding Symbian Custom Kits"/>
 	   <topic href="html/tasks/sdks/sdk_search.htm" label="Searching"/>
 	   <topic href="html/tasks/sdks/sdk_view_properties.htm" label="Viewing Properties"/>
        <topic href="html/qt_help/qt_pref_panel.htm"/>
@@ -585,7 +584,6 @@
 	<entry keyword="SDK Support">
 	   <topic href="html/tasks/sdks/sdk_add.htm" />
 	   <topic href="html/tasks/WorkingwithSDKs.html"/>
-	   <topic href="html/tasks/RmvngandVwngPropsosSDK.html" label="Viewing and Editing SDK Properties"/>
 	</entry>
 
 	<entry keyword="SIS File">

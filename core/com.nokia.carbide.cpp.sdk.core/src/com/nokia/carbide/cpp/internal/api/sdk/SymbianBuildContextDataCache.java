@@ -159,7 +159,7 @@ public class SymbianBuildContextDataCache {
 		
 		boolean buildCache = false;
 		
-		if (hrhFileInfo == null) {
+		if (hrhFileInfo == null || hrhFileInfo.getFiles().length == 0) {
 			// hasn't been built yet, or was flushed
 			buildCache = true;
 		} else {
@@ -311,7 +311,7 @@ public class SymbianBuildContextDataCache {
 		
 		compilerPrefixFile = prefixFile;
 
-		if (compilerPrefixFileInfo == null ||
+		if (compilerPrefixFileInfo == null || compilerPrefixFile == null ||
 				compilerPrefixFileInfo.anyChanged()) {
 
 			changed = true;

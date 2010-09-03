@@ -56,7 +56,5 @@ VENDORID	  	  0
 SECUREID		  $(uid3)
 CAPABILITY	  	  ReadUserData
 
-#ifdef ENABLE_ABIV2_MODE
-  DEBUGGABLE_UDEBONLY
-#endif
+DEBUGGABLE_UDEBONLY
 // End of File

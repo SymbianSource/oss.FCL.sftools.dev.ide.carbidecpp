@@ -24,7 +24,6 @@ import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
-import com.nokia.carbide.cpp.internal.sdk.core.model.SDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
@@ -33,11 +32,12 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class SBSv2QueryTests extends BaseTest {
 	
-	private boolean printTimingStats = true;
+	//private boolean printTimingStats = true;
 	
 	private long startTime;
 	
-	private final String SDK_ID1 = "K_92_WK12"; // SDK with additional aliases and products
+	//private final String SDK_ID1 = "s3"; // SDK with additional aliases and products
+	private final String SDK_ID1 = "K_92_WK12";
 	
 	@Override
 	protected void setUp() throws Exception {
@@ -71,7 +71,8 @@ public class SBSv2QueryTests extends BaseTest {
 		assertNotNull(sbsv2BuildInfo);
 		
 		List<ISymbianBuildContext> buildContexts = sbsv2BuildInfo.getFilteredBuildConfigurations();
-		assertEquals(6, buildContexts.size());
+		// WINSCW UREL is filtered out from default b/c it does not exist for current test SDK
+		assertEquals(5, buildContexts.size());
 		
 		for (ISymbianBuildContext context : buildContexts){
 			assertTrue(context instanceof ISBSv2BuildContext);
@@ -84,7 +85,13 @@ public class SBSv2QueryTests extends BaseTest {
 				System.out.println("Config " + sbsv2Context.getSBSv2Alias() + " had error, cannot fully test: " + sbsv2Context.getConfigQueryData().getConfigurationErrorMessage());
 			}
 			
-			assertTrue(sbsv2Context.getConfigQueryData().getTargettypes().size() > 0);
+			if (sbsv2Context.getConfigQueryData().getConfigurationErrorMessage() == null || 
+				sbsv2Context.getConfigQueryData().getConfigurationErrorMessage().length() == 0 ){
+				// If there is an error in a configuration we know there won't be any target types
+				assertTrue(sbsv2Context.getConfigQueryData().getTargettypes().size() > 0);
+			} else {
+				assertFalse(sbsv2Context.getConfigQueryData().getTargettypes() == null);
+			}
 		}
 	}
 		

@@ -6,13 +6,18 @@
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>Adding SDKs</title>
 <link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<style type="text/css">
+<!--
+.style1 {font-size: 1em}
+-->
+</style>
 </head>
 <body >
 <h2>Adding SDKs </h2>
-<p> Use the <b>Add New SDK</b> window to provide the information Carbide.c++ requires to identify, locate and build a project with the specified SDK.</p>
-<p align="center"><img src="../../reference/images/wnd_ad_sdk.png" width="438" height="262" /></p>
-<p class="figure">Figure 1. Add New SDK window</p>
-<h5>Table 1 Add New SDK window&mdash;items</h5>
+<p> Use the <b>Add New SDK</b> dialog to provide the information Carbide.c++ requires to identify and locate  the specified SDK.</p>
+<p align="center"><img src="../../reference/images/wnd_add_sdk.png" width="435" height="150" /></p>
+<p class="figure">Figure 1. Add New SDK dialog</p>
+<h5>Table 1 Add New SDK dialog&mdash;items</h5>
 <table width="800"  border="0" cellpadding="2" cellspacing="0">
   <tr>
     <th width="25%" scope="col">Item</th>
@@ -24,48 +29,29 @@
   </tr>
   <tr>
     <td><b>EPOCROOT</b></td>
-    <td>The path to  EPOCROOT within the SDK. Click <b>Browse</b> to locate and select EPOCROOT.</td>
-  </tr>
-  <tr>
-    <td><b>Vendor</b></td>
-    <td><p>Select the vendor from the drop down list, for example, com.nokia.s60 or com.symbian.TechView</p>
-    </td>
-  </tr>
-  <tr>
-    <td><b>Is Default</b></td>
-    <td>Specify whether or not the selected SDK is the default to use.</td>
-  </tr>
-  <tr>
-    <td><b>OS Version</b></td>
-    <td>Specify the operating system version or select Auto detect.</td>
-  </tr>
-  <tr>
-    <td><b>SDK Version </b></td>
-    <td>Select the SDK version or Auto detect.</td>
+    <td>The path to  <span class="code">EPOCROOT</span> within the SDK. Click <b>Browse</b> to locate and select <span class="code">EPOCROOT</span>.</td>
   </tr>
 </table>
 <div class="step">
   <h4>Adding  SDKs to Carbide.c++ </h4>
   <ol>
-    <li>Click  Add  New SDK in the <a href="../../reference/pref_carb_sdk_preference.html">SDK Preferences panel </a></li>
+    <li>Click Add New SDK in the <a href="../../reference/pref_carb_symbian_sdk.htm">Symbian SDKs</a><span class="style1"> preference panel </span></li>
     <p>The <b>Add New SDK</b> window (Figure 1) appears.</p>
-    <li>Enter SDK name, EPOCROOT, and additional information</li>
-    <p>Enter the requested information in the appropriate fields.</p>
-    <li>Click OK  </li>
-    <p>The <b>Add New SDK</b> window closes and the SDK is added to the <b>Available Symbian OS SDKs</b> list in the <b>SDK Preferences</b> panel. </p>
+    <li>Enter the identifying SDK ID</li>
+    <li>Enter the EPOCROOT path or click Browse to locate it</li>
+    <li>Click OK </li>
+    <p>The <b>Add New SDK</b> dialog closes and the SDK is added to the <b>Symbian SDKs</b> list. </p>
   </ol>
 </div>
-
 <h5>Related tasks </h5>
 <ul>
   <li><a href="../WorkingwithSDKs.html">Working with SDKs</a></li>
-  <li><a href="sdk_add_custkits.htm">Adding Symbian Custom Kits</a></li>
   <li><a href="sdk_search.htm">Searching SDKs</a></li>
   <li><a href="sdk_view_properties.htm">View SDK Properties</a> </li>
 </ul>
 <h5>Related references </h5>
 <ul>
-  <li><a href="../../reference/pref_carb_sdk_preference.html">SDK Preferences Panel</a></li>
+  <li><a href="../../reference/pref_carb_symbian_sdk.htm">Symbian SDKs panel</a></li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Nokia Corporation and/or its subsidiary(-ies). 
+* Copyright (c) 2009-2010 Nokia Corporation and/or its subsidiary(-ies). 
 * All rights reserved.
 * This component and the accompanying materials are made available
 * under the terms of the License "Eclipse Public License v1.0"
@@ -21,14 +21,9 @@ package com.nokia.carbide.cpp.internal.api.featureTracker;
 public interface IFeatureUseTracker {
 	
 	/**
-	 * Start using the feature (a.k.a. 'checkout')
-	 * @param featureName - The string of the feature to be used
+	 * Track the usage of the given feature
+	 * @param featureName the name of the feature being used
+	 * @since 3.0
 	 */
-	public void startUsingFeature(String featureName);
-	
-	/**
-	 * Called after 'startUsingFeature' once a feature is no longer being used
-	 * @param featureName - The string of the feature being used
-	 */
-	public void stopUsingFeature(String featureName);
+	public void useFeature(String featureName);
 }

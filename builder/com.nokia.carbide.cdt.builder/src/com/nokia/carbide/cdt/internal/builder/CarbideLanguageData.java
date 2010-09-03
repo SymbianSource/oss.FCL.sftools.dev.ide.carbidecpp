@@ -311,7 +311,7 @@ public class CarbideLanguageData extends CLanguageData {
 		
 		// now create the path entries for the macros
 		for (IDefine define : projectDefines) {
-			macroEntries.add(new CMacroEntry(define.getName(), define.getExpansion(), 0));
+			macroEntries.add(new CMacroEntry(define.getNameAndArguments(), define.getExpansion(), 0));
 		}
 		
 		// get the list of files the engine references when parsing the bld.inf and mmp files

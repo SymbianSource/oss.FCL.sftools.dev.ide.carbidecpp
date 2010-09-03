@@ -248,7 +248,8 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	
 	public Map<String, String> getBuildMacros(String buildAlias) {
 		Map<String, String> buildMacros = cachedBuildMacros.get(buildAlias);
-		if (buildMacros == null) {
+		
+		if (buildMacros == null || buildMacros.size() == 0) {
 			buildMacros = new HashMap<String, String>();
 			synchronized (cachedBuildMacros) {
 				if (sbsv2FilteredContexts == null || sbsv2FilteredContexts.size() == 0) {
@@ -272,7 +273,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 	 * @return A path object, or null if the variant.cfg does not exist. This routine does not check to see if the returned path exists.
 	 */
 	public IPath getPrefixFromVariantCfg(){
-		if (cachedVariantHRHFile == null) {
+		if (cachedVariantHRHFile == null || cachedVariantHRHFile.toOSString().length() == 0) {
 			if (sbsv2FilteredContexts == null || sbsv2FilteredContexts.size() == 0) {
 				getFilteredBuildConfigurations();
 			}

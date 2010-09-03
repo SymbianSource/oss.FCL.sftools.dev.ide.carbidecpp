@@ -54,10 +54,15 @@ public class SDKManager extends AbstractSDKManager {
 
 	private static final String EMPTY_DEVICES_XML_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><devices version=\"1.0\"></devices>";
 
+	/** Older kits put qmake under the tools/qt folder. */
 	private static final String QMAKE_FILE = "epoc32/tools/qt/qmake" + HostOS.EXE_EXT; //$NON-NLS-1$
+	/** Newer kits put qmake under the tools folder */
+	private static final String QMAKE_FILE_LOCATION2 = "epoc32/tools/qmake" + HostOS.EXE_EXT; //$NON-NLS-1$
 	private static final String MIFCONV_FILE = "epoc32/tools/mifconv" + HostOS.EXE_EXT; //$NON-NLS-1$
 	private static final String ABLD_FILE = "epoc32/tools/abld.pl"; //$NON-NLS-1$
 	private static final long VALID_ABLD_SIZE = 1024;
+	
+	private File[] systemDrives;
 
 	static boolean hasPromptedForDevicesXML = false; // make sure we only ask once at startup if devices.xml does not exist
 	long devicesXLMLastModified;
@@ -92,6 +97,9 @@ public class SDKManager extends AbstractSDKManager {
 				for (Iterator iter = devices.iterator(); iter.hasNext();) {
 					SymbianSDK sdk = new SymbianSDK((DeviceType) iter.next());
 					sdk.addSupportedFeature(ISymbianSDKFeatures.IS_FROM_DEVICES_XML);
+					if (isInSDKList(sdk)) {
+						continue;
+					}
 					sdkList.add(sdk);
 				}
 			}
@@ -363,6 +371,14 @@ public class SDKManager extends AbstractSDKManager {
 		}
 	}
 
+	public void ensureSystemDrivesSynchronized() {
+		if (HostOS.IS_WIN32) {
+			if (systemDrives != null && getSystemDrives().length > systemDrives.length) {
+				scanSDKs();
+			}
+		}
+	}
+
 	@Override
 	protected boolean isEPOCRootFixed() {
 		return true;
@@ -372,7 +388,7 @@ public class SDKManager extends AbstractSDKManager {
 	 * Scan system drives for installed SDKs
 	 */
 	protected void doScanDrives(IProgressMonitor monitor) {
-		File[] drives = getSystemDrives();
+		File[] drives = systemDrives = getSystemDrives();
 		monitor.beginTask("Scanning system drives for installed SDKs", drives.length);
 		for (File drive : drives) {
 			if (!isEPOCRoot(drive)) {
@@ -440,10 +456,17 @@ public class SDKManager extends AbstractSDKManager {
 	}
 
 	private boolean hasQmake(ISymbianSDK sdk) {
-		File qmake = new File(sdk.getEPOCROOT(), QMAKE_FILE);
+		File qmake = new File(sdk.getEPOCROOT(), QMAKE_FILE_LOCATION2);
 		if (qmake.exists()) {
 			return true;
 		}
+		
+		// try alternate (old) location
+		qmake = new File(sdk.getEPOCROOT(), QMAKE_FILE);
+		if (qmake.exists()) {
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -464,7 +487,8 @@ public class SDKManager extends AbstractSDKManager {
 		}
 	}
 
-	private boolean isInSDKList(ISymbianSDK sdk) {
+	@Override
+	protected boolean isInSDKList(ISymbianSDK sdk) {
 		for (ISymbianSDK entry : sdkList) {
 			if (entry.getEPOCROOT().equalsIgnoreCase(sdk.getEPOCROOT())) {
 				return true;

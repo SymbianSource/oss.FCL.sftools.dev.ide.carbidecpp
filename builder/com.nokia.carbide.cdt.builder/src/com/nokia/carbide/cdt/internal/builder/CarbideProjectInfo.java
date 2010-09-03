@@ -327,9 +327,6 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	}
 	
 	public IPath getAbsoluteBldInfPath(){
-		if (projectRelativeBldInfPath.isAbsolute()){
-			return projectRelativeBldInfPath;
-		}
 		return CarbideBuilderPlugin.getProjectRoot(projectTracker.getProject()).append(projectRelativeBldInfPath);
 	}
 	
@@ -338,9 +335,6 @@ public class CarbideProjectInfo implements ICarbideProjectInfo {
 	}
 
 	public IPath getWorkspaceRelativeBldInfPath(){
-		if (projectRelativeBldInfPath.isAbsolute()){
-			return projectRelativeBldInfPath;
-		}
 		return new Path(projectTracker.getProject().getName()).append(projectRelativeBldInfPath);
 	}
 	

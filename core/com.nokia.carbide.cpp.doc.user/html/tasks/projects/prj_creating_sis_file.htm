@@ -21,7 +21,7 @@
 <ul>
   <li>For non-Platform Security SDKs (pre-OS 9.x), <span class="code">makesis</span> is called</li>
 </ul>
-<p>Depending upon which tool is used, you will  need to complete some entries in the<a href="../../reference/build_properties/pane_build_config_sis.htm"> SIS Builder</a> pane of the Carbide Build Configurations window of the project Properties dialog box. You can access this pane by selecting a project in the Project Explorer view and select <b>Project &gt; Properties</b> &gt;  <b>Carbide Build Configurations</b>. Fill in the necessary information to add PKG files to the project for downloading. </p>
+<p>Depending upon which tool is used, you will  need to complete some entries in the <a href="../../reference/build_properties/pane_build_config_sis.htm">SIS Builder</a> pane of the Carbide Build Configurations panel of the project Properties dialog box. You can access this pane by selecting a project in the <a href="../../reference/view_proj_explorer.htm">Project Explorer</a> view and select <b>Project &gt; Properties</b> <strong>&gt; Carbide.c++ &gt; </strong><b>Carbide Build Configurations</b>. Fill in the necessary information to add PKG files to the project for downloading. </p>
 <table width="88%"  border="0" cellpadding="2" cellspacing="0">
   <tr>
     <th width="19%" scope="col">Tool</th>
@@ -31,14 +31,14 @@
     <td><b>SIS Builder </b></td>
     <td><p>Use the <b>Add</b> control to add one or more SIS or PKG files to the project up to the maximum number Carbide supports. Note that the <b>SIS Builder</b> pane operates on a build configuration level. You will need to add files in this pane for every build configuration in the project. </p>
       <p>In addition, any PKG file added here is picked up by the <a href="../../projects/launch/page_installation.htm">Installation</a> tab in Application TRK configurations. However, as only one SIS file can be debugged at a time you must specify which SIS/PKG file to install for debugging purposes. This is handy if you have both a developer SIS file and a certified SIS file that you want to remain in sync during development. Both are always built but you only need to debug one. </p>
-      <p><img src="images/sis_builder_tab.png" width="550" height="221" /></p>
+      <p><img src="images/sis_builder_tab.png" width="573" height="203" /></p>
     <p class="figure">Figure 1 - SIS Builder tab </p></td>
   </tr>
   <tr>
     <td><b>SIS Properties </b></td>
     <td><div align="center">
       <p align="left">Complete the PKG File, and Signing Options settings in the <a href="../../reference/build_properties/wnd_sis_properties.htm">SIS Properties</a> dialog. By default, SIS files are output in the directory of the original SIS file.</p>
-      <p><img src="../../reference/images/wnd_sis_properties.png" width="455" height="452"></p>
+      <p><img src="../../reference/images/wnd_sis_properties.png" width="533" height="463"></p>
       <p class="figure">Figure 2 - SIS Properties dialog </p>
       </div></td>
   </tr>

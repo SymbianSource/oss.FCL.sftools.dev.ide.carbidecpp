@@ -1727,8 +1727,8 @@ public class EpocEngineHelper {
 	 * @return List of macro strings which may be empty.  There is no macro value, only a
 	 * string like "FOO".
 	 */
-	public static List<String> getMMPMacrosForBuildConfiguration(final IPath workspaceRelativeMMPPath, final ICarbideBuildConfiguration buildConfig) {
-		final List<String> macros = new ArrayList<String>();
+	public static List<IDefine> getMMPMacrosForBuildConfiguration(final IPath workspaceRelativeMMPPath, final ICarbideBuildConfiguration buildConfig) {
+		final List<IDefine> macros = new ArrayList<IDefine>();
 		
 		EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
 				new DefaultMMPViewConfiguration(buildConfig.getCarbideProject().getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()), 
@@ -1738,8 +1738,14 @@ public class EpocEngineHelper {
 					Map<EMMPStatement, List<String>> listArgumentSettings = mmpData.getListArgumentSettings();
 					List<String> macroList = listArgumentSettings.get(EMMPStatement.MACRO);
 					for (String macro : macroList) {
-						if (!macros.contains(macro)) {
-							macros.add(macro);
+						String macroValue = null;
+						if (macro.contains("=")){
+							macroValue = macro.split("=")[1]; // expansion
+							macro = macro.split("=")[0]; // name
+						}
+						IDefine newDefine = DefineFactory.createDefine(macro, macroValue);
+						if (!macros.contains(newDefine)) {
+							macros.add(newDefine);
 						}
 					}
 					return null;
@@ -1908,15 +1914,8 @@ public class EpocEngineHelper {
 
 					public Object run(IBldInfData infView) {
 						for (final IMMPReference mmp : infView.getAllMMPReferences()) {
-							
-								IPath workspaceRelativeMMPPath1 = null;
-								if (info.getProjectRelativeBldInfPath().isAbsolute()){
-									workspaceRelativeMMPPath1 = mmp.getPath();
-								} else {
-									workspaceRelativeMMPPath1 = new Path(info.getProject().getName()).append(mmp.getPath());
-								}
+								final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmp.getPath());
 								
-								final IPath workspaceRelativeMMPPath = workspaceRelativeMMPPath1;
 								EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
 										new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 										new MMPDataRunnableAdapter() {
@@ -2795,11 +2794,10 @@ public class EpocEngineHelper {
 			// is enabled (Use preprocessor symbols....)
 			for (IPath mmpPath : mmpFiles) {
 				
-				List<String> mmpMacros = getMMPMacrosForBuildConfiguration(
+				List<IDefine> mmpMacros = getMMPMacrosForBuildConfiguration(
 						mmpPath, config);
-				for (String macro : mmpMacros) {
-					// Symbian docs say they are converted to upper case always
-					projectDefines.add(DefineFactory.createDefine(macro.toUpperCase()));
+				if (mmpMacros != null && mmpMacros.size() > 0){
+					projectDefines.addAll(mmpMacros);
 				}
 			}
 		}

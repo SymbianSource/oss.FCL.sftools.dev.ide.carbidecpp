@@ -34,7 +34,7 @@
 	 </ul>
 
      <h3>Projects for Symbian OS 9.3+ </h3>
-     <p>The latest versions of Symbian OS 9.3+ devkits include extensive use of <span class="code">PRJ_EXTENSIONS</span> and <span class="code">PRJ_TESTEXTENSIONS</span>. These top-level entries are extension makefile templates whose names are later filled in with target names, sources, and options. The intent is to make source editing easier and dependency checking possible during a build. </p>
+     <p>Versions of Symbian OS 9.3+ devkits include extensive use of <span class="code">PRJ_EXTENSIONS</span> and <span class="code">PRJ_TESTEXTENSIONS</span>. These top-level entries are extension makefile templates whose names are later filled in with target names, sources, and options. The intent is to make source editing easier and dependency checking possible during a build. </p>
      <p>Currently if you  import a bld.inf file but are not importing all of the components and one of these extensions are found:</p>
      <ul>
        <li>a warning appears at the top of the wizard page</li>
@@ -62,19 +62,18 @@
 			 Type the location of the bld.inf file to import, or browse to the file using the Browse button. </li>
 		  <p class="Image"><img src="../reference/images/import_bld_inf_02.png" alt="Select bld.inf file to import" width="573" height="550"></p>
 		  <p class="note"><strong>NOTE</strong> Depending upon which SDKs are installed, you may see both SBSv1 and SBSv2 builders available. It is recommended that SBSv2 be the primary choice as SBSv1 has been deprecated for future Symbian OS development.</p>
-		  <p class="Image">SBSv2   works with recent versions of Symbian^3 and Symbian ^4 SDKs. Both  SBSv1 and SBSv2 are GNU make based build systems.&nbsp; SBSv1 uses Perl to generate make files,  while SBSv2 uses Python. Select the appropriate builder for your project.</p>
-		  When building for  SBSv2, the builder will set <span class="code">EPOCROOT</span> to the absolute path (including drive  letter) to the kit for the active build configuration.&nbsp; It will also add the path to the sbs bin  directory to the start of the <span class="code">PATH</span> variable.&nbsp;  This is derived from the SBS_HOME environment variable.
-		  <p class="Image">For SBSv2, all  build configurations (platform/target), including the built-in platforms  (WINSCW, ARMV5), are declared in xml files in the <span class="code">\sbs\lib\config</span> directory.  The Build  Configurations selection page  displays only kits  known to support SBSv2.</p>
+		  <p class="Image">SBSv2   works with recent versions of Symbian^3 and Symbian ^4 SDKs. Both  SBSv1 and SBSv2 are GNU make based build systems. SBSv1 uses Perl to generate make files,  while SBSv2 uses Python. Select the appropriate builder for your project.</p>
+		  <p class="note"><strong>NOTE</strong> Choose SBSv2 whenever possible as SBSv1 is being phased out.</p>
+	     When building for  SBSv2, the builder will set <span class="code">EPOCROOT</span> to the absolute path (including drive  letter) to the kit for the active build configuration.&nbsp; It will also add the path to the sbs bin  directory to the start of the <span class="code">PATH</span> variable.&nbsp;  This is derived from the <span class="code">SBS_HOME</span> environment variable.
+	     <p class="Image">For SBSv2, all  build configurations (platform/target), including the built-in platforms  (WINSCW, ARMV5), are declared in xml files in the <span class="code">\sbs\lib\config</span> directory.  The Build  Configurations selection page  displays only kits  known to support SBSv2.</p>
 		  <li> Click Next to select the recognized SDKs and Build Configurations to be created for this project
-		      <blockquote>
-		          <p>The SDKs and Build Configurations shows a tree of
+		      <p>The SDKs and Build Configurations shows a tree of
 		              the SDKs that are available to be used, and for each SDK, the type of build configurations
 		              that are available. You can select a single SDK if you are developing the program
 		              for just one version of a platform, or multiple SDKs if your
 		              program is to be built against multiple platforms or operating system
 		              versions.</p>
-	          </blockquote>
-         </li>
+	     </li>
      </ol>
      <blockquote>
          <p class="note"><b>NOTE</b> The platforms listed are dependent upon the filter settings in the <a href="sdks/sdk_platform_filter.htm">Platform Filtering Preferences</a>.</p>
@@ -116,9 +115,8 @@
 	   <ul>
          <li><a href="CreatingNewProjects.html">Creating Projects </a></li>
          <li><a href="projects/prj_build.htm">Building Projects</a></li>
-         <li><a href="projects/prj_import_exe.htm">Importing a Symbian Executable</a></li>
-       </ul>
-	   <h5>Related references</h5>
+   </ul>
+   <h5>Related references</h5>
 	   <ul>
          <li><a href="sdks/sdk_platform_filter.htm">Platform Filtering Preferences</a></li>
          <li><a href="../reference/ProjectDirectories.html">Project Directories</a></li>

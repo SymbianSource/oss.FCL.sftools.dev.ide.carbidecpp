@@ -83,6 +83,10 @@ final public class SDKController {
 			}
 		};
 		probeAllAvailableSystemSDKDirectories();
+
+		// add the listener after getting the initial list of SDK's to prevent possible
+		// bundle state exception
+		sdkMgr.addInstalledSdkChangeListener(sdkListChangeListener);
 	}
 
 
@@ -144,7 +148,6 @@ final public class SDKController {
 	 * @throws MalformedURLException
 	 */
 	public void probeAllAvailableSystemSDKDirectories() {
-		sdkMgr.addInstalledSdkChangeListener(sdkListChangeListener);
 		List<ISymbianSDK> sdkList = sdkMgr.getSDKList();
 
 		for (ISymbianSDK currSDK : sdkList) {

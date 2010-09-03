@@ -9,14 +9,17 @@
 </head>
 <body >
 <h2>Auto-Targeting of Executables</h2>
-<p>In run-mode  the Carbide debugger now supports the auto-targeting of processes that are already running or are created during the execution of the debug session. Previously, the debugger forced users to explicitly attach to a running process. Now, the debugger attempts to target all the EXEs specified in the <a href="../projects/launch/page_executables.htm">Executables</a> tab of the launch configuration. </p>
+<p>In run-mode  the Carbide debugger now supports the auto-targeting of processes that are already running or are created during the execution of the debug session. Previously, the debugger forced users to explicitly attach to a running process. Now, the debugger attempts to target all the EXEs and binaries like DLLs specified in the <a href="../projects/launch/page_executables.htm">Executables</a> tab of the launch configuration. </p>
 <ul>
   <li>If the executables are already started, it gets the load address of the executable and targets it for debugging, resolving any breakpoints it finds.</li>
   <li>The debugger will target any executable not already started whenever a &quot;process load&quot; event occurs, resolving its breakpoints as well.</li>
 </ul>
+<h4>Debugging DLLs</h4>
+<p>One common debugging DLL use case is when the developer doesn't know which process calls the DLL. This makes it difficult to debug the DLL because you doesn't know which process to attach to nor start. Carbide enables DLL debugging  by simply attaching the DLL to any running process as long as the DLL is included in the <a href="../reference/view_executables.htm">Executables</a> view. See <a href="../tasks/processes/attach_to_process.htm">Attaching  to a Process</a> for more details.</p>
 <h5>Other References</h5>
 <ul>
   <li><a href="../projects/launch/page_executables.htm">Executables</a></li>
+  <li><a href="../tasks/processes/attach_to_process.htm">Attaching  to a Process</a></li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
@@ -46,6 +49,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ContainerCheckedTreeViewer;
 import org.eclipse.ui.dialogs.PreferencesUtil;
@@ -151,6 +155,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		
 		if (HostOS.IS_WIN32){
 			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+			((SDKManager)sdkMgr).ensureSystemDrivesSynchronized();
 			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
 				if (sdkMgr instanceof ISDKManagerInternal){
 					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
@@ -225,7 +230,11 @@ public class ManageConfigurationsDialog extends TrayDialog {
 			filteringContentProviderWrapper.setConfigFilter(new QtConfigFilter());
 		}
 		
-		drawSDKConfigTree();
+		try {
+			drawSDKConfigTree();
+		} catch (CoreException e1) {
+			e1.printStackTrace();
+		}
 		
 		BrokenConfigurationInProjectTreeNode[] brokenTreeInput = BrokenConfigurationInProjectTreeNode.getTreeViewerInput(cpi);
 		if (brokenTreeInput.length > 0) {
@@ -246,7 +255,11 @@ public class ManageConfigurationsDialog extends TrayDialog {
 			public void widgetSelected(SelectionEvent e) {
 				// I don't see a way to open it to a specific tab, only the page
 				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage", null, null, 0).open()){ //$NON-NLS-1$
-					drawSDKConfigTree();
+					try {
+						drawSDKConfigTree();
+					} catch (CoreException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -259,7 +272,11 @@ public class ManageConfigurationsDialog extends TrayDialog {
 			public void widgetSelected(SelectionEvent e) {
 				// I don't see a way to open it to a specific tab, only the page
 				if (Window.OK == PreferencesUtil.createPreferenceDialogOn(getShell(), "com.nokia.carbide.cpp.sdk.ui.preferences.SDKPreferencePage", null, null, 0).open()){ //$NON-NLS-1$
-					drawSDKConfigTree();
+					try {
+						drawSDKConfigTree();
+					} catch (CoreException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -269,12 +286,19 @@ public class ManageConfigurationsDialog extends TrayDialog {
 		return container;
 	}
 
-	private void drawSDKConfigTree() {
+	private void drawSDKConfigTree() throws CoreException {
 		boolean sbsv2Project = CarbideBuilderPlugin.getBuildManager().isCarbideSBSv2Project(cpi.getProject());
 	
 		properSdkViewer.setContentProvider(filteringContentProviderWrapper);
-		BuildTargetTreeNode[] sdkConfigTreeNodes = BuildTargetTreeNode.getTreeViewerInput(sbsv2Project);
-		if (sbsv2Project){
+		IWorkbenchWindow wbw = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		BuildTargetTreeNode[] sdkConfigTreeNodes = null;
+		if (wbw != null){
+			sdkConfigTreeNodes = BuildTargetTreeNode.getTreeViewerInput(sbsv2Project, wbw);
+		} else {
+			IStatus s = new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, 0, "Error retrieving workbench window. Cannot display configuration tree.", null);
+			throw new CoreException(s);
+		}
+		if (sbsv2Project && sdkConfigTreeNodes != null){
 			replaceFilteredConfigsFromProject(sdkConfigTreeNodes);
 		}
 		
@@ -300,6 +324,11 @@ public class ManageConfigurationsDialog extends TrayDialog {
 	 * @param sdkConfigTreeNodes
 	 */
 	private void replaceFilteredConfigsFromProject(BuildTargetTreeNode[] sdkConfigTreeNodes) {
+		
+		if (sdkConfigTreeNodes == null){
+			return;
+		}
+		
 		List<ICarbideBuildConfiguration> bldConfigs = cpi.getBuildConfigurations();
 		
 		HashMap<BuildTargetTreeNode, List<ISymbianBuildContext>> missingConfigMap = new HashMap<BuildTargetTreeNode, List<ISymbianBuildContext>>();

@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Carbide Builder Utils Plugin
+Bundle-Name: Carbide Builder Utils
 Bundle-SymbolicName: com.nokia.carbide.cpp.builder.utils;singleton:=true
 Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: com.nokia.carbide.cpp.internal.builder.utils.Activator

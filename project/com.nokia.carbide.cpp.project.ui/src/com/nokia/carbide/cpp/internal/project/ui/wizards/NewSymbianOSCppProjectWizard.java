@@ -22,6 +22,8 @@ import java.util.List;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISDKManagerInternal;
 import com.nokia.carbide.cpp.internal.api.sdk.ui.TemplateSDKsFilter;
@@ -42,6 +44,7 @@ import com.nokia.cpp.internal.api.utils.core.HostOS;
  */
 public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 	
+	private static final String SOS_PROJECT_WIZARD_FEATURE = "SOS_PROJECT_WIZARD"; //$NON-NLS-1$
 	private static final String ID = "com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"; //$NON-NLS-1$
 	protected List<IWizardDataPage> pagesAfterTemplateChoice;
 	protected BuildTargetsPage buildTargetsPage;
@@ -55,6 +58,7 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 		
 		if (HostOS.IS_WIN32){
 			ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
+			((SDKManager)sdkMgr).ensureSystemDrivesSynchronized();
 			if (!((SDKManager)sdkMgr).checkDevicesXMLSynchronized()){
 				if (sdkMgr instanceof ISDKManagerInternal){
 					ISDKManagerInternal sdkMgrInternal = (ISDKManagerInternal)sdkMgr;
@@ -78,11 +82,17 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 			String description = Messages.getString("NewSymbianOSCppProjectWizard.NewProjectPageDesc"); //$NON-NLS-1$
 			newProjectPage = new NewProjectPage(title, description);
 			pagesAfterTemplateChoice.add(newProjectPage);
+			setNeedsProgressMonitor(true);
 			buildTargetsPage = new ProjectWizardBuildTargetsPage(this);
 			pagesAfterTemplateChoice.add(buildTargetsPage);
 			notifyTemplateChanged();
 		}
 		return pagesAfterTemplateChoice;
+	}
+
+	@Override
+	public void init(IWorkbench workbench, IStructuredSelection currentSelection) {
+		super.init(workbench, currentSelection);
 	}
 
 	@Override
@@ -124,5 +134,10 @@ public class NewSymbianOSCppProjectWizard extends TemplateWizard {
 	public boolean performFinish() {
     	newProjectPage.saveDialogSettings();
 		return super.performFinish();
+	}
+
+	@Override
+	public String getFeatureName() {
+		return SOS_PROJECT_WIZARD_FEATURE;
 	}
 }

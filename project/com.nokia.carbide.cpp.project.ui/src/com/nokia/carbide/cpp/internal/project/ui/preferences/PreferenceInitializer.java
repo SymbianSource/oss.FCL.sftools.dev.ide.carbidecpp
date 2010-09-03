@@ -16,7 +16,6 @@
 */
 package com.nokia.carbide.cpp.internal.project.ui.preferences;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -36,21 +35,6 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = ProjectUIPlugin.getDefault().getPreferenceStore();
 		store.setDefault(PreferenceConstants.PREF_KEEP_PROJECTS_IN_SYNC, true);
 		store.setDefault(PreferenceConstants.PREF_INDEX_ALL, false);
-		
-		if (cmdLineArgsSupportsLinkedResources()){
-			store.setDefault(PreferenceConstants.PREF_SUPPORT_LINKED_RESOURCES, true);
-		} else {
-			store.setDefault(PreferenceConstants.PREF_SUPPORT_LINKED_RESOURCES, false);
-		}
-	}
-	
-	private boolean cmdLineArgsSupportsLinkedResources(){
-		String[] args = Platform.getCommandLineArgs();
-		for (String arg : args){
-			if (arg.equals("supportsLinkedRsrcs=true"))
-				return true;
-		}
-		return false;
 	}
 
 }

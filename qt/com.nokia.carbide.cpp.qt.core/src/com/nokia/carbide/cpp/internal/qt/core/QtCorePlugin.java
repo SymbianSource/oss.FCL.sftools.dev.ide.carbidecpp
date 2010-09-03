@@ -58,7 +58,6 @@ public class QtCorePlugin extends Plugin implements ISDKManagerLoadedHook, ICarb
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		SDKCorePlugin.getSDKManager().addInstalledSdkChangeListener(this);
 	}
 
 	/*
@@ -129,7 +128,7 @@ public class QtCorePlugin extends Plugin implements ISDKManagerLoadedHook, ICarb
 	 * ISDKManagerLoadedHook extension implementation
 	 */
 	public void symbianSDKManagerLoaded() {
-		scanForQtSDKs();
+		SDKCorePlugin.getSDKManager().addInstalledSdkChangeListener(this);
 	}
 
 	/**

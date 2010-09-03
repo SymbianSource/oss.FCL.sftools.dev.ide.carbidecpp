@@ -30,6 +30,7 @@ import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnLabelProvider;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.TableViewerColumn;
+import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -137,6 +138,7 @@ abstract class AbstractImportExportPage extends WizardPage {
 				return null;
 			}
 		});
+		viewer.setSorter(new ViewerSorter());
 
 		viewer.getControl().setLayoutData(
 				new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL

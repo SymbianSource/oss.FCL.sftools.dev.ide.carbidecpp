@@ -1,7 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Nokia Common Templates Plug-in
+Bundle-Name: Nokia Common Templates
 Bundle-SymbolicName: com.nokia.carbide.cpp.templates;singleton:=true
 Bundle-Version: 1.4.0.qualifier
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin
+Bundle-ActivationPolicy: lazy

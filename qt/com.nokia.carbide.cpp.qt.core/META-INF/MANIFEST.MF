@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Carbide Qt Core Plug-in
+Bundle-Name: Carbide Qt Core
 Bundle-SymbolicName: com.nokia.carbide.cpp.qt.core;singleton:=true
 Bundle-Version: 1.4.0.qualifier
 Bundle-Activator: com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin

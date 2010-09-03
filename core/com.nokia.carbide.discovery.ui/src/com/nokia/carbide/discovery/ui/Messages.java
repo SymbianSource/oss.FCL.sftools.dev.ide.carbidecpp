@@ -65,6 +65,7 @@ public class Messages extends NLS {
 	public static String ExportPage_Title;
 	public static String ExportPage_ViewerGroupLabel;
 	public static String ExportWizard_ErrorTitle;
+	public static String ExportWizard_ReadInstalledFeaturesError;
 	public static String ExportWizard_Title;
 	public static String ExportWizard_WriteFileError;
 	public static String FeatureInstallOperation_ConfiguringTaskName;
@@ -94,6 +95,7 @@ public class Messages extends NLS {
 	public static String InstallExtensionsPortalExtension_ExportActionLabel;
 	public static String InstallExtensionsPortalExtension_ImportActionLabel;
 	public static String InstallExtensionsPortalExtension_MigrateTitle;
+	public static String P2Utils_WriteInitialFeaturesFileError;
 	public static String PortalEditor_BadCommandBarFactoryError;
 	public static String PortalEditor_Name;
 	public static String PortalEditor_NoLayersError;
