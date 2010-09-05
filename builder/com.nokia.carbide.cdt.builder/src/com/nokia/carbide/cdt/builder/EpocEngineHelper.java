@@ -1914,15 +1914,8 @@ public class EpocEngineHelper {
 
 					public Object run(IBldInfData infView) {
 						for (final IMMPReference mmp : infView.getAllMMPReferences()) {
-							
-								IPath workspaceRelativeMMPPath1 = null;
-								if (info.getProjectRelativeBldInfPath().isAbsolute()){
-									workspaceRelativeMMPPath1 = mmp.getPath();
-								} else {
-									workspaceRelativeMMPPath1 = new Path(info.getProject().getName()).append(mmp.getPath());
-								}
+								final IPath workspaceRelativeMMPPath = new Path(info.getProject().getName()).append(mmp.getPath());
 								
-								final IPath workspaceRelativeMMPPath = workspaceRelativeMMPPath1;
 								EpocEnginePlugin.runWithMMPData(workspaceRelativeMMPPath, 
 										new DefaultMMPViewConfiguration(info.getProject(), buildConfig.getBuildContext(), new AcceptedNodesViewFilter()),
 										new MMPDataRunnableAdapter() {

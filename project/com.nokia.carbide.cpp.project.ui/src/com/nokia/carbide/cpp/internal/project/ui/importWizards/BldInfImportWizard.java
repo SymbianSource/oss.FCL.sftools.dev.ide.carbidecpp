@@ -89,7 +89,6 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
     	
 		final String projectName = projectPropertiesPage.getProjectName();
 		final IPath rootDirectory = projectPropertiesPage.getRootDirectory();
-		final boolean isLinkedProject = projectPropertiesPage.linkedResourcesEnabled();
 		
 		// calculate the project relative path to the bld.inf file.
 		IPath absoluteBldInfPath = new Path(getBldInfFile());
@@ -110,21 +109,13 @@ public class BldInfImportWizard extends Wizard implements IImportWizard {
 				monitor.beginTask(Messages.BldInfImportWizard_CreatingProjectJobName, IProgressMonitor.UNKNOWN);
 
 				IProject newProject = null;
-				if (isLinkedProject){
-					newProject = ProjectCorePlugin.createProject(projectName, null);
-					newProject.getFolder(rootDirectory.lastSegment()).createLink(rootDirectory.toFile().toURI(), IResource.BACKGROUND_REFRESH, new NullProgressMonitor());
-				} else {
-					newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
-				}
+				newProject = ProjectCorePlugin.createProject(projectName, rootDirectory.toOSString());
+				
         		monitor.worked(1);
         		
     			newProject.setSessionProperty(CarbideBuilderPlugin.SBSV2_PROJECT, Boolean.valueOf(useSBSv2Builder()));
 
-    			if (isLinkedProject){
-    				ProjectCorePlugin.postProjectCreatedActions(newProject, absoluteInfPath, selectedConfigs, components, null, null, monitor);
-    			} else {
-    				ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, null, null, monitor);
-    			}
+    			ProjectCorePlugin.postProjectCreatedActions(newProject, projectRelativePath, selectedConfigs, components, null, null, monitor);
         		
         		if (monitor.isCanceled()) {
 	    			// the user canceled the import so delete the project

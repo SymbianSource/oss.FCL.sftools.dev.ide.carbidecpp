@@ -28,6 +28,4 @@ public class PreferenceConstants {
 	public final static String PREF_CHANGED_FILES_OPTION = "changedFilesOption"; //$NON-NLS-1$
 
 	public static final String PREF_INDEX_ALL = "indexAll"; //$NON-NLS-1$
-	
-	public static final String PREF_SUPPORT_LINKED_RESOURCES = "supportsLinkedRsrcs"; //$NON-NLS-1$
 }

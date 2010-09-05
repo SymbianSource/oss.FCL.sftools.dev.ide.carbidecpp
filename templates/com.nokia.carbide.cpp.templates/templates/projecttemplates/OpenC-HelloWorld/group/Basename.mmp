@@ -39,6 +39,5 @@ LIBRARY         euser.lib
 // No capabilities needed by this application
 CAPABILITY      None
 
-#ifdef ENABLE_ABIV2_MODE
-  DEBUGGABLE_UDEBONLY
-#endif
+DEBUGGABLE_UDEBONLY
+

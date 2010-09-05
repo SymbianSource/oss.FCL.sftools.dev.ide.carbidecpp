@@ -43,7 +43,5 @@ nostrictdef
 
 LIBRARY		 euser.lib
 
-#ifdef ENABLE_ABIV2_MODE
-  DEBUGGABLE_UDEBONLY
-#endif
+DEBUGGABLE_UDEBONLY
 

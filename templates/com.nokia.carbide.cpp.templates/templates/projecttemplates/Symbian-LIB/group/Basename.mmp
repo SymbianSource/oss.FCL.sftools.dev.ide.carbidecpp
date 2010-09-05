@@ -17,6 +17,4 @@ SYSTEMINCLUDE   \epoc32\include
 SOURCEPATH	  ..\$(sourceDir)
 SOURCE		  $(baseName).cpp
 
-#ifdef ENABLE_ABIV2_MODE
-  DEBUGGABLE_UDEBONLY
-#endif
+DEBUGGABLE_UDEBONLY

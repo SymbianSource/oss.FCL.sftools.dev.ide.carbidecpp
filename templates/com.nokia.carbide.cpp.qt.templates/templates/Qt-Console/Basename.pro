@@ -9,4 +9,7 @@ SOURCES   += main.cpp \
 FORMS	  +=
 RESOURCES +=
 
-symbian:TARGET.UID3 = $(uid3)
+symbian: {
+	TARGET.UID3 = $(uid3)
+	MMP_RULES += DEBUGGABLE_UDEBONLY 
+}

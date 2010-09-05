@@ -298,7 +298,7 @@ public class ManageConfigurationsDialog extends TrayDialog {
 			IStatus s = new Status(IStatus.ERROR, CarbideBuilderPlugin.PLUGIN_ID, 0, "Error retrieving workbench window. Cannot display configuration tree.", null);
 			throw new CoreException(s);
 		}
-		if (sbsv2Project){
+		if (sbsv2Project && sdkConfigTreeNodes != null){
 			replaceFilteredConfigsFromProject(sdkConfigTreeNodes);
 		}
 		
@@ -324,6 +324,11 @@ public class ManageConfigurationsDialog extends TrayDialog {
 	 * @param sdkConfigTreeNodes
 	 */
 	private void replaceFilteredConfigsFromProject(BuildTargetTreeNode[] sdkConfigTreeNodes) {
+		
+		if (sdkConfigTreeNodes == null){
+			return;
+		}
+		
 		List<ICarbideBuildConfiguration> bldConfigs = cpi.getBuildConfigurations();
 		
 		HashMap<BuildTargetTreeNode, List<ISymbianBuildContext>> missingConfigMap = new HashMap<BuildTargetTreeNode, List<ISymbianBuildContext>>();
