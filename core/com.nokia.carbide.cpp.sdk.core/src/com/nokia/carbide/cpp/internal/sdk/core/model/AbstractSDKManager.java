@@ -112,24 +112,36 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		public void awake(IJobChangeEvent event) {}
 		public void aboutToRun(IJobChangeEvent event) {}
 		public void done(IJobChangeEvent event) {
-			fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
 			// Notify any plugins that want to know if the SDKManager has scanned plugins.
 			if (!sdkHookExtenstionsNotified) {
 				notifySDKManagerLoaded();
 				sdkHookExtenstionsNotified = true;
 			}
+			fireInstalledSdkChanged(SDKChangeEventType.eSDKScanned);
 		}
 	};
 
+	/**
+	 * Must call init() after construction
+	 */
 	public AbstractSDKManager() {
+	}
+	
+	/**
+	 * Initialize the AbastractSDKManager for first use.
+	 * Longer running tasks can be done here that should be avoided in the constructor
+	 * in the case of multiple requesting the SDKManager, which is a singleton object.
+	 */
+	public void init(){
 		macroStore = SymbianMacroStore.getInstance();
-		scanJob = new Job ("Scan for installed SDKs") {
+		scanJob = new Job ("Building Symbian SDK cache...") {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				return handleScan(monitor);
 			}
 		};
 		
+		scanSDKs();
 		addScanJobListner(scanJobListener);
 	}
 	
@@ -141,6 +153,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		SBSv2QueryUtils.removeAllCachedQueries();
 		// do the real sdk scanning in a job.
 		if (scanJob.getState() == Job.NONE) {
+			scanJob.setUser(true);
 			scanJob.schedule();
 		}
 	}
@@ -192,6 +205,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		if (monitor.isCanceled()) {
 			return Status.CANCEL_STATUS;
 		}
+		
 		return Status.OK_STATUS;
 	}
 

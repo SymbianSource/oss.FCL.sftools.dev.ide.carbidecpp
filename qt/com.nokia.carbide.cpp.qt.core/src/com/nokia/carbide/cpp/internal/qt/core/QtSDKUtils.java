@@ -131,7 +131,7 @@ public class QtSDKUtils {
 		refreshQtStoredSDKs();
 		if ((getQtSDKNameForSymbianSDK(sdk) == null) && isQtInternallyInstalled(sdk)){
 			addQtSDK(sdk.getUniqueId(), getQmakeInstallationPath(sdk), getQtIncludeDirectory(sdk), makeDefault);
-		}
+		} 
 	}
 	
 	/**
