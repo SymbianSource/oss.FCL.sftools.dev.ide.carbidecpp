@@ -80,7 +80,7 @@
           class="com.nokia.carbide.internal.discovery.ui.view.HomePage"
           order="1"
           pageId="com.nokia.carbide.discovery.ui.homePage"
-          title="Forum Nokia">
+          title="Carbide (S60 Wiki)">
     </portalPageLayer>
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
@@ -116,6 +116,12 @@
           order="25"
           pageId="com.nokia.carbide.discovery.ui.kitsPage"
           title="Install SDKs">
+    </portalPageLayer>
+    <portalPageLayer
+          class="com.nokia.carbide.internal.discovery.ui.view.InstallPlatSimPage"
+          order="10"
+          pageId="com.nokia.carbide.discovery.ui.homePage"
+          title="Install PlatSim">
     </portalPageLayer>
  </extension>
    <extension
