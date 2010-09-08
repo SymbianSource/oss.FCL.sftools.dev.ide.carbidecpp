@@ -45,7 +45,7 @@ public class PhoneLaunchShortcut extends AbstractSymbianLaunchShortcut {
 		LaunchPlugin.getDefault().launchProject(project, executable, defaultMMP, mode, 
 																new ILaunchCreationWizardFactory() {
 					public ILaunchCreationWizard createLaunchCreationWizard(LaunchOptions launchOptions) throws Exception {
-						IService trkService = LaunchPlugin.getTRKService();
+						IService trkService = LaunchPlugin.getRunModeDebugService();
 						LaunchWizard launchWizard = new LaunchWizard(launchOptions, trkService);
 						return launchWizard;
 					};

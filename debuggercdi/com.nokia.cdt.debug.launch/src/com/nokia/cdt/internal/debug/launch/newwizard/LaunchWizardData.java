@@ -403,7 +403,7 @@ public class LaunchWizardData extends LaunchOptions {
 			Collection<IConnectedService> connectedServices = 
 				RemoteConnectionsActivator.getConnectionsManager().getConnectedServices(connection);
 			for (IConnectedService connectedService : connectedServices) {
-				if (connectedService.getService().getIdentifier().equals(service.getIdentifier()))
+				if (service != null && connectedService.getService().getIdentifier().equals(service.getIdentifier()))
 					return connectedService;
 			}
 		}

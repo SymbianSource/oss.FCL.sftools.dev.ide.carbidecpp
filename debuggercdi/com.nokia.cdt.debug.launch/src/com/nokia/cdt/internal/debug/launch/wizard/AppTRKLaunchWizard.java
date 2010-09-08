@@ -17,6 +17,7 @@
 package com.nokia.cdt.internal.debug.launch.wizard;
 
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cdt.internal.debug.launch.ui.RunModeMainTab;
 import com.nokia.cdt.internal.debug.launch.wizard.MainExecutableSelectionWizardPage.IPathValidator;
 
@@ -57,7 +58,8 @@ public class AppTRKLaunchWizard extends AbstractLaunchWizard {
     public void addPages() {
     	super.addPages();
         fBuildOptionsSelectionPage = new BuildOptionsSelectionPage();
-        fMainPage = new TRKConnectionWizardPage(this);
+        fMainPage = new TRKConnectionWizardPage(this,
+        		LaunchPlugin.getDebugServiceId());
         fSISSelectionPage = new TRKSISSelectionWizardPage(this);
         addPage(fBuildOptionsSelectionPage);
         addPage(fMainPage);

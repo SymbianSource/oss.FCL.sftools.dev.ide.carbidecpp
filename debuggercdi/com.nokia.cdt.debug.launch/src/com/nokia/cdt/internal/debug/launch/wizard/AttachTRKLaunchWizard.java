@@ -25,6 +25,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import java.util.List;
 
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
 public class AttachTRKLaunchWizard extends AbstractLaunchWizard {
     private BuildOptionsSelectionPage fBuildOptionsSelectionPage;
@@ -54,7 +55,8 @@ public class AttachTRKLaunchWizard extends AbstractLaunchWizard {
     public void addPages() {
     	super.addPages();
         fBuildOptionsSelectionPage = new BuildOptionsSelectionPage();
-        fMainPage = new TRKConnectionWizardPage(this);
+        fMainPage = new TRKConnectionWizardPage(this,
+        		LaunchPlugin.getDebugServiceId());
         addPage(fBuildOptionsSelectionPage);
         addPage(fMainPage);
 	    addPage(getSummaryPage());

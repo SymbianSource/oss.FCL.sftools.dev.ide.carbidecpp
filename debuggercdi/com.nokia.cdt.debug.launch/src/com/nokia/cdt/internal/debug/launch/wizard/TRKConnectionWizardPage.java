@@ -21,7 +21,6 @@ import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IClientServiceSiteUI2.IListener;
-import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cpp.internal.api.utils.core.Check;
 
 import org.eclipse.core.runtime.IStatus;
@@ -40,10 +39,13 @@ public class TRKConnectionWizardPage extends WizardPage {
 	private final ISummaryTextItemContainer summaryTextItemContainer;
 	private IClientServiceSiteUI2 clientSiteUI;
 	private String connectionId;
+	private final String debugServiceId;
 	
     
-    public TRKConnectionWizardPage(ISummaryTextItemContainer summaryTextItemContainer) {
+    public TRKConnectionWizardPage(ISummaryTextItemContainer summaryTextItemContainer,
+    		String debugServiceId) {
         super(Messages.getString("TRKConnectionWizardPage.0")); //$NON-NLS-1$
+		this.debugServiceId = debugServiceId;
 		Check.checkArg(summaryTextItemContainer);
 		this.summaryTextItemContainer = summaryTextItemContainer;
         setPageComplete(false);
@@ -59,7 +61,9 @@ public class TRKConnectionWizardPage extends WizardPage {
         GridLayout layout = new GridLayout();
         composite.setLayout(layout);
 
-		clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(LaunchPlugin.getTRKService());
+		clientSiteUI = RemoteConnectionsActivator.getConnectionsManager().getClientSiteUI2(
+				RemoteConnectionsActivator.getConnectionTypeProvider().
+				findServiceByID(debugServiceId));
 		clientSiteUI.createComposite(composite);
 		clientSiteUI.addListener(new IListener() {
 			public void connectionSelected() {

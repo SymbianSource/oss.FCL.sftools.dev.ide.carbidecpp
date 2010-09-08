@@ -17,8 +17,8 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -56,8 +56,7 @@ public class CommandRunLaunchWizard2 extends AbstractHandler {
 			if (info == null) 
 				throw new ExecutionException("Not a Carbide project");
 			List<IPath> mmpFiles = EpocEngineHelper.getMMPFilesForProject(info);
-			IService trkService = RemoteConnectionsActivator.getConnectionTypeProvider().
-				findServiceByID("com.nokia.carbide.trk.support.service.TRKService"); //$NON-NLS-1$
+			IService debugService = LaunchPlugin.getRunModeDebugService();
 
 			List<IPath> allExePaths = new ArrayList<IPath>();
 			List<IPath> currBuiltExePaths = new ArrayList<IPath>();

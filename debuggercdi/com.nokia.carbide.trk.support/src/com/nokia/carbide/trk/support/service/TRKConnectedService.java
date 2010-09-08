@@ -49,7 +49,7 @@ import com.nokia.tcf.api.ITCMessageOptions;
 import com.nokia.tcf.api.TCFClassFactory;
 
 /**
- *
+ *	@deprecated C3TCF: TRK not visible or supported in C3
  */
 public class TRKConnectedService extends AbstractConnectedService2 {
 	
