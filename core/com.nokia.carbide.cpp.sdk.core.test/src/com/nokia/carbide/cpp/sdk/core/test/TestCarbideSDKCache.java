@@ -65,6 +65,7 @@ public class TestCarbideSDKCache extends TestCase {
 	
 	public void testCacheCreation() throws Exception {
 		final TestSDKManager manager = new TestSDKManager();
+		((AbstractSDKManager)manager).init();
 		manager.clearCache();
 		IJobChangeListener listener = new IJobChangeListener() {
 			
@@ -96,6 +97,7 @@ public class TestCarbideSDKCache extends TestCase {
 
 	public void testCacheModification() throws Exception {
 		final TestSDKManager manager = new TestSDKManager();
+		((AbstractSDKManager)manager).init();
 		manager.scanSDKs();
 		manager.getScanJob().join();
 		assertTrue(manager.getSDKList().isEmpty() == manager.getCache().isEmpty());
@@ -119,6 +121,7 @@ public class TestCarbideSDKCache extends TestCase {
 		assertNull(SDKCacheUtils.getCache().getCache(SBSv2QueryUtils.PRODUCT_CACHE_KEY));
 		assertNull(SDKCacheUtils.getCache().getCache(SBSv2QueryUtils.CONFIG_CACHE_KEY));
 		final TestSDKManager manager = new TestSDKManager();
+		((AbstractSDKManager)manager).init();
 		manager.scanSDKs();
 		manager.getScanJob().join();
 		assertNull(SDKCacheUtils.getCache().getCache(SBSv2QueryUtils.ALIAS_CACHE_KEY));
