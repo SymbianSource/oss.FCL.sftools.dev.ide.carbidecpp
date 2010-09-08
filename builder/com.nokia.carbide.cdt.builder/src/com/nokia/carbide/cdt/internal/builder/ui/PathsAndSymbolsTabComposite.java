@@ -283,7 +283,7 @@ public class PathsAndSymbolsTabComposite extends Composite {
 	}
 	
 	public static void refresh() {
-		if (treeViewer != null) {
+		if (treeViewer != null && !treeViewer.getTree().isDisposed()) {
 			treeViewer.refresh();
 		}
 	}
