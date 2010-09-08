@@ -35,6 +35,7 @@ import java.util.TreeSet;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.IDialogConstants;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
@@ -861,6 +862,9 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 				FileUtils.copyFile(is, file);
 			}
 		}
+		else
+			MessageDialog.openError(getShell(), "Package Error", MessageFormat.format("Cannot locate package file ({0})\n\n(server configuration problem?)", 
+					packageContents.getDefaultNameFileName()));
 	}
 	
 	private void attemptInstall(IPackageContents packageContents) throws Exception {
@@ -875,6 +879,10 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 			FileUtils.copyFile(is, tempFile);
 			Program.launch(tempFile.getAbsolutePath());
 		}
+		else
+			MessageDialog.openError(getShell(), "Package Error", MessageFormat.format(
+					"Failed to download package ({0})\n\n(server configuration problem?)",
+					packageContents.getDefaultNameFileName()));
 	}
 	
 

@@ -38,7 +38,6 @@ import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnection
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.trk.support.Messages;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
-import com.nokia.carbide.trk.support.service.TRKConnectedService;
 import com.nokia.cpp.internal.api.utils.ui.RunRunnableWhenWorkbenchVisibleJob;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
@@ -112,15 +111,16 @@ public class ConnectionStatusReconciler {
 		return connection instanceof IConnection2 && ((IConnection2) connection).isDynamic();
 	}
 
+	/* C3TCF
 	private boolean isSysTRK(TRKConnectedService service) {
 		String value = service.getProperties().get(TRKConnectedService.PROP_SYS_TRK);
 		return Boolean.parseBoolean(value);
 	}
-	
+	*/
 	private void addConnection(IConnection connection) {
 		handledConnections.add(connection);
 		for (IConnectedService service : manager.getConnectedServices(connection)) {
-			if (service instanceof TRKConnectedService || isTCFTRKService(service)) {
+			if (/* C3TCF service instanceof TRKConnectedService ||*/ isTCFTRKService(service)) {
 				service.addStatusChangedListener(serviceStatusListener);
 			}
 		}
@@ -213,10 +213,12 @@ public class ConnectionStatusReconciler {
 		EStatus trkStatus = EStatus.UNKNOWN;
 		EStatus tcfTRKStatus = EStatus.UNKNOWN;
 		for (IConnectedService service : manager.getConnectedServices(connection)) {
+			/* C3TCF
 			if (service instanceof TRKConnectedService) {
 				isSysTRK = isSysTRK((TRKConnectedService) service);
 				trkStatus = service.getStatus().getEStatus();
 			}
+			*/
 			if (isTCFTRKService(service)) { //$NON-NLS-1$
 				tcfTRKStatus = service.getStatus().getEStatus();
 			}

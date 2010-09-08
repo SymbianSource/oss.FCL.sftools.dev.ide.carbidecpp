@@ -211,8 +211,10 @@ public class Registry implements IConnectionTypeProvider, IConnectionsManager {
 
 	public Collection<String> getCompatibleConnectionTypeIds(IService service) {
 		Collection<String> compatibleConnectionTypeIds = new HashSet<String>();
-		for (IConnectedServiceFactory factory : connectedServiceFactories) {
-			compatibleConnectionTypeIds.addAll(factory.getCompatibleConnectionTypeIds(service));
+		if (service != null) {
+			for (IConnectedServiceFactory factory : connectedServiceFactories) {
+				compatibleConnectionTypeIds.addAll(factory.getCompatibleConnectionTypeIds(service));
+			}
 		}
 		return compatibleConnectionTypeIds;
 	}

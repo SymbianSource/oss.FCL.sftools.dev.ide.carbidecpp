@@ -387,8 +387,8 @@ public class ClientServiceSiteUI2 implements IClientServiceSiteUI2, IConnectionL
 		for (int i = 0; i < connectionTypes.length; i++) {
 			IConnectionType type = connectionTypes[i];
 			if (requiredConnectionTypes.length() > 0)
-				requiredConnectionTypes.append(", "); //$NON-NLS-1$
-			if (i == connectionTypes.length - 1)
+				requiredConnectionTypes.append(connectionTypes.length > 2 ? ", " : " "); //$NON-NLS-1$ //$NON-NLS-2$
+			if (i == connectionTypes.length - 1 && connectionTypes.length > 1)
 				requiredConnectionTypes.append(Messages.getString("ClientServiceSiteUI2.Or")); //$NON-NLS-1$
 			requiredConnectionTypes.append(type.getDisplayName());
 		}

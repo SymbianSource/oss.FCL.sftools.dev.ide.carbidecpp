@@ -28,13 +28,13 @@
       </launchConfigurationType>
 
       <launchConfigurationType
-            name="Symbian OS Application TRK"
+            name="Symbian OS Application TCF TRK"
             public="true"
             id="com.nokia.cdt.debug.launch.appTRKLaunch">
       </launchConfigurationType>
  
       <launchConfigurationType
-            name="Symbian OS System TRK"
+            name="Symbian OS System TCF TRK"
             public="true"
             id="com.nokia.cdt.debug.launch.systemTRKLaunch">
       </launchConfigurationType>
@@ -181,11 +181,11 @@
             </contextLabel>
          </contextualLaunch>
          <description
-               description="Debugs on a phone or simulator using System TRK or Application TRK"
+               description="Debugs on a phone or simulator using System or Application TCF TRK"
                mode="debug">
          </description>
          <description
-               description="Runs on a phone or simulator using System TRK or Application TRK"
+               description="Runs on a phone or simulator using System or Application TCF TRK"
                mode="run">
          </description>
       </shortcut>

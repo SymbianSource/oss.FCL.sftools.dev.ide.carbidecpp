@@ -22,7 +22,7 @@ import com.nokia.carbide.installpackages.InstallPackages.IServerData;
 import com.nokia.carbide.remoteconnections.interfaces.*;
 
 /**
- *
+ * @deprecated C3TCF:  TRKService and installer are not provided in C3
  */
 public class TRKInstallerProvider extends AbstractPackageInstallerProvider {
 

@@ -27,8 +27,6 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedServiceFactory;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IService;
-import com.nokia.carbide.trk.support.connection.SerialBTConnectionType;
-import com.nokia.carbide.trk.support.connection.SerialConnectionType;
 import com.nokia.carbide.trk.support.connection.USBConnectionType;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
 
@@ -47,12 +45,14 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 				return new RemoteConnectedService(service);		// TODO: not ported
 			return new TracingConnectedService(service, (AbstractSynchronizedConnection) connection);
 		}
+		/* C3TCF: removing TRK
 		else if (service instanceof TRKService &&
 				isCompatibleConnection(getCompatibleTRKConnectionTypeIds(), connection)) {
 			if (HostOS.IS_UNIX)
 				return new RemoteConnectedService(service);	// TODO: not ported
 			return new TRKConnectedService(service, (AbstractSynchronizedConnection) connection);
 		}
+		*/
 		return null;
 	}
 	
@@ -72,6 +72,7 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 		});
 	}
 	
+	/*
 	private Collection<String> getCompatibleTRKConnectionTypeIds() {
 		return Arrays.asList(new String[] {
 				SerialConnectionType.ID,
@@ -79,14 +80,18 @@ public class ConnectedServiceFactory implements IConnectedServiceFactory {
 				USBConnectionType.ID,
 				}); 
 	}
+	*/
 	
 	/* (non-Javadoc)
 	 * @see com.nokia.carbide.remoteconnections.interfaces.IConnectedServiceFactory#getCompatibleConnectionTypeIds(com.nokia.carbide.remoteconnections.interfaces.IService)
 	 */
 	public Collection<String> getCompatibleConnectionTypeIds(IService service) {
+		/* C3TCF: removing TRK
 		if (service instanceof TRKService)
 			return getCompatibleTRKConnectionTypeIds();
-		else if (service instanceof TracingService)
+		else
+		*/ 
+		if (service instanceof TracingService)
 			return getCompatibleTracingConnectionTypeIds();
 		return Collections.emptyList();
 	}

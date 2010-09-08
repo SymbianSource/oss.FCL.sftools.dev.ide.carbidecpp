@@ -74,7 +74,9 @@ public class LaunchPlugin extends AbstractUIPlugin {
 
 	public static final String EMULATION_LAUNCH_TYPE = "com.nokia.cdt.debug.launch.emulationLaunch"; //$NON-NLS-1$
 	
+	/** @deprecated */
 	public static final String REMOTE_CONNECTIONS_TRK_SERVICE = "com.nokia.carbide.trk.support.service.TRKService"; //$NON-NLS-1$
+	public static final String REMOTE_CONNECTIONS_TCFTRK_SERVICE = "com.nokia.carbide.cpp.edc.TCFTRKService"; //$NON-NLS-1$
 	public static final String REMOTE_CONNECTIONS_TRACING_SERVICE = "com.nokia.carbide.trk.support.service.TracingService"; //$NON-NLS-1$
 
 	
@@ -384,11 +386,24 @@ public class LaunchPlugin extends AbstractUIPlugin {
 		return CarbideBuilderPlugin.getProjectInContext();
 	}
 	
+	/** @deprecated */
 	public static IService getTRKService() {
 		return RemoteConnectionsActivator.getConnectionTypeProvider().
 					findServiceByID(REMOTE_CONNECTIONS_TRK_SERVICE);
 	}
-	
+	/** Get the TCF TRK service, specifically */
+	public static IService getTCFTRKService() {
+		return RemoteConnectionsActivator.getConnectionTypeProvider().
+				findServiceByID(REMOTE_CONNECTIONS_TCFTRK_SERVICE);
+	}
+	/** Get the run-mode debug service, generically */
+	public static IService getRunModeDebugService() {
+		return getTCFTRKService();
+	}
+	/** Get the run-mode debug service ID, generically */
+	public static String getDebugServiceId() {
+		return REMOTE_CONNECTIONS_TCFTRK_SERVICE;
+	}
 	/**
 	 * Returns the currently active workbench window or <code>null</code>
 	 * if none.

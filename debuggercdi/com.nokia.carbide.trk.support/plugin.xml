@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
 
+<!-- C3TCF: removing TRK support, which is the service, and any connections that only support TRK, from C3
    <extension
          point="com.nokia.carbide.remoteConnections.service">
       <service
@@ -20,18 +21,22 @@
             class="com.nokia.carbide.trk.support.connection.SerialBTConnectionType">
       </connectionType>
    </extension>
+-->
+
    <extension
          point="com.nokia.carbide.remoteConnections.connectionType">
       <connectionType
             class="com.nokia.carbide.trk.support.connection.USBConnectionType">
       </connectionType>
    </extension>
+   
    <extension
          point="com.nokia.carbide.remoteConnections.service">
       <service
             class="com.nokia.carbide.trk.support.service.TracingService">
       </service>
    </extension>
+   
    <extension
          point="com.nokia.carbide.remoteConnections.connectedServiceFactory">
       <connectedServiceFactory

@@ -19,6 +19,7 @@ package com.nokia.carbide.remoteconnections.interfaces;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -117,7 +118,7 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 				installFileUrl = getInstallFileUrl(runnableContext);
 				inputStream = getInstallFile(installFileUrl, runnableContext);
 			} catch (Exception e) {
-				RemoteConnectionsActivator.logError(e);
+				RemoteConnectionsActivator.log("Failed to find package URL " + installFileUrl, e);
 			}
 			String defaultFileName = null;
 			if (installFileUrl != null)
@@ -125,7 +126,16 @@ public abstract class AbstractPackageInstallerProvider implements IRemoteAgentIn
 			return new PackageContents(defaultFileName, inputStream);
 		}
 		
-		private ByteArrayInputStream getInstallFile(String installFileUrl, IRunnableContext runnableContext) throws Exception {
+		private InputStream getInstallFile(String installFileUrl, IRunnableContext runnableContext) throws Exception {
+			
+			URL url = null;
+			
+			// see if the file is local (Ed's hack for testing...)
+			url = new URL(installFileUrl);
+			if (url.getProtocol().equals("file")) { 
+				return url.openStream();
+			}
+			
 			GetMethod getMethod = new GetMethod(installFileUrl);
 			HttpClient client = new HttpClient();
 			InstallPackages.setProxyData(client, getMethod);

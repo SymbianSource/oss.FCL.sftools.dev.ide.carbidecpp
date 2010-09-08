@@ -28,6 +28,8 @@ import java.util.*;
 
 /**
  * Implementation of IService for TRK
+ * 
+ * @deprecated C3TCF: TRK service not provided in C3
  */
 public class TRKService implements IService {
 

@@ -182,6 +182,11 @@ public class InstallPackages {
 				if (o1.equals(o2))
 					return 0;
 
+				// EJS HACK: I tried using the ';' separator in the sdkFamily but it
+				// sorted to the bottom and also showed up in the UI...?
+				if (o1.equals("Symbian"))
+					return -1;
+				
 				for (String orderString : orderList) {
 					if (o1.equals(orderString))
 						return -1;
@@ -216,8 +221,19 @@ public class InstallPackages {
 		return packages;
 	}
 
-	private PackagesType getAvailablePackagesFromServer() throws Exception {
-		GetMethod getMethod = new GetMethod(getMasterFilePath());
+
+	private URL getAvailablePackagesURL() throws Exception {
+		URL url = null;
+		
+		// see if the file is local (Ed's hack for testing...)
+		String masterFilePathStr = getMasterFilePath();
+		url = new URL(masterFilePathStr);
+		if (url.getProtocol().equals("file")) { 
+			return url;
+		}
+
+		// else, read the file to a local temporary location
+		GetMethod getMethod = new GetMethod(masterFilePathStr);
 		HttpClient client = new HttpClient();
 		setProxyData(client, getMethod);
 		client.getHttpConnectionManager().getParams()
@@ -255,11 +271,20 @@ public class InstallPackages {
 			}
 			out.close();
 			in.close();
-			URL url = masterFile.toURI().toURL();
-			return loadPackages(url);
+			url = masterFile.toURI().toURL();
+			
+			return url;
 		}
-
 		return null;
+	}
+	
+	private PackagesType getAvailablePackagesFromServer() throws Exception {
+		URL url = getAvailablePackagesURL();
+		
+		if (url == null)
+			return null;
+		
+		return loadPackages(url);
 	}
 
 	private static java.net.URI getURI(GetMethod getMethod) {
