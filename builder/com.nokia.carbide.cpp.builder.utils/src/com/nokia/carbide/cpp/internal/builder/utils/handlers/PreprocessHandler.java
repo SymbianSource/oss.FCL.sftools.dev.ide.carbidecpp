@@ -409,7 +409,11 @@ public class PreprocessHandler extends AbstractHandler {
 		
 		List<IDefine> buildMacros = buildConfig.getBuildContext().getBuildMacros();
 		for (IDefine define : buildMacros){
-			macros.add(define.getName());
+			if (define.getName().equals("__PRODUCT_INCLUDE__")){
+				macros.add(define.getName() + "=" + define.getExpansion());
+			} else {
+				macros.add(define.getName());
+			}
 		}
 		
 		List<IDefine> metaDataMacros = buildConfig.getBuildContext().getMetadataMacros();
