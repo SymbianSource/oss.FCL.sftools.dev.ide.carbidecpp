@@ -56,8 +56,6 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 	private Text epoc32DirPath;
 	private Button epoc32DirBrowse;
 	
-	private Button logUnresolvedModules;
-	
 	/* (non-Javadoc)
 	 * @see org.eclipse.debug.ui.ILaunchConfigurationTab#createControl(org.eclipse.swt.widgets.Composite)
 	 */
@@ -186,21 +184,6 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 			}
 		});
 		
-		createVerticalSpacer(parent, 1);
-
-		logUnresolvedModules = createCheckButton(parseRomLogGroup.getGroup(), Messages.getString("RomLogFileTab.13")); //$NON-NLS-1$
-		data = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
-		data.horizontalSpan = 2;
-		logUnresolvedModules.setLayoutData(data);
-		logUnresolvedModules.setToolTipText(Messages.getString("RomLogFileTab.14")); //$NON-NLS-1$
-		logUnresolvedModules.setData(".uid", "RomLogFileTab.logUnresolvedModules");  //$NON-NLS-1$ //$NON-NLS-2$
-		logUnresolvedModules.addSelectionListener(new SelectionAdapter() {
-			public void widgetSelected(SelectionEvent e) {
-				updateLaunchConfigurationDialog();
-			}
-		});
-			
-		//createVerticalSpacer(parent, 1);
 	}
 	
 	/* (non-Javadoc)
@@ -217,7 +200,6 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 			parseRomLogGroup.setSelection(configuration.getAttribute( PreferenceConstants.J_PN_ParseRomLogFile , false ));
 			romLogFilePath.setText(configuration.getAttribute( PreferenceConstants.J_PN_RomLogFilePath , "" )); //$NON-NLS-1$	
 			epoc32DirPath.setText(configuration.getAttribute( PreferenceConstants.J_PN_SymbianKitEpoc32Dir , "" )); //$NON-NLS-1$
-			logUnresolvedModules.setSelection(configuration.getAttribute( PreferenceConstants.J_PN_LogUnresolved , false ));
 			
 			checkControlState();
 			
@@ -239,7 +221,6 @@ public class RomLogFileTab extends CLaunchConfigurationTab {
 			epoc32Dir = epoc32Dir.substring(0, epoc32Dir.length()-1);
 		}	
 		configuration.setAttribute( PreferenceConstants.J_PN_SymbianKitEpoc32Dir, epoc32Dir);
-		configuration.setAttribute( PreferenceConstants.J_PN_LogUnresolved, logUnresolvedModules.getSelection());				
 	}
 
 	/* (non-Javadoc)

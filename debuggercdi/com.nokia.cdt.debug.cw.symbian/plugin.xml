@@ -64,25 +64,6 @@
    <extension
          point="org.eclipse.ui.console.consoleFactories">
       <consoleFactory
-            label="New TRK Program Output Console"
-            class="com.nokia.cdt.debug.cw.symbian.UnframedMessagesConsoleFactory"/>
-   </extension>
- 
-   <extension
-         point="org.eclipse.ui.console.consoleFactories">
-      <consoleFactory
-            label="New TRK Communications Log Console"
-            class="com.nokia.cdt.debug.cw.symbian.TRKCommLogConsoleFactory"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.console.consoleFactories">
-      <consoleFactory
-            label="New Symbian Rom Log Console"
-            class="com.nokia.cdt.debug.cw.symbian.RomLogConsoleFactory"/>
-   </extension>
-   <extension
-         point="org.eclipse.ui.console.consoleFactories">
-      <consoleFactory
             label="New Emulator Output Console"
             class="com.nokia.cdt.debug.cw.symbian.DebugTraceConsoleFactory"/>
    </extension>

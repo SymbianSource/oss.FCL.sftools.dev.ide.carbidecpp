@@ -126,8 +126,6 @@ public class SettingsData {
 
 	public static final String TARGET_PATH_INCLUDES_FILENAME = "TARGET_PATH_INCLUDES_FILENAME"; //$NON-NLS-1$
 
-	public static final int J_PN_TrkTimeout_Default = 2000;
-	
 	private static String[] exceptionPropertyNames = null;
 	private static IPath mainExeTargetPath = null;
 	private static IPath mainExeHostPath = null;
@@ -415,8 +413,6 @@ public class SettingsData {
 		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ENABLE_REGISTER_BOOKKEEPING, false );
 		configuration.setAttribute( PreferenceConstants.J_PN_ViewUnframedData, true );
 		configuration.setAttribute( PreferenceConstants.J_PN_ViewCommMessages, false );
-		configuration.setAttribute( PreferenceConstants.J_PN_DefaultInstructionSet, PreferenceConstants.J_PV_DefaultInstructionSet_Auto );
-		configuration.setAttribute( PreferenceConstants.J_PN_TRKMessageTimeout, J_PN_TrkTimeout_Default );
 	}
 	
 	public static void setStopModeDebuggerTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
@@ -430,7 +426,6 @@ public class SettingsData {
 		configuration.setAttribute( ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ENABLE_REGISTER_BOOKKEEPING, false );
 		configuration.setAttribute( PreferenceConstants.J_PN_RomImgStartAddress , 0);
 		configuration.setAttribute( PreferenceConstants.J_PN_DebugRunFromStart, PreferenceConstants.J_PV_DebugRunFromStart_Debug);
-		configuration.setAttribute( PreferenceConstants.J_PN_DefaultInstructionSet, PreferenceConstants.J_PV_DefaultInstructionSet_Auto );
 		configuration.setAttribute( PreferenceConstants.J_PN_TargetProcessor, 8);
 		configuration.setAttribute( PreferenceConstants.J_PN_RunTargetInitFile, false);
 		configuration.setAttribute( PreferenceConstants.J_PN_TargetInitFilePath, ""); //$NON-NLS-1$
@@ -670,7 +665,6 @@ public class SettingsData {
 		configuration.setAttribute(PreferenceConstants.J_PN_ParseRomLogFile, false);
 		configuration.setAttribute(PreferenceConstants.J_PN_RomLogFilePath, ""); //$NON-NLS-1$
 		configuration.setAttribute(PreferenceConstants.J_PN_SymbianKitEpoc32Dir, ""); //$NON-NLS-1$
-		configuration.setAttribute(PreferenceConstants.J_PN_LogUnresolved, false);
 
 		configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_DEBUGGER_ID, SymbianDebugger.DEBUGGER_ID);
 
