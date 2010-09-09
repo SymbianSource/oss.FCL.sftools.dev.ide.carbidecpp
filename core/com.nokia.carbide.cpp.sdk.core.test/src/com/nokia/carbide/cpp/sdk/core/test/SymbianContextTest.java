@@ -66,7 +66,7 @@ public class SymbianContextTest extends TestCase {
 		ISymbianSDK contextSDK = context.getSDK();
 		sbsv1BuildInfo = (ISBSv1BuildInfo)contextSDK.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
 		
-		assertEquals(sdk, contextSDK);
+		assertEquals(sdk.getUniqueId(), contextSDK.getUniqueId());
 		
 		// test that we can get the macros for valid SDKs 
 		// (if the default of 0.0, then we never fetch macros)
