@@ -112,6 +112,7 @@ public class TestCarbideSDKCache extends TestCase {
 		assertFalse(manager.getCache().isEmpty());
 		assertNotNull(manager.getCacheEntry(sdkId));
 		manager.removeSDK(sdkId);
+		Thread.sleep(5000);  // Testing. This test fails on one test machine but not another. Put in a sleep, guess there may be some timing issue with the cache
 		assertNull(manager.getCacheEntry(sdkId));
 	}
 
