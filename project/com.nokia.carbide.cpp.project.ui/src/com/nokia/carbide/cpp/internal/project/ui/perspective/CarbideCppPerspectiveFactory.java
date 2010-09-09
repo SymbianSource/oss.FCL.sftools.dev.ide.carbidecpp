@@ -29,8 +29,6 @@ public class CarbideCppPerspectiveFactory implements IPerspectiveFactory {
 	private static final String EXECUTABLES_VIEW_ID = 
 		"org.eclipse.cdt.debug.ui.executablesView"; //$NON-NLS-1$
 	
-	private static final String INSTALL_VIEW_ID = "com.nokia.carbide.discovery.view"; //$NON-NLS-1$
-	
 	private static final String TOP_LEFT = "topLeft"; //$NON-NLS-1$
 	private static final String BOTTOM_LEFT = "bottomLeft"; //$NON-NLS-1$
 	private static final String BOTTOM_RIGHT = "bottom"; //$NON-NLS-1$
@@ -80,7 +78,6 @@ public class CarbideCppPerspectiveFactory implements IPerspectiveFactory {
 		layout.addShowViewShortcut(IPageLayout.ID_PROBLEM_VIEW);
 		layout.addShowViewShortcut(IConsoleConstants.ID_CONSOLE_VIEW); // build console
 		layout.addShowViewShortcut(EXECUTABLES_VIEW_ID);
-		layout.addShowViewShortcut(INSTALL_VIEW_ID);
 
 		// add show-in contributions
 		layout.addShowInPart(ProjectExplorer.VIEW_ID);
