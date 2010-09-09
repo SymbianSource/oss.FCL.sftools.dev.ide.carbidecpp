@@ -43,6 +43,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 
     private static final String COMPONENT_ARG = "-p"; //$NON-NLS-1$
     private static final String COMPILE_ARG = "-c"; //$NON-NLS-1$
+    private static final String STROUT_ARG = "-f -";
     
     public boolean buildAllComponents(ICarbideBuildConfiguration buildConfig, List<IPath> normalMakMakePaths, List<IPath> testMakMakePaths, CarbideCommandLauncher launcher, IProgressMonitor monitor) {
 		
@@ -570,7 +571,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		
 		String configName = getConfigName(buildConfig, fullMMPPath);
 		
-		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, configName, COMPONENT_ARG, fullMMPPath.toFile().getName()};
+		String[] sbsArgs = new String[] {"--source-target=" + file.toOSString(), COMPILE_ARG, configName, COMPONENT_ARG, fullMMPPath.toFile().getName(), STROUT_ARG};
 		launcher.setErrorParserManager(buildConfig.getCarbideProject().getINFWorkingDirectory(), buildConfig.getErrorParserList());
 		
 		int retVal = launcher.executeCommand(
