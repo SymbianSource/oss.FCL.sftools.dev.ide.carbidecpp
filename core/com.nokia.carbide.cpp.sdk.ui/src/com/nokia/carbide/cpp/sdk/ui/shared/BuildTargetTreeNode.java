@@ -160,7 +160,11 @@ public class BuildTargetTreeNode extends TreeNode {
 					monitor.worked(1);
 					for (ISymbianSDK sdk : sdkListCopy) {
 						monitor.worked(1);
-						monitor.setTaskName(msgPrefix + sdk.getUniqueId());
+						String sdkErr = ""; // If we are scanning due to errors in the SDK
+						if (!(new File(sdk.getEPOCROOT()).exists())){
+							sdkErr = " (Building cache with bad EPOCROOT)";
+						}
+						monitor.setTaskName(msgPrefix + sdk.getUniqueId() + sdkErr);
 						BuildTargetTreeNode treeNode = new BuildTargetTreeNode(
 								sdk, sbsv2Project);
 						if (treeNode.getChildren() != null || sbsv2Project) {
