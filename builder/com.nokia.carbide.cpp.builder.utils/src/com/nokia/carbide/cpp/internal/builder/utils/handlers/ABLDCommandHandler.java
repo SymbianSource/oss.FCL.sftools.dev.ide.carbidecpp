@@ -94,7 +94,7 @@ public class ABLDCommandHandler extends ProjectCommandHandler {
 
 			Job buildJob = new Job("Invoking abld command") {
 				protected IStatus run(IProgressMonitor monitor) {
-					CarbideCommandLauncher launcher = new CarbideCommandLauncher(cpi.getProject(), new NullProgressMonitor(), null, cpi.getINFWorkingDirectory());
+					CarbideCommandLauncher launcher = new CarbideCommandLauncher(cpi.getProject(), monitor, null, cpi.getINFWorkingDirectory());
 					launcher.showCommand(true);
 					launcher.startTimingStats();
 

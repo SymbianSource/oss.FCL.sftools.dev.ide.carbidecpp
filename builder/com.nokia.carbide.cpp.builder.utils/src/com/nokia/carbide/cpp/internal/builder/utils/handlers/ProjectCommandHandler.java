@@ -34,7 +34,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
@@ -165,9 +164,6 @@ public class ProjectCommandHandler extends AbstractHandler {
 		if (cpi != null) {
 			final List<ICarbideBuildConfiguration> buildConfigList = cpi.getBuildConfigurations();
 
-			final CarbideCommandLauncher launcher = new CarbideCommandLauncher(cpi.getProject(), new NullProgressMonitor(), null, cpi.getINFWorkingDirectory());
-			launcher.showCommand(true);
-
     		try {
     			CarbideCPPBuilder.removeAllMarkers(cpi.getProject());
     		} catch (CoreException e) {
@@ -177,6 +173,9 @@ public class ProjectCommandHandler extends AbstractHandler {
     		Job buildJob = new Job("Building all configurations for project " + project.getName()) { //$NON-NLS-1$
 				protected IStatus run(IProgressMonitor monitor) {
 					try {
+						CarbideCommandLauncher launcher = new CarbideCommandLauncher(cpi.getProject(), monitor, null, cpi.getINFWorkingDirectory());
+						launcher.showCommand(true);
+
 						SubMonitor subMonitor = SubMonitor.convert(monitor, buildConfigList.size());
 						
 						for (final ICarbideBuildConfiguration currConfig : buildConfigList) {
