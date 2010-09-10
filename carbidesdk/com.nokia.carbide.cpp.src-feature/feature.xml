@@ -2,7 +2,7 @@
 <feature
       id="com.nokia.carbide.cpp.src"
       label="Carbide.c++ Plug-in SRC"
-      version="2.0.0.qualifier"
+      version="3.0.0.qualifier"
       provider-name="Nokia Corporation"
       plugin="com.nokia.carbide.cpp"
       image="Carbide_Image.png">

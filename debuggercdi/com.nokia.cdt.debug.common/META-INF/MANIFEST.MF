@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Carbide Common CDT Debug Plugin
 Bundle-SymbolicName: com.nokia.cdt.debug.common;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.nokia.cdt.debug.common.CarbideCommonDebuggerPlugin
 Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.core.runtime,

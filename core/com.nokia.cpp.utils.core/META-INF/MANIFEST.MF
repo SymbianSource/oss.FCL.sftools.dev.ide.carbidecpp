@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-Name: Carbide.c++ Core Utilities
 Bundle-SymbolicName: com.nokia.cpp.utils.core;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.nokia.cpp.utils.core.noexport.UtilsCorePlugin
 Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.core.runtime,

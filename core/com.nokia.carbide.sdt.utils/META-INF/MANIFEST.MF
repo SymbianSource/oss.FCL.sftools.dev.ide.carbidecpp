@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-Name: Carbide.c++ Utilities
 Bundle-SymbolicName: com.nokia.sdt.utils;singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-ClassPath: .,
  libs/rhino1_6R2/js.jar,
  libs/batik-1.6/lib/batik-awt-util.jar,

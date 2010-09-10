@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Builder
 Bundle-SymbolicName: com.nokia.carbide.cdt.builder; singleton:=true
-Bundle-Version: 2.0.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.cdt.builder.CarbideBuilderPlugin
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin

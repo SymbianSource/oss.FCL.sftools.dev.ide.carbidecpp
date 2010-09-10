@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Symbian Plug-in
 Bundle-SymbolicName: com.nokia.cdt.debug.cw.symbian; singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.nokia.cdt.debug.cw.symbian.SymbianPlugin
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin

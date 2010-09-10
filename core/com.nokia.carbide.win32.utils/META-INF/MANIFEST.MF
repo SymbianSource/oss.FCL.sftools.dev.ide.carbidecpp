@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Win32Utils
 Bundle-SymbolicName: com.nokia.carbide.win32.utils;singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.internal.win32.utils.Win32UtilsPlugin
 Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.ui,

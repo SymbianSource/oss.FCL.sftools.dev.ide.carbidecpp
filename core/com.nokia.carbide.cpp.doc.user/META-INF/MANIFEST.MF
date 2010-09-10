@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Carbide.c++ User Guide
 Bundle-SymbolicName: com.nokia.carbide.cpp.doc.user;singleton:=true
-Bundle-Version: 1.4.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.help,

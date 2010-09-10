@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Carbide.c++ Template Wizard
 Bundle-SymbolicName: com.nokia.carbide.templatewizard; singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.templatewizard.TemplateWizardPlugin
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin
