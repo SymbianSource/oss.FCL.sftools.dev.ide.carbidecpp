@@ -16,6 +16,10 @@
 */
 package com.nokia.carbide.cpp.internal.qt.ui.wizard;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.viewers.TreeNode;
+import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -24,7 +28,10 @@ import org.eclipse.swt.widgets.Composite;
 
 import com.nokia.carbide.cpp.internal.qt.core.QtConfigFilter;
 import com.nokia.carbide.cpp.internal.qt.core.QtSDKFilter;
+import com.nokia.carbide.cpp.project.ui.sharedui.NewProjectPage;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.ui.shared.BuildTargetsPage;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 
 
 public class QtBuildTargetsPage extends BuildTargetsPage {
@@ -73,6 +80,47 @@ public class QtBuildTargetsPage extends BuildTargetsPage {
 				setErrorMessage(Messages.QtBuildTargetsPage_noQtConfigsError);
 			return false;
 		}
+		
+		if (HostOS.IS_WIN32){
+			if ((viewer.getCheckedElements()).length > 1) {
+				Object[] checkedElements = viewer.getCheckedElements();
+				for (Object obj : checkedElements){
+					TreeNode node = (TreeNode)obj;
+					if (node.getValue() instanceof ISymbianBuildContext) {
+						String epocRoot = ((ISymbianBuildContext)node.getValue()).getSDK().getEPOCROOT();
+						IPath path = new Path(epocRoot);
+						// This supports both the Qt project wizard and .pro file import wizard
+						// So we need to check wizard page instances to figure out which wizard we are running
+						String newProjectPageName = com.nokia.carbide.cpp.internal.project.ui.Messages.getString("NewProjectPage.Name");
+						IWizardPage npwp = this.getWizard().getPage(newProjectPageName);
+						if (npwp == null){
+							newProjectPageName = com.nokia.carbide.cpp.internal.qt.ui.wizard.Messages.QtProFileSelectionPage_title;
+							npwp = this.getWizard().getPage(newProjectPageName);
+						}
+						
+						if (npwp != null){
+							IPath projectLocation = null;
+							if (npwp instanceof NewProjectPage){
+								NewProjectPage npp = (NewProjectPage)this.getWizard().getStartingPage();
+								projectLocation = npp.getLocationPath();
+							}
+							else if (npwp instanceof QtProFileSelectionPage){
+								QtProFileSelectionPage qtpfsp = (QtProFileSelectionPage)this.getWizard().getStartingPage();
+								projectLocation = new Path(qtpfsp.getProFilePath());
+							}
+							
+							if (projectLocation != null){
+								if (!projectLocation.getDevice().equalsIgnoreCase(path.getDevice())){
+									setErrorMessage(Messages.QtBuildTargetsPage_mismatchedDriveSpec);
+									return false;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		return super.validatePage();
 	}	
 }

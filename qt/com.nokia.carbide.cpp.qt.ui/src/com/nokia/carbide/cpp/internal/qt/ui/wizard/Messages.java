@@ -127,6 +127,8 @@ public class Messages extends NLS {
 	
 	public static String PerspectiveSwitchDialog_RememberDecisionText;
 	
+	public static String QtBuildTargetsPage_mismatchedDriveSpec;
+	
 	static {
 		// initialize resource bundle
 		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
