@@ -471,4 +471,8 @@ public class BuildSettingsUI {
 		dontCheckForExternalDependencies.setSelection(dontAsk);
 	}
 	
+	public boolean wantsSBSv1(){
+		return wantsSBSv1;
+	}
+	
 }

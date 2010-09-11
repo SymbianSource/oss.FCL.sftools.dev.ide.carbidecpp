@@ -85,7 +85,7 @@ public class BuilderPreferencePage extends PreferencePage implements IWorkbenchP
 		store.setValue(BuilderPreferenceConstants.PREF_CONCURRENT_BUILD_JOBS, buildSettingsUI.getNumConcurrentBuildJobs());
 		store.setValue(BuilderPreferenceConstants.PREF_USE_BUILIN_X86_VARS, buildSettingsUI.getUseBuiltInEnvVars());
 		
-		if (SBSv2Utils.enableSBSv1Support()) {
+		if (SBSv2Utils.enableSBSv1Support() && buildSettingsUI.wantsSBSv1()) {
 			store.setValue(BuilderPreferenceConstants.PREF_CLEAN_LEVEL, buildSettingsUI.getDefaultCleanLevelv1());
 			store.setValue(BuilderPreferenceConstants.PREF_MANAGE_DEPENDENCIES, buildSettingsUI.getManageDependencies());
 			store.setValue(BuilderPreferenceConstants.PREF_MMP_CHANGED_ACTION_PROMPT, buildSettingsUI.getPromptForMMPChangedAction());
