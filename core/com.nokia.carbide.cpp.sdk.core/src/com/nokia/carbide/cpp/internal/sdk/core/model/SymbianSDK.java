@@ -242,8 +242,11 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		sbsv1BuildInfo.clearPlatformMacros();
 
 		if (!setDataFromManifestXML()){
-			//need to scan SDK files for OS version
-			scanSDKForVersionInfo();
+			// check if it's a legacy SDK that is not supported
+			if (!deriveOSVersionFromDeviceId()){
+				//need to scan SDK files for OS and SDK version
+				scanSDKForVersionInfo();
+			}
 		}
 		
 		setSupportFeatures();
@@ -589,6 +592,41 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 				}
 			}
 		}
+	}
+	
+	private boolean deriveOSVersionFromDeviceId(){
+		boolean foundOSVersion = false;
+		
+		if (getUniqueId().equals("S60_3rd")){
+			setOSVersion(new Version("9.1.0"));
+			foundOSVersion = true;
+		} else if (getUniqueId().equals("UIQ3") || getUniqueId().equals("UIQ_3_PB2")){
+			setOSVersion(new Version("9.1.0"));
+			foundOSVersion = true;
+		} else if (getUniqueId().equals("Series60_1_2_CW")){
+			setOSVersion(new Version("6.1.0"));
+			foundOSVersion = true;
+		} else if (getUniqueId().equals("Series60_2_0_CW")){
+			setOSVersion(new Version("7.0.0"));
+			foundOSVersion = true;
+		} else if (getUniqueId().equals("Series60_v21_CW")){
+			setOSVersion(new Version("7.0.0"));
+			foundOSVersion = true;
+		} else if (getUniqueId().equals("S60_2nd_FP2_CW")){
+			setOSVersion(new Version("8.0.0"));
+			foundOSVersion = true;
+		}  else if (getUniqueId().equals("S60_2nd_FP3") || getUniqueId().equals("S60_2nd_FP3_CW") || getUniqueId().equals("S60_2nd_FP3_B")){
+			setOSVersion(new Version("8.1.0"));
+			foundOSVersion = true;
+		} else if (getUniqueId().equals("UIQ_21")){
+			setOSVersion(new Version("7.0.15"));
+			foundOSVersion = true;
+		} else if (getUniqueId().equals("Series80_DP2_0_SDK_CW")){
+			setOSVersion(new Version("7.0.0"));
+			foundOSVersion = true;
+		}
+		return foundOSVersion;
+		
 	}
 
 }
