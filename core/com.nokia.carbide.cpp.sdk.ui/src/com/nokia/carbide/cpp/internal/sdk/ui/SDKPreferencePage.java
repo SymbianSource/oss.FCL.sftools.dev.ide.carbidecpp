@@ -27,12 +27,14 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
+import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerEditor;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationEvent;
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy;
 import org.eclipse.jface.viewers.EditingSupport;
+import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableColorProvider;
@@ -649,6 +651,12 @@ public class SDKPreferencePage
 		getApplyButton().setVisible(false);
 		GridLayout gridLayout = new GridLayout();
 		sdkListTableViewer.getTable().getParent().setLayout(gridLayout);
+		sdkListTableViewer.addCheckStateListener(new ICheckStateListener() {
+			
+			public void checkStateChanged(CheckStateChangedEvent event) {
+				performApply();
+			}
+		});
 	}
 
 }
