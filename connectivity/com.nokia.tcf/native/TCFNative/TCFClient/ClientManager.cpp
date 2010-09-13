@@ -24,7 +24,7 @@
 #include "resource.h"
 #include <stdio.h>
 #ifdef _PSAPI_PRESENT
-	#include <psapi.h>
+	#include "psapi.h"
 #endif
 
 #ifdef _DEBUG
@@ -109,6 +109,11 @@ CClientManager::CClientManager(HINSTANCE hinstDLL)
 
 	m_ServerLockFile = new char[MAX_DLLPATHNAME];
 	sprintf(m_ServerLockFile, "%s%c%s", exeDirectory, PATH_DELIMITER, SERVER_LOCKFILE_NAME);
+
+
+#ifdef _PSAPI_PRESENT
+	FindOrCreateRunningServer();
+#endif
 
 	char name[100];
 	sprintf(name, "%s%ld", ERRORMONITORLIST_MUTEX_BASENAME, ::GetCurrentProcessId());
@@ -276,21 +281,26 @@ CClientManager::FindOrCreateRunningServer()
 	{
 		// start the one next to the DLL
 		strncpy(exeDirectory, m_DllLocation, strlen(m_DllLocation) + 1);
-		size_t len = strlen(exeDirectory);
-		// remove file
-		for (int i = len-1; i > 0; i--)
-		{
-			if (exeDirectory[i] == PATH_DELIMITER)
-				break;
-		}
-		exeDirectory[i] = NULL;
 	}
+	size_t len = strlen(exeDirectory);
+	// remove file
+	int j;
+	for (j = len-1; j > 0; j--)
+	{
+		if (exeDirectory[j] == PATH_DELIMITER)
+			break;
+	}
+	exeDirectory[j] = NULL;
 
 	m_ServerExeFile = new char[MAX_DLLPATHNAME];
 	sprintf(m_ServerExeFile, "\"%s%c%s\"", exeDirectory, PATH_DELIMITER, SERVER_PROCESS_NAME);
+	TCDEBUGLOGA1("exeFile at %s\n", m_ServerExeFile);
 
 	m_ServerLockFile = new char[MAX_DLLPATHNAME];
 	sprintf(m_ServerLockFile, "%s%c%s", exeDirectory, PATH_DELIMITER, SERVER_LOCKFILE_NAME);
+	TCDEBUGLOGA1("lockFile at %s\n", m_ServerLockFile);
+
+
 
 	TCDEBUGCLOSE();
 
@@ -727,7 +737,7 @@ void CClientManager::CreateLockFile(DWORD processId)
 	if (m_ServerLockFile != NULL)
 	{
 		FILE* f = fopen(m_ServerLockFile, "wt");
-		TCDEBUGLOGA1("CClientManager::CreateLockFile f=%x\n", f);
+		TCDEBUGLOGA2("CClientManager::CreateLockFile f=%x, lockFile=%s\n", f, m_ServerLockFile);
 
 		if (f)
 		{
@@ -748,7 +758,7 @@ void CClientManager::AppendToLockFile(DWORD processId)
 	if (m_ServerLockFile != NULL)
 	{
 		FILE* f = fopen(m_ServerLockFile, "at");
-		TCDEBUGLOGA1("CClientManager::AppendToLockFile f=%x\n", f);
+		TCDEBUGLOGA2("CClientManager::AppendToLockFile f=%x, lockFile=%s\n", f, m_ServerLockFile);
 
 		if (f)
 		{
@@ -768,7 +778,7 @@ void CClientManager::DeleteLockFile()
 {
 	if (m_ServerLockFile != NULL)
 	{
-		TCDEBUGLOGS("CClientManager::DeleteLockFile\n");
+		TCDEBUGLOGA1("CClientManager::DeleteLockFile lockFile=%s\n", m_ServerLockFile);
 		::remove(m_ServerLockFile);
 	}
 }
@@ -784,7 +794,7 @@ void CClientManager::DeleteFromLockFile(DWORD serverProcessId)
 	if (m_ServerLockFile != NULL)
 	{
 		DWORD attr = ::GetFileAttributes(m_ServerLockFile);
-		TCDEBUGLOGA1("CClientManager::DeleteFromLockFile attr=%x\n", attr);
+		TCDEBUGLOGA2("CClientManager::DeleteFromLockFile attr=%x, lockFile=%s\n", attr, m_ServerLockFile);
 
 		if (attr != 0xffffffff) // error
 		{

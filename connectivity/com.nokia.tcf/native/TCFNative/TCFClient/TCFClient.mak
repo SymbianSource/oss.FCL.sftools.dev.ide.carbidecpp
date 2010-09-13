@@ -60,7 +60,7 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_PROJ=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -101,7 +101,7 @@ BSC32_FLAGS=/nologo /o"$(OUTDIR)\TCFClient.bsc"
 BSC32_SBRS= \
 	
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib shlwapi.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\TCFClient.pdb" /map:"$(INTDIR)\TCFClient.map" /machine:I386 /out:"$(OUTDIR)\TCFClient.dll" /implib:"$(OUTDIR)\TCFClient.lib" 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib shlwapi.lib psapi.lib /nologo /dll /incremental:no /pdb:"$(OUTDIR)\TCFClient.pdb" /map:"$(INTDIR)\TCFClient.map" /machine:I386 /out:"$(OUTDIR)\TCFClient.dll" /implib:"$(OUTDIR)\TCFClient.lib" 
 LINK32_OBJS= \
 	"$(INTDIR)\ClientManager.obj" \
 	"$(INTDIR)\ErrorMonitorData.obj" \
@@ -185,7 +185,7 @@ CLEAN :
     if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
 
 CPP=cl.exe
-CPP_PROJ=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_PROJ=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 .c{$(INTDIR)}.obj::
    $(CPP) @<<
@@ -242,7 +242,7 @@ BSC32_SBRS= \
 <<
 
 LINK32=link.exe
-LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib shlwapi.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\TCFClient.pdb" /map:"$(INTDIR)\TCFClient.map" /debug /machine:I386 /out:"$(OUTDIR)\TCFClient.dll" /implib:"$(OUTDIR)\TCFClient.lib" /pdbtype:sept 
+LINK32_FLAGS=kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib shlwapi.lib psapi.lib /nologo /dll /incremental:yes /pdb:"$(OUTDIR)\TCFClient.pdb" /map:"$(INTDIR)\TCFClient.map" /debug /machine:I386 /out:"$(OUTDIR)\TCFClient.dll" /implib:"$(OUTDIR)\TCFClient.lib" /pdbtype:sept 
 LINK32_OBJS= \
 	"$(INTDIR)\ClientManager.obj" \
 	"$(INTDIR)\ErrorMonitorData.obj" \
@@ -293,7 +293,7 @@ SOURCE=.\ClientManager.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\ClientManager.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -303,7 +303,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\ClientManager.obj"	"$(INTDIR)\ClientManager.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -317,7 +317,7 @@ SOURCE=..\Common\Source\ErrorMonitorData.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\ErrorMonitorData.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -327,7 +327,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\ErrorMonitorData.obj"	"$(INTDIR)\ErrorMonitorData.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -341,7 +341,7 @@ SOURCE=..\Common\Source\InputStream.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\InputStream.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -351,7 +351,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\InputStream.obj"	"$(INTDIR)\InputStream.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -365,7 +365,7 @@ SOURCE=..\Common\Source\mutex.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\mutex.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -375,7 +375,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\mutex.obj"	"$(INTDIR)\mutex.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -389,7 +389,7 @@ SOURCE=..\Common\Source\ServerClient.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\ServerClient.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -399,7 +399,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\ServerClient.obj"	"$(INTDIR)\ServerClient.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -413,7 +413,7 @@ SOURCE=..\Common\Source\shareddata.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\shareddata.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -423,7 +423,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\shareddata.obj"	"$(INTDIR)\shareddata.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -437,7 +437,7 @@ SOURCE=.\StdAfx.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yc"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yc"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\StdAfx.obj"	"$(INTDIR)\TCFClient.pch" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -447,7 +447,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yc"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yc"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\StdAfx.obj"	"$(INTDIR)\StdAfx.sbr"	"$(INTDIR)\TCFClient.pch" : $(SOURCE) "$(INTDIR)"
 	$(CPP) @<<
@@ -461,7 +461,7 @@ SOURCE=.\TCAPIConnectionJni.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\TCAPIConnectionJni.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -471,7 +471,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\TCAPIConnectionJni.obj"	"$(INTDIR)\TCAPIConnectionJni.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -485,7 +485,7 @@ SOURCE=..\Common\Source\TCDebugLog.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\TCDebugLog.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -495,7 +495,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\TCDebugLog.obj"	"$(INTDIR)\TCDebugLog.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -509,7 +509,7 @@ SOURCE=.\TCFClient.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\TCFClient.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -519,7 +519,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\TCFClient.obj"	"$(INTDIR)\TCFClient.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -533,7 +533,7 @@ SOURCE=.\TCFCppApi.cpp
 
 !IF  "$(CFG)" == "TCFClient - Win32 Release"
 
-CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
+CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "NDEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /c 
 
 "$(INTDIR)\TCFCppApi.obj" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<
@@ -543,7 +543,7 @@ CPP_SWITCHES=/nologo /Zp2 /MT /W3 /GX /O2 /I "..\Common\Headers" /I ".\jdk1.5.0_
 
 !ELSEIF  "$(CFG)" == "TCFClient - Win32 Debug"
 
-CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+CPP_SWITCHES=/nologo /Zp2 /MTd /W3 /Gm /GX /ZI /Od /I "..\Common\Headers" /I ".\jdk1.5.0_10\include" /I ".\jdk1.5.0_10\include\win32" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "TCFCLIENT_EXPORTS" /D "_PSAPI_PRESENT" /FR"$(INTDIR)\\" /Fp"$(INTDIR)\TCFClient.pch" /Yu"stdafx.h" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
 
 "$(INTDIR)\TCFCppApi.obj"	"$(INTDIR)\TCFCppApi.sbr" : $(SOURCE) "$(INTDIR)" "$(INTDIR)\TCFClient.pch"
 	$(CPP) @<<

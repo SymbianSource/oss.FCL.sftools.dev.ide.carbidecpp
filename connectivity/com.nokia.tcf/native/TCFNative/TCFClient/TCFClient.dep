@@ -4,6 +4,7 @@
 	"..\Common\Headers\ErrorMonitorData.h"\
 	"..\Common\Headers\InputStream.h"\
 	"..\Common\Headers\mutex.h"\
+	"..\common\headers\psapi.h"\
 	"..\Common\Headers\ServerClient.h"\
 	"..\Common\Headers\shareddata.h"\
 	"..\Common\Headers\TCDebugLog.h"\
