@@ -22,11 +22,12 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-import com.nokia.carbide.internal.discovery.ui.wizard.P2Utils;
+import com.nokia.carbide.internal.discovery.ui.p2.P2Utils;
 
 /**
  * The main plugin class to be used in the desktop.
  */
+@SuppressWarnings("restriction")
 public class ProductPlugin extends AbstractUIPlugin {
 
 	//The shared instance.
