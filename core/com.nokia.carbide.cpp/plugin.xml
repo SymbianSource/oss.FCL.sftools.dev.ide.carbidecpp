@@ -266,6 +266,10 @@
             commandId="org.eclipse.ui.edit.addBookmark"
             schemeId="com.nokia.carbide.cpp.carbidedefault" />
 		
+		<key
+			sequence="M1+B"
+			commandId="org.eclipse.ui.project.buildProject"
+			schemeId="com.nokia.carbide.cpp.carbidedefault"/>	
 	   
 <!-- =================================================================================== -->
 <!-- MICROSOFT VISUAL STUDIO KEY SHORTCUTS                                               -->
@@ -275,7 +279,7 @@
 		<!-- MSVS BuildSolution -->
 		<key
 			sequence="F7"
-			commandId="com.nokia.carbide.cpp.buildProject"
+			commandId="org.eclipse.ui.project.buildProject"
 			schemeId="org.eclipse.cdt.ui.visualstudio"/>	
 		<key
 			sequence="M1+F7"

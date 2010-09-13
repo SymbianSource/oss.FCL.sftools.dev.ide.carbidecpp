@@ -365,16 +365,7 @@
          </enablement>
 	 </commonWizard>
 	</extension>
- <extension
-       point="org.eclipse.ui.commands">
-    <command
-          categoryId="org.eclipse.ui.category.project"
-          defaultHandler="com.nokia.carbide.cpp.internal.project.ui.actions.CarbideBuildAction"
-          id="com.nokia.carbide.cpp.buildProject"
-          name="%buildProject">
-    </command>
- </extension>
-
+ 
 <!-- =================================================================================== -->
 <!-- CarbideFormEditor specific problem marker                                           -->
 <!-- =================================================================================== -->
