@@ -261,7 +261,6 @@
 	<!--  STOPMODE.ROMIMAGE -->
 	<context id="stopmode_romimage" >
 		<description>Specify the ROM image details.</description>
-		<topic label="Stop Mode ROM Image"					href="html/tasks/debugger/stop_mode_debug_launchcfg.htm" />
 		<topic label="ROM Log"								href="html/tasks/debugger/stop_mode_debug_rom_log_file.htm" />
 	</context>
 

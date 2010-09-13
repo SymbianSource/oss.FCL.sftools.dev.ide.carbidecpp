@@ -87,10 +87,6 @@
        <topic href="html/reference/menus/build_symbian_comp.htm"/>
     </entry>
 
-    <entry keyword="Build Targets">
-       <topic href="html/concepts/build_targets.htm"/>
-    </entry>
-
 	<entry keyword="Building Projects">
 	   <topic href="html/tasks/projects/prj_build.htm"/>
 	</entry>
