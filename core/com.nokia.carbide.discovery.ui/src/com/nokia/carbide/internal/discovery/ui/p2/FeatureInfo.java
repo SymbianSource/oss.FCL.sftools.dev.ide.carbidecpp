@@ -14,12 +14,12 @@
 * Description: 
 *
 */
-package com.nokia.carbide.internal.discovery.ui.wizard;
+package com.nokia.carbide.internal.discovery.ui.p2;
 
 import org.eclipse.equinox.p2.metadata.IInstallableUnit;
 import org.eclipse.equinox.p2.metadata.Version;
 
-class FeatureInfo {
+public class FeatureInfo {
 	private String id;
 	private Version version;
 	

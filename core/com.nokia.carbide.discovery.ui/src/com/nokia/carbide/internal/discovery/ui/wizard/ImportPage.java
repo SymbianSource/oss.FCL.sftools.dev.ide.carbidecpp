@@ -44,6 +44,9 @@ import org.eclipse.ui.progress.UIJob;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
+import com.nokia.carbide.internal.discovery.ui.p2.FeatureInfo;
+import com.nokia.carbide.internal.discovery.ui.p2.ImportExportData;
+import com.nokia.carbide.internal.discovery.ui.p2.Streamer;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**

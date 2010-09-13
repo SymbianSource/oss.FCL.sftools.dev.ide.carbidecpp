@@ -30,6 +30,7 @@ import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
+import com.nokia.carbide.internal.discovery.ui.p2.FeatureInstallOperation;
 
 /**
  * Wizard for importing installed features from a file and install them

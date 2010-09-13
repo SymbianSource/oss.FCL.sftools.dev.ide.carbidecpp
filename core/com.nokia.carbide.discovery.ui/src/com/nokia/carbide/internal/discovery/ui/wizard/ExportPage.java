@@ -38,6 +38,8 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.progress.UIJob;
 
 import com.nokia.carbide.discovery.ui.Messages;
+import com.nokia.carbide.internal.discovery.ui.p2.FeatureInfo;
+import com.nokia.carbide.internal.discovery.ui.p2.P2Utils;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
 
 /**

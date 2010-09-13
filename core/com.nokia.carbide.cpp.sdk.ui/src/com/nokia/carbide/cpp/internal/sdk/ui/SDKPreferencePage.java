@@ -71,6 +71,7 @@ import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
 import com.nokia.carbide.cpp.sdk.ui.shared.AddSDKDialog;
 import com.nokia.carbide.cpp.ui.TextAndDialogCellEditor;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
@@ -536,6 +537,7 @@ public class SDKPreferencePage
 		addSDKComponentTableItems();
 		sdkListTableViewer.refresh();
 		selectSDKEntry(0);
+		NewPluginChecker.checkForNewlyInstalledPlugins(SDKUIPlugin.getDefault().getWorkbench());
 		rescanButton.setText(Messages.getString("SDKPreferencePage.Rescan_Button_Label")); //$NON-NLS-1$
 		rescanButton.setEnabled(true);
 	}

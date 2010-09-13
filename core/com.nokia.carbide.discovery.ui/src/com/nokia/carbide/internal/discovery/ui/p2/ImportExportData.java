@@ -1,10 +1,11 @@
-package com.nokia.carbide.internal.discovery.ui.wizard;
+package com.nokia.carbide.internal.discovery.ui.p2;
 
 import java.net.URI;
 import java.util.Collection;
 import java.util.HashSet;
 
-class ImportExportData {
+
+public class ImportExportData {
 	private boolean wantsVersions;
 	private Collection<URI> uris;
 	private Collection<FeatureInfo> featureInfos;

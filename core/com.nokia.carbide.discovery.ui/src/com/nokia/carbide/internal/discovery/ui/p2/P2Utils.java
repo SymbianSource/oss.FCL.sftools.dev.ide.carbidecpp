@@ -14,7 +14,7 @@
 * Description: 
 *
 */
-package com.nokia.carbide.internal.discovery.ui.wizard;
+package com.nokia.carbide.internal.discovery.ui.p2;
 
 import java.io.File;
 import java.io.FileOutputStream;

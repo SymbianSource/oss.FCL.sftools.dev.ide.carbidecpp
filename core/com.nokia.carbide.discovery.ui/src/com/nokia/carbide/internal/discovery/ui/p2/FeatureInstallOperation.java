@@ -14,7 +14,7 @@
  * Description: 
  *
  */
-package com.nokia.carbide.internal.discovery.ui.wizard;
+package com.nokia.carbide.internal.discovery.ui.p2;
 
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
@@ -46,7 +46,7 @@ import org.eclipse.swt.widgets.Display;
 
 import com.nokia.carbide.discovery.ui.Messages;
 
-class FeatureInstallOperation implements IRunnableWithProgress {
+public class FeatureInstallOperation implements IRunnableWithProgress {
 	
 	private Collection<URI> uris;
 	private Collection<FeatureInfo> featureInfos;

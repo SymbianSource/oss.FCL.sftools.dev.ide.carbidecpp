@@ -14,7 +14,7 @@
 * Description: 
 *
 */
-package com.nokia.carbide.internal.discovery.ui.wizard;
+package com.nokia.carbide.internal.discovery.ui.p2;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +47,7 @@ import com.nokia.carbide.discovery.ui.Messages;
  *&lt;/featuresConfiguration&gt;
  * </pre></blockquote>
  */
-class Streamer {
+public class Streamer {
 
 	private static final String CURRENT_VERSION = "1"; //$NON-NLS-1$
 	

@@ -48,6 +48,7 @@ import org.eclipse.swt.widgets.Text;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
+import com.nokia.carbide.internal.discovery.ui.p2.FeatureInfo;
 
 /**
  * Abstract superclass of import and export page

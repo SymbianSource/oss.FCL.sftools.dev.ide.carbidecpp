@@ -22,21 +22,21 @@ import java.util.List;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWindow;
 
-import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildInfo;
-import com.nokia.carbide.cpp.internal.sdk.core.model.DynamicFeatureInstaller;
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
+import com.nokia.carbide.internal.discovery.ui.p2.DynamicP2Installer;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
-@SuppressWarnings("restriction")
 public class NewPluginChecker {
 
 	private static final String SDK_FEATURE_SUBDIR = "epoc32/kit";  //$NON-NLS-1$
@@ -54,16 +54,21 @@ public class NewPluginChecker {
 				boolean installed = false;
 				boolean oneSDKWasScanned = false;
 				for (ISymbianSDK sdk : sdkList) {
-					ISBSv1BuildInfo sbsv1BuildInfo = (ISBSv1BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV1_BUILDER);
-					if (sbsv1BuildInfo != null) {
-						if (sbsv1BuildInfo.isPreviouslyScanned() == false) {
+					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
+					if (sbsv2BuildInfo != null) {
+						if (sbsv2BuildInfo.isPreviouslyScanned() == false) {
 							oneSDKWasScanned = true;
 							// XML was parsed, now try to run the feature installer
-							sbsv1BuildInfo.setPreviouslyScanned(true);
+							sbsv2BuildInfo.setPreviouslyScanned(true);
 							File featureDir = new File(sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR);
 							try {
-								DynamicFeatureInstaller installer = new DynamicFeatureInstaller(featureDir, null);
-								if (installer.install()) {
+								IStatus status = DynamicP2Installer.install(featureDir, new NullProgressMonitor());
+								if (status.isOK()) {
+									// TODO advise user??
+									installed = true;
+								}
+								else if (status.getSeverity() == IStatus.CANCEL) {
+									// TODO was installed 
 									installed = true;
 								}
 							} catch (Exception e) {
@@ -81,7 +86,7 @@ public class NewPluginChecker {
 				}
 				if (installed) {
 					// plugins from some SDK were installed
-					doEclipseRestartDialog(workbench);
+					//doEclipseRestartDialog(workbench);
 				}
 				
 				return Status.OK_STATUS;

@@ -34,6 +34,10 @@ import org.eclipse.ui.IWorkbench;
 
 import com.nokia.carbide.discovery.ui.Activator;
 import com.nokia.carbide.discovery.ui.Messages;
+import com.nokia.carbide.internal.discovery.ui.p2.FeatureInfo;
+import com.nokia.carbide.internal.discovery.ui.p2.ImportExportData;
+import com.nokia.carbide.internal.discovery.ui.p2.P2Utils;
+import com.nokia.carbide.internal.discovery.ui.p2.Streamer;
 
 /**
  * Wizard for exporting installed features to a file

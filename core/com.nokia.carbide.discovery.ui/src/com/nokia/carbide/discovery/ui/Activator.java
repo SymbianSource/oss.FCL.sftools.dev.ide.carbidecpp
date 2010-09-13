@@ -197,7 +197,10 @@ public class Activator extends AbstractUIPlugin {
 	}
 
     public static IStatus makeErrorStatus(String message, Throwable t) {
-        return new Status(IStatus.ERROR, PLUGIN_ID, message, t);
+    	return makeStatus(IStatus.ERROR, message, t);
     }
 
+    public static IStatus makeStatus(int severity, String message, Throwable t) {
+    	return new Status(severity, PLUGIN_ID, message, t);
+    }
 }
