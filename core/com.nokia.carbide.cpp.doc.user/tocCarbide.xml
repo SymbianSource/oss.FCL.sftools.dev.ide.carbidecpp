@@ -106,7 +106,7 @@
       <topic label="Debugger"							href="html/reference/pref_carb_debugger.htm" />
       <topic label="Diagnostic Logs"          			href="html/reference/pref_carb_diagnostic_logs.htm" />
       <topic label="Preprocess"							href="html/reference/pref_carb_preprocess.htm" />
-      <topic label="Symbian Filtering Preferences"		href="html/tasks/sdks/sdk_platform_filter.htm" />
+      <topic label="Build Configuration Filtering"		href="html/tasks/sdks/sdk_platform_filter.htm" />
       <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
       <topic label="Code Styles"						href="html/reference/pref_cpp_code_style.htm" >
         <topic label="Setting the Workspace Code Style"	href="html/tasks/code_style_workspace.htm" />
