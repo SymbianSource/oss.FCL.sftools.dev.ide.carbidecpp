@@ -294,7 +294,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 					@Override
 					public String isValid(String newText) {
 						try {
-							new URL(newText);
+							new URL(getLocationURL(newText));
 						} catch (MalformedURLException e) {
 							return Messages.AbstractBrowserPortalPageLayer_InvalidURLError;
 						}
@@ -303,9 +303,19 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				});
 				int result = dlg.open();
 				if (result == Dialog.OK) {
-					setUrl(dlg.getValue());
+					String value = dlg.getValue();
+					setUrl(getLocationURL(value));
 					actionBar.update();
 				}
+			}
+
+			private String getLocationURL(String value) {
+				try {
+					new URL(value);
+				} catch (MalformedURLException e) {
+					value = "http://" + value;
+				}
+				return value;
 			};
 			
 			public boolean isEnabled() {
