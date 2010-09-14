@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.equinox.internal.provisional.p2.director.IDirector;
 import org.eclipse.equinox.internal.provisional.p2.director.ProfileChangeRequest;
 import org.eclipse.equinox.p2.core.IProvisioningAgent;
@@ -118,6 +119,7 @@ public class DynamicP2Installer {
 	}
 
 	private void doInstall(IProgressMonitor monitor) throws CoreException {
+		SubMonitor subMonitor = SubMonitor.convert(monitor, "Installing plugins from " + repositoryLocation.toOSString(), 100);
 		URI uri = URIUtil.toURI(repositoryLocation);
 		IMetadataRepositoryManager metadataRepoManager = 
 			(IMetadataRepositoryManager) agent.getService(IMetadataRepositoryManager.SERVICE_NAME);
@@ -125,26 +127,34 @@ public class DynamicP2Installer {
 			(IArtifactRepositoryManager) agent.getService(IArtifactRepositoryManager.SERVICE_NAME);
 		try {
 			// add and load repository
+			checkIfCanceled(subMonitor);
 			metadataRepoManager.addRepository(uri);
 			IMetadataRepository metadataRepository = metadataRepoManager.loadRepository(uri, null);
 			artifactRepoManager.addRepository(uri);
 			artifactRepoManager.loadRepository(uri, null);
+			subMonitor.worked(10);
 			
 			// get IU from repository
-			IQueryResult<IInstallableUnit> units = metadataRepository.query(QueryUtil.createIUGroupQuery(), monitor);
+			checkIfCanceled(subMonitor);
+			IQueryResult<IInstallableUnit> units = metadataRepository.query(QueryUtil.createIUGroupQuery(), subMonitor);
 			if (units.isEmpty())
 				throw new CoreException(Activator.makeErrorStatus("Could not find installable unit", null));
+			subMonitor.worked(10);
 			
 			// check if installed
-			IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUQuery(units.iterator().next()), monitor);
+			checkIfCanceled(subMonitor);
+			IQueryResult<IInstallableUnit> result = profile.query(QueryUtil.createIUQuery(units.iterator().next()), subMonitor);
 			if (!result.isEmpty())
 				throw new CoreException(Activator.makeStatus(IStatus.CANCEL, null, null)); // already installed
+			subMonitor.worked(10);
 			
 			// do provisioning operation
+			checkIfCanceled(subMonitor);
 			ProfileChangeRequest request = new ProfileChangeRequest(profile);
 			request.addAll(units.toUnmodifiableSet());
 			IDirector director = (IDirector) agent.getService(IDirector.SERVICE_NAME);
-			IStatus status = director.provision(request, null, monitor);
+			IStatus status = director.provision(request, null, subMonitor);
+			subMonitor.worked(70);
 	
 			if (!status.isOK())
 				throw new CoreException(status);
@@ -152,12 +162,19 @@ public class DynamicP2Installer {
 		finally {
 			metadataRepoManager.removeRepository(uri);
 			artifactRepoManager.removeRepository(uri);
+			subMonitor.done();
 		}
 	}
 
 	private IProfile getProfile() {
 		IProfileRegistry profileRegistry = (IProfileRegistry) agent.getService(IProfileRegistry.SERVICE_NAME);
 		return profileRegistry.getProfile(provisioningUI.getProfileId());
+	}
+
+	private void checkIfCanceled(IProgressMonitor monitor) throws CoreException {
+		if (monitor.isCanceled()) {
+			throw new CoreException(Activator.makeStatus(IStatus.CANCEL, null, null)); // installation canceled
+		}
 	}
 
 }

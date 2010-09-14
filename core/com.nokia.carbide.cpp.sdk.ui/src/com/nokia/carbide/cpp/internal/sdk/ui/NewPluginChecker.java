@@ -22,8 +22,8 @@ import java.util.List;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbench;
@@ -53,6 +53,8 @@ public class NewPluginChecker {
 			protected IStatus run(IProgressMonitor monitor) {
 				boolean installed = false;
 				boolean oneSDKWasScanned = false;
+				SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
+				int worked = 100 / sdkList.size();
 				for (ISymbianSDK sdk : sdkList) {
 					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 					if (sbsv2BuildInfo != null) {
@@ -62,7 +64,7 @@ public class NewPluginChecker {
 							sbsv2BuildInfo.setPreviouslyScanned(true);
 							File featureDir = new File(sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR);
 							try {
-								IStatus status = DynamicP2Installer.install(featureDir, new NullProgressMonitor());
+								IStatus status = DynamicP2Installer.install(featureDir, subMonitor);
 								if (status.isOK()) {
 									// TODO advise user??
 									installed = true;
@@ -76,6 +78,8 @@ public class NewPluginChecker {
 								// Otherwise, these errors will be logged every time this check is done (workspace is opened)
 								// Originally, this was used to install MBS build support, but now is only used for SDK documentation
 		//						ResourcesPlugin.getPlugin().getLog().log(new Status(IStatus.ERROR, SDKCorePlugin.PLUGIN_ID, IStatus.ERROR, "Unable to install plug-ins dynamically.", e));
+							} finally {
+								subMonitor.worked(worked);
 							}
 						}
 					}
