@@ -230,10 +230,6 @@
             commandId="com.nokia.carbide.cpp.builder.utils.commands.compileSource"
             schemeId="com.nokia.carbide.cpp.carbidedefault"/>
 		<key
-            commandId="com.nokia.carbide.cpp.buildProject"
-            sequence="M1+B"
-            schemeId="com.nokia.carbide.cpp.carbidedefault" />
-		<key
             commandId="com.nokia.carbide.cpp.builder.utils.commands.abldTarget"
             sequence="M1+M3+B"
             schemeId="com.nokia.carbide.cpp.carbidedefault" />
@@ -321,7 +317,7 @@
 		<!-- CW Make -->
  		<key
 			sequence="F7"
-			commandId="com.nokia.carbide.cpp.buildProject"
+			commandId="org.eclipse.ui.project.buildProject"
 			schemeId="com.nokia.carbide.cpp.codewarrior"/>
 		<!-- CW Remove Object Code (Clean) -->	
 		<key
