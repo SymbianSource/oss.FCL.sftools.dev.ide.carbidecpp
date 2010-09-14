@@ -24,6 +24,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CellEditor;
@@ -236,6 +237,7 @@ public class SDKPreferencePage
 	private Button deleteButton;
 	private Button propertiesButton;
 	private Button rescanButton;
+	private Button scanPluginsButton;
 	private Label iconLabel;
 	private Label statusLabel;
 
@@ -289,6 +291,9 @@ public class SDKPreferencePage
 	 * @see org.eclipse.jface.preference.PreferencePage#performOk()
 	 */
 	public boolean performOk() {
+		IPreferenceStore prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
+		prefsStore.setValue(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS, scanPluginsButton.getSelection());
+
 		// Remember which SDK is enabled
 		for (ISymbianSDK sdk : sdkMgr.getSDKList()) {
 			((SymbianSDK)sdk).setEnabled(false);
@@ -312,6 +317,8 @@ public class SDKPreferencePage
 	 */
 	@Override
 	public Control createContents(Composite parent) {
+		IPreferenceStore prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
+
 		// Set up colors used in this preference page
 		Shell shell = parent.getShell();
 		black = shell.getDisplay().getSystemColor(SWT.COLOR_BLACK);
@@ -377,7 +384,16 @@ public class SDKPreferencePage
 		statusLabel.setLayoutData(gridData);
 
 		new Label(content, SWT.WRAP); // filler
-		
+
+		// Scan for installable features in SDKs button
+		scanPluginsButton = new Button(content, SWT.CHECK);
+		scanPluginsButton.setToolTipText(Messages.getString("SDKPreferencePage.scanPlugins_ButtonToolTip")); //$NON-NLS-1$
+		scanPluginsButton.setText(Messages.getString("SDKPreferencePage.scanPlugins_Button_Label")); //$NON-NLS-1$
+		scanPluginsButton.setSelection(prefsStore.getBoolean(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS));
+		addButtonListener(scanPluginsButton);
+
+		new Label(content, SWT.WRAP); // filler
+
 		// Rescan button
 		rescanButton = new Button(content, SWT.NONE);
 		rescanButton.setToolTipText(Messages.getString("SDKPreferencePage.Rescan_Button_ToolTip")); //$NON-NLS-1$
@@ -537,7 +553,9 @@ public class SDKPreferencePage
 		addSDKComponentTableItems();
 		sdkListTableViewer.refresh();
 		selectSDKEntry(0);
-		NewPluginChecker.checkForNewlyInstalledPlugins(SDKUIPlugin.getDefault().getWorkbench());
+		if (scanPluginsButton.getSelection()) {
+			NewPluginChecker.checkForNewlyInstalledPlugins(SDKUIPlugin.getDefault().getWorkbench());
+		}
 		rescanButton.setText(Messages.getString("SDKPreferencePage.Rescan_Button_Label")); //$NON-NLS-1$
 		rescanButton.setEnabled(true);
 	}

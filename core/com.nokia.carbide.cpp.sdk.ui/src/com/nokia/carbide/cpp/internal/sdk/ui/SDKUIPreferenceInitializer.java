@@ -34,7 +34,7 @@ public class SDKUIPreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = SDKUIPlugin.getDefault().getPreferenceStore();
 		store.setDefault(SDKUIPreferenceConstants.ENABLE_BSF_SCANNER, false);
 		store.setDefault(SDKUIPreferenceConstants.LISTEN_FOR_DEVICES_XML_CHANGE, true);
-		store.setDefault(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS, false);
+		store.setDefault(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS, true);
 		
 		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA2_WINSCW, true);
 		store.setDefault(SDKUIPreferenceConstants.PLAT_EKA2_GCCE, true);

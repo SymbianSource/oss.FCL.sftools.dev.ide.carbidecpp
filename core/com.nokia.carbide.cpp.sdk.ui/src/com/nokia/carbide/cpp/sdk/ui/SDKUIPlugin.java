@@ -61,7 +61,10 @@ public class SDKUIPlugin extends AbstractUIPlugin implements IStartup, ICarbideD
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
-		NewPluginChecker.checkForNewlyInstalledPlugins(getWorkbench());
+		IPreferenceStore prefsStore = SDKUIPlugin.getDefault().getPreferenceStore();
+		if (prefsStore.getBoolean(SDKUIPreferenceConstants.SCAN_FOR_NEW_PLUGINS)) {
+			NewPluginChecker.checkForNewlyInstalledPlugins(getWorkbench());
+		}
 		
 		ISDKManager sdkMgr = SDKCorePlugin.getSDKManager();
 		if (HostOS.IS_WIN32){
