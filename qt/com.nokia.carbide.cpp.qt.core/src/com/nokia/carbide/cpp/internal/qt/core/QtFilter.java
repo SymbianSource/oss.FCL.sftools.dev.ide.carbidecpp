@@ -33,7 +33,7 @@ public abstract class QtFilter implements IFilter {
 			append(context.getTargetString()).append("QtCore.dll").toFile(); //$NON-NLS-1$
 		} else {
 			// for non-emulator targets, check in the armv5/lib directory (ARMV5 and GCCE)
-			return releaseRoot.append("armv5/lib/QtCore.lib").toFile(); //$NON-NLS-1$
+			return releaseRoot.append("armv5/lib/QtCore.dso").toFile(); //$NON-NLS-1$
 		}
 	}
 	
