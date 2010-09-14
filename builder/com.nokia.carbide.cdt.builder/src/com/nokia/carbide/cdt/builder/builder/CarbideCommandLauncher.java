@@ -300,9 +300,6 @@ public class CarbideCommandLauncher extends CommandLauncher implements IMarkerGe
             //logIOException(e1);
         }
 		
-		stdoutStream.reportProblems();
-		stderrStream.reportProblems();
-		
 		System.out.flush();
 		
 		return exitValue;
