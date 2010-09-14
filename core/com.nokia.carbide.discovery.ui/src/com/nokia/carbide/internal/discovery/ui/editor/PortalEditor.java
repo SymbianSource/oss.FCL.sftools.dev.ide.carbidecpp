@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Platform;
@@ -46,6 +47,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IElementFactory;
+import org.eclipse.ui.IMemento;
 import org.eclipse.ui.IPersistableElement;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
@@ -60,8 +63,50 @@ import com.nokia.carbide.internal.discovery.ui.extension.IPortalPageLayer;
 import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
-public class PortalEditor extends EditorPart implements IPortalEditor {
+public class PortalEditor extends EditorPart implements IPortalEditor, IElementFactory {
 	
+	private static final class PortalEditorInput implements IEditorInput {
+		@SuppressWarnings("rawtypes")
+		@Override
+		public Object getAdapter(Class adapter) {
+			return null;
+		}
+
+		@Override
+		public String getToolTipText() {
+			return getName();
+		}
+
+		@Override
+		public IPersistableElement getPersistable() {
+			return new IPersistableElement() {
+				@Override
+				public void saveState(IMemento memento) {
+				}
+				
+				@Override
+				public String getFactoryId() {
+					return "com.nokia.carbide.discovery.ui.portalEditorFactory"; //$NON-NLS-1$
+				}
+			};
+		}
+
+		@Override
+		public String getName() {
+			return Messages.PortalEditor_Name;
+		}
+
+		@Override
+		public ImageDescriptor getImageDescriptor() {
+			return null;
+		}
+
+		@Override
+		public boolean exists() {
+			return true;
+		}
+	}
+
 	class LayerExtension {
 		public LayerExtension(IPortalPageLayer layer, String title, int order) {
 			this.layer = layer;
@@ -257,47 +302,22 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 	}
 	
 	public static void openPortal() {
-		try {
-			WorkbenchUtils.openEditor(getInput(), ID);
-		} catch (PartInitException e) {
-			Activator.logError(Messages.PortalEditor_PageOpenError, e);
-		}
+		Display.getDefault().asyncExec(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					if (PlatformUI.isWorkbenchRunning())
+						WorkbenchUtils.openEditor(getInput(), ID);
+				} catch (PartInitException e) {
+					Activator.logError(Messages.PortalEditor_PageOpenError, e);
+				}
+			}
+		});
 	}
-
+	
 	private static IEditorInput getInput() {
 		if (input == null) {
-			input = new IEditorInput() {
-				@SuppressWarnings("rawtypes")
-				@Override
-				public Object getAdapter(Class adapter) {
-					return null;
-				}
-				
-				@Override
-				public String getToolTipText() {
-					return getName();
-				}
-				
-				@Override
-				public IPersistableElement getPersistable() {
-					return null;
-				}
-				
-				@Override
-				public String getName() {
-					return Messages.PortalEditor_Name;
-				}
-				
-				@Override
-				public ImageDescriptor getImageDescriptor() {
-					return null;
-				}
-				
-				@Override
-				public boolean exists() {
-					return false;
-				}
-			};
+			input = new PortalEditorInput();
 		}
 			
 		return input;
@@ -339,6 +359,11 @@ public class PortalEditor extends EditorPart implements IPortalEditor {
 	@Override
 	public IEditorPart getEditorPart() {
 		return this;
+	}
+
+	@Override
+	public IAdaptable createElement(IMemento memento) {
+		return new PortalEditorInput();
 	}
 
 }

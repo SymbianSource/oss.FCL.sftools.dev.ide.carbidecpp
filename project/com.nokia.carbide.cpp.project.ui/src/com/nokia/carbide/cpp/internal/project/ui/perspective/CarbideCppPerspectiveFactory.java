@@ -18,9 +18,15 @@ package com.nokia.carbide.cpp.internal.project.ui.perspective;
 
 import org.eclipse.cdt.internal.ui.wizards.CWizardRegistry;
 import org.eclipse.cdt.ui.CUIPlugin;
-import org.eclipse.ui.*;
+import org.eclipse.ui.IFolderLayout;
+import org.eclipse.ui.IPageLayout;
+import org.eclipse.ui.IPerspectiveFactory;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IConsoleConstants;
+import org.eclipse.ui.handlers.IHandlerService;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
+
+import com.nokia.carbide.cpp.internal.project.ui.ProjectUIPlugin;
 
 public class CarbideCppPerspectiveFactory implements IPerspectiveFactory {
 		
@@ -83,6 +89,14 @@ public class CarbideCppPerspectiveFactory implements IPerspectiveFactory {
 		layout.addShowInPart(ProjectExplorer.VIEW_ID);
 		
 		addCDTWizardShortcutIdsToLayout(layout);
+		
+		IHandlerService handlerService = 
+			(IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
+        try {
+			handlerService.executeCommand("com.nokia.carbide.discovery.commands.launch", null); //$NON-NLS-1$
+        } catch (Exception e) {
+			ProjectUIPlugin.log(e);
+		}
 	}
 	
 	@SuppressWarnings("restriction")
