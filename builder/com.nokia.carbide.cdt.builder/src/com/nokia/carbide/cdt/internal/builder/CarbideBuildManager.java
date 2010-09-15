@@ -338,8 +338,6 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 		Set<IPath> pathList = new HashSet<IPath>();
 		for (ICarbideBuildConfiguration config : cpi.getBuildConfigurations()) {
 
-			// Bug 12078:  I see no reason for this in C3 -- it always happens on startup and obviates the cache
-			/*
 			// force a rebuild of the CarbideLanguageData cache
 			// TODO PERFORMANCE EJS: why??? We end up forcing a cache rebuild even when you just switch configurations...
 			CLanguageData languageData = null;
@@ -362,7 +360,6 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 					}
 				}
 			}
-			 */
 			
 			EpocEngineHelper.addIncludedFilesFromBldInf(cpi, config, cpi.getAbsoluteBldInfPath(), pathList);
 

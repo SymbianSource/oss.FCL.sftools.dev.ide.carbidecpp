@@ -154,7 +154,7 @@ public class CarbideLanguageData extends CLanguageData {
 			// But we must save the cache in a workspace job because this code
 			// is usually called when the project description is being read for 
 			// the first time (thus saving just throws an exception).
-			Job job = new Job("Saving Carbide indexer cache for " + carbideBuildConfig.getDisplayString()) {
+			Job job = new Job("Saving Carbide indexer cache for " + carbideBuildConfig.toString()) {
 
 				@Override
 				protected IStatus run(IProgressMonitor monitor) {
@@ -524,7 +524,11 @@ public class CarbideLanguageData extends CLanguageData {
 	}
 	
 	public void forceRebuildCache() {
-		forceRebuildCache = true;
+		// only force rebuild if there was something loaded already -- 
+		// we get here on startup too when first hooking up resource listeners
+		if (includeEntries != null && macroEntries != null && cacheFileSource != null) {
+			forceRebuildCache = true;
+		}
 	}
 
 	@Override
