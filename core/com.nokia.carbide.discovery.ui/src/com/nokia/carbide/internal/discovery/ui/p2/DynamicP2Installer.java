@@ -39,6 +39,7 @@ import org.eclipse.equinox.p2.repository.metadata.IMetadataRepositoryManager;
 import org.eclipse.equinox.p2.ui.ProvisioningUI;
 
 import com.nokia.carbide.discovery.ui.Activator;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 
 /**
  * Installer to install features from a p2 repository at a supplied URL or directory.
@@ -80,10 +81,12 @@ public class DynamicP2Installer {
 	 * @param monitor An implementation of IProgressMonitor, usually showing the 
 	 * installation progress as a Progress Bar to the user.
 	 */
-	public static IStatus install(File repositoryDirectory, IProgressMonitor monitor) {
+	public static IStatus install(String sdkId, File repositoryDirectory, IProgressMonitor monitor) {
 		try {
 			DynamicP2Installer installer = new DynamicP2Installer(repositoryDirectory);
 			installer.doInstall(monitor);
+			RemoteConnectionsActivator.getStatusDisplay().displayStatus(
+					Activator.makeStatus(IStatus.INFO, "Installed features from " + sdkId, null));
 			return Status.OK_STATUS;
 		} catch (CoreException e) {
 			return e.getStatus();

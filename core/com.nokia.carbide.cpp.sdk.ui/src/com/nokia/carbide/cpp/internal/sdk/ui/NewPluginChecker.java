@@ -70,7 +70,7 @@ public class NewPluginChecker {
 							sbsv2BuildInfo.setPreviouslyScanned(true);
 							File featureDir = new File(sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR);
 							try {
-								IStatus status = DynamicP2Installer.install(featureDir, subMonitor);
+								IStatus status = DynamicP2Installer.install(sdk.getUniqueId(), featureDir, subMonitor);
 								if (status.isOK()) {
 									// TODO advise user??
 									installed = true;
