@@ -13,9 +13,9 @@
 <p>The <img src="../images/command_link.png" border="0" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=com.nokia.carbide.cpp.debug.kernelaware.ui.SymbianOSView)")'>Symbian OS Data</a> view displays the processes and threads for the suspended debug session based on the selection in the <a href="../debugger/debug/viewing_debug.htm">Debug</a> view. Read-only data is displayed for ARM build configurations. To open the Symbian OS Data view select<b> Window &gt; Show View &gt; Symbian OS Data</b> when the <a href="perspective_debug.htm">Debug</a> perspective is visible or select <b>Window &gt; Show View &gt; Other...</b>, then expand the Carbide.c++ folder and select <b>Symbian OS Data</b> when the <a href="../concepts/CarbidePerspective.html">Carbide C/C++ perspective</a> is visible. Click <b>Ok</b> to display the Symbian OS Data window (Figure 1).</p>
 <p class="note"><b>NOTE</b> The Symbian OS Data view works with the debugger and will only display data during a live debug session. The Symbian OS Data view is not supported for emulator debugging, and will not show anything during emulator debug.</p>
 <p>The <b>Symbian OS Data</b> view reveals kernel data in the Symbian OS running on the device being debugged. The kernel data displayed is always that of the device with the currently selected thread or process in <a href="../debugger/debug/viewing_debug.htm">Debug</a> view. If you are debugging two devices at the same time, the content of the view will change when focus is switched from a thread on one device to a thread on another device. The kernel data includes more than just processes and threads. </p>
-<p>For the stop mode debugger and the crash debugger, all the data listed above is supported. For the Application and System TRK debuggers, the chunks and libraries views are not supported. The Symbian OS Data view is not supported for the emulator debugger and will show nothing during an emulator debug session. During a stop mode debug session or a TRK debug session, you are able to select a process or a thread in the Symbian OS Data view and attach the debugger to it for source level debugging if the binary  is listed in the <a href="view_executables.htm">Executables</a> view. Binaries listed in the Executable view can be source level debugged. Binaries  not listed in the Executables view can only be assembly code debugged in the <a href="view_disassembly.htm">Disassembly</a> view.</p>
+<p>For the stop mode debugger and the crash debugger, all the data listed above is supported. For the Application and System CODA debuggers, the chunks and libraries views are not supported. The Symbian OS Data view is not supported for the emulator debugger and will show nothing during an emulator debug session. During a stop mode debug session or a CODA debug session, you are able to select a process or a thread in the Symbian OS Data view and attach the debugger to it for source level debugging if the binary  is listed in the <a href="view_executables.htm">Executables</a> view. Binaries listed in the Executable view can be source level debugged. Binaries  not listed in the Executables view can only be assembly code debugged in the <a href="view_disassembly.htm">Disassembly</a> view.</p>
 <p class="note"><b>NOTE</b> Any executable must be included in the <b>Executables</b> view before it can be debugged. </p>
-<p>When the <a href="pref_carb_debugger.htm">Time interval for auto-refreshing OS View</a> option is enabled (which is on by default except for crash debugger), the data in the Symbian OS Data view will be auto-refreshed. Note that &quot;auto-refresh&quot; has a different meaning in different debuggers. During a stop mode debug session, the view will refresh data whenever the debugged program on the device is stopped and shows data as stale (greyed out) when the program is running. During a TRK debug session, the View will refresh data at a time interval regardless of whether the debugged program is stopped or not. The time interval is specified by an option in the Carbide.c++ global preference panel, which is five seconds by default.</p>
+<p>When the <a href="pref_carb_debugger.htm">Time interval for auto-refreshing OS View</a> option is enabled (which is on by default except for crash debugger), the data in the Symbian OS Data view will be auto-refreshed. Note that &quot;auto-refresh&quot; has a different meaning in different debuggers. During a stop mode debug session, the view will refresh data whenever the debugged program on the device is stopped and shows data as stale (greyed out) when the program is running. During a CODA debug session, the View will refresh data at a time interval regardless of whether the debugged program is stopped or not. The time interval is specified by an option in the Carbide.c++ global preference panel, which is five seconds by default.</p>
 <p>When auto-refresh is turned off, the debugger will not automatically refresh data in the View and will show the data as stale (greyed out). However you can manually refresh the data by clicking on the &quot;Refresh&quot; button in the View. Usually you may want to turn off the auto-refresh if you think it is slowing down your debug operations such as stepping.</p>
 <h3>Symbian OS Data pages
 </h3>
@@ -28,7 +28,7 @@
   <li><a href="#chunks">Chunks</a></li>
   <li><a href="#Library">Libraries</a></li>
 </ul>
-<p class="note"><b>NOTE</b>  Information for the Chunks and Libraries tabs is not available when debugging with the TRK debug agent.</p>
+<p class="note"><b>NOTE</b>  Information for the Chunks and Libraries tabs is not available when debugging with the CODA debug agent.</p>
 <h4><a name="overview" id="overview"></a>Overview Tab</h4>
 <p>This tab (shown in Figure 1) provides a tree view of ownership  of all processes, threads, and chunks in the OS. 
   In contrast, the other tabs provide a flat list of corresponding kernel objects such as process, thread, chunk, library, etc.</p>
@@ -55,7 +55,7 @@ border="0">
   <tr valign="top">
     <td class="Cell"><p> <b>Debug process or thread</b> </p></td>
     <td class="Cell"><div align="center"><img src="images/view_symbianOSbtn_debug.png" width="22" height="20" alt="" /></div></td>
-    <td class="Cell"><p> Click the <b>Debug</b> button to attach to the process and debug the selected process or thread. Or right-click an item and choose <b>Debug</b>. This applies to both TRK (run mode) and TCF (stop mode).</p>
+    <td class="Cell"><p> Click the <b>Debug</b> button to attach to the process and debug the selected process or thread. Or right-click an item and choose <b>Debug</b>. This applies to both CODA (run mode) and TCF (stop mode).</p>
     </td>
   </tr>
   <tr valign="top">
@@ -88,12 +88,12 @@ Click a column title to sort the list by the title attribute in alternating asce
 <h4><a name="chunks" id="chunks"></a>Chunks</h4>
 <p>Chunks are an area of contiguous linear memory. It is the unit of memory allocation where a region of RAM is mapped into contiguous logical addresses. Chunks are allocated during boot for such things as the Kernel's data and stack.</p>
 <p>The Chunks tab (Figure 4) provides a flat list of corresponding kernel objects. The list will display &ldquo;sortable&rdquo; attributes of that type of object in columns. The &ldquo;sortable attribute&rdquo; means you can sort the list by that attribute. For example, you may want to sort the list by the owning process name. Sort the list of any column by clicking on the column header.</p>
-<p class="note"> <b>NOTE</b> Chunks data is not available during TRK debugging.</p>
+<p class="note"> <b>NOTE</b> Chunks data is not available during CODA debugging.</p>
 <p align="center"><img src="images/view_symbianOS_chunks.png" width="530" height="278" alt="" /></p>
 <p class="figure">Figure 4. Chunks Pane of Symbian OS View</p>
 <h4><a name="Library" id="Library"></a>Libraries Tab</h4>
 <p> The Libraries pane (Figure 5) in the Symbian OS view provides  information on libraries in the Symbian OS residing on the target.</p>
-<p class="note"> <b>NOTE</b> Library data is not available during TRK debugging.</p>
+<p class="note"> <b>NOTE</b> Library data is not available during CODA debugging.</p>
 <p align="center"><img src="images/view_symbianOS_Lib.png" width="531" height="278" alt="" /></p>
 <p class="figure">Figure 5. Libraries Pane of Symbian OS View</p>
 <h3><a name="attach" id="attach"></a>Attaching to a Process</h3>

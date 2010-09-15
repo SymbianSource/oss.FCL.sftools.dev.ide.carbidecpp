@@ -123,7 +123,7 @@
 	</context>
 
 	<context id="wizard_trk_connection_page" >
-		<description>Specify TRK connection information.</description>
+		<description>Specify CODA connection information.</description>
 		<topic label="Creating a Launch Configuration"		href="html/tasks/projects/prj_debug_config.htm" />
 	</context>
 

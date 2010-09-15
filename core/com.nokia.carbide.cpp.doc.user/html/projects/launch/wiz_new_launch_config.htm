@@ -10,7 +10,7 @@
 </head>
 <body >
 <h2>New Launch Configuration Wizard </h2>
-<p>The <b>New Launch Configuration Wizard</b> launches when no launch configuration exists for a build configuration in a project. Wherever possible the <b>New Launch Configuration </b> wizard gathers the information from the project and asks additional questions based on the type of launch configuration chosen. For example, a launch configuration using Application TRK requires different information than  one targeted for System TRK. </p>
+<p>The <b>New Launch Configuration Wizard</b> launches when no launch configuration exists for a build configuration in a project. Wherever possible the <b>New Launch Configuration </b> wizard gathers the information from the project and asks additional questions based on the type of launch configuration chosen. For example, a launch configuration using Application CODA requires different information than  one targeted for System CODA. </p>
 <p>Every project consists of one or more build configurations as listed under the <b>Build project</b> icon (<img src="../images/icon_build_project.png" alt="Build project icon" width="17" height="17" align="absmiddle">) of the toolbar or in the <a href="../../tasks/projects/prj_new_build_config.htm">Add/Remove Carbide Build Configuration</a> dialog. Every build configuration needs a launch configuration to enable debugging. Launch configurations can be shared between  build configurations. The <b>New Launch Configuration Wizard</b> detects when a build configuration doesn't have an associated launch configuration and guides you through the setup process.</p>
 <p align="center"><img src="images/menu_build_target.png" width="428" height="224"></p>
 <p class="figure">Figure 1. Build configurations for the chosen project appear under the Build icon</p>
@@ -41,16 +41,16 @@
         </ul></td>
     </tr>
     <tr>
-        <td><b>Application TRK and System TRK</b></td>
+        <td><b>Application CODA and System CODA</b></td>
         <td><ul>
-            <li><a href="#TRK_CONN">TRK Connection Settings</a></li>
-            <li><a href="#TRK_SIS">TRK SIS Selection</a> (<i>Application TRK only</i>) </li>
+            <li><a href="#TRK_CONN">CODA Connection Settings</a></li>
+            <li><a href="#TRK_SIS">CODA SIS Selection</a> (<i>Application CODA only</i>) </li>
         </ul></td>
     </tr>
     <tr>
         <td><b>Attach to Process</b></td>
         <td><ul>
-            <li><a href="#TRK_CONN">TRK Connection Settings</a></li>
+            <li><a href="#TRK_CONN">CODA Connection Settings</a></li>
         </ul></td>
     </tr>
 </table>
@@ -66,7 +66,7 @@
 <p align="center"><img src="images/wiz_launch_config_debug_as.png" alt="Debug As dialog" width="346" height="435"></p>
 <p class="figure">Figure 1 - Debug As dialog </p>
 <h3><a name="LAUNCH" id="LAUNCH"></a>Launch Types</h3>
-<p>Use the<b> Launch Types</b> page to select the type of launch configuration for the build target. This page does not appear when using an Emulator target. Available types are listed from the most frequently chosen (Application TRK) to the least likely type (Attach to Process). Select a type and click <b>Next</b>. </p>
+<p>Use the<b> Launch Types</b> page to select the type of launch configuration for the build target. This page does not appear when using an Emulator target. Available types are listed from the most frequently chosen (Application CODA) to the least likely type (Attach to Process). Select a type and click <b>Next</b>. </p>
 <p align="center"><img src="images/wiz_launch_config_launch_types.png" width="438" height="533"></p>
 <p class="figure">Figure 2 - Launch Type page </p>
 <h3><a name="BLD_OPT" id="EXE_SEL2"></a>Build Options Selection </h3>
@@ -80,15 +80,15 @@
 <p>Select the Executable to launch, verify it is the correct binary, then click <b>Next</b>. </p>
 <p align="center"><img src="images/wiz_launch_config_app_selection.png" width="438" height="533"> </p>
 <p class="figure">Figure 4 - Executable Selection page (when project has multiple EXEs)</p>
-<h3><a name="TRK_CONN" id="TRK_CONN"></a>TRK Connection Settings </h3>
-<p>Use the <b>TRK Connection Settings</b> page to specify the connection used to communicate with the target device. If the device is already connected, the drop down list will include both the COM port and the name of the device using that port. Use the <a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Conection</a> dialog to verify and update all Carbide software services on the device. Choose the serial port used to communicate with the target device and click <b>Next</b>. </p>
+<h3><a name="TRK_CONN" id="TRK_CONN"></a>CODA Connection Settings </h3>
+<p>Use the <b>CODA Connection Settings</b> page to specify the connection used to communicate with the target device. If the device is already connected, the drop down list will include both the COM port and the name of the device using that port. Use the <a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Conection</a> dialog to verify and update all Carbide software services on the device. Choose the serial port used to communicate with the target device and click <b>Next</b>. </p>
 <p align="center"><img src="images/wiz_launch_config_trk_conn.png" width="487" height="533"> </p>
-<p class="figure">Figure 5 - TRK Connection Settings  page </p>
+<p class="figure">Figure 5 - CODA Connection Settings  page </p>
 <p>&nbsp;</p>
-<h3><a name="TRK_SIS" id="TRK_SIS"></a>TRK SIS Selection</h3>
-<p>Use the <b>TRK SIS Selection</b> page to select the SIS file to install on the target device. Click the <b>Modify SIS builder settings for build configuration</b> link to open the <a href="../../reference/build_properties/pane_build_config_sis.htm">SIS Builder</a> properties pane to add, edit, or review  the SIS files to build. Once the correct SIS File to Install is selected, click <b>Next</b>. </p>
+<h3><a name="TRK_SIS" id="TRK_SIS"></a>CODA SIS Selection</h3>
+<p>Use the <b>CODA SIS Selection</b> page to select the SIS file to install on the target device. Click the <b>Modify SIS builder settings for build configuration</b> link to open the <a href="../../reference/build_properties/pane_build_config_sis.htm">SIS Builder</a> properties pane to add, edit, or review  the SIS files to build. Once the correct SIS File to Install is selected, click <b>Next</b>. </p>
 <p align="center"><img src="images/wiz_launch_config_trk_sis.png" width="463" height="533"></p>
-<p class="figure">Figure 6 - TRK SIS Selection page </p>
+<p class="figure">Figure 6 - CODA SIS Selection page </p>
 <h3><a name="FINISH" id="FINISH"></a>New Launch Configuration</h3>
 <p>Use the <b>New Launch Configuration</b> page to note the name of the configuration, confirm the launch configuration settings,  and then launch the debug session. If something doesn't look right, click <b>Back</b> to return to a page and change its setting. If all the settings are correct, click <b>Finish</b> to start the debug session using this launch configuration. </p>
 <p>If you checkmark <b> Advanced settings</b>, the <a href="../../reference/wnd_debug_configuration.htm">Debug</a> dialog appears instead of launching the project. This enables you to make additional changes to the new launch configuration before starting the debug session. By design and intent, this should seldom be required for the initial launch. </p>

@@ -4,12 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
-<title>TRK On-device Debugging</title>
+<title>Carbide On-device Debug Agent</title>
 <link rel="StyleSheet" href="../../book.css" type="text/css"/>
 </head>
 <body >
-<h2>TRK On-device Debugging</h2>
-<p>The on-device TRK remote agent (Application TRK or System TRK) is a program that enables on-device debugging of  phone prototypes, reference boards, and retail phones. An on-device debug agent is a program that is installed on a phone or reference board. It communicates with the debugger using a serial-over-Bluetooth or serial-over-USB connection. Through this serial communication, the on-device debug agent acts as the interface between the Carbide.c++ debugger and the target device. An on-device debug agent provides: </p>
+<h2>Carbide On-device Debug Agent</h2>
+<p>The <b>Carbide On-device Debug Agen</b>t (CODA) is a program that enables on-device debugging of  phone prototypes, reference boards, and retail phones. An on-device debug agent is a program that is installed on a phone or reference board. It communicates with the debugger using a serial-over-Bluetooth or serial-over-USB connection. Through this serial communication, the on-device debug agent acts as the interface between the Carbide.c++ debugger and the target device. The CODA provides: </p>
 <ul>
   <li>Debug agent running on Symbian OS</li>
   <li>Provides a stable &amp; integrated interface to Symbian OS</li>
@@ -17,7 +17,7 @@
   <li>Can be built-in to the OS image or installed as a .sis file</li>
 </ul>
 <p>Using the on-device remote agent, one can use the Carbide.c++ IDE to debug programs running on phone hardware, making the debugging process much easier. The on-device debug agent works on all Nokia Qt SDK, Symbian^3, and Symbian TechView devkits.</p>
-<p>The Application TRK remote agents are stored online and can be downloaded and installed using the <a href="../reference/trk/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</p>
+<p>The Application CODA is stored online and available for download and installation using the <a href="../reference/trk/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</p>
 <p>Some of the key benefits to using an on-device debug agent include:</p>
 <ul>
   <li>Easy debugging via serial interface (Bluetooth, USB, IrDA, etc)</li>
@@ -26,8 +26,8 @@
 </ul>
 <p>There are two variations of the on-device debug agent, they are:</p>
 <ul>
-  <li><b>Application TRK</b>&#8212;supports application debugging only and available to developers creating applications for devices. Developers do not have access to system level routines,  system ROM,   other user application code, cannot modify the LR and SR registers, and must use a SIS file to debug an application.</li>
-  <li><b>System TRK</b>&#8212;
+  <li><b>Application CODA</b>&#8212;supports application debugging only and available to developers creating applications for devices. Developers do not have access to system level routines,  system ROM,   other user application code, cannot modify the LR and SR registers, and must use a SIS file to debug an application.</li>
+  <li><b>System CODA</b>&#8212;
   supports both application and limited ROM debugging (includes application executables and limited ROM based components (i.e. no device drivers) and available to original equipment manufacturers (OEM) for device creation and customization</li>
 </ul>
 <h5>Related tasks</h5>
