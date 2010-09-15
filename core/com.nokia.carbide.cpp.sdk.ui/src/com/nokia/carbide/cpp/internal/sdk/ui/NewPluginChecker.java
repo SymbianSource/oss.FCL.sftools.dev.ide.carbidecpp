@@ -59,6 +59,9 @@ public class NewPluginChecker {
 				SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
 				int worked = 100 / sdkList.size();
 				for (ISymbianSDK sdk : sdkList) {
+					if (!sdk.isEnabled()){
+						continue; // Don't bother scanning SDKs that are not enabled
+					}
 					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 					if (sbsv2BuildInfo != null) {
 						if (sbsv2BuildInfo.isPreviouslyScanned() == false) {
