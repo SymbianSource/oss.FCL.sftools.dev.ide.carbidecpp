@@ -417,7 +417,14 @@ public class LaunchWizardData extends LaunchOptions {
 	public Boolean isSysTRKConnection() {
 		IConnectedService connectedService = getConnectedService();
 		if (connectedService instanceof IConnectedService2) {
+			// C3TRK: old name
 			String value = ((IConnectedService2) connectedService).getProperties().get("is-system-trk"); //$NON-NLS-1$
+			if (value != null) {
+				return Boolean.parseBoolean(value);
+			}
+			
+			// new name
+			value = ((IConnectedService2) connectedService).getProperties().get("is-system-debugger"); //$NON-NLS-1$
 			if (value != null) {
 				return Boolean.parseBoolean(value);
 			}
