@@ -459,7 +459,10 @@ public class TestViewDataCache extends BaseTest {
 		b.start();
 		
 		while (System.currentTimeMillis() < timeout) {
-			Thread.sleep(100);
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+			}
 		}
 		
 		a.interrupt();
@@ -526,7 +529,10 @@ public class TestViewDataCache extends BaseTest {
 			b.start();
 			
 			while (System.currentTimeMillis() < timeout) {
-				Thread.sleep(100);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+				}
 			}
 			
 			a.interrupt();
@@ -606,7 +612,11 @@ public class TestViewDataCache extends BaseTest {
 			b.start();
 			
 			while (System.currentTimeMillis() < timeout) {
-				Thread.sleep(100);
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					
+				}
 			}
 			
 			a.interrupt();
