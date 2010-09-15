@@ -441,6 +441,7 @@ public class TCAPIConnection implements ITCAPIConnection {
 			}
 			if (this.monitorThread != null) {
 				this.stopTCFMonitorThread = true;
+				this.monitorThread.stop = true;
 				try {
 					this.monitorThread.join();
 				} catch (InterruptedException e) {
