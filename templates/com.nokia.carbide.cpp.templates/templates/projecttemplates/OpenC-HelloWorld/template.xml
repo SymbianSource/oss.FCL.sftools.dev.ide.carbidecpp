@@ -73,7 +73,7 @@
 		<!-- SIS -->
 		<parameter name="file"
 			sourcePath="sis/Basename.pkg" 
-			targetPath="$(sisDir)/$(baseName)_S60_3_X_v_1_0_0.pkg" 
+			targetPath="$(sisDir)/$(baseName)_S60_5_X_v_1_0_0.pkg" 
 			/> 
 		<parameter name="file"
 			sourcePath="sis/backup_registration.xml"
@@ -97,7 +97,7 @@
 		<parameter name="project" projectName="$(projectName)"
 			bldInfPath="$(groupDir)/bld.inf"
 			targetMMPFileName="$(baseName).mmp" 
-			pkgFilePath="$(sisDir)/$(baseName)_S60_3_X_v_1_0_0.pkg" /> 
+			pkgFilePath="$(sisDir)/$(baseName)_S60_5_X_v_1_0_0.pkg" /> 
 	</process>
 
 </template>
