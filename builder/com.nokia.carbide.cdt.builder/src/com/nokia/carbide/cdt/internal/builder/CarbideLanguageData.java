@@ -49,10 +49,12 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.core.runtime.content.IContentTypeManager;
 import org.eclipse.core.runtime.content.IContentTypeSettings;
+import org.eclipse.core.runtime.jobs.Job;
 
 import com.nokia.carbide.cdt.builder.CarbideBuilderPlugin;
 import com.nokia.carbide.cdt.builder.EpocEngineHelper;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
+import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cpp.epoc.engine.model.sbv.ISBVView;
 import com.nokia.carbide.cpp.epoc.engine.preprocessor.IDefine;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
@@ -146,16 +148,16 @@ public class CarbideLanguageData extends CLanguageData {
 		}
 		
 		if (cacheBuilt) {
+			
 			// Bug 12078: persisting the cache requires setting the project 
 			// description, or else it gets thrown away (!).
 			// But we must save the cache in a workspace job because this code
 			// is usually called when the project description is being read for 
 			// the first time (thus saving just throws an exception).
-			WorkspaceJob job = new WorkspaceJob("Saving Carbide indexer cache for " + carbideBuildConfig.getDisplayString()) {
+			Job job = new Job("Saving Carbide indexer cache for " + carbideBuildConfig.getDisplayString()) {
 
 				@Override
-				public IStatus runInWorkspace(IProgressMonitor monitor)
-						throws CoreException {
+				protected IStatus run(IProgressMonitor monitor) {
 					persistCache(monitor);
 					
 					return Status.OK_STATUS;
@@ -163,7 +165,13 @@ public class CarbideLanguageData extends CLanguageData {
 				
 			};
 			job.setRule(ResourcesPlugin.getWorkspace().getRoot());
-			job.schedule();
+			job.setSystem(true);
+			job.setPriority(Job.LONG);
+			job.schedule(5000);	
+				// This scheduling delay is a gross HACK: WorkspaceModelProvider#saveStorage()
+				// has had and still has problems with deadlocks on saving
+				// model content.  This job exacerbates it unless we wait a
+				// while before locking the workspace.
 		}
 
 		switch(kind) {
@@ -358,8 +366,15 @@ public class CarbideLanguageData extends CLanguageData {
 
 	private void persistCache(IProgressMonitor monitor) {
 		// persist the cache between IDE launches.
+		if (!isValid())
+			return;
 		try {
-			final IProject project = carbideBuildConfig.getCarbideProject().getProject();
+			ICarbideProjectInfo carbideProject = carbideBuildConfig.getCarbideProject();
+			if (carbideProject == null)
+				return;
+			final IProject project = carbideProject.getProject();
+			if (project == null)
+				return;
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
 			if (projDes != null) {
 				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getBuildContext().getConfigurationID());
