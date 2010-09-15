@@ -43,14 +43,6 @@
             templateId="com.nokia.carbide.cpp.templates.symbian.empty"
             wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
 
-      <template
-      		displayName="%openc.label"
-            filterArguments=""
-            groupLabel="%S60.3.label"
-            image="icons/icon_S60.png"
-            location="templates/projecttemplates/OpenC-HelloWorld/template.xml"
-            templateId="com.nokia.carbide.cpp.templates.openC.helloworld"
-            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
    </extension>
 
 	<!-- CLASS WIZARDS -->
