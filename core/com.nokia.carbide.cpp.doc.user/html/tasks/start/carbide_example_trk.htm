@@ -9,10 +9,10 @@
 <script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
 </head>
 <body >
-<h2>Run Mode Debug Example (Application TRK) </h2>
-<p>This example shows how to create and build an application and debug it on a device using the Application TRK on-device debug agent. The majority of steps are identical to the ones used to create a program and debug in an emulator, with some minor variations.</p>
+<h2>Run Mode Debug Example (Application CODA) </h2>
+<p>This example shows how to create and build an application and debug it on a device using the Application CODA on-device debug agent. The majority of steps are identical to the ones used to create a program and debug in an emulator, with some minor variations.</p>
 <div class="step">
-  <h4>Debugging a Run-mode Project using Application TRK </h4>
+  <h4>Debugging a Run-mode Project using Application CODA </h4>
   <ol>
     <li>Import the Bld.inf to create a project using the Import wizard </li>
     <p>In this example we are importing a project called Music, a complex project that includes several EXEs (MusicPlayer, MusicShop, MusicVisualizer). For the import, we select an ARM target.</p>
@@ -24,21 +24,21 @@
     <p>In this example we will set one breakpoint in two different EXEs. The first is set in the file called <span class="code">MCEngine.cpp</span> (MCServer.exe) and the second is set in  <span class="code">MPlayerAppUI.cpp</span> (MusicPlayer.exe). </p>
     <li>Click the Debug icon (<img src="../../projects/images/icon_debug.png" width="17" height="16" align="absmiddle">) to launch the <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration</a> wizard
       <ol type="a">
-        <li>Select the Application TRK Launch Configuration from the Launch Types page, then click Next</li>
+        <li>Select the Application CODA Launch Configuration from the Launch Types page, then click Next</li>
         <p align="center"><img src="../trk/images/trk_launch_types.png" width="438" height="533"></p>
         <p class="figure">Figure 1 - Launch Types page showing selection </p>
         <li>If you have more than one executable, select the Main Executable in the Executable Selection page of the wizard, then click Next</li>
         <p>For this example we select the musicplayer.exe as the main executable.</p>
         <p align="center"><img src="../trk/images/trk_exe_selection.png" width="438" height="533"></p>
         <p class="figure">Figure 2 - Executable Selection page showing selection </p>
-        <li>Select the remote connection to use in the TRK Connection Settings page, then click Next</li>
+        <li>Select the remote connection to use in the CODA Connection Settings page, then click Next</li>
         <p align="center"><img src="../trk/images/trk_conn_settings.png" width="438" height="533"></p>
-        <p class="figure">Figure 3 - TRK Connection Settings page showing selection </p>
-        <li>Select the SIS file to install in the TRK SIS Selection page if not already populated</li>
+        <p class="figure">Figure 3 - CODA Connection Settings page showing selection </p>
+        <li>Select the SIS file to install in the CODA SIS Selection page if not already populated</li>
       </ol>
       <blockquote>
         <p class="figure"><img src="../trk/images/trk_sis_selection.png" width="438" height="533"></p>
-        <p class="figure">Figure 4 - TRK Connection Settings page showing selection </p>
+        <p class="figure">Figure 4 - CODA Connection Settings page showing selection </p>
       </blockquote>
       <ol type="a">
         <li>Click Finish </li>

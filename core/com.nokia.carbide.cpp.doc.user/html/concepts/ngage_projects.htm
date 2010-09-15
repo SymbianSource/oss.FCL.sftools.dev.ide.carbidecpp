@@ -61,7 +61,7 @@
 <p>Once you have an <span class="code">.N-GAGE</span> game file, you need to deploy it on the target device:</p>
 <ol>
   <li>Verify that you have a valid developer certificate on the target device given to you by the  Nokia R&amp;D Certificate Service. If not, get and install one.</li>
-  <li>Verify that you have Application TRK installed on the target device. If not, install it now using <a href="../reference/trk/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</li>
+  <li>Verify that you have Application CODA installed on the target device. If not, install it now using <a href="../reference/trk/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</li>
 <li>Manually install the <span class="code">.N-GAGE</span>  file on the device</li>
 </ol>
 <h4>Debugging the Game project</h4>
@@ -69,11 +69,11 @@
 <ol>
   <li>Open <span class="note"><b>Window &gt; Preferences &gt; Run/Debug &gt;<img src="../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.debug.ui.LaunchingPreferencePage)")'> Launching</a></b> preference panel </span>and disable the <b>Build (if required) before launching</b> option under the General Options group</li>
   <li>Right-click the project and choose <b>Debug As &gt; Debug Configuration</b> to open the <b><a href="../reference/wnd_debug_configuration.htm">Debug Cinfigurations</a></b> window</li>
-  <li><a href="../tasks/projects/prj_debug_config.htm">Create</a> an <b>Symbian OS Application TRK</b> launch configuration
+  <li><a href="../tasks/projects/prj_debug_config.htm">Create</a> an <b>Symbian OS Application CODA</b> launch configuration
       <ul>
       <li>In the <b><a href="../projects/launch/page_connection.htm">Connection</a></b> tab select the COM port used to connect to the device. </li>
       <li> In the <b><a href="../projects/launch/page_installation.htm">Installation</a></b> tab, verify that the game SISX file is correct </li>
-      <li>In the <b><a href="../projects/launch/page_debugger.htm">Debug</a></b> tab, enable the View messges between PC and debug agent on the phone if you want to monitor communications between TRK and Carbide </li>
+      <li>In the <b><a href="../projects/launch/page_debugger.htm">Debug</a></b> tab, enable the View messages between PC and debug agent on the phone if you want to monitor communications between CODA and Carbide </li>
     </ul>
   </li>
 

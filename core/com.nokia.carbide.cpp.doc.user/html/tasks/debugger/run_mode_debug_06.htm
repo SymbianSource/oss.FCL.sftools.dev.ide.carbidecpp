@@ -18,15 +18,15 @@
   <li><a href="run_mode_debug_04.htm">Setup a virtual drive for Techview and Cust Kits</a></li>
   <li><a href="run_mode_debug_05.htm">Set the default kit in Devices.xml </a></li>
   <li><b>Install the SISX file on the target device</b></li>
-  <li><a href="run_mode_debug_07.htm">Configure TRK connection on the device</a></li>
+  <li><a href="run_mode_debug_07.htm">Configure CODA connection on the device</a></li>
   <li><a href="run_mode_debug_08.htm">Create a launch configuration</a></li>
 </ol>
 <div class="step">
 <h4><a name="runSISX" id="runSISX"> </a>Install the SISX File on the Target Device</h4>
-<p>The on-device debug agent is delivered to the target device as a SISX file. There are two versions of TRK: Application TRK and System TRK.</p>
+<p>The on-device debug agent is delivered to the target device as a SISX file. There are two versions of CODA: Application CODA and System CODA.</p>
   <ul>
-    <li>Application TRK&mdash; supports application debugging only and available to developers creating applications for devices. Developers do not have access to system level routines, system ROM, and other user application code. User cannot modify the LR and SR registers, and must use a SIS file to debug an application.</li>
-    <li>System TRK&mdash; supports both application and limited ROM debugging; including application executables and limited ROM based components (no device drivers). Also available to original equipment manufacturers (OEMs) for device creation and customization.</li>
+    <li>Application CODA&mdash; supports application debugging only and available to developers creating applications for devices. Developers do not have access to system level routines, system ROM, and other user application code. User cannot modify the LR and SR registers, and must use a SIS file to debug an application.</li>
+    <li>System CODA&mdash; supports both application and limited ROM debugging; including application executables and limited ROM based components (no device drivers). Also available to original equipment manufacturers (OEMs) for device creation and customization.</li>
   </ul>
   <p>The following SISX file is officially signed by Nokia: 
   <span class="code">s60_3_0_app_trk_2_6_nokia_signed.sisx</span></p>
@@ -41,12 +41,12 @@
     <li>On the device you will be prompted  to enter the same PIN code. Enter PIN code. </li>
     <li>The device will then ask you to accept the connection request from the PC. Press OK.</li>
     <p>The OBEX folder on the PC should now be available.</p>
-    <li>Drop the TRK SISX file into the folder</li>
+    <li>Drop the CODA SISX file into the folder</li>
     <li>The device will prompt you to accept the connection request from the PC. Press OK.</li>
     <li>The SISX file should then transfer from the PC to the device</li>
     <li>Navigate to where the SISX file was placed</li>
     <p>If you dropped it into the OBEX folder it will be in <span class="code">Applications &gt; Messages &gt; Inbox</span>. If you dropped it into the C folder it will be in <span class="code">Applications &gt; Utilities &gt;FileBrowse &gt; C</span>.</p>
-    <li>Select the TRK SISX file on the device to install the TRK debug agent.</li>
+    <li>Select the CODA SISX file on the device to install the CODA debug agent.</li>
   </ol>
   <h5>Installing using PC Suite</h5>
   <ol>
