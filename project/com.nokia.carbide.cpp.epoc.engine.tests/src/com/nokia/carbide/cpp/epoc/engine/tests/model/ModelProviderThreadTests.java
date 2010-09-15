@@ -263,7 +263,7 @@ public class ModelProviderThreadTests {
 				// can't actually validate -- we have no idea whether writers'
 				// commits have come in order or not, since one writer may have
 				// been out-of-sync and had to retry its commit late.
-				validate(builder.toString());
+				//validate(builder.toString());
 			} finally {
 				view.dispose();
 			}
