@@ -48,6 +48,9 @@ public class NewPluginChecker {
 		}
 		
 		final List<ISymbianSDK> sdkList = SDKCorePlugin.getSDKManager().getSDKList();
+		if (sdkList.size() == 0){
+			return;
+		}
 		Job job = new Job("Checking installed SDKs for plugins") { 
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
