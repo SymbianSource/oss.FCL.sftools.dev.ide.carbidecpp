@@ -18,7 +18,7 @@
 
 int main(void)
 {
-	printf("Hello Open C!\n");
+	printf("Hello ANSI C!\n");
 	printf("Press a character to exit!");
 	int c = getchar();
 	return 0;

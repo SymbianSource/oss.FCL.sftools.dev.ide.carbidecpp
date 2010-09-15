@@ -43,6 +43,14 @@
             templateId="com.nokia.carbide.cpp.templates.symbian.empty"
             wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
 
+      <template
+      		displayName="%ansic.label"
+            filterArguments=""
+            groupLabel="%GenericSymbianOS.label"
+            image="icons/icon_symbian.gif"
+            location="templates/projecttemplates/OpenC-HelloWorld/template.xml"
+            templateId="com.nokia.carbide.cpp.templates.openC.helloworld"
+            wizardId="com.nokia.carbide.cpp.project.ui.wizards.NewSymbianOSCppProjectWizard"/>
    </extension>
 
 	<!-- CLASS WIZARDS -->
