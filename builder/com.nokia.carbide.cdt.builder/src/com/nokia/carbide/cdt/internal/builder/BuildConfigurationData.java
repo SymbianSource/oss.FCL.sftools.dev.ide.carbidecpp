@@ -316,7 +316,7 @@ public class BuildConfigurationData extends CConfigurationData {
 		try {
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(((CarbideBuildConfiguration)carbideBuildConfig).getBuildContext().getConfigurationID());
+				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getBuildContext().getConfigurationID());
 				if (configDes != null) {
 					ICStorageElement storage = configDes.getStorage(CONFIG_DATA_CACHE, false);
 					if (storage != null) {

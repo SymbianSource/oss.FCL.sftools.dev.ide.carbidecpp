@@ -36,10 +36,16 @@ import org.eclipse.cdt.core.settings.model.ICStorageElement;
 import org.eclipse.cdt.core.settings.model.extension.CLanguageData;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ProjectScope;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.core.runtime.content.IContentTypeManager;
 import org.eclipse.core.runtime.content.IContentTypeSettings;
@@ -140,7 +146,24 @@ public class CarbideLanguageData extends CLanguageData {
 		}
 		
 		if (cacheBuilt) {
-			persistCache();
+			// Bug 12078: persisting the cache requires setting the project 
+			// description, or else it gets thrown away (!).
+			// But we must save the cache in a workspace job because this code
+			// is usually called when the project description is being read for 
+			// the first time (thus saving just throws an exception).
+			WorkspaceJob job = new WorkspaceJob("Saving Carbide indexer cache for " + carbideBuildConfig.getDisplayString()) {
+
+				@Override
+				public IStatus runInWorkspace(IProgressMonitor monitor)
+						throws CoreException {
+					persistCache(monitor);
+					
+					return Status.OK_STATUS;
+				}
+				
+			};
+			job.setRule(ResourcesPlugin.getWorkspace().getRoot());
+			job.schedule();
 		}
 
 		switch(kind) {
@@ -333,13 +356,13 @@ public class CarbideLanguageData extends CLanguageData {
 		cacheTimestamp = System.currentTimeMillis();
 	}
 
-	private void persistCache() {
+	private void persistCache(IProgressMonitor monitor) {
 		// persist the cache between IDE launches.
 		try {
 			final IProject project = carbideBuildConfig.getCarbideProject().getProject();
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getDisplayString());
+				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getBuildContext().getConfigurationID());
 				if (configDes != null) {
 					String includesCacheValue = "";
 					for (ICLanguageSettingEntry inc : includeEntries) {
@@ -370,6 +393,8 @@ public class CarbideLanguageData extends CLanguageData {
 						filesCacheValue += file.getAbsolutePath() + ENTRY_DELIMTER;
 					}
 					storage.setAttribute(FILES_CACHE, filesCacheValue);
+					
+					CoreModel.getDefault().setProjectDescription(project, projDes, true, monitor);
 				}
 			}
 		} catch (CoreException e) {
@@ -386,7 +411,7 @@ public class CarbideLanguageData extends CLanguageData {
 		try {
 			ICProjectDescription projDes = CoreModel.getDefault().getProjectDescription(project);
 			if (projDes != null) {
-				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getDisplayString());
+				ICConfigurationDescription configDes = projDes.getConfigurationById(carbideBuildConfig.getBuildContext().getConfigurationID());
 				if (configDes != null) {
 					ICStorageElement storage = configDes.getStorage(CONFIG_DATA_CACHE, false);
 					if (storage != null) {
