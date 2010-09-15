@@ -1,6 +1,5 @@
 package com.nokia.carbide.cpp.internal.api.sdk.sbsv2;
 
-import java.io.File;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,6 +9,8 @@ import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -19,6 +20,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2ConfigQueryData;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
+import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.Logging;
 
 public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
@@ -183,9 +185,15 @@ public class SBSv2ConfigQueryData implements ISBSv2ConfigQueryData {
 											value = valueNode.getNodeValue();
 										}
 										if (name.equals("__PRODUCT_INCLUDE__")){
-											File f = new File(value.replaceAll("\"", ""));
-											if (!f.exists())
+											IPath f = new Path(value.replaceAll("\"", ""));
+											if (!f.toFile().exists())
 												continue; // Don't add a product include for non-existent HRH
+											
+											// Raptor provides HRH as a full quoted path for windows
+											if (HostOS.IS_WIN32){
+												value = value.substring(3, value.length()-1);
+												value = "\\\"" + value + "\\\"";
+											}
 										}
 										buildMacros.put(name, value);
 									} else if (buildChild.getNodeName().equals("preinclude")){
