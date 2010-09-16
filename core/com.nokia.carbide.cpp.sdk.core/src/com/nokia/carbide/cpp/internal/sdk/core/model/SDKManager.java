@@ -83,6 +83,7 @@ public class SDKManager extends AbstractSDKManager {
 	
 	protected boolean doScanSDKs(IProgressMonitor monitor) {
 		boolean result = true;
+		scanCarbideSDKCache();
 		DevicesType devicesType;
 		try {
 			File devicesFile = getDevicesXMLFile();
@@ -108,7 +109,6 @@ public class SDKManager extends AbstractSDKManager {
 			result = false;
 		}
 
-		scanCarbideSDKCache();
 		doScanDrives(monitor);
 		return result;
 	}
@@ -490,7 +490,9 @@ public class SDKManager extends AbstractSDKManager {
 	@Override
 	protected boolean isInSDKList(ISymbianSDK sdk) {
 		for (ISymbianSDK entry : sdkList) {
-			if (entry.getEPOCROOT().equalsIgnoreCase(sdk.getEPOCROOT())) {
+			File f1 = new File(entry.getEPOCROOT());
+			File f2 = new File(sdk.getEPOCROOT());
+			if (f1.equals(f2)) {
 				return true;
 			}
 		}

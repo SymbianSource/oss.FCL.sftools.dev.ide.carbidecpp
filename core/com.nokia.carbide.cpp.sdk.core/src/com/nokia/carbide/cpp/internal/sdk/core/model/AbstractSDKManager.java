@@ -331,9 +331,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				sdk = SymbianSDKFactory.createInstance(id, 
 						   entry.getEpocRoot(),
 						   osVersion);
-				if (isInSDKList(sdk)) {
-					continue;
-				}
 				((SymbianSDK)sdk).setEnabled(entry.isEnabled());
 				synchronized (sdkList) {
 					sdkList.add(sdk);
