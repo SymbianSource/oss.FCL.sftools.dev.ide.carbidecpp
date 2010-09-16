@@ -95,9 +95,4 @@ class NavigationBar extends RoundedCornerComposite {
 		layout();
 	}
 	
-	@Override
-	public void layout() {
-		super.layout();
-		pack();
-	}
 }

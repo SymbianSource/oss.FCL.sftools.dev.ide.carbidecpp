@@ -62,4 +62,9 @@ class SharedBackgroundComposite extends Canvas {
 //		gc.drawRectangle(1, 1, width - 2, height - 2);
 	}
 
+	@Override
+	public void layout() {
+		super.layout();
+		pack();
+	}
 }
