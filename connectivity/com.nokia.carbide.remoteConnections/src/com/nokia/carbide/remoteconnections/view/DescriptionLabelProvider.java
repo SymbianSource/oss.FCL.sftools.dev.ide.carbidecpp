@@ -108,7 +108,8 @@ public class DescriptionLabelProvider extends StyledCellLabelProvider {
 						break;
 					case SWT.MouseDown:
 						String linkHRef = getLinkHRef(event);
-						handleLinkClicked(linkHRef, event);
+						if (linkHRef != null)
+							handleLinkClicked(linkHRef, event);
 						break;
 					default:
 				}
