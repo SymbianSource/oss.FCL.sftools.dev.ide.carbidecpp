@@ -378,6 +378,8 @@ public class SettingsData {
 	public static void setStopModeMainTab(ILaunchConfigurationWorkingCopy configuration, IProject project) {
 		//===== StopMode :  main tab =================================================== 
 		//		
+		configuration.setAttribute(RemoteConnectionsTRKHelper.CONNECTION_ATTRIBUTE, Registry.CURRENT_CONNECTION_ID);
+
 		if (project != null) {
 			String projectName = project.getName();
 			configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_NAME, projectName);
@@ -657,7 +659,7 @@ public class SettingsData {
 			configuration.setMappedResources( new IResource[] { project });
 		    ICarbideProjectInfo cpi = CarbideBuilderPlugin.getBuildManager().getProjectInfo(project);
 		    configuration.setAttribute(ICDTLaunchConfigurationConstants.ATTR_PROJECT_BUILD_CONFIG_ID, 
-		    		cpi != null ? cpi.getDefaultBuildConfigName() : ""); //$NON-NLS-1$
+		    		cpi != null ? cpi.getDefaultConfiguration().getBuildContext().getConfigurationID() : ""); //$NON-NLS-1$
 		}
 		
 		// set rom log file defaults.  do this for all launch types since it shouldn't hurt
