@@ -234,7 +234,7 @@ public class ConnectionStatusReconciler {
 		EStatus serviceStatus = tcfTRKStatus;
 		EConnectionStatus connectionStatus = service2ConnectionStatus(serviceStatus);
 		if (!connectionStatus.equals(EConnectionStatus.READY)) {
-			serviceStatus = trkStatus;
+			serviceStatus = tcfTRKStatus; // C3TCF !!!!!!!!!!!!!
 			connectionStatus = service2ConnectionStatus(serviceStatus);
 		}
 
