@@ -89,16 +89,15 @@ import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConne
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionsManagerListener;
 import com.nokia.carbide.remoteconnections.internal.ToggleDiscoveryAgentAction;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
-import com.nokia.carbide.remoteconnections.internal.api.IToggleServicesTestingListener;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatusChangedListener;
 import com.nokia.carbide.remoteconnections.internal.api.IDeviceDiscoveryAgent;
+import com.nokia.carbide.remoteconnections.internal.api.IToggleServicesTestingListener;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
-import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
 
 /**
@@ -119,7 +118,7 @@ public class ConnectionsView extends ViewPart {
 	private List<Action> serviceSelectedActions;
 	private List<Action> discoveryAgentActions;
 	private static final String UID = ".uid"; //$NON-NLS-1$
-
+	
 	private static final ImageDescriptor CONNECTION_NEW_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionNew.png"); //$NON-NLS-1$
 	private static final ImageDescriptor CONNECTION_EDIT_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionEdit.png"); //$NON-NLS-1$
 	private static final ImageDescriptor SERVICE_TEST_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/serviceTest.png"); //$NON-NLS-1$
@@ -265,9 +264,6 @@ public class ConnectionsView extends ViewPart {
 			return getNodeDisplayName(obj);
 		}
 		
-		/* (non-Javadoc)
-		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
-		 */
 		@Override
 		public Font getFont(Object element) {
 			if (element instanceof TreeNode) {
@@ -345,9 +341,6 @@ public class ConnectionsView extends ViewPart {
 			return null;
 		}
 		
-		/* (non-Javadoc)
-		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
-		 */
 		@Override
 		public Font getFont(Object element) {
 			// we need this to avoid letting the bold name column influence the others 
@@ -355,46 +348,6 @@ public class ConnectionsView extends ViewPart {
 		}
 	}
 	
-	public class DescriptionLabelProvider extends ColumnLabelProvider {
-		
-		@Override
-		public String getText(Object obj) {
-			TreeNode node = (TreeNode) obj;
-			Object value = node.getValue();
-			if (value instanceof IConnectedService) {
-				IStatus status = ((IConnectedService) value).getStatus();
-				IConnection connection = findConnection((IConnectedService) value);
-				if (!status.getEStatus().equals(EStatus.IN_USE) ||
-						!(connection != null && ConnectionUIUtils.isSomeServiceInUse(connection))) { // if in-use, we show it in the connection row
-					String longDescription = status.getLongDescription();
-					if (longDescription != null)
-						longDescription = TextUtils.canonicalizeNewlines(longDescription, " "); //$NON-NLS-1$
-					return longDescription;
-				}
-			}
-			else if (value instanceof IConnection) {
-				IConnectionStatus status = getConnectionStatus((IConnection) value);
-				if (status != null) {
-					return status.getLongDescription();
-				}
-				else if (ConnectionUIUtils.isSomeServiceInUse((IConnection) value)) {
-					return Messages.getString("ConnectionsView.InUseDesc"); //$NON-NLS-1$
-				}
-			}
-			
-			return null;
-		}
-		
-		/* (non-Javadoc)
-		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
-		 */
-		@Override
-		public Font getFont(Object element) {
-			// we need this to avoid letting the bold name column influence the others 
-			return JFaceResources.getDefaultFont();
-		}
-	}
-
 	private class TypeLabelProvider extends ColumnLabelProvider {
 		
 		public String getText(Object obj) {
@@ -406,9 +359,6 @@ public class ConnectionsView extends ViewPart {
 			return null;
 		}
 		
-		/* (non-Javadoc)
-		 * @see org.eclipse.jface.viewers.ColumnLabelProvider#getFont(java.lang.Object)
-		 */
 		@Override
 		public Font getFont(Object element) {
 			// we need this to avoid letting the bold name column influence the others 
@@ -466,9 +416,6 @@ public class ConnectionsView extends ViewPart {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
-	 */
 	public void createPartControl(Composite parent) {
 		viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 		
@@ -495,7 +442,7 @@ public class ConnectionsView extends ViewPart {
 		statusColumn.getColumn().setText(Messages.getString("ConnectionsView.StatusColumnHeader")); //$NON-NLS-1$
 		
 		TreeViewerColumn descriptionColumn = new TreeViewerColumn(viewer, SWT.LEFT);
-		descriptionColumn.setLabelProvider(new DescriptionLabelProvider());
+		descriptionColumn.setLabelProvider(new DescriptionLabelProvider(this, descriptionColumn));
 		descriptionColumn.getColumn().setText(Messages.getString("ConnectionsView.DescriptionColumnHeader")); //$NON-NLS-1$
 		
 		viewer.setContentProvider(new TreeNodeContentProvider());
@@ -601,7 +548,7 @@ public class ConnectionsView extends ViewPart {
 	}
 
 	// returns non-null status when status is not EConnectionStatus.NONE
-	private IConnectionStatus getConnectionStatus(IConnection connection) {
+	public IConnectionStatus getConnectionStatus(IConnection connection) {
 		if (connection instanceof IConnection2) {
 			IConnectionStatus status = ((IConnection2) connection).getStatus();
 			if (status != null && status.getEConnectionStatus() != EConnectionStatus.NONE)
@@ -973,7 +920,7 @@ public class ConnectionsView extends ViewPart {
 		super.dispose();
 	}
 	
-	private static IConnection findConnection(IConnectedService cs) {
+	public static IConnection findConnection(IConnectedService cs) {
 		for (IConnection connection : Registry.instance().getConnections()) {
 			for (IConnectedService connectedService : Registry.instance().getConnectedServices(connection)) {
 				if (cs.equals(connectedService))

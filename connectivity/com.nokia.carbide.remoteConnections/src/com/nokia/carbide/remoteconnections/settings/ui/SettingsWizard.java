@@ -45,6 +45,7 @@ public class SettingsWizard extends Wizard {
 	private IConnection connectionToEdit;
 	private IService serviceToRestrict;
 	private Map<IConnectedService, Boolean> savedEnabledStates;
+	private int selectedTabIndexInConnectionSettingsPage;
 	
 	public SettingsWizard(IConnection connectionToEdit, IService serviceToRestrict) {
 		this.connectionToEdit = connectionToEdit;
@@ -161,5 +162,17 @@ public class SettingsWizard extends Wizard {
 	public void connectionTypeChanged() {
 		connectionSettingsPage.updateDynamicUI();
 		getContainer().updateButtons();
+	}
+	
+	/**
+	 * Call before opening the wizard to set which tab will be selected in the setting page
+	 * @param index int
+	 */
+	public void setSelectedTabInSettingsPage(int index) {
+		this.selectedTabIndexInConnectionSettingsPage = index;
+	}
+	
+	int getSelectedTabIndexInConnectionSettingsPage() {
+		return selectedTabIndexInConnectionSettingsPage;
 	}
 }

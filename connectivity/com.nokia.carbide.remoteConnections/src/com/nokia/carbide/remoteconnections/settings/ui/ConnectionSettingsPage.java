@@ -189,6 +189,9 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 		createSetupTabComposite(tabFolder);
 		createAgentTestTabComposite(tabFolder);
 		createInstallTabComposite(tabFolder);
+		int index = settingsWizard.getSelectedTabIndexInConnectionSettingsPage();
+		if (index >= 0 && index < 3)
+			tabFolder.setSelection(index);
 		
 		RemoteConnectionsActivator.setHelp(tabFolder, ".connection_settings_page"); //$NON-NLS-1$
 		
