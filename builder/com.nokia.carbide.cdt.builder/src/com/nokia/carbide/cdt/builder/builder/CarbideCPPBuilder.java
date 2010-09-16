@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.ICModelMarker;
 import org.eclipse.cdt.core.resources.IConsole;
 import org.eclipse.cdt.utils.spawner.EnvironmentReader;
@@ -63,7 +62,6 @@ import com.nokia.carbide.cdt.internal.builder.CarbideBuildConfiguration;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv1Builder;
 import com.nokia.carbide.cdt.internal.builder.CarbideSBSv2Builder;
 import com.nokia.carbide.cdt.internal.builder.ICarbideBuilder;
-import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cdt.internal.builder.ui.MMPSelectionDialog;
 import com.nokia.carbide.cpp.epoc.engine.EpocEnginePlugin;
 import com.nokia.carbide.cpp.epoc.engine.MMPDataRunnableAdapter;
@@ -77,7 +75,6 @@ import com.nokia.carbide.cpp.epoc.engine.preprocessor.AcceptedNodesViewFilter;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.qt.core.QtCorePlugin;
-import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.internal.api.cpp.epoc.engine.model.pkg.EPKGLanguage;
@@ -306,8 +303,6 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		launcher.writeToConsole("\n***Building project \"" + cpi.getProject().getName() + "\" for configuration \"" + buildConfig.getDisplayString() + "\"\n");
 		
 		getBuilder(cpi.getProject()).preBuildStep(buildConfig, launcher);
-		
-		runPreBuildChecks(buildConfig, launcher);
 
 		if (SHOW_ENV_VARS){ 
 			launcher.writeToConsole("\n***Printing environment variables modified from default:\n");
@@ -508,7 +503,6 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 
 		boolean result = false;
 		if (action == BUILD_COMPONENT_ACTION) {
-			runPreBuildChecks(buildConfig, launcher);
 
 			launcher.writeToConsole("\n***Building component \"" + componentName + "\" for configuration \"" + buildConfig.getDisplayString() + "\"\n");
 			
@@ -605,8 +599,6 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		IPath fullMMPPath = tempPath.get(0);
 
 		launcher.writeToConsole("\n***Compiling file \"" + file.toOSString() + "\" for configuration \"" + buildConfig.getDisplayString() + "\"\n");
-		
-		runPreBuildChecks(buildConfig, launcher);
 
 		getBuilder(cpi.getProject()).compileFile(file, buildConfig, fullMMPPath, launcher, monitor);
 
@@ -713,12 +705,6 @@ public class CarbideCPPBuilder extends IncrementalProjectBuilder {
 		});
 		
 		return rules;
-	}
-
-	protected static void runPreBuildChecks(ICarbideBuildConfiguration buildConfig, CarbideCommandLauncher launcher) {
-		if (buildConfig.getPlatformString().toUpperCase().equals(ISBSv1BuildContext.EMULATOR_PLATFORM) && BuilderPreferencePage.useBuiltInX86Vars()) {
-			X86BuildPlugin.checkForUpdates();
-		}
 	}
 	
 	protected static void calculateComponentLists(ICarbideBuildConfiguration buildConfig, CarbideCommandLauncher launcher) {

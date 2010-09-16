@@ -37,7 +37,6 @@ import com.nokia.carbide.cdt.builder.project.IEnvironmentVarsInfo;
 import com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage;
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv1BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.SBSv2Utils;
-import com.nokia.carbide.cpp.internal.x86build.X86BuildPlugin;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.cpp.internal.api.utils.core.HostOS;
@@ -456,7 +455,7 @@ public class EnvironmentVarsInfo2 implements IEnvironmentVarsInfo {
 	 * @return
 	 */
 	private String getNokiaX86BuildDir() {
-		return X86BuildPlugin.getX86BuildDirectoryPath().toOSString() + File.separator;
+		return CarbideBuilderPlugin.getX86BuildDirectoryPath().toOSString() + File.separator;
 	}
 	
 	private Map<String, String> stringArrayToMap(String[] array) {

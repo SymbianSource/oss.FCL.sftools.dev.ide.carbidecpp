@@ -44,11 +44,13 @@ import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.osgi.service.datalocation.Location;
 import org.eclipse.ui.*;
 import org.eclipse.ui.navigator.resources.ProjectExplorer;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -97,7 +99,7 @@ public class CarbideBuilderPlugin extends AbstractUIPlugin implements ICProjectD
 	private static ListenerList<ICarbideProjectPropertyChangedListener> ppListeners = new ListenerList<ICarbideProjectPropertyChangedListener>();
 	
 	private static List<IEnvironmentModifier> envModifiers = null;
-
+	private static IPath x86BuildDirectoryPath;
 	
 	/**
 	 * The constructor
@@ -142,6 +144,12 @@ public class CarbideBuilderPlugin extends AbstractUIPlugin implements ICProjectD
 		super.start(context);
 		
 		CoreModel.getDefault().getProjectDescriptionManager().addCProjectDescriptionListener(this, CProjectDescriptionEvent.APPLIED);
+		
+		Location installLocation = Platform.getInstallLocation();
+		URL installURL = installLocation.getURL();
+		IPath installPath = new Path(installURL.getFile());
+
+		x86BuildDirectoryPath = installPath.append("x86Build"); //$NON-NLS-1$
 	}
 
 	/*
@@ -448,5 +456,9 @@ public class CarbideBuilderPlugin extends AbstractUIPlugin implements ICProjectD
 		}
 		
 		return envModifiers;
+	}
+
+	public static IPath getX86BuildDirectoryPath() {
+		return x86BuildDirectoryPath;
 	}
 }
