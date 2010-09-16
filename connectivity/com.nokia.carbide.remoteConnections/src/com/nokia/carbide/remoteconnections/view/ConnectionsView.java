@@ -125,6 +125,8 @@ public class ConnectionsView extends ViewPart {
 	private static final ImageDescriptor SERVICE_TEST_DISABLED_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/serviceTest_No.png"); //$NON-NLS-1$
 	private static final ImageDescriptor CONNECTION_REFRESH_IMGDESC = RemoteConnectionsActivator.getImageDescriptor("icons/connectionRefresh.png"); //$NON-NLS-1$
 
+	public static final int DESCRIPTION_COLUMN_INDEX = 3;
+	
 	private static final String NEW_ACTION = "ConnectionsView.new"; //$NON-NLS-1$
 	private static final String EDIT_ACTION = "ConnectionsView.edit"; //$NON-NLS-1$
 	private static final String RENAME_ACTION = "ConnectionsView.rename"; //$NON-NLS-1$

@@ -124,7 +124,7 @@ public class DescriptionLabelProvider extends StyledCellLabelProvider {
 				List<Element> elements = parseText(text);
 				if (elements.isEmpty())
 					return null;
-				int locMouseX = event.x - item.getTextBounds(3).x;
+				int locMouseX = event.x - item.getTextBounds(ConnectionsView.DESCRIPTION_COLUMN_INDEX).x;
 				GC gc = new GC(item.getDisplay());
 				try {
 					gc.setFont(item.getFont());
