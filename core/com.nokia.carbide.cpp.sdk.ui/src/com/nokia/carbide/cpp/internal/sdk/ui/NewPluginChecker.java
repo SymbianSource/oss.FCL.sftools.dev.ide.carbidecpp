@@ -35,6 +35,7 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
 import com.nokia.carbide.internal.discovery.ui.p2.DynamicP2Installer;
+import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class NewPluginChecker {
@@ -72,7 +73,8 @@ public class NewPluginChecker {
 							try {
 								IStatus status = DynamicP2Installer.install(sdk.getUniqueId(), featureDir, subMonitor);
 								if (status.isOK()) {
-									// TODO advise user??
+									RemoteConnectionsActivator.getStatusDisplay().displayStatus(
+											SDKUIPlugin.makeStatus(IStatus.INFO, "Installed features from\n" + sdk.getUniqueId(), null));
 									installed = true;
 								}
 								else if (status.getSeverity() == IStatus.CANCEL) {

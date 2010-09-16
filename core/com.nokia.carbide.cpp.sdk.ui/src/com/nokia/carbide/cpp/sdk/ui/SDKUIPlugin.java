@@ -16,6 +16,8 @@
 */
 package com.nokia.carbide.cpp.sdk.ui;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
@@ -150,4 +152,13 @@ public class SDKUIPlugin extends AbstractUIPlugin implements IStartup, ICarbideD
 		}
 		
 	}
+
+    public static IStatus makeErrorStatus(String message, Throwable t) {
+    	return makeStatus(IStatus.ERROR, message, t);
+    }
+
+    public static IStatus makeStatus(int severity, String message, Throwable t) {
+    	return new Status(severity, PLUGIN_ID, message, t);
+    }
+
 }
