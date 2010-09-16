@@ -19,8 +19,6 @@ package com.nokia.carbide.internal.discovery.ui.editor;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.eclipse.jface.layout.RowDataFactory;
-import org.eclipse.jface.layout.RowLayoutFactory;
 import org.eclipse.jface.resource.FontDescriptor;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
@@ -29,6 +27,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
@@ -56,7 +55,11 @@ class NavigationBar extends RoundedCornerComposite {
 				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
 		this.portalEditor = portalEditor;
 		buttonToPageMap = new LinkedHashMap<Button, PortalPage>();
-		RowLayoutFactory.swtDefaults().margins(3, 3).wrap(false).applyTo(this);
+		FillLayout layout = new FillLayout(SWT.HORIZONTAL);
+		layout.spacing = 5;
+		layout.marginHeight = 5;
+		layout.marginWidth = 5;
+		setLayout(layout);
 		listener = new ButtonListener();
 		selectedButtonFont = JFaceResources.getHeaderFont();
 		FontData[] fontData = selectedButtonFont.getFontData();
@@ -79,7 +82,6 @@ class NavigationBar extends RoundedCornerComposite {
 		b.setText(page.getTitle());
 		b.setImage(portalEditor.createImage(page.getImageDescriptor(), 16, 16));
 		b.addSelectionListener(listener);
-		RowDataFactory.swtDefaults().applyTo(b);
 		buttonToPageMap.put(b, page);
 	}
 
@@ -94,5 +96,4 @@ class NavigationBar extends RoundedCornerComposite {
 		button.setFont(selectedButtonFont);
 		layout();
 	}
-	
 }

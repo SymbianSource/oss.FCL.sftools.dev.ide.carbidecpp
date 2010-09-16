@@ -154,7 +154,7 @@ public class PortalPage implements IActionBar {
 		for (Layer layer : layers) {
 			Composite layerComposite = new SharedBackgroundComposite(pageComposite, backgroundParent);
 			GridDataFactory.fillDefaults().grab(true, true).applyTo(layerComposite);
-			GridLayoutFactory.fillDefaults().numColumns(2).spacing(20, 0).extendedMargins(20, 20, 20, 0).applyTo(layerComposite);
+			GridLayoutFactory.fillDefaults().numColumns(2).spacing(10, 0).extendedMargins(0, 0, 10, 0).applyTo(layerComposite);
 			createTaskBarControls(portalEditor, layerComposite, layer.getLayer());
 			createMainControl(portalEditor, layerComposite, layer.getLayer());
 			layer.setControl(layerComposite);
@@ -167,7 +167,7 @@ public class PortalPage implements IActionBar {
 		GridLayoutFactory.fillDefaults().applyTo(taskComposite);
 		GridDataFactory.fillDefaults().grab(false, true).applyTo(taskComposite);
 		TaskBar taskBar = new TaskBar(taskComposite, backgroundParent, this);
-		GridDataFactory.fillDefaults().minSize(150, SWT.DEFAULT).grab(true, false).indent(0, 0).applyTo(taskBar);
+		GridDataFactory.fillDefaults().minSize(120, SWT.DEFAULT).grab(true, false).indent(0, 0).applyTo(taskBar);
 		pageTaskBars.add(taskBar);
 		ActionUIUpdater updater = new ActionUIUpdater();
 		createCommandBars(backgroundParent, taskComposite, updater, 

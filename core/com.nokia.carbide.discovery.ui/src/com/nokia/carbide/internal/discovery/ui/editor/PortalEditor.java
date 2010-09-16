@@ -243,10 +243,10 @@ public class PortalEditor extends EditorPart implements IPortalEditor, IElementF
 		// create background
 		backgroundParent = new Composite(parent, SWT.NONE);
 		applyBG(backgroundParent);
-		GridLayoutFactory.fillDefaults().applyTo(backgroundParent);
+		GridLayoutFactory.fillDefaults().margins(10, 0).applyTo(backgroundParent);
 		// create top navigation bar
 		navigationBar = createNavigationBar(backgroundParent);
-		GridDataFactory.swtDefaults().grab(true, false).align(SWT.CENTER, SWT.TOP).indent(10, 10).applyTo(navigationBar);
+		GridDataFactory.swtDefaults().grab(true, false).align(SWT.FILL, SWT.TOP).indent(0, 10).applyTo(navigationBar);
 		// create stack composite
 		createStackComposite(backgroundParent, navigationBar);
 		return backgroundParent;
