@@ -163,8 +163,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		{
 			ArrayList<ISymbianSDK> oldSDKList = new ArrayList<ISymbianSDK>(sdkList);
 			
-			getSBSv2Version(true);
-			
 			if (sdkList != null){
 				sdkList.clear();
 			}
