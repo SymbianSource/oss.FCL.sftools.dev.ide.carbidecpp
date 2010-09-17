@@ -153,7 +153,7 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 		SBSv2QueryUtils.removeAllCachedQueries();
 		// do the real sdk scanning in a job.
 		if (scanJob.getState() == Job.NONE) {
-			scanJob.setUser(true);
+			scanJob.setSystem(false);
 			scanJob.schedule();
 		}
 	}
@@ -331,9 +331,6 @@ public abstract class AbstractSDKManager implements ISDKManager, ISDKManagerInte
 				sdk = SymbianSDKFactory.createInstance(id, 
 						   entry.getEpocRoot(),
 						   osVersion);
-				if (isInSDKList(sdk)) {
-					continue;
-				}
 				((SymbianSDK)sdk).setEnabled(entry.isEnabled());
 				synchronized (sdkList) {
 					sdkList.add(sdk);

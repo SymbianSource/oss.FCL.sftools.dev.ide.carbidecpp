@@ -2,15 +2,11 @@ package com.nokia.carbide.remoteconnections.view;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.StyledCellLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
-import org.eclipse.jface.viewers.StyledString.Styler;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.jface.viewers.ViewerCell;
@@ -19,7 +15,6 @@ import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -36,41 +31,16 @@ import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnection
 import com.nokia.carbide.remoteconnections.internal.ui.ConnectionUIUtils;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
+import com.nokia.cpp.internal.api.utils.ui.LinkParser;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
+import com.nokia.cpp.internal.api.utils.ui.LinkParser.Element;
+import com.nokia.cpp.internal.api.utils.ui.LinkParser.LinkElement;
 
 public class DescriptionLabelProvider extends StyledCellLabelProvider {
 
-	private class Element {
-		private String text;
-
-		public Element(String text) {
-			this.text = text;
-		}
-		
-		public String getText() {
-			return text;
-		}
-	}
-	
-	private class LinkElement extends Element {
-		private String href;
-		
-		public LinkElement(String href, String text) {
-			super(text);
-			this.href = href;
-		}
-		
-		public String getHref() {
-			return href;
-		}
-	}
-	
-	private static final Pattern HREF_PATTERN = 
-		Pattern.compile("<a href=\"([^\"]*)\">(.*?)</a>", Pattern.CASE_INSENSITIVE); //$NON-NLS-1$
 	private static final String AGENT_INSTALLERS_URL = "about:agentInstallers"; //$NON-NLS-1$
 
 	private final ConnectionsView connectionsView;
-	private Styler hyperLinkStyler;
 	private TreeViewerColumn treeViewerColumn;
 	private Listener mouseListener;
 
@@ -78,13 +48,6 @@ public class DescriptionLabelProvider extends StyledCellLabelProvider {
 		this.connectionsView = connectionsView;
 		this.treeViewerColumn = treeViewerColumn;
 		hookColumn();
-		hyperLinkStyler = new Styler() {
-			@Override
-			public void applyStyles(TextStyle textStyle) {
-				textStyle.foreground = ConnectionUIUtils.COLOR_HYPERLINK;
-				textStyle.underline = true;
-			}
-		};
 	}
 	
 	private void hookColumn() {
@@ -122,7 +85,7 @@ public class DescriptionLabelProvider extends StyledCellLabelProvider {
 					return null;
 				TreeItem item = (TreeItem) cell.getItem();
 				String text = getText(cell.getElement());
-				List<Element> elements = parseText(text);
+				List<Element> elements = LinkParser.parseText(text);
 				if (elements.isEmpty())
 					return null;
 				int locMouseX = event.x - item.getTextBounds(ConnectionsView.DESCRIPTION_COLUMN_INDEX).x;
@@ -211,9 +174,9 @@ public class DescriptionLabelProvider extends StyledCellLabelProvider {
 	public void update(ViewerCell cell) {
 		Object element = cell.getElement();
 		String text = getText(element);
-		List<Element> elements = parseText(text);
+		List<Element> elements = LinkParser.parseText(text);
 		
-		StyledString styledString = getStyledString(elements);
+		StyledString styledString = LinkParser.getStyledString(elements);
 		cell.setText(styledString.toString());
 		cell.setStyleRanges(styledString.getStyleRanges());
 
@@ -223,34 +186,6 @@ public class DescriptionLabelProvider extends StyledCellLabelProvider {
 		super.update(cell);
 	}
 	
-	private List<Element> parseText(String text) {
-		List<Element> elements = new ArrayList<Element>();
-		if (text != null) {
-			Matcher m = HREF_PATTERN.matcher(text);
-			int start = 0;
-			int end;
-			while (m.find()) {
-				end = m.start();
-				if (start <= end)
-					elements.add(new Element(text.substring(start, end)));
-				elements.add(new LinkElement(m.group(1), m.group(2)));
-				start = m.end();
-			}
-			end = text.length();
-			if (start <= end)
-				elements.add(new Element(text.substring(start, end)));
-		}
-		return elements;
-	}
-
-	private StyledString getStyledString(List<Element> elements) {
-		StyledString styledString = new StyledString();
-		for (Element element : elements) {
-			styledString.append(element.getText(), element instanceof LinkElement ? hyperLinkStyler : null);
-		}
-		return styledString;
-	}
-
 	private String getText(Object obj) {
 		TreeNode node = (TreeNode) obj;
 		Object value = node.getValue();

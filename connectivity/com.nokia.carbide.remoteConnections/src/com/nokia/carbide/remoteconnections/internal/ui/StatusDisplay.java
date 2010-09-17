@@ -151,7 +151,7 @@ public class StatusDisplay implements IStatusDisplay {
 			});
 		}
 		else {
-			int style = SWT.YES | SWT.NO;
+			int style = prompt != null ? SWT.YES | SWT.NO : 0;
 			switch (status.getSeverity()) {
 			case IStatus.INFO:
 				style |= SWT.ICON_INFORMATION;
@@ -170,8 +170,10 @@ public class StatusDisplay implements IStatusDisplay {
 			messageBox.setText(getTitleString(status));
 			StringBuilder sb = new StringBuilder();
 			sb.append(status.getMessage());
-			sb.append("\n");
-			sb.append(prompt);
+			if (prompt != null) {
+				sb.append("\n");
+				sb.append(prompt);
+			}
 			messageBox.setMessage(sb.toString());
 			int open = messageBox.open();
 			closed = true;

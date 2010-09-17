@@ -48,6 +48,7 @@ import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.ListViewer;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeNode;
 import org.eclipse.jface.viewers.TreeNodeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -111,6 +112,8 @@ import com.nokia.cpp.internal.api.utils.core.HostOS;
 import com.nokia.cpp.internal.api.utils.core.ObjectUtils;
 import com.nokia.cpp.internal.api.utils.core.Pair;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
+import com.nokia.cpp.internal.api.utils.ui.LinkParser;
+import com.nokia.cpp.internal.api.utils.ui.LinkParser.Element;
 
 public class ConnectionSettingsPage extends WizardPage implements ISettingsChangedListener {
 	
@@ -802,8 +805,15 @@ public class ConnectionSettingsPage extends WizardPage implements ISettingsChang
 				public void statusChanged(final IStatus status) {
 					Display.getDefault().asyncExec(new Runnable() {
 						public void run() {
-							if (!statusText.isDisposed())
-								statusText.setText(status.getLongDescription());
+							if (!statusText.isDisposed()) {
+								String longDescription = status.getLongDescription();
+								if (longDescription != null) {
+									List<Element> elements = LinkParser.parseText(longDescription);
+									StyledString styledString = LinkParser.getStyledString(elements);
+									longDescription = styledString.getString();
+								}
+								statusText.setText(longDescription);
+							}
 							if (status.getEStatus().equals(EStatus.UP))
 								resetServiceTesting(false);
 						}
