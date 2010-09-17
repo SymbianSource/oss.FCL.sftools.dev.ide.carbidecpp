@@ -17,6 +17,9 @@
 package com.nokia.carbide.cdt.internal.builder;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
@@ -245,6 +248,18 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		}
 	}
 
+	private static List<ICConfigurationDescription> sortBuildConfigs(List<ICConfigurationDescription> cofigs){ 
+		Collections.sort(cofigs, new Comparator<ICConfigurationDescription>() {
+			
+			public int compare(ICConfigurationDescription o1, ICConfigurationDescription o2) {
+				
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		
+		return cofigs; 
+	}
+	
 	public boolean saveChanges() {
 
 		checkInternalSettings();
@@ -254,8 +269,15 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		
 		boolean rebuildCacheAndReindex = shouldForceRebuildCache && !getIndexAllPreference();
 		
+		ICConfigurationDescription[] cconfigs = projDes.getConfigurations();
+		List<ICConfigurationDescription> cclist =  new ArrayList<ICConfigurationDescription>();
+		for (ICConfigurationDescription cc : cconfigs){
+			cclist.add(cc);
+		}
+		// Save the build configs sorted so they show up under the cdt build menus sorted
+		cclist = sortBuildConfigs(cclist);
 		if (rebuildCacheAndReindex) {
-			for (ICConfigurationDescription configuration : projDes.getConfigurations()) {
+			for (ICConfigurationDescription configuration : cclist) {
 				BuildConfigurationData data = (BuildConfigurationData) configuration.getConfigurationData();
 				data.forceRebuildCache();
 			}
