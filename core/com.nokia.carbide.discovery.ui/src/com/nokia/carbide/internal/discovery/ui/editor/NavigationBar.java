@@ -33,9 +33,6 @@ import org.eclipse.swt.widgets.Composite;
 
 class NavigationBar extends RoundedCornerComposite {
 
-	private PortalEditor portalEditor;
-
-
 	private final class ButtonListener extends SelectionAdapter {
 		@Override
 		public void widgetSelected(SelectionEvent e) {
@@ -44,21 +41,21 @@ class NavigationBar extends RoundedCornerComposite {
 		}
 	}
 
+	private static final int BUTTON_SPACING = -2;
+	private PortalEditor portalEditor;
 	private Map<Button, PortalPage> buttonToPageMap;
 	private SelectionListener listener;
 	private Font buttonFont;
 	private Font selectedButtonFont;
 	
 	NavigationBar(PortalEditor portalEditor, Composite parent) {
-		super(parent, portalEditor.getBackgroundParent(), 
-				parent.getDisplay().getSystemColor(SWT.COLOR_BLACK),
-				parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
+		super(parent, portalEditor.getBackgroundParent(), null, null);
 		this.portalEditor = portalEditor;
 		buttonToPageMap = new LinkedHashMap<Button, PortalPage>();
 		FillLayout layout = new FillLayout(SWT.HORIZONTAL);
-		layout.spacing = 5;
-		layout.marginHeight = 5;
-		layout.marginWidth = 5;
+		layout.spacing = BUTTON_SPACING;
+		layout.marginHeight = BUTTON_SPACING;
+		layout.marginWidth = BUTTON_SPACING;
 		setLayout(layout);
 		listener = new ButtonListener();
 		selectedButtonFont = JFaceResources.getHeaderFont();
@@ -77,10 +74,10 @@ class NavigationBar extends RoundedCornerComposite {
 	}
 
 	public void addNavButton(NavigationBar bar, PortalPage page) {
-		Button b = new Button(bar, SWT.TOGGLE | SWT.FLAT);
+		Button b = new Button(bar, SWT.LEFT | SWT.TOGGLE);
 		b.setFont(buttonFont);
 		b.setText(page.getTitle());
-		b.setImage(portalEditor.createImage(page.getImageDescriptor(), 16, 16));
+		b.setImage(portalEditor.createImage(page.getImageDescriptor(), 32, 32));
 		b.addSelectionListener(listener);
 		buttonToPageMap.put(b, page);
 	}
