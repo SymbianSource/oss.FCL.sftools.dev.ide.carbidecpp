@@ -262,8 +262,6 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 		}
 		
 		try {
-			// replace the old info in the map with the new
-			CarbideBuilderPlugin.getBuildManager().setProjectInfo(this);
 			
 			// save the CDT project description
 			
@@ -274,6 +272,10 @@ public class CarbideProjectModifier extends CarbideProjectInfo implements ICarbi
 				// TODO PERFORMANCE: this can lead to CarbideLanguageData#buildCache(), which is an enormously expensive operation. 
 				// So use a real progress monitor, say from a Job, so UI will be updated
 				CCorePlugin.getDefault().setProjectDescription(projectTracker.getProject(), projDes, true, new NullProgressMonitor());
+				
+				// replace the old info in the map with the new
+				CarbideBuilderPlugin.getBuildManager().setProjectInfo(this);
+				
 			} finally {
 				SymbianBuildContextDataCache.endProjectOperation();
 			}
