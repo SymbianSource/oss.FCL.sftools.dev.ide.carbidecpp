@@ -38,6 +38,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
@@ -59,13 +60,15 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
+import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionType;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionTypeProvider;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager;
-import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatusChangedListener;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectionsManager.IConnectionListener;
 import com.nokia.carbide.remoteconnections.settings.ui.SettingsWizard;
+import com.nokia.cpp.internal.api.utils.ui.LinkParser;
+import com.nokia.cpp.internal.api.utils.ui.LinkParser.Element;
 
 /**
  *	This dialog allows in-depth configuration of the connection settings.
@@ -216,6 +219,11 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 					if (!serviceStatus.getEStatus().equals(
 							com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus.UP)) {
 						String description  = serviceStatus.getLongDescription();
+						if (description != null) {
+							List<Element> elements = LinkParser.parseText(description);
+							StyledString styledString = LinkParser.getStyledString(elements);
+							description = styledString.getString();
+						}
 						status = warning(Messages.getString("ConnectToDeviceDialog.ServiceNotAvailWarning"),  //$NON-NLS-1$
 								description == null ? "" : description); //$NON-NLS-1$
 					}

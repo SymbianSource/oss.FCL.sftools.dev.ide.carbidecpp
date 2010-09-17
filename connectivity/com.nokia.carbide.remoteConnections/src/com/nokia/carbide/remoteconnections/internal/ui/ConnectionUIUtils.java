@@ -20,16 +20,15 @@ package com.nokia.carbide.remoteconnections.internal.ui;
 import java.util.Collection;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.resource.JFaceColors;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService;
-import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus;
 import com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus.EStatus;
+import com.nokia.carbide.remoteconnections.interfaces.IConnection;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus;
 import com.nokia.carbide.remoteconnections.internal.api.IConnection2.IConnectionStatus.EConnectionStatus;
@@ -77,7 +76,6 @@ public class ConnectionUIUtils {
 	public static final Color COLOR_GREEN = new Color(Display.getDefault(), 0, 128, 0);
 	public static final Color COLOR_ELECTRIC = new Color(Display.getDefault(), 0, 0, 255);
 	public static final Color COLOR_GREY = new Color(Display.getDefault(), 96, 96, 96);
-	public static final Color COLOR_HYPERLINK = JFaceColors.getHyperlinkText(Display.getDefault());
 	
 	/**
 	 * Get the image representing the connection status.

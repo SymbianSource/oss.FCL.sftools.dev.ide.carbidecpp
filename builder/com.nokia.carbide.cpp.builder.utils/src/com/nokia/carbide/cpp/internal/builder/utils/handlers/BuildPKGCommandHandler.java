@@ -48,9 +48,7 @@ import com.nokia.carbide.cdt.builder.builder.CarbideCPPBuilder;
 import com.nokia.carbide.cdt.builder.builder.CarbideCommandLauncher;
 import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
-import com.nokia.carbide.cpp.internal.api.sdk.BuildContextSBSv1;
 import com.nokia.carbide.cpp.internal.builder.utils.Activator;
-import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public class BuildPKGCommandHandler extends AbstractHandler {
@@ -151,14 +149,11 @@ public class BuildPKGCommandHandler extends AbstractHandler {
 		        IPath workingDir = cpi.getINFWorkingDirectory();
 				CarbideCommandLauncher bldMakeLauncher = new CarbideCommandLauncher(project, monitor, CarbideCPPBuilder.getParserIdArray(ICarbideBuildConfiguration.ERROR_PARSERS_SIS_BUILDER), workingDir);
 				bldMakeLauncher.showCommand(true);
-				String defaultConfigName = cpi.getDefaultBuildConfigName();
 				ICarbideBuildConfiguration defaultConfig = cpi.getDefaultConfiguration();
-				// TODO: YUCKY!!!
-				ISymbianBuildContext context = BuildContextSBSv1.getBuildContextFromDisplayName(defaultConfigName);
 				
 				bldMakeLauncher.startTimingStats();
 				
-				bldMakeLauncher.writeToConsole("\n***Building \"" + finalComponentName + "\" for project \"" + projectName + "\" and configuration \"" + context.getDisplayString() + "\".\n");
+				bldMakeLauncher.writeToConsole("\n***Building \"" + finalComponentName + "\" for project \"" + projectName + "\" and configuration \"" + defaultConfig.getDisplayString() + "\".\n");
 			
 				CarbideCPPBuilder.invokeSISBuilder(finalPKGPath, defaultConfig, bldMakeLauncher, subMonitor, false);
 				bldMakeLauncher.writeToConsole(bldMakeLauncher.getTimingStats());
