@@ -282,7 +282,7 @@ public class TCMessageInputStream implements ITCMessageInputStream {
 			}
 		}		
 	}
-	public byte[] readBytes(int inNumberMessages) throws IOException {
+	public byte[] readBytes(int inNumberMessages, long timeoutMs) throws IOException {
 		// if not open throw exception
 		if (!this.isOpen) {
 			// stream not open
@@ -296,6 +296,7 @@ public class TCMessageInputStream implements ITCMessageInputStream {
 		long[] outNumberMessagesRead = new long[1];
 		outNumberMessagesRead[0] = 0;
 		long[] outNumberBytesRead = new long[1];
+		long deadline = timeoutMs > 0 ? System.currentTimeMillis() + timeoutMs : Long.MAX_VALUE;
 		do {
 			long ret = api.nativeReadInputStream(this.clientId, inNumberMessages, outNumberMessagesRead, outNumberBytesRead, MAX_BYTES, messageData);
 			if (ret != TCErrorConstants.TCAPI_ERR_NONE) {
@@ -312,7 +313,9 @@ public class TCMessageInputStream implements ITCMessageInputStream {
 					break;
 				}
 			}
-		} while (outNumberMessagesRead[0] == 0);
+			if (timeoutMs != 0)
+				timeoutMs -= blockingTime;
+		} while (outNumberMessagesRead[0] == 0 && System.currentTimeMillis() < deadline);
 
 		// return how many messages actually processed
 		byte[] newMessageData = new byte[(int)outNumberBytesRead[0]];
@@ -321,6 +324,11 @@ public class TCMessageInputStream implements ITCMessageInputStream {
 		}
 		return newMessageData;
 	}
+	
+	public byte[] readBytes(int inNumberMessages) throws IOException {
+		return readBytes(inNumberMessages, 0);
+	}
+	
 	public byte[] readBytes(int inNumberMessages, int[] outNumberMessages) throws IOException {
 		outNumberMessages[0] = 0;
 		

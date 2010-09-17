@@ -20,11 +20,14 @@
 package com.nokia.tcf.api;
 
 import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
 /**
  * This interface is used to access various features of the Message Input Stream. The implementation is created
  * after a successful connection is established. To get a reference to this stream, use the 
  * {@link #ITCAPIConnection.getInputStream} method.
+ * @noimplement
+ * @noextend
  */
 public interface ITCMessageInputStream extends java.io.Closeable {
 
@@ -105,4 +108,21 @@ public interface ITCMessageInputStream extends java.io.Closeable {
 	 */
 	public byte[] readBytes(int inNumberMessages, int[] outNumberMessages) throws IOException;
 	
+	/**
+	 * Return messages from input stream. This call is blocking until at least 1 message exists. Number of
+	 * messages returned may be less than requested. It is up to the caller to parse the byte array
+	 * for individual messages. Only whole messages are returned in the byte stream.
+	 * 
+	 * @param inNumberMessages - maximum number of messages to return. If this is zero, then all messages
+	 * currently in the buffer are returned that will fit into a 2MB byte[] array. 
+	 * @param timeoutMs - timeout in milliseconds (values <= 0 mean wait forever)
+	 * 
+	 * @return byte[] - byte array
+	 * 
+	 * @throws IOException - if an IO error occurs
+	 * @throws TimeoutException - if no messages are received in the given time frame 
+	 */
+	public byte[] readBytes(int inNumberMessages, long timeoutMs) throws IOException, TimeoutException;
+	
+
 }
