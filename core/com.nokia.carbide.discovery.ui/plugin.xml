@@ -111,12 +111,14 @@
           pageId="com.nokia.carbide.discovery.ui.homePage"
           title="Report Bugs">
     </portalPageLayer>
-    <portalPageLayer
+<!--    
+	<portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.PulsarPageLayer"
           order="25"
           pageId="com.nokia.carbide.discovery.ui.kitsPage"
           title="Install SDKs">
     </portalPageLayer>
+-->
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.InstallPlatSimPage"
           order="10"
