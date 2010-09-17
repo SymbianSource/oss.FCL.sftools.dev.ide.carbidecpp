@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import org.eclipse.cdt.debug.core.ICDTLaunchConfigurationConstants;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -70,6 +72,16 @@ public class SourceMappingUtils {
 		if (!hasSymbianContainer) {
 			
 			String epocRootPath = configuration.getAttribute( EPOCROOT_SETTING, (String)null );
+			if (epocRootPath == null)
+			{
+				String exeName = configuration.getAttribute(ICDTLaunchConfigurationConstants.ATTR_PROGRAM_NAME, "");
+				IPath executable = new Path(exeName);
+				String[] segs = executable.segments();
+				for (int i = 0; i < segs.length; i++) {
+					if (segs[i].equalsIgnoreCase("epoc32"))
+						epocRootPath = executable.removeLastSegments(segs.length - i).toOSString();				
+				}
+			}
 			if (epocRootPath != null)
 			{
 				symbianContainer = new SymbianSourceContainer(new Path(epocRootPath));
