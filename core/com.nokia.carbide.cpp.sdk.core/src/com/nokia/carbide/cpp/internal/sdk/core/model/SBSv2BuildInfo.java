@@ -15,6 +15,8 @@ package com.nokia.carbide.cpp.internal.sdk.core.model;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -66,7 +68,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	public List<ISymbianBuildContext> getAllBuildConfigurations() {
 		// This really only applies to SBSv1. We never return the full list of configs for SBSv2, only the filtered ones
-		return sbsv2FilteredContexts;
+		return sortContexts(sbsv2FilteredContexts);
 	}
 
 	public void clearDataFromBuildCache(){
@@ -120,7 +122,9 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			}
 		} 
 		
-		return sbsv2FilteredContexts;
+		
+		
+		return sortContexts(sbsv2FilteredContexts);
 	}
 
 	private void initSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {
@@ -322,6 +326,35 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	public void setPreviouslyScanned(boolean wasScanned) {
 		this.wasScanned = wasScanned;
+	}
+	
+	private static List<ISymbianBuildContext> sortContexts(List<ISymbianBuildContext> contexts){ 
+		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
+			
+			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
+				
+				ISBSv2BuildContext sbs1 = (ISBSv2BuildContext)o1;
+				ISBSv2BuildContext sbs2 = (ISBSv2BuildContext)o2;
+				
+				//String[] sbs1Prefix = sbs1.getSBSv2Alias().split("_");
+				String[] sbs2Prefix = sbs2.getSBSv2Alias().split("_");
+				
+				if (sbs1.getSBSv2Alias().length() == sbs2.getSBSv2Alias().length()){
+					return sbs1.getSBSv2Alias().compareTo(sbs2.getSBSv2Alias());
+				}
+				
+				if (sbs2Prefix.length > 0){
+					if (sbs1.getSBSv2Alias().startsWith(sbs2Prefix[0])){
+						return -1;
+					}
+				}
+				
+				
+				return sbs1.getSBSv2Alias().compareTo(sbs2.getSBSv2Alias());
+			}
+		});
+		
+		return contexts; 
 	}
 
 }

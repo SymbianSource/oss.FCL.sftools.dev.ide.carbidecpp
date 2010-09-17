@@ -236,16 +236,7 @@ public class SBSv2Utils {
 		}
 		return sbsPath != null ? sbsPath : new Path(sbsScriptName);  // dummy
 	}
-	
-	private static List<ISymbianBuildContext> sortContexts(List<ISymbianBuildContext> contexts){ 
-		Collections.sort(contexts, new Comparator<ISymbianBuildContext>() {
-			public int compare(ISymbianBuildContext o1, ISymbianBuildContext o2) {
-				return o2.getDisplayString().compareTo(o1.getDisplayString());
-			}
-		});
-		
-		return contexts; 
-	}
+
 	
 	private static boolean isSBSv1Supported() {
 		if (HostOS.IS_UNIX){
