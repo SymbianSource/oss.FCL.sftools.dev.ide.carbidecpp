@@ -56,7 +56,6 @@ public class NewPluginChecker {
 			@Override
 			protected IStatus run(IProgressMonitor monitor) {
 				boolean installed = false;
-				boolean oneSDKWasScanned = false;
 				SubMonitor subMonitor = SubMonitor.convert(monitor, 100);
 				int worked = 100 / sdkList.size();
 				for (ISymbianSDK sdk : sdkList) {
@@ -66,7 +65,6 @@ public class NewPluginChecker {
 					ISBSv2BuildInfo sbsv2BuildInfo = (ISBSv2BuildInfo)sdk.getBuildInfo(ISymbianBuilderID.SBSV2_BUILDER);
 					if (sbsv2BuildInfo != null) {
 						if (sbsv2BuildInfo.isPreviouslyScanned() == false) {
-							oneSDKWasScanned = true;
 							// XML was parsed, now try to run the feature installer
 							sbsv2BuildInfo.setPreviouslyScanned(true);
 							File featureDir = new File(sdk.getEPOCROOT() + SDK_FEATURE_SUBDIR);
@@ -93,9 +91,6 @@ public class NewPluginChecker {
 					}
 				}
 				
-				if (oneSDKWasScanned) {
-					SDKCorePlugin.getSDKManager().updateCarbideSDKCache();
-				}
 				if (installed) {
 					// plugins from some SDK were installed
 					//doEclipseRestartDialog(workbench);
