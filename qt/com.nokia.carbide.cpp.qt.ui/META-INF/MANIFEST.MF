@@ -8,11 +8,6 @@ Bundle-Vendor: Nokia
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.cdt.ui,
- org.eclipse.search,
- org.eclipse.ui.navigator.resources,
- org.eclipse.ui.console,
- org.eclipse.core.resources,
  com.nokia.carbide.cpp.project.ui,
  com.nokia.carbide.cpp.qt.core,
  com.nokia.carbide.cpp.sdk.core,
@@ -26,5 +21,5 @@ Require-Bundle: org.eclipse.ui,
  com.nokia.cpp.utils.ui,
  com.nokia.cpp.utils.core;bundle-version="1.0.0",
  com.nokia.carbide.cpp.featureTracker;bundle-version="3.0.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

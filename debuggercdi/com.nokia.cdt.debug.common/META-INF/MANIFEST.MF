@@ -10,10 +10,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.cdt.debug.core;bundle-version="7.0.0",
  org.eclipse.debug.core;bundle-version="3.6.0",
  com.nokia.carbide.cdt.builder;bundle-version="2.0.0",
- org.eclipse.cdt.debug.edc,
  com.nokia.carbide.remoteConnections;bundle-version="1.4.0",
  org.eclipse.core.filesystem;bundle-version="1.3.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.cdt.debug.common.internal.api,
  com.nokia.cdt.debug.common.internal.executables,

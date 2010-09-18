@@ -33,4 +33,5 @@ Export-Package: com.nokia.cdt.internal.debug.launch,
  com.nokia.cdt.internal.debug.launch.ui,
  com.nokia.cdt.internal.debug.launch.wizard
 Bundle-ClassPath: .
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 

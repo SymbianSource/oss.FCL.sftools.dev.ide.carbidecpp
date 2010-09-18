@@ -10,8 +10,7 @@ Require-Bundle: org.eclipse.help.ui,
  com.nokia.carbide.remoteConnections,
  com.nokia.cpp.utils.core,
  com.nokia.cpp.utils.ui;bundle-version="1.0.0",
- com.nokia.tcf,
- com.nokia.carbide.cpp.featureTracker;bundle-version="1.0.0"
+ com.nokia.tcf
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: com.nokia.carbide.trk.support.Activator
 Bundle-ClassPath: trksupport.jar,
@@ -20,4 +19,4 @@ Bundle-ClassPath: trksupport.jar,
  lib/commons-logging-1.1.jar
 Export-Package: com.nokia.carbide.trk.support.connection;x-friends:="com.nokia.carbide.symsee.trk.support,com.nokia.carbide.cpp.edc",
  com.nokia.carbide.trk.support.service;x-friends:="com.nokia.carbide.symsee.trk.support,com.nokia.carbide.cpp.edc"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

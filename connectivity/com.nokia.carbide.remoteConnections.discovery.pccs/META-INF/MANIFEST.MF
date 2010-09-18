@@ -8,7 +8,7 @@ Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.cdt.core,
  org.eclipse.core.runtime,
  com.nokia.carbide.remoteConnections
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  lib/jna.jar,
@@ -16,5 +16,4 @@ Bundle-ClassPath: .,
  pccsPlugin.jar
 Export-Package: com.nokia.carbide.remoteconnections.discovery.pccs.agent,
  com.nokia.carbide.remoteconnections.discovery.pccs.pccsnative
-Import-Package: com.nokia.cpp.internal.api.utils.core,
- com.nokia.cpp.internal.api.utils.ui
+Import-Package: com.nokia.cpp.internal.api.utils.core

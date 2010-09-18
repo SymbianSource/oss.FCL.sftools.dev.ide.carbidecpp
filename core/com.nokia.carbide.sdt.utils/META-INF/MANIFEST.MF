@@ -27,11 +27,8 @@ Bundle-Activator: com.nokia.sdt.utils.UtilsPlugin
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.resources,
  org.eclipse.ui,
  org.eclipse.core.filebuffers,
- org.eclipse.ui.forms,
- org.eclipse.ui.ide,
  com.nokia.cpp.utils.core,
  com.nokia.cpp.utils.ui
 Bundle-ActivationPolicy: lazy
@@ -40,4 +37,5 @@ Export-Package: com.nokia.sdt.utils,com.nokia.sdt.utils.drawing,
  org.mozilla.javascript,
  org.mozilla.javascript.tools
 Bundle-ManifestVersion: 2
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 

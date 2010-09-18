@@ -9,8 +9,6 @@ Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.ide,
- org.eclipse.core.resources,
- org.eclipse.jface.text,
  org.eclipse.ui.editors,
  org.eclipse.ui.workbench.texteditor,
  com.nokia.carbide.cpp.project.core,
@@ -50,3 +48,4 @@ Export-Package: com.nokia.carbide.cpp.internal.project.ui,
  com.nokia.carbide.cpp.project.ui.processes,
  com.nokia.carbide.cpp.project.ui.sharedui,
  com.nokia.carbide.cpp.project.ui.utils
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

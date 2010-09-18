@@ -6,7 +6,7 @@ Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.cpp.internal.featureTracker.FeatureUseTrackerPlugin
 Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.api.featureTracker,
  com.nokia.carbide.cpp.internal.featureTracker

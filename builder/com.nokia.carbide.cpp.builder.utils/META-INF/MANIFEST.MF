@@ -8,16 +8,15 @@ Bundle-Vendor: Nokia
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.core.resources,
  com.nokia.carbide.cdt.builder,
  org.eclipse.cdt.core,
  com.nokia.carbide.cpp.sdk.core,
  com.nokia.cpp.utils.core,
  com.nokia.cpp.utils.ui,
  org.eclipse.ui.ide,
- org.eclipse.jface.text,
  com.nokia.carbide.cpp.project.ui,
  com.nokia.carbide.cpp.epoc.engine,
  org.eclipse.cdt.ui,
  org.eclipse.core.expressions
 Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

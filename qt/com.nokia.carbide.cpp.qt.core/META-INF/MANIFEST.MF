@@ -11,6 +11,6 @@ Require-Bundle: org.eclipse.core.runtime,
  com.nokia.carbide.cpp.sdk.ui,
  com.nokia.cpp.utils.core;bundle-version="1.0.0",
  com.trolltech.qtcppproject;bundle-version="1.6.0";resolution:=optional
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.qt.core

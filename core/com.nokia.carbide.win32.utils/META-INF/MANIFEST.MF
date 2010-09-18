@@ -8,7 +8,6 @@ Bundle-Vendor: Nokia
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,
- org.eclipse.cdt.core,
- org.eclipse.cdt.ui,
- org.eclipse.core.expressions;bundle-version="3.4.100"
+ org.eclipse.cdt.core
 Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

@@ -6,9 +6,7 @@ Bundle-Version: 3.0.0.qualifier
 Bundle-Activator: com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin
 Bundle-Vendor: Nokia
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.core.resources,
+Require-Bundle: org.eclipse.core.runtime,
  com.nokia.carbide.cpp.sdk.core,
  com.nokia.carbide.cpp.ui,
  com.nokia.carbide.templatewizard,
@@ -19,4 +17,4 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.api.sdk.ui,
  com.nokia.carbide.cpp.sdk.ui.shared
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
