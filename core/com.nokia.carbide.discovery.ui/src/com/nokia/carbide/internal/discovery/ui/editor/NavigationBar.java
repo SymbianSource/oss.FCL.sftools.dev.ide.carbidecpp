@@ -74,7 +74,7 @@ class NavigationBar extends RoundedCornerComposite {
 	}
 
 	public void addNavButton(NavigationBar bar, PortalPage page) {
-		Button b = new Button(bar, SWT.LEFT | SWT.TOGGLE);
+		Button b = new Button(bar, SWT.TOGGLE);
 		b.setFont(buttonFont);
 		b.setText(page.getTitle());
 		b.setImage(portalEditor.createImage(page.getImageDescriptor(), 32, 32));

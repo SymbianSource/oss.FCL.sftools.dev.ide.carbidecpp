@@ -61,5 +61,11 @@ class SharedBackgroundComposite extends Canvas {
 //		gc.setForeground(gc.getDevice().getSystemColor(SWT.COLOR_WHITE));
 //		gc.drawRectangle(1, 1, width - 2, height - 2);
 	}
+	
+	@Override
+	public void setBounds(int x, int y, int width, int height) {
+		super.setBounds(x, y, width, height);
+		redraw();
+	}
 
 }
