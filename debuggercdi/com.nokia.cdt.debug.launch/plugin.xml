@@ -9,7 +9,7 @@
             sourceLocatorId="org.eclipse.cdt.debug.core.sourceLocator"
             sourcePathComputerId="com.nokia.cdt.debug.common.internal.source.lookup.CarbideSourcePathComputer"
             delegateDescription="Launch a classic Carbide Emulator debug session."          
-            name="Classic Symbian OS Emulation"
+            name="Symbian OS Emulation"
             delegate="com.nokia.cdt.internal.debug.launch.EmulationLaunchDelegate"
             modes="run,debug"
             type="com.nokia.cdt.debug.launch.emulationLaunch"
@@ -22,25 +22,25 @@
          point="org.eclipse.debug.core.launchConfigurationTypes">
 
       <launchConfigurationType
-            name="Symbian OS Emulation"
+            name="Symbian OS Emulator"
              public="true"
             id="com.nokia.cdt.debug.launch.emulationLaunch">
       </launchConfigurationType>
 
       <launchConfigurationType
-            name="Symbian OS Application TCF TRK"
+            name="Symbian OS Device (Install SIS)"
             public="true"
             id="com.nokia.cdt.debug.launch.appTRKLaunch">
       </launchConfigurationType>
  
       <launchConfigurationType
-            name="Symbian OS System TCF TRK"
+            name="Symbian OS Device"
             public="true"
             id="com.nokia.cdt.debug.launch.systemTRKLaunch">
       </launchConfigurationType>
  
       <launchConfigurationType
-            name="Symbian OS Attach to Process"
+            name="Symbian OS Device (Attach to Process)"
             public="true"
             id="com.nokia.cdt.debug.launch.attachLaunch">
       </launchConfigurationType>
@@ -114,7 +114,7 @@
             class="com.nokia.cdt.internal.debug.launch.PhoneLaunchShortcut"
             icon="icons/launch_config_file_16x16.png"
             id="com.nokia.cdt.debug.launch.symbianCPPShortcut.phone"
-            label="Symbian OS Phone or Simulator Launch"
+            label="Device"
             modes="run, debug">
          <contextualLaunch>
             <enablement>
@@ -172,20 +172,20 @@
                </with>
             </enablement>
             <contextLabel
-                  label="Run Symbian OS Application on Phone or Simulator"
+                  label="Run on Device"
                   mode="run">
             </contextLabel>
             <contextLabel
-                  label="Debug Symbian OS Application on Phone or Simulator"
+                  label="Debug on Device"
                   mode="debug">
             </contextLabel>
          </contextualLaunch>
          <description
-               description="Debugs on a phone or simulator using CODA"
+               description="Debug on a Symbian OS device using CODA"
                mode="debug">
          </description>
          <description
-               description="Runs on a phone or simulator using CODA"
+               description="Run on a Symbian OS device using CODA"
                mode="run">
          </description>
       </shortcut>
@@ -251,20 +251,20 @@
                </with>
             </enablement>
             <contextLabel
-                  label="Run Symbian OS Application on Emulator"
+                  label="Run on Emulator"
                   mode="run">
             </contextLabel>
             <contextLabel
-                  label="Debug Symbian OS Application on Emulator"
+                  label="Debug on Emulator"
                   mode="debug">
             </contextLabel>
          </contextualLaunch>
          <description
-               description="Debugs using a WINSCW emulator"
+               description="Debug on the Symbian OS emulator (WINSCW)"
                mode="debug">
          </description>
          <description
-               description="Runs using a WINSCW emulator"
+               description="Run on the Symbian OS emulator (WINSCW)"
                mode="run">
          </description>
       </shortcut>
