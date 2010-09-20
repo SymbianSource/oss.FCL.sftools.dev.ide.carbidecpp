@@ -4,5 +4,5 @@
    <service>
       <provide interface="org.eclipse.equinox.p2.ui.Policy"/>
    </service>
-   <property name="service.ranking" type="Integer" value="100"/>
+   <property name="service.ranking" type="Integer" value="2147483647"/>
 </scr:component>

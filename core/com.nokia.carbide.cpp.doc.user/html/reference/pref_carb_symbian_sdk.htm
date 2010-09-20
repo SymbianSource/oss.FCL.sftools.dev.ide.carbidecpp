@@ -24,14 +24,13 @@
    <p align="center" class="Image"><img src="images/prefs_symbian_sdks.png" alt="Symbian SDKs preference panel" width="719" height="525"></p>
      <p align="center" class="figure">Figure 1. Symbian SDKs preference panel </p>
    <table width="800" border="0" cellpadding="2" cellspacing="0">
-   <tr valign="top"><th width="221" class="Cell">Name</th><th width="584" class="Cell">Function</th></tr>
+   <tr valign="top"><th width="193" class="Cell">Name</th><th width="597" class="Cell">Function</th></tr>
          <tr valign="top">
            <td class="Cell"><b>Symbian SDK's</b></td>
            <td class="Cell"><p>Lists all the installed and recognized SDKs that are supported by the IDE. SDKs no longer supported by Carbide are not shown. You can double-click the <b>SDK ID</b> or <b>Location</b> entry to edit them directly.</p>
              <p>Checked SDKs indicate build configurations available for creating projects. Unchecked SDKs are not displayed when creating new projects. </p>
              <p>SDKs shown in <span class="style2">RED</span>  indicate  a problem, usually no <span class="code">EPOCROOT</span> or unsupported Symbian OS version. </p>
-           <p>Click on a SDK name to see its <span class="code">EPOCROOT</span> location and build configuration status in the SDK Information area. </p>
-           </td>
+           <p>Click on a SDK name to see its <span class="code">EPOCROOT</span> location and build configuration status in the SDK Information area. </p>           </td>
         </tr>
          <tr valign="top">
              <td class="Cell"><b>Add </b></td>
@@ -45,6 +44,10 @@
            <td class="Cell"><b>Properties</b></td>
            <td class="Cell"><p>Click to view and edit the <a href="../tasks/sdks/sdk_view_properties.htm">properties</a> of the currently selected SDK in the <b>Symbian SDKs</b> list.</p>           </td>
      </tr>
+         <tr valign="top">
+             <td class="Cell"><b>Scan for installable features in SDKs</b></td>
+             <td class="Cell">Controls whether Carbide dynamically discovers and installs features from SDKs during startup and SDK rescanning. Disable to not perform this scan of SDKs. It is on by default.</td>
+       </tr>
          <tr valign="top">
            <td class="Cell"><p><b>Rescan All SDKs</b></p>           </td>
            <td class="Cell"><p>Click to <a href="../tasks/sdks/sdk_search.htm">rescan</a>  the drive  for newly installed SDKs. </p>

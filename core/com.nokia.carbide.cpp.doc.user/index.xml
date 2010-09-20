@@ -9,7 +9,7 @@
     </entry>
 
     <entry keyword="ARM registers">
-       <topic href="html/concepts/arm_registers.htm"/>
+       <topic href="html/concepts/registers.htm"/>
 	</entry>
 
     <entry keyword="Attaching to a Symbian OS Process ">
@@ -55,10 +55,6 @@
 	<entry keyword="build">
 	   <topic href="html/projects/launch/wiz_new_launch_config.htm"/>
 	   <topic href="html/projects/launch/page_main.htm"/>
-	</entry>
-
-	<entry keyword="Build preference panel">
-	   <topic href="html/reference/wnd_build_prefs.htm"/>
 	</entry>
 
 	<entry keyword="Build preference panel">
@@ -140,12 +136,12 @@
 	   <topic href="html/concepts/cvs.htm"/>
 	</entry>
 
-	<entry keyword="Connection Pane">
-	   <topic href="html/reference/trk/panel_trk_connection.htm"/>
+	<entry keyword="Connection pane">
+	   <topic href="html/reference/view_remote_connection.htm"/>
 	</entry>
 
 	<entry keyword="Console View">
-	   <topic href="html/reference/view_log.htm"/>
+	   <topic href="html/reference/view_console.htm"/>
 	</entry>
 
 	<entry keyword="Context Menus">
@@ -168,6 +164,22 @@
        <topic href="html/qt_help/qt_creating_projs_01.htm"/>
 	</entry>
 
+	<entry keyword="CODA" >
+		<topic href="html/concepts/trk.htm" label="Carbide On-device Debug Agent" />
+		<topic href="html/tasks/trk/trk_overview.htm" label="CODA Overview" />
+		<topic href="html/tasks/trk/trk_carbide_setup.htm" />
+		<topic href="html/tasks/start/carbide_example_trk.htm" />
+		<topic href="html/tasks/debugger/stop_mode_debug.htm" />
+	</entry>
+	
+
+	<entry keyword="CODA">
+	   <topic href="html/reference/trk/panel_trk_overview.htm"/>
+	</entry>
+
+	<entry keyword="ClearCase">
+	   <topic href="html/concepts/cvs.htm"/>
+	</entry>
 
 <!-- D -->
 	
@@ -299,6 +311,10 @@
 	   <topic href="html/reference/view_global_variables.htm"  label="Global Variables Window" />
 	</entry>
 
+	<entry keyword="Git">
+	   <topic href="html/concepts/cvs.htm"/>
+	</entry>
+
 <!-- H -->
 
 	<entry keyword="Hints and Tips">
@@ -372,6 +388,10 @@
 
 	<entry keyword="Memory view">
 	   <topic href="html/reference/view_memory_wnd.htm"/>
+	</entry>
+
+	<entry keyword="Mercurial">
+	   <topic href="html/concepts/cvs.htm"/>
 	</entry>
 
 	<entry keyword="menus">
@@ -509,6 +529,10 @@
 	</entry>
 
 
+	<entry keyword="Perforce">
+	   <topic href="html/concepts/cvs.htm"/>
+	</entry>
+
 <!-- Q -->
 
     <entry keyword="Qt">
@@ -610,11 +634,15 @@
 	   <topic href="html/tasks/debugger/stop_mode_debug_precond.htm" label="Stop Mode Debugging"/>
 	</entry>
 
+	<entry keyword="Subversive">
+	   <topic href="html/concepts/cvs.htm"/>
+	</entry>
+
 	<entry keyword="Symbian OS Classes">
 	   <topic href="html/tasks/projects/prj_adding_symbian_class.htm" label="Adding"/>
 	</entry>
 
-	<entry keyword="Symbian OS Data View">
+	<entry keyword="Symbian OS Data view">
 	   <topic href="html/reference/view_symbian_kernel.htm"/>
 	   <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" />
 	</entry>
@@ -666,18 +694,6 @@
 	   <topic href="html/concepts/thread_cond_breakpoints.htm"/>
 	</entry>
 
-	<entry keyword="TRK" >
-		<topic href="html/concepts/trk.htm" label="On-device Debugging" />
-		<topic href="html/tasks/trk/trk_overview.htm" label="TRK Overview" />
-		<topic href="html/tasks/trk/trk_carbide_setup.htm" />
-		<topic href="html/tasks/start/carbide_example_trk.htm" />
-		<topic href="html/tasks/debugger/stop_mode_debug.htm" />
-	</entry>
-	
-
-	<entry keyword="TRK Pane">
-	   <topic href="html/reference/trk/panel_trk_overview.htm"/>
-	</entry>
 
 <!-- U -->
 

@@ -46,10 +46,11 @@ public class SymbianSourceFileRemapping implements ISourceFileRemapping {
 	
 	private Job saveThePrefsJob = new Job(""){
 
+		@SuppressWarnings("restriction")
 		@Override
 		protected IStatus run(IProgressMonitor monitor) {
-			System.out.println("save prefs");
-			CDebugCorePlugin.getDefault().savePluginPreferences();
+			CSourceLookupDirector director = CDebugCorePlugin.getDefault().getCommonSourceLookupDirector();
+			director.setSourceContainers(director.getSourceContainers()); // force it to write out the prefs
 			return Status.OK_STATUS;
 		}};
 
@@ -90,7 +91,7 @@ public class SymbianSourceFileRemapping implements ISourceFileRemapping {
 		// here it will be slow and redundant if we are being used to remap a large collection
 		// of source files. So we save the prefs later in a job.
 		saveThePrefsJob.cancel();
-		saveThePrefsJob.schedule(1000);
+		saveThePrefsJob.schedule(2000);
 	}
 
 	public String remapSourceFile(IPath executable, String filePath) {
