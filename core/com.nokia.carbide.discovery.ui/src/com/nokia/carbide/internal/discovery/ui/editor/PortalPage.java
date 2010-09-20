@@ -94,6 +94,7 @@ public class PortalPage implements IActionBar {
 	}
 
 	private String title;
+	private String tooltip;
 	private ImageDescriptor imageDescriptor;
 	private String id;
 	private final ICommandBarFactory commandBarFactory;
@@ -104,9 +105,10 @@ public class PortalPage implements IActionBar {
 	private IAction[] actions;
 	private List<TaskBar> pageTaskBars;
 	
-	public PortalPage(String title, ImageDescriptor imageDescriptor, String id, 
+	public PortalPage(String title, String tooltip, ImageDescriptor imageDescriptor, String id, 
 			List<LayerExtension> layerExtensions, ICommandBarFactory commandBarFactory) {
 		this.title = title;
+		this.tooltip = tooltip;
 		this.imageDescriptor = imageDescriptor;
 		this.id = id;
 		this.commandBarFactory = commandBarFactory;
@@ -129,6 +131,10 @@ public class PortalPage implements IActionBar {
 	
 	public String getTitle() {
 		return title;
+	}
+	
+	public String getTooltip() {
+		return tooltip;
 	}
 	
 	public ImageDescriptor getImageDescriptor() {
