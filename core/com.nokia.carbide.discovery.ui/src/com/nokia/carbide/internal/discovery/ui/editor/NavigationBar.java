@@ -33,6 +33,8 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -69,7 +71,9 @@ class NavigationBar extends RoundedCornerComposite {
 			addMouseListener(mouseListener = new MouseAdapter() {
 				@Override
 				public void mouseUp(MouseEvent e) {
-					setSelection(true);
+					Point size = Button.this.getSize();
+					if (new Rectangle(0, 0, size.x, size.y).contains(e.x, e.y))
+						setSelection(true);
 				}
 			});
 		}
