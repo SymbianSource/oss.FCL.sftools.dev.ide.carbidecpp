@@ -163,6 +163,7 @@ public class PortalEditor extends EditorPart implements IPortalEditor, IElementF
 			String id = element.getAttribute("id"); //$NON-NLS-1$
 			int order = getOrderStringFromElement(element, id);
 			String title = element.getAttribute("title"); //$NON-NLS-1$
+			String tooltip = element.getAttribute("tooltip"); //$NON-NLS-1$
 			String imageFilePath = element.getAttribute("image"); //$NON-NLS-1$
 			String pluginId = element.getContributor().getName();
 			ImageDescriptor imageDesc = AbstractUIPlugin.imageDescriptorFromPlugin(pluginId, imageFilePath);
@@ -178,7 +179,7 @@ public class PortalEditor extends EditorPart implements IPortalEditor, IElementF
 					Activator.logError(MessageFormat.format(Messages.PortalEditor_BadCommandBarFactoryError, id), e);
 				}
 			}
-			PortalPage portalPage = new PortalPage(title, imageDesc, id, portalLayers, commandBarFactory);
+			PortalPage portalPage = new PortalPage(title, tooltip, imageDesc, id, portalLayers, commandBarFactory);
 			pageList.add(new Pair<PortalPage, Integer>(portalPage, order));
 		}
 		Collections.sort(pageList, new Comparator<Pair<PortalPage, Integer>>() {
@@ -193,7 +194,7 @@ public class PortalEditor extends EditorPart implements IPortalEditor, IElementF
 		}
 	}
 
-	private int getOrderStringFromElement(IConfigurationElement element, String id) {
+	private int getOrderStringFromElement(IConfigurationElement element, String name) {
 		int order = Integer.MAX_VALUE;
 		String orderString = element.getAttribute("order"); //$NON-NLS-1$
 		if (orderString != null) {
@@ -201,7 +202,7 @@ public class PortalEditor extends EditorPart implements IPortalEditor, IElementF
 				order = Integer.parseInt(orderString);
 			}
 			catch (NumberFormatException e) {
-				Activator.logError(MessageFormat.format(Messages.PortalEditor_PageRankError, id), e);
+				Activator.logError(MessageFormat.format(Messages.PortalEditor_PageRankError, name), e);
 			}
 		}
 		return order;

@@ -51,27 +51,31 @@
     <portalPage
           class="com.nokia.carbide.internal.discovery.ui.view.SettingsBarCreator"
           id="com.nokia.carbide.discovery.ui.customizePage"
-          image="icons/icon-discovery.png"
+          image="icons/icon_customize.png"
           order="50"
-          title="%customize.title">
+          title="%customize.title"
+          tooltip="%customize.tooltip">
     </portalPage>
     <portalPage
           id="com.nokia.carbide.discovery.ui.homePage"
           image="icons/icon_home.png"
           order="1"
-          title="%home.title">
+          title="%home.title"
+          tooltip="%home.tooltip">
     </portalPage>
     <portalPage
           id="com.nokia.carbide.discovery.ui.supportPage"
-          image="icons/debug.png"
+          image="icons/icon_support.png"
           order="100"
-          title="%support.title">
+          title="%support.title"
+          tooltip="%support.tooltip">
     </portalPage>
     <portalPage
           id="com.nokia.carbide.discovery.ui.kitsPage"
-          image="icons/Carbide_c_icon_16x16.png"
+          image="icons/icon_kits.png"
           order="75"
-          title="Kits">
+          title="%kits.title"
+          tooltip="%kits.tooltip">
     </portalPage>
  </extension>
  <extension

@@ -313,7 +313,7 @@ public abstract class AbstractBrowserPortalPageLayer implements IPortalPageLayer
 				try {
 					new URL(value);
 				} catch (MalformedURLException e) {
-					value = "http://" + value;
+					value = "http://" + value; //$NON-NLS-1$
 				}
 				return value;
 			};

@@ -181,11 +181,11 @@
             </contextLabel>
          </contextualLaunch>
          <description
-               description="Debugs on a phone or simulator using System or Application TCF TRK"
+               description="Debugs on a phone or simulator using CODA"
                mode="debug">
          </description>
          <description
-               description="Runs on a phone or simulator using System or Application TCF TRK"
+               description="Runs on a phone or simulator using CODA"
                mode="run">
          </description>
       </shortcut>

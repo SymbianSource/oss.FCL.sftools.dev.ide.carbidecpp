@@ -1179,7 +1179,7 @@ public class MMPView extends ViewASTBase implements IMMPView {
 			// replace any "/~/" sequences 
 			if (dirPath.segmentCount() > 0)
 				dirPath = new Path(dirPath.addTrailingSeparator().toPortableString()
-						.replace("/~/", "/"+implDirectory+"/")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						.replace("~/", implDirectory+"/")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		
 		// version identifier overrides unicode
