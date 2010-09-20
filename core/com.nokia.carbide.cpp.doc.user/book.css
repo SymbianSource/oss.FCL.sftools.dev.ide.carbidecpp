@@ -12,8 +12,8 @@ html {
 /* 20091007 added verdana and ariel to list to match SFO website fonts choices */
 body, p, table, li {
 	font-family: Verdana, Ariel, Helvetica, sans-serif;
-	font-size: 0.9em;
 	font-size: 1.0em;
+	font-size: 0.9em;
 	font-weight: normal;
 }
 
