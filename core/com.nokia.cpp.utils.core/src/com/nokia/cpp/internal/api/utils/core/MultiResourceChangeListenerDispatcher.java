@@ -150,4 +150,17 @@ public class MultiResourceChangeListenerDispatcher {
 		}
 	}
 
+	/**
+	 * Fire resource changed listeners on the workspace paths in the given list,
+	 * if they are registered.
+	 * @param pathList
+	 */
+	public void fireListenersOnPaths(Collection<IPath> pathList) {
+		for (Pair<IPath, IResourceChangeHandler> entry : trackedResources) {
+			if (pathList.contains(entry.first)) {
+				entry.second.resourceChanged(entry.first);
+			}
+		}		
+	}
+
 }

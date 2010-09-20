@@ -33,6 +33,7 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
@@ -194,7 +195,66 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 //			assert(oldInfo != null);
 			
 			projectInfoMap.put(project, newInfo);
+		}
+
+
+		// Update resources-to-listen-to outside the lock (bug 11274). 
+		// 
+		// This invokes listenForReferencedFileChanges() to figure out what
+		// files to listen to (mmp/bld.inf/mmh/c/c++) that may affect the 
+		// indexer state.
+		// 
+		// By doing this outside a lock and after the project has changed, 
+		// it is *possible* that some other listener could sneak in and 
+		// modify a referenced file before we know we need to listen to it.
+		
+		// So listen to all changes in the meantime.
+		final Set<IPath> resourcesModifiedDuringSetup = new HashSet<IPath>();
+		
+		IResourceChangeListener modifiedFilesListener = new IResourceChangeListener() {
+			
+			public void resourceChanged(IResourceChangeEvent event) {
+				// look for all modifying changes
+				if (event.getDelta() == null
+				|| event.getDelta().getKind() != IResourceDelta.CHANGED
+				|| event.getType() != IResourceChangeEvent.POST_CHANGE)
+					return;
+				
+				IResourceDelta delta = event.getDelta();
+				if (delta.getKind() == IResourceDelta.ADDED || delta.getKind() == IResourceDelta.REMOVED ||
+						(delta.getKind() == IResourceDelta.CHANGED && (delta.getFlags() & IResourceDelta.CONTENT) != 0)) {
+					resourcesModifiedDuringSetup.add(event.getResource().getFullPath());
+				}
+			}
+		};
+		ResourcesPlugin.getWorkspace().addResourceChangeListener(modifiedFilesListener);
+		
+		try {
 			addProjectListener(newInfo);
+		} finally {
+			
+			// Now, see if the modified files are related to the newly detected files
+			ResourcesPlugin.getWorkspace().removeResourceChangeListener(modifiedFilesListener);
+			
+			if (!resourcesModifiedDuringSetup.isEmpty()) {
+				System.out.println("Changes detected during project listener update:");
+				for (IPath path : resourcesModifiedDuringSetup) {
+					System.out.println("\t" + path);
+				}
+				
+				WorkspaceJob job = new WorkspaceJob("Updating for files changed during refresh") {
+					
+					@Override
+					public IStatus runInWorkspace(IProgressMonitor monitor)
+							throws CoreException {
+						resourceChangedListener.fireListenersOnPaths(resourcesModifiedDuringSetup);
+						return Status.OK_STATUS;
+					}
+				};
+				job.setRule(ResourcesPlugin.getWorkspace().getRoot());
+				job.schedule();
+			}
+			
 		}
 	}
 	
