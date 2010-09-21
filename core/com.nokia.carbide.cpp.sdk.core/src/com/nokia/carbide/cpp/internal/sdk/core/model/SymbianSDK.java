@@ -78,6 +78,8 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 	private Map<String, File> prefixFileMap = new HashMap<String, File>();
 	private Set<Object> sdkFeatures = new HashSet<Object>();
 
+	private boolean hasScannedRaptor;
+	
 	public SymbianSDK(DeviceType device) {
 		deviceEntry = device;
 		scanSDK();
@@ -628,5 +630,12 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return foundOSVersion;
 		
 	}
+	
+	public boolean hasScannedRaptor(){
+		return hasScannedRaptor;
+	}
 
+	void setScannedRaptor(boolean hasScannedRaptor){
+		this.hasScannedRaptor = hasScannedRaptor;
+	}
 }

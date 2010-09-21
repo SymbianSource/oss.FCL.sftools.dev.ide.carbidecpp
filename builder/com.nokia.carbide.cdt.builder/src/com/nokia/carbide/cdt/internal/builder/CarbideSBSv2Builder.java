@@ -476,11 +476,7 @@ public class CarbideSBSv2Builder implements ICarbideBuilder {
 		args.add(cpi.getAbsoluteBldInfPath().toOSString());
 		args.add("-c"); //$NON-NLS-1$
 		IPath componentPath = null;
-		if (sbsArgs.size() >= 2){
-			componentPath =  new Path(sbsArgs.get(sbsArgs.indexOf("-p")+ 1));
-			sbsArgs.remove(1);
-			sbsArgs.add(componentPath.lastSegment());
-		} 
+
 		String configName = getConfigName(buildConfig, componentPath);
 		
 		if (isTest) {

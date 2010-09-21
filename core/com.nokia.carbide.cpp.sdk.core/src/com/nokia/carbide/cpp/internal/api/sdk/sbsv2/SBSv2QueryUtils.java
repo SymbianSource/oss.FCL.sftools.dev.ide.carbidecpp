@@ -143,18 +143,25 @@ public class SBSv2QueryUtils {
 	}
 
 	@SuppressWarnings("unchecked")
+	/**
+	 * Adds build config info for a single Raptor build config in an SDK. If the config exists in the map it
+	 * will be overwritten
+	 */
 	public static void storeConfigQueryDataForSDK(ISymbianSDK sdk, String alias, SBSv2ConfigQueryData configQueryData) {
 		Map<String, SBSv2ConfigQueryData> configsMap = SDKCacheUtils.getCache().getCachedData(CONFIG_CACHE_KEY, Map.class, 0);
 		String key = (new SBSv2SDKKey(sdk)).toString() + "[" + alias + "]";
 
 		if (configsMap == null) {
 			configsMap = new HashMap<String, SBSv2ConfigQueryData>();
-		} else {
-			if (configsMap.get(key) != null) {
-				// configQueryData already exist in cache
-				return;
-			}
 		}
+		// Always add the config, b/c if there's an erro in the config we want to be able to update it
+		// when the IDE rescans at startup checking for Raptor config errors that were saved to the cache
+//		else {
+//			if (configsMap.get(key) != null) {
+//				// configQueryData already exist in cache
+//			//	return;
+//			}
+//		}
 
 		configsMap.put(key, configQueryData);
 		SDKCacheUtils.getCache().putCachedData(CONFIG_CACHE_KEY, (Serializable)configsMap, 0);		
