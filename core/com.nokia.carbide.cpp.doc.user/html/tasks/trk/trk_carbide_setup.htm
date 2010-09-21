@@ -9,32 +9,32 @@
 </head>
 <body >
 <h2>Launch Configuration Setup</h2>
-<p>To communicate between the Carbide.c++ debugger and the <a href="../../concepts/trk.htm">on-device debug agent</a>, using either Application CODA or System CODA, you must <a href="../projects/prj_debug_config.htm">define</a> a debug <a href="../../projects/launch/launch_configs_overview.htm">launch configuration</a> that matches the installed debug agent. The two configurations available include:</p>
+<p>To communicate between the Carbide.c++ debugger and the <a href="../../concepts/trk.htm">on-device debug agent</a>, using either Symbian OS Device (Install SIS) or Symbian OS Device, you must <a href="../projects/prj_debug_config.htm">define</a> a debug <a href="../../projects/launch/launch_configs_overview.htm">launch configuration</a> that matches the installed debug agent. The two configurations available include:</p>
 <ul>
-  <li><b>Symbian OS Appication CODA</b>&#8212; used to run or debug applications on a target device using the Application CODA on-device debug agent. Application CODA is an application that runs on released phones and allows you to debug your executables. The debugger will download a Symbian OS installation file to the phone and install it prior to launching.</li>
-  <li><b>Symbian OS System CODA</b> (<i>not available in the Developer Edition</i>) &#8212;used to run or debug applications or ROM code on a target device using the System CODA on-device debug agent. System CODA is an application that runs on reference boards and prototype phones and allows you to debug your executables. The debugger will download files to the phone prior to launching.</li>
+  <li><b>Symbian OS Device (Install SIS) </b>&#8212; used to run or debug applications on a target device using  CODA (Carbide On-device Debug Agent).  CODA is an application that runs on released phones and allows you to debug your executables. The debugger will download a Symbian OS installation file to the phone and install it prior to launching.</li>
+  <li><b>Symbian OS Device</b> &#8212; used to run or debug applications or ROM code on a target device using CODA.  CODA is an application that runs on reference boards and prototype phones and allows you to debug your executables. The debugger will download files to the phone prior to launching.</li>
 </ul>
 <p>By default, you can click the <b>Debug</b> icon (<img src="../../projects/images/icon_debug.png" width="17" height="16" align="absmiddle">) in the toolbar to launch the <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration Wizard</a>. This   creates a launch configuration for the project based on project information and any additional input required, like COM port selection. It is the recommended method for creating new launch configurations. Or, use the <a href="../../projects/launch/page_main.htm">Debug</a> window to create a customized  launch configuration. </p>
-<p align="center"><img src="../../reference/images/wnd_trk_debug_config.png" width="936" height="640" /></p>
-<p class="figure">Figure 1. Debug launch configuration for on-device debugging   (<i>Application TCF CODA shown</i>)</p>
+<p align="center"><img src="../../reference/images/wnd_trk_debug_config.png" width="823" height="640" /></p>
+<p class="figure">Figure 1. Debug launch configuration for on-device debugging   (<i>Device (Install SIS) shown</i>)</p>
 <div class="step">
   <h4>Defining a Customized  Launch Configuration </h4>
   <ol>
     <li>Choose the Run &gt; Debug As menu item </li>
     <p>The <a href="../../reference/wnd_debug_configuration.htm">Debug</a> window appears.</p>
     <li>Select a Configuration type for on-device debugging and click New</li>
-    <p>Choose the <b>Symbian OS Application TCF CODA </b> or <b>System CODA</b> configuration based on which debug agent is installed on the device, then click <b>New</b>. A new debug launch configuration appears in the Configuration list and the Main tab appears. </p>
+    <p>Choose the <b>Symbian OS Device </b> or<b> Symbian OS Device (Install SIS)</b> configuration based on which debug agent is installed on the device, then click <b>New</b>. A new debug launch configuration appears in the Configuration list and the Main tab appears. </p>
     <li>Enter the required information</li>
-    <p>For  debug launch configurations using the CODA debug agent, the following   pages require review and possible option settings:</p>
+    <p>For  debug launch configurations using  CODA, the following   pages require review and possible option settings:</p>
     <ul>
       <li><a href="../../projects/launch/page_main.htm">Main</a>&#8212; defines the project to be launched on the target device</li>
       <li>Arguments &#8212; enter command line build system arguments </li>
       <li><a href="../../projects/launch/page_debugger.htm">Debugger</a>&#8212; provides control over entry points, message handling, and instruction set default settings</li>
       <li><a href="../../projects/launch/page_connection.htm">Connection</a>&#8212;   specifies the method used to transfer files to the target device</li>
       <li><a href="../../projects/launch/page_file_transfer.htm">File Transfer</a> &#8212; the files  transfered to the target device at the start of each launch</li>
-      <li><a href="../../projects/launch/page_installation.htm">Installation</a>   (<i>Application CODA onl</i>y)&#8212;  specifies the .sis or .pkg file to install on the target device</li>
+      <li><a href="../../projects/launch/page_installation.htm">Installation</a>   (<i>Install SIS onl</i>y)&#8212;  specifies the .sis or .pkg file to install on the target device</li>
       <li><a href="../../projects/launch/page_executables.htm">Executables</a> &#8212; specifies the executables to be debugged</li>
-      <li><a href="../../projects/launch/page_rom_log.htm">ROM Log</a>  (<i>System CODA only</i>) &#8212; specifies the executables to be debugged</li>
+      <li><a href="../../projects/launch/page_rom_log.htm">ROM Log</a>  (<i>Device only</i>) &#8212; specifies the executables to be debugged</li>
     </ul>
     <li>Click Debug </li>
     <p>The Debug window closes and the Carbide.c++ debugger begins a debugging session using the new configuration. The next time you click the <b>Debug</b> icon, this debug launch configuration is used to start a debug session.</p>

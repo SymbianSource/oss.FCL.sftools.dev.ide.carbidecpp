@@ -94,13 +94,13 @@
   <p class="figure">Figure 1. Ports displayed in Ports section of Device Manager.</p>
   <p>In some situations all USB virtual COM ports are installed under &quot;Modems&quot; in the Device Manager. In the Device Manager dialog, choose &quot;Modems&quot; and see if there are two COM ports listed. One of them will work for debugging. Most of the time, the higher port number works for debugging with TRK.</p>
 </blockquote>
-<h4>I am having difficulty getting a Bluetooth connection to work with AppTRK, any suggestions?</h4>
+<h4>I am having difficulty getting a Bluetooth connection to work with CODA, any suggestions?</h4>
 <blockquote>
   <p>The following are known issues when trying to use Bluetooth serial port on the host:</p>
 </blockquote>
 <ul>
-  <li>XP Microsoft Bluetooth stack does not work correctly with bt serial port emulation (on the PC side). For using TRK, you need BT serial port emulation. Some of the BT dongle manufacturers recommend changing to their own drivers to enable Bt stack serial port emulation.
-    <ul>
+  <li>XP Microsoft Bluetooth stack does not work correctly with bt serial port emulation (on the PC side). For using CODA, you need BT serial port emulation. Some of the BT dongle manufacturers recommend changing to their own drivers to enable Bt stack serial port emulation.
+      <ul>
       <li> Resolution at the moment: Change the XP drivers to bt dongle manufacturers (IBM, TDK, MSI) own drivers by uninstalling the XP drivers and installing the dongle drivers. After the installation the Microsoft Bluetooth Enumerator and Microsoft Bluetooth Services must be shut down.</li>
       <li>From Computer Management -&gt; Device Manager uninstall the Microsoft BT Enumerator</li>
       <li>From Computer Management -&gt; Services and Applications -&gt; Services shutdown the Microsoft Bluetooth Services</li>
@@ -108,14 +108,14 @@
     </ul>
   </li>
 </ul>
-<h4>TRK is launched on the device, but I am getting &ldquo;Can&rsquo;t connect to TRK&rdquo; error message in the Carbide.c++ tools, any suggestions?</h4>
+<h4>CODA is launched on the device, but I am getting &ldquo;Can&rsquo;t connect to CODA&rdquo; error message in the Carbide.c++ tools, any suggestions?</h4>
 <blockquote>
   <p>Check that Carbide.c++ and your USB Virtual COM port or BT Serial Port agree on the port settings.</p>
 </blockquote>
 <ul>
-  <li>Use the <a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Connections</a> dialog to quickly  determine if you can communicate with the device in the <strong>Check TRK version</strong> pane </li>
-  <li>Open your Bluetooth or USB cable's connection settings: Start -&gt; Settings -&gt; Control panel -&gt; System -&gt; Hardware -&gt; Device Manager. In the Device Manager dialog, click open the Ports directory, then you will see all the com ports available on the machine. Here you will be able to see the COM port for Bluetooth or USB. Sometimes you will have two COM ports for Bluetooth, so you might have to try specifying either of them. </li>
-  <li>In the Carbide tools, <a href="../projects/prj_debug_config.htm">open</a> the launch configuration associated with the target device and verify that you have specified the correct launch configuration for TRK. For example, the launch configuration should be either Symbian OS Application TRK or Symbian OS System TRK configuration. </li>
+  <li>Use the <a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Connections</a> dialog to quickly  determine if you can communicate with the device in the <strong>Test Connection</strong> pane </li>
+  <li>Open your Bluetooth or USB cable's connection settings: Start &gt; Settings &gt; Control panel &gt; System &gt; Hardware &gt; Device Manager. In the Device Manager dialog, click open the Ports directory, then you will see all the com ports available on the machine. Here you will be able to see the COM port for Bluetooth or USB. Sometimes you will have two COM ports for Bluetooth, so you might have to try specifying either of them. </li>
+  <li>In the Carbide tools, <a href="../projects/prj_debug_config.htm">open</a> the launch configuration associated with the target device and verify that you have specified the correct launch configuration for TRK. For example, the launch configuration should be either Symbian OS Device (Install SIS) or Symbian OS Device configuration. </li>
   <li>In the Carbide tools, <a href="../projects/prj_debug_config.htm">open</a> the launch configuration associated with the target device. In the Connections tab make sure you specify the same COM port number as in the device manager. For Bluetooth, if two ports are listed in the device manager, then you need to try to both, to see which one works. For USB, don't select the COM port assigned to the serial port. Always select the COM port assigned to the virtual COM port ID for the phone that is specified in the Device Manager. </li>
   <li>Make sure the settings in these two dialogs are the same and that the launch configuration settings refer to the right COM port. You shouldn't have to touch the other settings, but they're Data Bits: 8; Parity: None; Stop Bits: 1; Flow Control: None. </li>
 </ul>

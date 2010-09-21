@@ -29,9 +29,9 @@
     <li>From the IDE select Run &gt; Debug&hellip;</li>
     <li>The <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration Wizard</a>  appears</li>
     <p>To communicate between the Carbide.c++ debugger and the on-device debug agent or protocol interface you must define a debug launch configuration. The Debug window is where you define the type of debug launch configuration to use when debugging programs on the target device (Figure 4).</p>
-    <p><img src="images/Debug_Config_main.png" width="830" height="506" /></p>
+    <p><img src="images/Debug_Config_main.png" width="986" height="640" /></p>
     <p class="figure">Figure 4. Debug Window</p>
-    <li>Select either a Symbian OS Application CODA or Symbian OS System CODA configuration type for on-device debugging and click New</li>
+    <li>Select either a Symbian OS Device (Install SIS) or Symbian OS Device configuration type for on-device debugging and click New</li>
     <p>For debug launch configurations using the CODA debug agent, the following pages require review and possible option settings:</p>
     <ul>
       <li><b>Main</b> - defines the project to be launched on the target device</li>
@@ -145,7 +145,7 @@
       </tr>
     </table>
   <h5>Installation Tab</h5>
-  <p>For Application CODA select the Installation tab. The Installation pane specifies the .sis file to install on the target device. This is used by Application CODA because Application CODA downloads all files via a SIS file. This is required when using the CODA debug agent with 9.x based SDK&rsquo;s.</p>
+  <p>For  CODA select the Installation tab. The Installation pane specifies the .sis file to install on the target device. This is because  CODA downloads all files via a SIS file. This is required when using  CODA with 9.x based SDK&rsquo;s.</p>
   <p align="center"><img src="images/Debug_Config_installation_run.png" width="595" height="280" /></p>
   <p class="figure">Figure 8. Debug windows Installation pane</p>
     <p>Table 4. Installation pane</p>
@@ -176,8 +176,8 @@
       </tr>
     </table>
   <h5>File Transfer Tab</h5>
-  <p>For System CODA select the File Transfer pane. The File Transfer pane displays a list of files the Carbide IDE transfers to the target device at the start of each launch. By default, any file added is automatically checked for downloading to the device.</p>
-  <p class="note"><b>NOTE</b> If debugging a DLL from an application and using System CODA, ensure that the DLL is included so that it is deployed to the device with the application. It is not added by default.</p>
+  <p>For  CODA select the File Transfer pane. The File Transfer pane displays a list of files the Carbide IDE transfers to the target device at the start of each launch. By default, any file added is automatically checked for downloading to the device.</p>
+  <p class="note"><b>NOTE</b> If debugging a DLL from an application and using  CODA, ensure that the DLL is included so that it is deployed to the device with the application. It is not added by default.</p>
   <p align="center"><img src="images/Debug_Config_filetransfer_run.png" width="595" height="280" /></p>
   <p class="figure">Figure 9. Debug windows File Transfer pane </p>
 </div>

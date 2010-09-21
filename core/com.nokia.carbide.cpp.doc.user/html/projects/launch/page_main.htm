@@ -5,18 +5,17 @@
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
 <title>Carbide Main page </title>
-<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
-</head>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/></head>
 <body >
 <h2>Main page </h2>
 <p>The options shown in the <b>Main</b> page differ based upon the type of launch configuration. Generally, the options fall into these choices: </p>
 <ul>
-  <li><a href="#emulator_mode">Emulation Main page</a> (Emulation) </li>
-  <li><a href="#run_mode">Run-mode Main page</a> (Application CODA) </li>
-  <li><a href="#stop_mode">Stop-Mode Main page</a> (System CODA) </li>
+  <li><a href="#emulator_mode">Emulation Main page</a> (Emulator) </li>
+  <li><a href="#run_mode">Run-mode Main page</a> (CODA) </li>
+  <li><a href="#stop_mode">Stop-Mode Main page</a> (CODA) </li>
 </ul>
 <h3><a name="emulator_mode" id="emulator_mode"></a>Emulation Main page </h3>
-<p>The <b>Symbian OS <a href="emulation.htm">Emulation</a></b> launch configuration uses the <b>Main</b> page to define the process to be launched by the emulator. </p>
+<p>The <b>Symbian OS <a href="emulation.htm">Emulator</a></b> launch configuration uses the <b>Main</b> page to define the process to be launched by the emulator. </p>
 <p>The behavior that occurs when launching a debug session varies based upon the <a href="page_main.htm">SDK</a>. Normally, <a href="../../debugger/debug/cmds_starting.htm">starting</a> a debug session launches the emulator (<span class="code">epoc.exe</span>) and you must then navigate to your application and open it. However, starting a debug session for an .exe file will, in most cases, launch the .exe directly. This starts the emulator and then opens your application automatically. Note that some SDKs do not support this behavior. In those cases you must still open your application in the emulator manually.</p>
 <p align="center"><img src="images/page_debug_main.png" width="611" height="322"></p>
 <p class="figure">Figure 1. Main page (<i>Emulation shown</i>) </p>
@@ -51,9 +50,9 @@
 </table>
 
 <h3><a name="run_mode" id="run_mode"></a>Run-mode Main page </h3>
-<p>The <b>Symbian OS <a href="run_mode.htm">Application CODA </a></b> launch configuration uses the <b>Main</b> page to defines the project and the process to launch on the target device. </p>
+<p>The <b><a href="run_mode.htm">Symbian OS Device (Install SIS) </a></b> launch configuration uses the <b>Main</b> page to defines the project and the process to launch on the target device. </p>
 <p align="center"><img src="images/page_main_run_mode.png" width="585" height="365"></p>
-<p class="figure">Figure 2 - Main page (<i>Application CODA shown</i>) </p>
+<p class="figure">Figure 2 - Main page (<i>Device (Install SIS)</i><i> shown</i>) </p>
 <h5>Table 2.  Run-mode Main page &mdash;items </h5>
 <table width="94%"  border="0" cellpadding="2" cellspacing="0">
   <tr>
@@ -88,7 +87,7 @@
   </tr>
 </table>
 <h3><a name="stop_mode" id="stop_mode"></a>Stop-mode Main page </h3>
-<p>The <b>Symbian OS <a href="stop_mode.htm">System CODA</a></b> launch configurations uses the <b>Main</b> page to defines the project and the executable to launch on the target device. </p>
+<p>The <b><a href="stop_mode.htm">Symbian OS Device</a></b> launch configurations uses the <b>Main</b> page to defines the project and the executable to launch on the target device. </p>
 <p align="center"><img src="images/page_main_stop_mode.png" width="604" height="385"></p>
 <p class="figure">Figure 3. Main page</p>
 <h5>Table 3. Stop-mode Main page &mdash; items</h5>
