@@ -68,7 +68,7 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 	public List<ISymbianBuildContext> getAllBuildConfigurations() {
 		// This really only applies to SBSv1. We never return the full list of configs for SBSv2, only the filtered ones
-		return sortContexts(sbsv2FilteredContexts);
+		return getFilteredBuildConfigurations();
 	}
 
 	public void clearDataFromBuildCache(){
@@ -122,14 +122,11 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 			}
 		} 
 		
-		
-		
 		return sortContexts(sbsv2FilteredContexts);
 	}
 
 	private void initSBSv2BuildContextList(List<String> allowedConfigs) throws SBSv2MinimumVersionException {
 		List<String> filteredAliasList = new ArrayList<String>();
-		
 		for (String alias : aliasToMeaningMap.keySet()){
 			for (String checkedAlias : allowedConfigs){
 				if (checkedAlias.equalsIgnoreCase(alias)){
@@ -155,20 +152,28 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 
 		List<String> processedAliasList = new ArrayList<String>();
 		sbsv2FilteredContexts.clear();
+		// First check if we have scanned configs already this IDE session.
+		// We don't want to scan broken configs over and over
+		boolean isStartUpScan = !((SymbianSDK)sdk).hasScannedRaptor();
+		
 		for (String alias : filteredAliasList) {
 			SBSv2ConfigQueryData configQueryData = SBSv2QueryUtils.getConfigQueryDataForSDK(sdk, alias);
-			if (configQueryData != null && configQueryData.getConfigurationErrorMessage().trim().length() == 0) {
-				ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
-				sbsv2FilteredContexts.add(sbsv2Context);
-				processedAliasList.add(alias);
+			if (configQueryData != null) {
+				if (configQueryData.getConfigurationErrorMessage().trim().length() == 0 || isStartUpScan == false){
+					ISBSv2BuildContext sbsv2Context = new BuildContextSBSv2(sdk, alias, configQueryData);
+					sbsv2FilteredContexts.add(sbsv2Context);
+					processedAliasList.add(alias);
+				}
 			}
 		}
 
 		if (!processedAliasList.isEmpty()) {
-			filteredAliasList.removeAll(processedAliasList);
+			filteredAliasList.removeAll(processedAliasList); // Get the configs that had errors
 		}
 
 		if (!filteredAliasList.isEmpty()) {
+			// These configs have no data or had errors in them reported by Raptor
+			
 			String configQueryXML = SBSv2QueryUtils.getConfigQueryXMLforSDK(sdk, filteredAliasList);
 
 			for (String alias : filteredAliasList) {
@@ -189,6 +194,11 @@ public class SBSv2BuildInfo implements ISBSv2BuildInfo {
 		}
 
 		checkWINSCWSupport();
+		if (!((SymbianSDK)sdk).hasScannedRaptor()){
+			((SymbianSDK)sdk).setScannedRaptor(true);
+			SBSv2QueryUtils.flushAllSBSv2Caches();
+		}
+		
 	}
 
 	private void checkWINSCWSupport() {
