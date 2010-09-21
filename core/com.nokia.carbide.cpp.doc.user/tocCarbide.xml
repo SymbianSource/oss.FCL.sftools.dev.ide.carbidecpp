@@ -284,7 +284,6 @@
        </topic>
       <topic label="Stop Mode Debug Example" 				href="html/tasks/debugger/stop_mode_debug.htm" >
         <topic label="On-Device Debugging Preconditions" href="html/tasks/debugger/stop_mode_debug_precond.htm" />
-        <topic label="Using Soft Attach"	 href="html/tasks/debugger/soft_attach_debug.htm" />
       </topic>
       <topic label="Building a ROM Image File"            href="html/reference/ROM_build_settings.html" />
       <topic label="Toggle HW Breakpoint"           		href="html/reference/menus/hardware_breakpoints.htm" />
