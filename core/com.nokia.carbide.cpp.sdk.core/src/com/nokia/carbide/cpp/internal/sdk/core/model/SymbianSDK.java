@@ -52,8 +52,15 @@ import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDKFeatures;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
-import com.sun.org.apache.xpath.internal.XPathAPI;
 
+import com.sun.org.apache.xpath.internal.XPathAPI;
+/// for this import, the subsequent SuppressWarnings("restriction") is for
+/// "Access restriction: The type XPathAPI is not accessible due to restriction on required library ${JavaSE-1.6}/rt.jar"
+///
+///	(also had to set custom settings in (Project) Properties -> Java Compiler -> Errors/Warnings
+///	under "Deprecated and Restricted API", setting the "Forbidden access rules" to "Warning")
+
+@SuppressWarnings("restriction")
 public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 
 	public static final String MANIFEST_XML_LOCATION = "/epoc32/kit/manifest.xml"; //$NON-NLS-1$

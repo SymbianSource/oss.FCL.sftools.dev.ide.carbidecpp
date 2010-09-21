@@ -13,7 +13,6 @@ Require-Bundle: org.eclipse.core.runtime,
  com.nokia.carbide.cpp.epoc.engine,
  org.eclipse.update.core,
  com.nokia.carbide.templatewizard,
- org.eclipse.core.filesystem,
  com.nokia.cpp.utils.ui
 Bundle-ActivationPolicy: lazy
 Export-Package: com.nokia.carbide.cpp.internal.api.sdk;
@@ -39,3 +38,4 @@ Export-Package: com.nokia.carbide.cpp.internal.api.sdk;
  com.nokia.carbide.cpp.internal.sdk.core.xml;x-friends:="com.nokia.carbide.cpp.sdk.core.test",
  com.nokia.carbide.cpp.sdk.core
 Bundle-ClassPath: sdkCorePlugin.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
