@@ -443,6 +443,9 @@ public class CarbideBuildManager implements ICarbideBuildManager, IResourceChang
 				resourceChangedListener.addResource(wsPath, handler);
 			}
 		}
+		
+		// make sure .cproject itself is never accidentally listened to (possible cause in bug 12139)
+		resourceChangedListener.removeResource(new Path(cpi.getProject().getName()).append(".cproject"), handler);
 	}
 
 	public void installedSdkChanged(SDKChangeEventType eventType) {
