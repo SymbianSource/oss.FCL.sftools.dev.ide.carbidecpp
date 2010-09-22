@@ -23,13 +23,11 @@
 </ol>
 <div class="step">
 <h4><a name="runSISX" id="runSISX"> </a>Install the SISX File on the Target Device</h4>
-<p>The on-device debug agent is delivered to the target device as a SISX file. There are two versions of CODA: Symbian OS Device (Install SIS) and Symbian OS Device.</p>
+<p>CODA (Carbide On-device Debug Agent)  is delivered to the target device as a SISX file. It can be used with all Symbian OS launch configurations that require an on-device agent.</p>
   <ul>
     <li>Symbian OS Device (Install SIS)&mdash; supports application debugging only and available to developers creating applications for devices. Developers do not have access to system level routines, system ROM, and other user application code. User cannot modify the LR and SR registers, and must use a SIS file to debug an application.</li>
     <li>Symbian OS Device&mdash; supports both application and limited ROM debugging; including application executables and limited ROM based components (no device drivers). Also available to original equipment manufacturers (OEMs) for device creation and customization.</li>
   </ul>
-  <p>The following SISX file is officially signed by Nokia: 
-  <span class="code">s60_3_0_app_trk_2_6_nokia_signed.sisx</span></p>
   <h5>Installing using Bluetooth</h5>
   <ol>
     <li>Right click on the Bluetooth item on the system tray and select Quick Connect &gt; File Transfer &gt; Find Devices</li>
@@ -46,7 +44,7 @@
     <li>The SISX file should then transfer from the PC to the device</li>
     <li>Navigate to where the SISX file was placed</li>
     <p>If you dropped it into the OBEX folder it will be in <span class="code">Applications &gt; Messages &gt; Inbox</span>. If you dropped it into the C folder it will be in <span class="code">Applications &gt; Utilities &gt;FileBrowse &gt; C</span>.</p>
-    <li>Select the CODA SISX file on the device to install the CODA debug agent.</li>
+    <li>Select the CODA SISX file on the device to install the CODA software.</li>
   </ol>
   <h5>Installing using PC Suite</h5>
   <ol>
