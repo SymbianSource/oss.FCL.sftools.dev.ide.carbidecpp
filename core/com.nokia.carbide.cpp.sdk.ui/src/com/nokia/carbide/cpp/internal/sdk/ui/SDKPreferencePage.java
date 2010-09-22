@@ -67,9 +67,12 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 
+import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.api.sdk.SymbianBuildContextDataCache;
+import com.nokia.carbide.cpp.internal.sdk.core.model.SBSv2BuildInfo;
 import com.nokia.carbide.cpp.internal.sdk.core.model.SymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.ISDKManager;
+import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
 import com.nokia.carbide.cpp.sdk.core.ISymbianSDK;
 import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 import com.nokia.carbide.cpp.sdk.ui.SDKUIPlugin;
@@ -182,6 +185,13 @@ public class SDKPreferencePage
 		@Override
 		protected void setValue(Object element, Object value) {
 			ISymbianSDK sdk = (ISymbianSDK) element;
+			File currentPath = new File(sdk.getEPOCROOT());
+			File editedPath = new File(value.toString());
+			if (!currentPath.equals(editedPath)){
+				// User changed the path, so make sure to scan again (boog 12172)
+				((SymbianSDK)sdk).setScannedRaptor(false);
+				SymbianBuildContextDataCache.refreshForSDKs(new ISymbianSDK[] { sdk });
+			}
 			((SymbianSDK)sdk).setEPOCROOT(value.toString());
 			SDKCorePlugin.getSDKManager().updateSDK(sdk);
 			getViewer().refresh();

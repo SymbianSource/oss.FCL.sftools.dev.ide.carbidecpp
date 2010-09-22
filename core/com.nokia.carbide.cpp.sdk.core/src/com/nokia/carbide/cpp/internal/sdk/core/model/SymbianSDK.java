@@ -156,21 +156,6 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return osVersion;
 	}
 
-//	public File getPrefixFile(String builderId) {
-//		File prefixFile = prefixFileMap.get(builderId);
-//		if (prefixFile == null) {
-//			ISDKBuildInfo buildInfo = getBuildInfo(builderId);
-//			if (buildInfo != null) {
-//				IPath prefixFilePath = buildInfo.getPrefixFromVariantCfg();
-//				if (prefixFilePath != null) {
-//					prefixFile = prefixFilePath.toFile();
-//					setPrefixFile(prefixFilePath, builderId);
-//				}
-//			}
-//		}
-//		return prefixFile;
-//	}
-
 	public IPath getReleaseRoot() {
 		String epocRoot = getEPOCROOT();
 		if (epocRoot.length() > 0) {
@@ -642,7 +627,7 @@ public class SymbianSDK implements ISymbianSDK, ISymbianSDKModifier {
 		return hasScannedRaptor;
 	}
 
-	void setScannedRaptor(boolean hasScannedRaptor){
+	public void setScannedRaptor(boolean hasScannedRaptor){
 		this.hasScannedRaptor = hasScannedRaptor;
 	}
 }
