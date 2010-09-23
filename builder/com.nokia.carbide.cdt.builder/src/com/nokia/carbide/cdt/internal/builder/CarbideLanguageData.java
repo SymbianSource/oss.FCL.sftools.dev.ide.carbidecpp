@@ -95,8 +95,6 @@ public class CarbideLanguageData extends CLanguageData {
 
 	private final String ENTRY_DELIMTER = ";"; //$NON-NLS-1$
 	private final String LOCAL_MARKER = "[LOCAL]"; //$NON-NLS-1$
-	private Job persistCacheJob;
-
 
 	public CarbideLanguageData(ICarbideBuildConfiguration config) {
 		carbideBuildConfig = config;
@@ -149,40 +147,7 @@ public class CarbideLanguageData extends CLanguageData {
 		}
 		
 		if (cacheBuilt) {
-			
-			// Bug 12078: persisting the cache requires setting the project 
-			// description, or else it gets thrown away (!).
-			// But we must save the cache in a workspace job because this code
-			// is usually called when the project description is being read for 
-			// the first time (thus saving just throws an exception).
-			
-			// Bug 12139: oops, this job was running over and over again without end
-			synchronized (this) {
-				if (persistCacheJob == null) {
-					persistCacheJob = new Job("Saving Carbide indexer cache for " + carbideBuildConfig.toString()) {
-		
-						@Override
-						protected IStatus run(IProgressMonitor monitor) {
-							persistCache(monitor);
-							
-							return Status.OK_STATUS;
-						}
-						
-					};
-					persistCacheJob.setRule(ResourcesPlugin.getWorkspace().getRoot());
-					persistCacheJob.setSystem(true);
-					persistCacheJob.setPriority(Job.LONG);
-				}
-			
-				// don't reschedule if it has not run yet
-				if (persistCacheJob.getResult() == null || persistCacheJob.getState() == Job.NONE) {
-					persistCacheJob.schedule(5000);	
-					// This scheduling delay is a gross HACK: WorkspaceModelProvider#saveStorage()
-					// has had and still has problems with deadlocks on saving
-					// model content.  This job exacerbates it unless we wait a
-					// while before locking the workspace.
-				}
-			}
+			persistCache();
 		}
 
 		switch(kind) {
@@ -375,10 +340,8 @@ public class CarbideLanguageData extends CLanguageData {
 		cacheTimestamp = System.currentTimeMillis();
 	}
 
-	private void persistCache(IProgressMonitor monitor) {
+	private void persistCache() {
 		// persist the cache between IDE launches.
-		if (!isValid())
-			return;
 		try {
 			ICarbideProjectInfo carbideProject = carbideBuildConfig.getCarbideProject();
 			if (carbideProject == null)
@@ -419,8 +382,6 @@ public class CarbideLanguageData extends CLanguageData {
 						filesCacheValue += file.getAbsolutePath() + ENTRY_DELIMTER;
 					}
 					storage.setAttribute(FILES_CACHE, filesCacheValue);
-					
-					CoreModel.getDefault().setProjectDescription(project, projDes, true, monitor);
 				}
 			}
 		} catch (CoreException e) {
