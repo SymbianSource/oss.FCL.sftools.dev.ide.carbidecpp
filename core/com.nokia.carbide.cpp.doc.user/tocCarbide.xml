@@ -105,15 +105,16 @@
     <topic label="Symbian Build System (SBSv2)" 			href="html/concepts/sbsv2.htm" />
     <topic label="Carbide.c++ preferences" 				href="html/reference/pref_carb_cpp.htm" >
       <topic label="Build"								href="html/reference/pref_carb_build.htm" />
-      <topic label="Debugger"							href="html/reference/pref_carb_debugger.htm" />
-      <topic label="Diagnostic Logs"          			href="html/reference/pref_carb_diagnostic_logs.htm" />
-      <topic label="Preprocess"							href="html/reference/pref_carb_preprocess.htm" />
       <topic label="Build Configuration Filtering"		href="html/tasks/sdks/sdk_platform_filter.htm" />
-      <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
       <topic label="Code Styles"						href="html/reference/pref_cpp_code_style.htm" >
         <topic label="Setting the Workspace Code Style"	href="html/tasks/code_style_workspace.htm" />
         <topic label="Reformatting a Source File"		href="html/tasks/code_style_reformatting_sources.htm" />
       </topic>
+      <topic label="Debugger"							href="html/reference/pref_carb_debugger.htm" />
+      <topic label="Diagnostic Logs"          			href="html/reference/pref_carb_diagnostic_logs.htm" />
+      <topic label="Launch Configurations"				href="html/reference/trk/panel_filter.htm" />
+      <topic label="Preprocess"							href="html/reference/pref_carb_preprocess.htm" />
+      <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
     </topic>
     <topic label="Working with SDKs"					href="html/tasks/WorkingwithSDKs.html" >
       <topic label="Symbian SDKs"						href="html/reference/pref_carb_symbian_sdk.htm" />
@@ -239,13 +240,13 @@
       <topic href="html/debugger/debug/cmds_reposition_pc.htm" label="Reposition the program counter"></topic>
     </topic>
     
-    <topic href="html/reference/trk/wnd_on_device_setup.htm" label="On-Device Connections" >
-      <topic href="html/reference/trk/wnd_new_connection_wizard.htm" label="Setup Connection" />
-      <topic href="html/reference/trk/wnd_on_device_check_tab.htm" label="Test Connections" />
-      <topic href="html/reference/trk/wnd_new_conn_install_tab.htm" label="Install Remote Agents" />
+    <topic href="html/reference/trk/wnd_on_device_setup.htm" 			label="On-Device Connections" >
+      <topic href="html/reference/trk/wnd_new_connection_wizard.htm" 	label="Setup Connection" />
+      <topic href="html/reference/trk/wnd_on_device_check_tab.htm" 		label="Test Connections" />
+      <topic href="html/reference/trk/wnd_new_conn_install_tab.htm" 	label="Install Remote Agents" />
       <topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
-      <topic href="html/reference/trk/exporting_remote_conns.htm" label="Exporting remote connections"></topic>
-      <topic href="html/reference/trk/importing_remote_conns.htm" label="Importing remote connections"></topic>
+      <topic href="html/reference/trk/exporting_remote_conns.htm" 		label="Exporting remote connections"></topic>
+      <topic href="html/reference/trk/importing_remote_conns.htm" 		label="Importing remote connections"></topic>
     </topic>
 	
 	<!--
@@ -280,14 +281,13 @@
       <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data View"></topic>
         
     
-    <topic label="Stop mode projects" 				href="html/tasks/StopModeToc.htm">
-      <topic label="On-Device Debugging Preconditions" 		href="html/tasks/debugger/stop_mode_debug_precond.htm" />
-      <topic label="Stop Mode Debug Examples"  >
-        <topic label="Stop Mode Debug Example" 			href="html/tasks/debugger/stop_mode_debug.htm" />
-      </topic>
-      <topic label="Building a ROM Image File"            href="html/reference/ROM_build_settings.html" />
-      <topic label="Toggle HW Breakpoint"           		href="html/reference/menus/hardware_breakpoints.htm" />
+    <topic label="Stop mode projects" 					href="html/tasks/StopModeToc.htm">
+      <topic label="On-Device Debugging Preconditions" 	href="html/tasks/debugger/stop_mode_debug_precond.htm" />
+      <topic label="Stop Mode Debug Example" 			href="html/tasks/debugger/stop_mode_debug.htm" />
+      <topic label="Building a ROM Image File"          href="html/reference/ROM_build_settings.html" />
+      <topic label="Toggle HW Breakpoint"           	href="html/reference/menus/hardware_breakpoints.htm" />
     </topic>
+	
     <topic href="html/debugger/breakpoints/breakpoints.htm" label="Breakpoints">
       <topic label="Viewing breakpoints" href="html/debugger/breakpoints/viewing_breakpoints.htm" />
       <topic label="Breakpoint status indicators" href="html/debugger/breakpoints/resolving_breakpoints.htm" />
