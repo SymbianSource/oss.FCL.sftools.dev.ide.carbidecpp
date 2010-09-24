@@ -197,7 +197,6 @@
         <topic label="Symbian OS Device (Install SIS)"			href="html/projects/launch/run_mode.htm" />
         <topic label="Symbian OS Device (Attach to Process)"	href="html/projects/launch/attach_process.htm" />
         <topic label="Symbian OS Emulator"						href="html/projects/launch/emulation.htm" />
-        <topic label="Symbian OS Simulator"						href="html/projects/launch/simulator.htm" />
         <anchor id="launch_config_ANCHOR"/>
       </topic>
       <topic label="Configuration panes"				href="html/projects/launch/pages_overview.htm" >

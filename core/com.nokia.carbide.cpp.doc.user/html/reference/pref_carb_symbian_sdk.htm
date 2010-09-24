@@ -10,6 +10,7 @@
 	color: #FF0000;
 	font-weight: bold;
 }
+.style3 {color: #EE0000}
 -->
 </style>
 </head>
@@ -30,7 +31,8 @@
            <td class="Cell"><p>Lists all the installed and recognized SDKs that are supported by the IDE. SDKs no longer supported by Carbide are not shown. You can double-click the <b>SDK ID</b> or <b>Location</b> entry to edit them directly.</p>
              <p>Checked SDKs indicate build configurations available for creating projects. Unchecked SDKs are not displayed when creating new projects. </p>
              <p>SDKs shown in <span class="style2">RED</span>  indicate  a problem, usually no <span class="code">EPOCROOT</span> or unsupported Symbian OS version. </p>
-           <p>Click on a SDK name to see its <span class="code">EPOCROOT</span> location and build configuration status in the SDK Information area. </p>           </td>
+             <p>If you see a <span class="code style3">BAD_SDK_ROOT</span> error message in the Location column, it indicates you have a bad build configuration. To correct this you must remove the  bad configurations from all the projects in your current workspace. Once that is done, you can delete or redirect the SDK or point it to the correct one.</p>
+             <p>Click on a SDK name to see its <span class="code">EPOCROOT</span> location and build configuration status in the SDK Information area. </p>           </td>
         </tr>
          <tr valign="top">
              <td class="Cell"><b>Add </b></td>
