@@ -57,7 +57,7 @@ class NavigationBar extends RoundedCornerComposite {
 				@Override
 				public void mouseExit(MouseEvent e) {
 					if (!selection)
-						setBackgroundColor();
+						updateUI();
 					
 				}
 				
@@ -89,7 +89,7 @@ class NavigationBar extends RoundedCornerComposite {
 		public void setSelection(boolean selection) {
 			if (this.selection != selection) {
 				this.selection = selection;
-				setBackgroundColor();
+				updateUI();
 				if (selection) {
 					for (Control control : getParent().getChildren()) {
 						if (control instanceof Button) {
@@ -113,8 +113,9 @@ class NavigationBar extends RoundedCornerComposite {
 			
 		}
 
-		private void setBackgroundColor() {
+		private void updateUI() {
 			setBackground(getDisplay().getSystemColor(selection ? SWT.COLOR_WIDGET_NORMAL_SHADOW : SWT.COLOR_WHITE));
+			setFont(selection ? selectedButtonFont : buttonFont);
 		}
 		
 		@Override
@@ -178,7 +179,6 @@ class NavigationBar extends RoundedCornerComposite {
 
 	public void selectNavButton(Button button) {
 		portalEditor.showPage(buttonToPageMap.get(button));
-		button.setFont(selectedButtonFont);
 		layout();
 	}
 }

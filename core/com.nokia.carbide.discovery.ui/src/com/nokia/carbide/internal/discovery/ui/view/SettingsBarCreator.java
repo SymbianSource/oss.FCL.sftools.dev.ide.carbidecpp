@@ -40,8 +40,8 @@ public class SettingsBarCreator implements ICommandBarFactory {
 		public IAction[] getActions() {
 			List<IAction> actions = new ArrayList<IAction>();
 			actions.add(new OpenPreferencePageAction(
-					Messages.SettingsBarCreator_CapabilitiesActionLabel, 
-					"org.eclipse.sdk.capabilities")); //$NON-NLS-1$
+					Messages.SettingsBarCreator_AutoUpdateActionLabel, 
+					"org.eclipse.equinox.internal.p2.ui.sdk.scheduler.AutomaticUpdatesPreferencePage")); //$NON-NLS-1$
 			actions.add(new OpenPreferencePageAction(
 					Messages.SettingsBarCreator_CodeStyleActionLabel, 
 					"org.eclipse.cdt.ui.preferences.CodeFormatterPreferencePage")); //$NON-NLS-1$

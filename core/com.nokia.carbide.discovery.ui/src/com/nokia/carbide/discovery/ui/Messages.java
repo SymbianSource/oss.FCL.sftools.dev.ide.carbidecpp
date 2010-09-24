@@ -102,7 +102,7 @@ public class Messages extends NLS {
 	public static String PortalEditor_PageLoadError;
 	public static String PortalEditor_PageOpenError;
 	public static String PortalEditor_PageRankError;
-	public static String SettingsBarCreator_CapabilitiesActionLabel;
+	public static String SettingsBarCreator_AutoUpdateActionLabel;
 	public static String SettingsBarCreator_CodeStyleActionLabel;
 	public static String SettingsBarCreator_KeyBindingsActionLabel;
 	public static String SettingsBarCreator_ProxiesActionLabel;
