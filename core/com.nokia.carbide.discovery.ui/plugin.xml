@@ -103,12 +103,14 @@
           pageId="com.nokia.carbide.discovery.ui.homePage"
           title="%wrenchscience.title">
     </portalPageLayer>
+<!-- Pulling this out for now because it doesn't work with the proxypac auto-proxy config script
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.CreatingCarbidePage"
           order="25"
           pageId="com.nokia.carbide.discovery.ui.homePage"
           title="%creatingcarbide.title">
     </portalPageLayer>
+-->
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.BugzillaPage"
           order="100"
