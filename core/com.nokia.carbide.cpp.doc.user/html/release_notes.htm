@@ -57,7 +57,7 @@ changes making the tools unusable!</p>
   <li><strong>Performance improvements</strong>  &mdash; We continue to address known performance issues as they reveal themselves. This release provides improvements for:
       <ul>
           <li><strong>Stack frames</strong>   &mdash; in the Debug view stack frames were displayed once the symbol tables were completely read. For large symbol files this sometimes slowed down the display and hence the ability to continue debugging. Now the Debug view will show a subset of stack frames after a set time and update the remainder once it has finished scanning the symbol file.</li>
-          <li><strong>Executables view</strong>   &mdash; eliminated several use cases that forced the Executables list to update to frequently.</li>
+          <li><strong>Executables view</strong>   &mdash; eliminated several use cases that forced the Executables list to update too frequently.</li>
           <li><strong>Large symbol tables</strong> supported &mdash; The Carbide symbol reader has been rewritten to provide faster access to symbols and to handle very large symbol files (larger than 10GB).</li>
         </ul>
   </li>
