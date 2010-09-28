@@ -282,6 +282,8 @@ public class PortalEditor extends EditorPart implements IPortalEditor, IElementF
 			@Override
 			public void handleEvent(Event event) {
 				Rectangle rect = composite.getClientArea();
+				if (rect.isEmpty())
+					return;
 				Image newImage = new Image(composite.getDisplay(), rect.width, rect.height);
 				GC gc = new GC(newImage);
 				gc.setForeground(composite.getDisplay().getSystemColor(SWT.COLOR_WIDGET_FOREGROUND));
