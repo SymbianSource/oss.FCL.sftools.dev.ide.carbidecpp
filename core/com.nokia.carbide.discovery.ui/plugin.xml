@@ -84,12 +84,18 @@
           class="com.nokia.carbide.internal.discovery.ui.view.HomePage"
           order="1"
           pageId="com.nokia.carbide.discovery.ui.homePage"
-          title="Carbide (S60 Wiki)">
+          title="%main.layer.title">
+    </portalPageLayer>
+    <portalPageLayer
+          class="com.nokia.carbide.internal.discovery.ui.view.CarbideWikiPage"
+          order="5"
+          pageId="com.nokia.carbide.discovery.ui.homePage"
+          title="%carbidewiki.layer.title">
     </portalPageLayer>
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
           pageId="com.nokia.carbide.discovery.ui.supportPage"
-          title="Carbide Support">
+          title="%support.layer.title">
     </portalPageLayer>
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.InstallExtensionsPortalExtension"
@@ -101,35 +107,19 @@
           class="com.nokia.carbide.internal.discovery.ui.view.WrenchSciencePage"
           order="30"
           pageId="com.nokia.carbide.discovery.ui.homePage"
-          title="%wrenchscience.title">
+          title="%tools.layer.title">
     </portalPageLayer>
-<!-- Pulling this out for now because it doesn't work with the proxypac auto-proxy config script
-    <portalPageLayer
-          class="com.nokia.carbide.internal.discovery.ui.view.CreatingCarbidePage"
-          order="25"
-          pageId="com.nokia.carbide.discovery.ui.homePage"
-          title="%creatingcarbide.title">
-    </portalPageLayer>
--->
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.BugzillaPage"
           order="100"
           pageId="com.nokia.carbide.discovery.ui.homePage"
-          title="Report Bugs">
+          title="%bugs.layer.title">
     </portalPageLayer>
-<!--    
-	<portalPageLayer
-          class="com.nokia.carbide.internal.discovery.ui.view.PulsarPageLayer"
-          order="25"
-          pageId="com.nokia.carbide.discovery.ui.kitsPage"
-          title="Install SDKs">
-    </portalPageLayer>
--->
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.InstallPlatSimPage"
           order="10"
           pageId="com.nokia.carbide.discovery.ui.homePage"
-          title="Install PlatSim">
+          title="%platsim.layer.title">
     </portalPageLayer>
  </extension>
    <extension
@@ -159,7 +149,7 @@
             class="com.nokia.carbide.internal.discovery.ui.wizard.ExportWizard"
             icon="icons/icon-discovery_exp.png"
             id="com.nokia.carbide.discovery.ui.features.exportWizard"
-            name="Installed Feature Configuration">
+            name="%wizard.name">
          <description>
             %Export.desc
          </description>
@@ -172,7 +162,7 @@
             class="com.nokia.carbide.internal.discovery.ui.wizard.ImportWizard"
             icon="icons/icon-discovery.png"
             id="com.nokia.carbide.discovery.ui.features.importWizard"
-            name="Installed Feature Configuration">
+            name="%wizard1.name">
          <description>
             %Import.desc
          </description>
