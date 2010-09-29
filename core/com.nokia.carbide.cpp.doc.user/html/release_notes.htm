@@ -23,26 +23,19 @@
   <li><a href="bugs_fixed.htm">Bug Fixes</a></li>
   <li><a href="#support">Technical support</a> </li>
 </ul>
-<p>Once you have read the release notes, we recommend you follow the <img src="images/command_link.png" width="16" height="12" alt="" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=com.nokia.carbide.cpp.doc.user.getStarted)")'>HelloWorld tutorial</a> for
-a quick introduction to Carbide.c++.</p>
-<p class="note" style="color: rgb(255, 0, 0);"><span style="font-weight: bold;">WARNING</span>:
-Updating the CDT feature in Carbide.c++/Eclipse will wipe out our
-changes making the tools unusable!</p>
 <h3><a name="whatsNew" id="whatsNew"></a>What's New in 3.0.0 </h3>
 <p>The following features for Symbian  development are provided within Carbide.c++:</p>
 <ul>
     
-    <li><b>Eclipse 3.6 </b>&#8212; The Eclipse 3.6 project (Helios) provides the foundation, or integration platform, on which  Carbide.c++  is built. New features include: Breakpoint detail pane for editing properties, Expression View Columns, Rectangular cut/paste, Smarter Linked Resources (editable resources, dynamic path variables, virtual folders, resource filters, improved import wizards), Synchronize View for applying patches. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.6</a> for more information.</li>
+    <li><b>Eclipse 3.6 </b>&#8212; The Eclipse 3.6 project (Helios) provides the foundation, or integration platform, on which  Carbide.c++  is built. New features include: Breakpoint detail pane for editing properties, Expression View Columns, Rectangular cut/paste, Synchronize View for applying patches. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.6</a> for more information.</li>
     <li><b>CDT 7.0 </b>&#8212; The final version of CDT is included as part of the Helios release. New Disassembly view with unlimited scrolling et al, new Templates view, compiler error/warning output highlighting, Regular Expression Error parser, Save build log to file, new key binding for &quot;Run last make target&quot;. See the <a href="http://wiki.eclipse.org/CDT/User/NewIn70">CDT 7.0 News and Noteworthy</a> page for more information. </li>
-    <li><strong>Eclipse Debugger for C/C++</strong><strong> </strong>&mdash; Carbide now uses the <strong>Eclipse Debugger for C/C++</strong> (EDC) as its default debugger. EDC provided an entirely new Debug view with all of the standard debug features like variables, breakpoints, watchpoints, disassembly, and all the other views required to run a debugging session. In addition, EDC provides the framework to add new debug features like snapshots.</li>
+    <li><strong>Eclipse Debugger for C/C++</strong><strong> </strong>&mdash; Carbide now uses the <strong>Eclipse Debugger for C/C++</strong> (EDC) as the default device debugger. EDC provided an entirely new Debug view with all of the standard debug features like variables, breakpoints, watchpoints, disassembly, and all the other views required to run a debugging session. In addition, EDC provides the framework to add new debug features like snapshots.</li>
     <li><b>TCF Debug Agents</b> &ndash; Using Eclipse&rsquo;s Target Configuration Framework, a new set of debug agents are used with the new EDC debugger to provide a completely new end-to-end debug environment. </li>
     <li><b>Plug-n-Play Debug Discovery</b> &ndash; a new method where Carbide can detect a debug target (phone device, PlatSim, etc) and automatically connect and configure the target so debugging can be initiated.</li>
     <li><b>Snapshots</b> &ndash; Save the state of a debug session for later review. Multiple snapshots are stored in a debug album to be shared with others or used for comparing different debug sessions.</li>
-    <li><b>New SDK Manager</b> &ndash; The developer can add and manage SDKs in the Symbian SDKs panel. The tool lists all available SDKs and can rescan system drives for newly installed and supported SDKs.</li>
-    <li><b>Improved Raptor support</b> &ndash; The Build Configuration Filter selects which platforms are visible when creating new projects or build configurations. The results of this preference panel are used to populate the build configurations when importing new projects.</li>
-    <li><b>CODA</b> replaces <b>TRK</b> as the debug agent on remote devices. CODA (Carbide On-device Debug Agent) uses the TCF interface to provide improved communication support between the Carbide debugger and the remote device.</li>
-</ul>
-<ul>
+    <li><b>New SDK Manager</b> &ndash; Now automatically adds Symbian SDKs found on subst'ed drives and will link corresponding internally installed Qt SDKs. There are only two properties for SDKs now, the unique ID and location - no more messing around with OS or SDK versions!</li>
+    <li><b>Improved Raptor support</b> &ndash; The Build Configuration Filter selects which platforms are visible when creating new projects or build configurations. This preference panel populates the build configurations when importing new projects. Users can now create their own custom variants for any Raptor build alias.</li>
+    <li><b>CODA</b> replaces <b>TRK</b> as the debug agent on remote devices. CODA (Carbide On-device Debug Agent) uses the TCF interface to provide improved communication support between the Carbide debugger and the remote device. Can be downloaded and installed using the Install Remote Agents tab in the New Connection dialog. Requires both Carbide.c++ 3.x and EDC.</li>
     <li><b>New Carbide.c++ portal view</b> &ndash; The new <a href="reference/view_carbide_portal.htm">Carbide.c++ Portal</a> view provides easier access to
         <ul>
             <li> Welcome and getting started information including videos, blogs, and much more</li>
@@ -50,13 +43,13 @@ changes making the tools unusable!</p>
             <li>Customizing the Carbide workspace to better suit your needs</li>
             <li>Support information</li>
         </ul>
-    </li>
+        </li>
+    <li><strong>Streamlined UI</strong> &mdash; Carbide's UI has been streamlined and minimized to a core set of functionality, mainly that of creating Symbian projects, building and debugging them. Context menus have been reworked to show a minimum set of options. If your favorite option is missing, you can use the <strong>Capability</strong> preference panel or the <strong>Customize Perspective</strong> dialog to add favorite commands back onto the context menus.</li>
 </ul>
-<ul><li><strong>Customized Carbide environment</strong>  &mdash; Carbide introduces Plugin Discovery Sites where you can search for and download Carbide plugins to customize your Carbide environment. Think of it as an app store for plugins. It uses the Eclipse P2 feature  to provide a common framework for finding, installing, updating, and removing plugins from the Carbide environment.</li>
-  <li><strong>Improved UI</strong> &mdash; Carbide's UI has been streamlined and minimized to a core set of functionality, mainly that of creating Symbian projects, building and debugging them. Context menus have been reworked to show a minimum set of options. If your favorite option is missing, you can use the <strong>Capability</strong> preference panel or the <strong>Customize Perspective</strong> dialog to add favorite commands back onto the context menus.</li>
-  <li><strong>Performance improvements</strong>  &mdash; We continue to address known performance issues as they reveal themselves. This release provides improvements for:
+<ul><li><strong>Performance improvements</strong>  &mdash; We continue to address known performance issues as they reveal themselves. This release provides improvements for:
       <ul>
-          <li><strong>Stack frames</strong>   &mdash; in the Debug view stack frames were displayed once the symbol tables were completely read. For large symbol files this sometimes slowed down the display and hence the ability to continue debugging. Now the Debug view will show a subset of stack frames after a set time and update the remainder once it has finished scanning the symbol file.</li>
+          <li><b>Cached SDK and SBS builds</b> &ndash; once your SDKs and build configurations are set up subsequent Carbide launches are faster.</li>
+          <li><strong>Stack frames</strong> &mdash; in the Debug view stack frames were displayed once the symbol tables were completely read. For large symbol files this sometimes slowed down the display and hence the ability to continue debugging. Now the Debug view will show a subset of stack frames after a set time and update the remainder once it has finished scanning the symbol file.</li>
           <li><strong>Executables view</strong>   &mdash; eliminated several use cases that forced the Executables list to update too frequently.</li>
           <li><strong>Large symbol tables</strong> supported &mdash; The Carbide symbol reader has been rewritten to provide faster access to symbols and to handle very large symbol files (larger than 10GB).</li>
         </ul>
