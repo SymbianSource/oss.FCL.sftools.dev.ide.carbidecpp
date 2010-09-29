@@ -31,7 +31,7 @@
            <td class="Cell"><p>Lists all the installed and recognized SDKs that are supported by the IDE. SDKs no longer supported by Carbide are not shown. You can double-click the <b>SDK ID</b> or <b>Location</b> entry to edit them directly.</p>
              <p>Checked SDKs indicate build configurations available for creating projects. Unchecked SDKs are not displayed when creating new projects. </p>
              <p>SDKs shown in <span class="style2">RED</span>  indicate  a problem, usually no <span class="code">EPOCROOT</span> or unsupported Symbian OS version. </p>
-             <p>If you see a <span class="code style3">BAD_SDK_ROOT</span> error message in the Location column, it indicates you have a bad build configuration. To correct this you must remove the  bad configurations from all the projects in your current workspace. Once that is done, you can delete or redirect the SDK or point it to the correct one.</p>
+             <p>If you see a <span class="style3">BAD_SDK_ROOT</span> error message in the Location column, it indicates you have a build configuration with an SDK ID unknown to Carbide. To correct this you can either 1) remove the bad configurations from all the projects in your current workspace or 2) fix the location with the proper path and rescan your SDKs. If you delete an SDK with <span class="code">BAD_SDK_ROOT</span> before removing it's configuration the SDK will continue to appear in the Symbian SDKs until the configurations are fixed or removed.</p>
              <p>Click on a SDK name to see its <span class="code">EPOCROOT</span> location and build configuration status in the SDK Information area. </p>           </td>
         </tr>
          <tr valign="top">
@@ -44,7 +44,7 @@
        </tr>
          <tr valign="top">
            <td class="Cell"><b>Properties</b></td>
-           <td class="Cell"><p>Click to view and edit the <a href="../tasks/sdks/sdk_view_properties.htm">properties</a> of the currently selected SDK in the <b>Symbian SDKs</b> list.</p>           </td>
+           <td class="Cell"><p>Click to <a href="../tasks/sdks/sdk_view_properties.htm">view</a> the OS version of the currently selected SDK in the <b>Symbian SDKs</b> list. If the OS version cannot be determined, it  will default to 9.5.</p>           </td>
      </tr>
          <tr valign="top">
              <td class="Cell"><b>Scan for installable features in SDKs</b></td>
@@ -53,7 +53,7 @@
          <tr valign="top">
            <td class="Cell"><p><b>Rescan All SDKs</b></p>           </td>
            <td class="Cell"><p>Click to <a href="../tasks/sdks/sdk_search.htm">rescan</a>  the drive  for newly installed SDKs. </p>
-             <p class="note"><b>NOTE</b> Carbide.c++ scans for available SDKs each time it is started.</p></td>
+             <p>Carbide scans system drives for installed SDKs at startup or during a forced rescan, adding any detected Symbian SDKs automatically. Automatically added SDKs have IDs of &quot;<span class="code">&lt;drive spec&gt;_SDK</span>&quot;. You many edit the SDK ID if you don't like the name that Carbide has chosen.</p></td>
         </tr>
    </table>
    <h5>Related tasks</h5>
