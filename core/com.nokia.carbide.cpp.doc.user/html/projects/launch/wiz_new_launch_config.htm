@@ -23,72 +23,44 @@
         <th width="59%" scope="col">Wizard Pages</th>
     </tr>
     <tr>
-        <td><b>Common pages</b></td>
+        <td><b>Device</b></td>
         <td><ul>
             <li><a href="#DEBUGAS">Debug As</a></li>
-            <li>Launch Types</li>
-            <li><a href="#BLD_OPT">Build Option Selection</a></li>
             <li><a href="#EXE_SEL">Executable Selection</a></li>
+            <li><a href="#BLD_OPT">Build Options Selection</a></li>
             <li><a href="#FINISH">New Launch Configuration</a></li>
         </ul></td>
     </tr>
     <tr>
         <td><b>Simulator</b></td>
         <td><ul>
-            <li><a href="#EXE_SEL">Executable Selection</a></li>
-            <li><a href="#BLD_OPT">Build Option Selection</a></li>
-            <li><a href="#FINISH">New Launch Configuration</a></li>
-        </ul></td>
-    </tr>
-    <tr>
-        <td><b>Symbian OS Device (Install SIS)</b></td>
-        <td><ul>
-            <li><a href="#TRK_CONN">CODA Connection Settings</a></li>
-            <li><a href="#TRK_SIS">CODA SIS Selection</a> (<i>Symbian OS Device (Install SIS) only</i>) </li>
-        </ul></td>
-    </tr>
-    <tr>
-        <td><b>Symbian OS Device (Attach to Process)</b></td>
-        <td><ul>
-            <li><a href="#TRK_CONN">CODA Connection Settings</a></li>
+            <li><a href="#DEBUGAS">Debug As</a><a href="#EXE_SEL"></a></li>
+            <li><a href="wnd_config_launch_config.htm">Configure launch configuration</a></li>
         </ul></td>
     </tr>
 </table>
 <h3><a name="DEBUGAS" id="LAUNCH2"></a>Debug As</h3>
 <p>Use the<b> Debug As </b>dialog  to select the method of debugging for the chosen build configuration.  The choices include: </p>
 <ul>
-    <li><b>Symbian OS Phone of Simulator Launch</b> &ndash; choose to work with attached phones or devices</li>
+    <li><b>Device</b> &ndash; debug on Symbian devices using CODA (Carbide On-device Debug Agent) </li>
 </ul>
 <ul>
-    <li><b>Symbian OS Platform Simulator Launch</b> &ndash; choose to work with platform boards</li>
+    <li><b>Simulator</b> &ndash; debug on Symbian simulators</li>
 </ul>
 <p>The choice made here filters the <b>Launch Types</b> page to  only show valid launch configurations. Once a debug as choice is made, click <b>OK</b>. </p>
-<p align="center"><img src="images/wiz_launch_config_debug_as.png" alt="Debug As dialog" width="346" height="435"></p>
+<p align="center"><img src="images/wiz_launch_config_debug_as.png" alt="Debug As dialog" width="350" height="350"></p>
 <p class="figure">Figure 1 - Debug As dialog </p>
-<h3><a name="LAUNCH" id="LAUNCH"></a>Launch Types</h3>
-<p>Use the<b> Launch Types</b> page to select the type of launch configuration for the build target. This page does not appear when using an Emulator target. Available types are listed from the most frequently chosen  to the least likely type. Select a type and click <b>Next</b>. </p>
-<p align="center"><img src="images/wiz_launch_config_launch_types.png" width="438" height="533"></p>
-<p class="figure">Figure 2 - Launch Type page </p>
-<h3><a name="BLD_OPT" id="EXE_SEL2"></a>Build Options Selection </h3>
+<h3><a name="BLD_OPT" id="EXE_SEL2"></a>Build Options Selection page</h3>
 <p>Use the <b>Build Options Selection </b> page to define if the launch configuration uses automatic build or not. Choices include using the global automatic built setting (default), enable or disable automatic build for the launch configuration. You can also set the global option using the Configure Workspace Settings... to open the Launching preference panel.</p>
 <p align="center"><img src="images/wiz_launch_config_build_options.png" width="631" height="433"></p>
 <p class="figure">Figure 3 - Build Options Selection page </p>
-<h3><a name="EXE_SEL" id="EXE_SEL"></a>Executable Selection </h3>
-<p>Use the <b>Application Selection </b> page to choose a binary created by the project to launch and debug and verify its location. If only a single binary is available the <b>Process to launch</b> option is disabled. </p>
+<h3><a name="EXE_SEL" id="EXE_SEL"></a>Executable Selection page</h3>
+<p>Use the <b>Executable Selection </b> page to choose a binary created by the project to launch and debug. If only a single binary is available the <b>Process to launch</b> option is disabled. </p>
 <p><b>EMULATOR ONLY</b> Use the <b>Location</b> field for emulator targets to verify that the correct executable on the host is selected. This field is not used with on-device launch configurations. </p>
 <p>Select the <b>Process to launch</b>, verify it is the correct binary. </p>
-<p>Use the <b>Specify device path of remote process to launch</b> option to specify alternate paths for launching the executable from RAM (<span class="code">c:\sys\bin\</span>), ROM (<span class="code">z:\sys\bin\</span>) or  memory cards (<span class="code">e:\sys\bin\</span>), then click <b>Next</b>. </p>
-<p align="center"><img src="images/wiz_launch_config_app_selection.png" width="438" height="533"> </p>
+<p>Use the <b>Specify device path of remote process to launch</b> option (<i>not shown</i>) to specify alternate paths for launching the executable from RAM (<span class="code">c:\sys\bin\</span>), ROM (<span class="code">z:\sys\bin\</span>) or  memory cards (<span class="code">e:\sys\bin\</span>), then click <b>Next</b>. </p>
+<p align="center"><img src="images/wiz_launch_config_app_selection.png" width="542" height="421"> </p>
 <p class="figure">Figure 4 - Executable Selection page (when project has multiple EXEs)</p>
-<h3><a name="TRK_CONN" id="TRK_CONN"></a>CODA Connection Settings </h3>
-<p>Use the <b>CODA Connection Settings</b> page to specify the connection used to communicate with the target device. If the device is already connected, the drop down list will include both the COM port and the name of the device using that port. Use the <a href="../../reference/trk/wnd_on_device_setup.htm">On-Device Conection</a> dialog to verify and update all Carbide software services on the device. Choose the serial port used to communicate with the target device and click <b>Next</b>. </p>
-<p align="center"><img src="images/wiz_launch_config_trk_conn.png" width="487" height="533"> </p>
-<p class="figure">Figure 5 - CODA Connection Settings  page </p>
-<p>&nbsp;</p>
-<h3><a name="TRK_SIS" id="TRK_SIS"></a>CODA SIS Selection</h3>
-<p>Use the <b>CODA SIS Selection</b> page to select the SIS file to install on the target device. Click the <b>Modify SIS builder settings for build configuration</b> link to open the <a href="../../reference/build_properties/pane_build_config_sis.htm">SIS Builder</a> properties pane to add, edit, or review  the SIS files to build. Once the correct SIS File to Install is selected, click <b>Next</b>. </p>
-<p align="center"><img src="images/wiz_launch_config_trk_sis.png" width="463" height="533"></p>
-<p class="figure">Figure 6 - CODA SIS Selection page </p>
 <h3><a name="FINISH" id="FINISH"></a>New Launch Configuration</h3>
 <p>Use the <b>New Launch Configuration</b> page to note the name of the configuration, confirm the launch configuration settings,  and then launch the debug session. If something doesn't look right, click <b>Back</b> to return to a page and change its setting. If all the settings are correct, click <b>Finish</b> to start the debug session using this launch configuration. </p>
 <p>If you checkmark <b> Advanced settings</b>, the <a href="../../reference/wnd_debug_configuration.htm">Debug</a> dialog appears instead of launching the project. This enables you to make additional changes to the new launch configuration before starting the debug session. By design and intent, this should seldom be required for the initial launch. </p>
@@ -96,10 +68,7 @@
 <p class="figure">Figure 7 - New Launch Configuration page </p>
 <h5>Other references</h5>
 <ul>
-  <li><a href="../../projects/launch/launch_configs_overview.htm">Launch Configuration</a>  </li>
-  <li><a href="launch_emulator.htm">Symbian OS Emulator Launch</a></li>
-  <li><a href="launch_phone.htm">Symbian OS Phone Launch</a></li>
-  <li><a href="launch_board.htm">Symbian OS Reference Board Launch</a></li>
+  <li><a href="../../projects/launch/launch_configs_overview.htm">Launch Configuration</a></li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 
