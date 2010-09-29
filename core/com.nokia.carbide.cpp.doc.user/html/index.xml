@@ -58,10 +58,10 @@
 	</entry>
 
 	<entry keyword="Build preference panel">
-	   <topic href="html/reference/wnd_build_prefs.htm"/>
+	   <topic href="html/reference/pref_carb_build.htm"/>
 	</entry>
 
-    <entry keyword="Build All Targets">
+    <entry keyword="Build All Configurations">
        <topic href="html/reference/menus/build_all_targets.htm"/>
     </entry>
 
@@ -106,15 +106,15 @@
 	</entry>
 
 	<entry keyword="Carbide.c++ Perspective">
-	   <topic href="html/concepts/SymbianPerspective.html"/>
+	   <topic href="html/concepts/CarbidePerspective.html"/>
 	</entry>
 
-	<entry keyword="Carbide Portal">
+	<entry keyword="Carbide.c++ Portal">
 		<topic href="html/reference/view_carbide_portal.htm" />
 	</entry>
 
 	<entry keyword="clean">
-	   <topic href="html/reference/wnd_build_prefs.htm"/>
+	   <topic href="html/reference/pref_carb_build.htm"/>
 	   <topic href="html/tasks/projects/prj_clean.htm"/>
        <topic href="html/reference/menus/clean_symbian_comp.htm"/>
 	</entry>
@@ -137,19 +137,19 @@
 	</entry>
 
 	<entry keyword="Connection pane">
-	   <topic href="html/reference/view_remote_connection.htm"/>
+	   <topic href="html/reference/trk/view_remote_connection.htm"/>
 	</entry>
 
-	<entry keyword="Console View">
+	<entry keyword="Console view">
 	   <topic href="html/reference/view_console.htm"/>
 	</entry>
 
-	<entry keyword="Context Menus">
+	<entry keyword="Context menus">
 	   <topic href="html/concepts/contextual_menus.htm"/>
 	</entry>
 
 	<entry keyword="concurrent builds">
-	   <topic href="html/reference/wnd_build_prefs.htm"/>
+	   <topic href="html/reference/pref_carb_build.htm"/>
 	</entry>
 
 	<entry keyword="Controlling Program Execution">
@@ -157,24 +157,16 @@
 	</entry>
 
 	<entry keyword="creating">
-       <topic label="AIF files"		href="html/tasks/AppInfoFile.html" />
        <topic label="MBM files"		href="html/tasks/Multi-BitmapFile.html" />
 	   <topic label="projects"		href="html/tasks/CreatingNewProjects.html"/>
        <topic label="SIS files"		href="html/tasks/projects/prj_creating_sis_file.htm"/>
        <topic href="html/qt_help/qt_creating_projs_01.htm"/>
 	</entry>
 
-	<entry keyword="CODA" >
-		<topic href="html/concepts/trk.htm" label="Carbide On-device Debug Agent" />
-		<topic href="html/tasks/trk/trk_overview.htm" label="CODA Overview" />
-		<topic href="html/tasks/trk/trk_carbide_setup.htm" />
-		<topic href="html/tasks/start/carbide_example_trk.htm" />
-		<topic href="html/tasks/debugger/stop_mode_debug.htm" />
-	</entry>
-	
-
 	<entry keyword="CODA">
-	   <topic href="html/reference/trk/panel_trk_overview.htm"/>
+		<topic href="html/concepts/trk.htm" label="Carbide On-device Debug Agent" />
+		<topic href="html/reference/trk/panel_trk_overview.htm"/>
+		<topic href="html/tasks/debugger/stop_mode_debug.htm" />
 	</entry>
 
 	<entry keyword="ClearCase">
@@ -190,14 +182,14 @@
 	-->
 	
 	<entry keyword="Debug Preferences">
-	   <topic href="html/reference/wnd_debugger_prefs.htm"/>
+	   <topic href="html/reference/pref_carb_debugger.htm"/>
 	</entry>
 
 	<entry keyword="debugger">
 	   <topic href="html/concepts/working_with_data.htm" label="Working with Debugger Data"/>
-	   <topic href="html/reference/projects/launch/emulation.htm" label="Emulator Launch Configuration" />
-	   <topic href="html/reference/projects/launch/run_mode.htm" label="Application TRK Launch Configuration" />
-	   <topic href="html/reference/projects/launch/stop_mode.htm" label="System TRK Launch Configuration" />
+	   <topic href="html/reference/projects/launch/emulation.htm" label="Symbian OS Emulator Launch Configuration" />
+	   <topic href="html/reference/projects/launch/run_mode.htm" label="Symbian OS Device (Install SIS) Launch Configuration" />
+	   <topic href="html/reference/projects/launch/stop_mode.htm" label="Symbian OS Device Launch Configuration" />
 	   <topic href="html/reference/debugger_settings.htm" label="Debugger Settings"/>
 	</entry>
 	
@@ -215,7 +207,7 @@
 
 	<entry keyword="debug agent">
 	   <topic href="html/concepts/trk.htm" label="On-device Debugging" />
-	   <topic href="html/tasks/trk/trk_overview.htm" label="TRK Overview" />
+	   <topic href="html/tasks/trk/trk_overview.htm" label="CODA Overview" />
 	   <topic href="html/tasks/trk/trk_install_pcsuite.htm" label="PC Suite"/>
 	   <topic href="html/tasks/trk/trk_install_bluetooth.htm" label="Bluetooth"/>
 	   <topic href="html/tasks/trk/trk_install_usb.htm" label="USB"/>
@@ -226,17 +218,17 @@
 	</entry>
 
 	<entry keyword="Debug view">
-	   <topic href="html/reference/view_debug.htm"/>
+	   <topic href="html/debugger/debug/viewing_debug.htm"/>
 	</entry>
 
 	<entry keyword="Debug window">
 	   <topic href="html/reference/wnd_debug_configuration.htm" label="Debug window" />
-	   <topic href="html/concepts/launch_configuration.htm" label="Launch Configurations" />
-	   <topic href="html/tasks/projects/wiz_new_launch_config.htm" label="New Launch Configuration" />
+	   <topic href="html/projects/launch/launch_configs_overview.htm" label="Launch Configuration Overview" />
+	   <topic href="html/projects/launch/wiz_new_launch_config.htm" label="New Launch Configuration" />
 	</entry>
 
 	<entry keyword="dependency tracking">
-	   <topic href="html/reference/wnd_build_prefs.htm"/>
+	   <topic href="html/reference/pref_carb_build.htm"/>
 	</entry>
 
 	<entry keyword="Disassembly view">
@@ -245,14 +237,13 @@
 
 	<entry keyword="DLL">
 	   <topic href="html/tasks/projects/prj_debug_dlls.htm"/>
-	   <topic href="html/concepts/SampleExampleProjectCreate.html"/>
-	   <topic label="example" 		href="html/concepts/SampleExampleProjectCreate.html"/>
+	   <topic label="Simple DLL Example" 		href="html/concepts/SampleExampleProjectCreate.html"/>
 	</entry>	
 
 <!-- E -->
 
 	<entry keyword="emulator">
-	   <topic href="html/concepts/emulators.htm"/>
+	   <topic href="html/projects/launch/emulators.htm"/>
 	   <topic href="html/reference/pref_carb_build.htm"/>
 	</entry>	
 
@@ -261,7 +252,7 @@
 	</entry>
 
 	<entry keyword="Executables">
-	   <topic href="html/reference/trk/panel_trk_exes.htm"/>
+	   <topic href="html/projects/launch/page_executables.htm"/>
 	</entry>
 
 	<entry keyword="External Build">
@@ -290,11 +281,11 @@
 <!-- F -->
 
 	<entry keyword="File Transfer Pane">
-	   <topic href="html/reference/trk/panel_trk_file_transfer.htm"/>
+	   <topic href="html/projects/launch/page_file_transfer.htm"/>
 	</entry>
 
 	<entry keyword="FPU Registers">
-	   <topic href="html/concepts/fpu_registers.htm"/>
+	   <topic href="html/concepts/registers.htm"/>
 	</entry>
 
 	<entry keyword="Freezing DLL Projects">
@@ -304,11 +295,7 @@
 <!-- G -->
 
 	<entry keyword="General Registers">
-	   <topic href="html/concepts/general_registers.htm"/>
-	</entry>
-
-	<entry keyword="Global Variables Window">
-	   <topic href="html/reference/view_global_variables.htm"  label="Global Variables Window" />
+	   <topic href="html/concepts/registers.htm"/>
 	</entry>
 
 	<entry keyword="Git">
@@ -322,14 +309,13 @@
 	</entry>
 
 	<entry keyword="Host Registers">
-	   <topic href="html/concepts/host_registers.htm"/>
+	   <topic href="html/concepts/registers.htm"/>
 	</entry>
 
 <!-- I -->
 
 	<entry keyword="Importing">
 	   <topic href="html/tasks/ImportingProjects.html"/>
-	   <topic href="html/tasks/projects/prj_import_exe.htm"/>
        <topic href="html/qt_help/qt_importing_projs_01.htm"/>
 	</entry>
 
@@ -342,7 +328,7 @@
 	</entry>
 
 	<entry keyword="Installation Pane">
-	   <topic href="html/reference/trk/panel_trk_installation.htm"/>
+	   <topic href="html/projects/launch/page_installation.htm"/>
 	</entry>
 
 <!-- J -->
@@ -351,7 +337,7 @@
 
 	<entry keyword="Launch Configuration">
 	   <topic href="html/concepts/launch_configuration.htm" label="Overview"/>
-	   <topic href="html/tasks/trk/trk_carbide_setup.htm" label="TRK Setup"/>
+	   <topic href="html/tasks/trk/trk_carbide_setup.htm" label="Launch Configuration Setup"/>
 	   <topic href="html/tasks/projects/prj_debug_config.htm" label="Creating"/>
 	</entry>
 
@@ -387,7 +373,7 @@
 	</entry>
 
 	<entry keyword="Memory view">
-	   <topic href="html/reference/view_memory_wnd.htm"/>
+	   <topic href="html/reference/view_memory.htm"/>
 	</entry>
 
 	<entry keyword="Mercurial">
@@ -397,8 +383,8 @@
 	<entry keyword="menus">
 		<topic href="html/reference/menus/abld.htm" />
 
-	    <topic label="Symbian OS C++ Class" href="html/reference/menus/new_symbian_class.htm" />
-	    <topic label="Symbian OS C++ Project" href="html/reference/menus/new_symbian_project.htm" />
+	    <topic label="Symbian OS C++ Class" href="html/reference/new_symbian_class.htm" />
+	    <topic label="Symbian OS C++ Project" href="html/reference/new_symbian_project.htm" />
 		
 	    <topic href="html/reference/menus/open_cmd_window.htm" />
 	    <topic href="html/reference/menus/open_explorer_window.htm" />
@@ -473,7 +459,7 @@
    <entry keyword="On-device Connections">
    		<topic href="html/reference/trk/wnd_new_connection_wizard.htm" />
      	<topic href="html/reference/trk/view_remote_connection.htm" />
-		<topic href="html/reference/trk/wnd_new_conn_wiz_edit.htm"/>
+		<topic label="Editing connections"	href="html/reference/trk/wnd_new_conn_wiz_edit.htm"/>
   		<topic href="html/reference/trk/exporting_remote_conns.htm" />
 	</entry>
 
@@ -546,7 +532,7 @@
 <!-- R -->
 
 	<entry keyword="register">
-	   <topic href="html/tasks/start/carbide_register.htm"/>
+	   <topic href="html/concepts/registers.htm"/>
 	</entry>
 
 	<entry keyword="registers">
@@ -562,11 +548,11 @@
 	</entry>
 
 	<entry keyword="Restarting Debugger">
-	   <topic href="html/debugger/debug/cmds_resume.htm"/>
+	   <topic href="html/debugger/debug/cmds_resuming.htm"/>
 	</entry>
 
 	<entry keyword="Resuming Program Execution">
-	   <topic href="html/debugger/debug/cmds_resume.htm"/>
+	   <topic href="html/debugger/debug/cmds_resuming.htm"/>
 	</entry>
 
 	<entry keyword="Requirements">
@@ -643,8 +629,8 @@
 	</entry>
 
 	<entry keyword="Symbian OS Data view">
-	   <topic href="html/reference/view_symbian_kernel.htm"/>
-	   <topic href="html/tasks/debugger/view_symbian_kernel_set.htm" />
+	   <topic label="Symbian OS Data view" 	href="html/reference/view_symbian_kernel.htm"/>
+	   <topic label="Setting Symbian OS Data View Refresh Rate" 	href="html/tasks/debugger/view_symbian_kernel_set.htm" />
 	</entry>
 
     <entry keyword="Symbian OS SDKs">
@@ -663,10 +649,6 @@
 	   <topic href="html/concepts/symbolic_files_about.htm"/>
 	</entry>
 
-	<entry keyword="System Browser View">
-	   <topic href="html/reference/view_system_browser.htm" label="System Browser" />
-	</entry>
-	
 	<entry keyword="Symbian Build System">
 	   <topic href="html/concepts/sbsv2.htm" label="Symbian Build System" />
 	</entry>
@@ -687,7 +669,7 @@
 	</entry>
 
 	<entry keyword="test components">
-	   <topic href="html/reference/wnd_build_prefs.htm"/>
+	   <topic href="html/reference/pref_carb_build.htm"/>
 	</entry>
 
 	<entry keyword="Thread Breakpoint">
@@ -723,23 +705,19 @@
 		<topic href="html/reference/view_carbide_portal.htm" />
 		<topic href="html/reference/view_breakpoints.htm" />
 		<topic href="html/reference/view_console.htm" />
-		<topic href="html/reference/view_cpp_projects.htm" />
 		<topic href="html/debugger/debug/viewing_debug.htm" />
 		<topic href="html/reference/view_disassembly.htm" />
 		<topic href="html/reference/view_executables.htm" />
 		<topic href="html/reference/view_expressions.htm" />
-		<topic href="html/reference/view_install_extensions.htm" />
-		<topic href="html/reference/view_global_variables.htm" label="Global Variables Window" />
 		<topic href="html/reference/view_memory.htm" />
 		<topic href="html/reference/view_mifdef_editor.htm" />
 		<topic href="html/reference/view_module.htm" />
 	    <topic href="html/reference/view_proj_explorer.htm" />
 		<topic href="html/reference/view_registers.htm" />
 	    <topic href="html/reference/trk/view_remote_connection.htm" />
-	    <topic href="html/reference/view_signals_wnd.htm" label="Symbols" />
-	    <topic href="html/reference/view_symbian_kernel.htm" />
+	    <topic href="html/reference/view_signals.htm" label="Symbols" />
+	    <topic href="html/reference/view_symbian_kernel.htm" label="Symbian OS Data" />
 	    <topic href="html/reference/view_sym_proj_nav.htm" />
-	    <topic href="html/reference/view_system_browser.htm" label="System Browser" />
 	    <topic href="html/reference/view_variables.htm" />
 	</entry>
 
@@ -760,7 +738,7 @@
 <!-- X -->
 
 	<entry keyword="x86 Exceptions Pane">
-	   <topic href="html/reference/launch_config/emulator_exceptions.htm"/>
+	   <topic href="html/projects/launch/page_x86_exceptions.htm"/>
 	</entry>
 
 <!-- Y -->
