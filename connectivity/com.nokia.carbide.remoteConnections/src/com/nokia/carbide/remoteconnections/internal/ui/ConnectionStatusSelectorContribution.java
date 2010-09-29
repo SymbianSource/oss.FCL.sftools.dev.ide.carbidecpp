@@ -165,6 +165,7 @@ public class ConnectionStatusSelectorContribution extends WorkbenchWindowControl
 	protected Control createControl(Composite parent) {
 		
 		// This UI is recreated whenever the current connection changes.
+		removeListeners();
 		
 		// This is gross.  The normal parent of this is a toolbar,
 		// but we cannot add arbitrary stuff to the toolbar besides
