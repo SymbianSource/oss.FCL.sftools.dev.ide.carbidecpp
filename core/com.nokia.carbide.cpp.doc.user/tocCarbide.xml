@@ -226,6 +226,7 @@
     </topic>
     <topic label="Software Configuration Management"	href="html/concepts/cvs.htm" />
   </topic>
+  
   <topic label="Debugging projects" 				href="html/concepts/debugger_about.htm" >
     <topic label="Running a program" 			href="html/debugger/debug/cmds_starting.htm" />
     <topic label="Debug perspective" 			href="html/reference/perspective_debug.htm" >
@@ -240,6 +241,7 @@
     </topic>
     
     <topic href="html/reference/trk/wnd_on_device_setup.htm" 			label="On-Device Connections" >
+      <topic href="html/tasks/trk/trk_start_sisx.htm" 	label="Starting the CODA Software" />
       <topic href="html/reference/trk/wnd_new_connection_wizard.htm" 	label="Setup Connection" />
       <topic href="html/reference/trk/wnd_on_device_check_tab.htm" 		label="Test Connections" />
       <topic href="html/reference/trk/wnd_new_conn_install_tab.htm" 	label="Install Remote Agents" />
