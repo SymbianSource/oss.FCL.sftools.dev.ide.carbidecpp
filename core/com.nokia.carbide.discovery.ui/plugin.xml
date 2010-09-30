@@ -94,6 +94,7 @@
     </portalPageLayer>
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.SupportPage"
+          order="1"
           pageId="com.nokia.carbide.discovery.ui.supportPage"
           title="%support.layer.title">
     </portalPageLayer>
@@ -112,7 +113,7 @@
     <portalPageLayer
           class="com.nokia.carbide.internal.discovery.ui.view.BugzillaPage"
           order="100"
-          pageId="com.nokia.carbide.discovery.ui.homePage"
+          pageId="com.nokia.carbide.discovery.ui.supportPage"
           title="%bugs.layer.title">
     </portalPageLayer>
     <portalPageLayer
