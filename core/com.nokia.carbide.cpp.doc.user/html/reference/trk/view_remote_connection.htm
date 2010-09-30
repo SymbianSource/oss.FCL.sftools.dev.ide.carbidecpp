@@ -29,7 +29,7 @@
 <ul>
   <li>Connection/Services - connection name defined by you and remote agent type</li>
   <li>Type - connection type, i.e. Bluetooth, USB, TCP/IP, etc.</li>
-  <li>Status - current connection status, i.e. Available, Not accessible, Ready, etc.</li>
+  <li>Status - current connection status, i.e. Available, Not Accessible, Ready, etc.</li>
   <li>Description - provides information on the current connection test status.</li>
 </ul>
 <p align="center"><img src="../images/view_remote_connections.png" width="588" height="177"></p>
@@ -111,7 +111,13 @@
     <td><center>
       <img src="../images/icon_rc_not_accessible.png" width="16" height="16">
     </center>    </td>
-    <td>Cannot access the connection type within the connection setup.</td>
+    <td><p>Cannot access the connection type within the connection setup. This could be due to one of the following conditions:</p>
+        <ul>
+            <li>Nokia Ovi/PC Suite is not installed (Carbide uses their drivers to connect to remote devices)</li>
+            <li>User did not select Ovi/PC Suite mode on the device</li>
+            <li>CODA (Carbide On-device Debug Agent)   is not installed on the device</li>
+        </ul>        
+        <p>If all the above is setup the remote device should automatically appear when it is connected to the PC. The Description field contains useful debug information that can help solve the issue as well. </p></td>
   </tr>
 </table>
 <h3>Remote Connections view context menu options</h3>
