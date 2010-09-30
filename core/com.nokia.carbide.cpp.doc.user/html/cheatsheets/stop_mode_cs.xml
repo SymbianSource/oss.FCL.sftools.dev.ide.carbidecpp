@@ -1,21 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <cheatsheet title="On-device Stop Mode Debugging Setup">
-	<intro>
+	<intro
+       href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/stop_mode_debug.htm">
 		<description>
-		Follow these steps to install on-device stop mode debug software and compilers, create ROM images, and define launch configurations.
+		Follow these steps to create a project, build it, and debug it on a remote device connected using CODA.
 		</description> 
 	</intro> 
 	
-	<item title="Install necessary compilers, SDKs, and create ROM image files" href="/com.nokia.carbide.cpp.doc.user/html/tasks/debugger/stop_mode_debug_precond.htm" >
+	<item title="Verify that your SDK is recognized by Carbide." >
 		<description>
-		Before you begin stop mode debugging, make sure all preconditions are met.
+		Verify that your SDK or customer kit is recognized in the Symbian SDKs panel.
 		</description>
 	</item>
 	
-	<item title="Define a Launch Configuration" >
+	<item
+       href="/com.nokia.carbide.cpp.doc.user/html/tasks/ImportingProjects.html"
+       title="Create or import project to debug">
 		<description>
-		Define debug launch configurations for the selected project.
+		Create project or Import the project&apos;s bld.inf file into Carbide.c++.
+		</description>
+	</item>
+	
+	<item
+       href="/com.nokia.carbide.cpp.doc.user/html/tasks/projects/prj_build.htm"
+       title="Build project using the ARM compiler">
+		<description>
+		Build your Project using the ARM compiler.
+		</description>
+	</item>
+	
+	<item title="Build ROM if required" >
+		<description>
+		Build ROM if required.
+		</description>
+	</item>
+	
+	<item
+       href="/com.nokia.carbide.cpp.doc.user/html/projects/launch/stop_mode.htm"
+       title="Create a Symbian Device launch configuration">
+		<description>
+		Click the Debug icon in the toolbar to launch the New Launch Configuration Wizard. Fill in the necessary info.
+		</description>
+	</item>
+	
+	<item title="Launch the debugger" >
+       href="/com.nokia.carbide.cpp.doc.user/html/debugger/debug/comds_starting.htm"
+		<description>
+		Click Debug to launch the debugger and debug your program using the standard debugging actions.
 		</description>
 	</item>
 	
