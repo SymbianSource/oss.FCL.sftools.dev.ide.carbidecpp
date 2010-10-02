@@ -13,14 +13,13 @@
          Use the <b>New Connections</b> window to create, edit, and manage remote connection settings to enable on-device debugging and the installation of remote agents.
       </description>
       <subitem
-            label="Click Help &gt; On-Device Connections to open the New Connection window.">
+            label="In the Remote Connections view click the New Connection... icon to open the New Connection window.">
       </subitem>
    </item>
    <item
          title="Define the remote connection">
       <description>
-         Use the <b>Edit connection name and type</b> page to define basic remote connection settings.
-         
+         Use the <b>Edit connection name and type</b> page to define basic remote connection settings.         
       </description>
       <subitem
             label="Enter a name for this connection">
