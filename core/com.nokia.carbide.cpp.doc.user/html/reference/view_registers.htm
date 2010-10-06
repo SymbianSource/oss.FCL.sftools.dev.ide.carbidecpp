@@ -4,55 +4,168 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta name="LASTUPDATED" content="06/17/05 11:09:43" />
-<title>Registers View</title>
+<script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+<title>Registers view</title>
 <link rel="StyleSheet" href="../../book.css" type="text/css"/>
 </head>
 <body >
-<h2>Registers View</h2>
-<p>  The <b>Registers</b> view reveals a hierarchical view of general, FPU, and host-specific registers of the host computer or target device. You can use the Register view to perform these tasks:</p>
+<h2>Registers view</h2>
+<p>The <img src="../images/command_link.png" border="0" alt="" /> <a href='javascript:executeCommand("org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.debug.ui.RegisterView)")' class="command-link"><b>Registers</b></a> view reveals a hierarchical view of all registers of the host computer or target device based on the debugging mode chosen. The view contains two separate panes:</p>
+<ul>
+    <li>Registers pane &ndash; displays a tree list of register groups, the registers in each group and their values</li>
+    <li>Details pane &ndash; shows the selected register value</li>
+</ul>
+<p>You can use the <b>Register</b> view to perform these tasks:</p>
 <ul>
   <li>expand the hierarchical items in the window and <a href="../tasks/registers/mem_reg_viewing.htm">view</a> their contents</li>
   <li>select and <a href="../tasks/registers/mem_reg_changing.htm">modify</a> register values</li>
   <li><a href="../tasks/registers/mem_reg_data_views.htm">view</a> documentation for individual registers (depending on the register)</li>
 </ul>
-<p>Figure 1 shows a sample Registers view.</p>
+<p>Figure 1 shows a sample <b>Registers</b> view.</p>
 <p align="center"><img src="images/view_registers.png" width="367" height="370"></p>
-<p class="figure">Figure 1 - Registers View </p>
-<h5>Table 1. <span class="figure">Registers</span> view&mdash;items </h5>
+<p class="figure">Figure 1 - Registers view (Register and Detail panes shown)</p>
+<div class="step">
+    <h4>To open a Registers view </h4>
+    <ul>
+        <li>Click the Window &gt; Show View &gt; Registers menu option</li>
+        <p>A <b>Registers</b> view appears.</p>
+    </ul>
+</div>
+<h2><strong>Executables view toolbar icons</strong></h2>
+<p>The table below lists the unique icons displayed in the <b>Registers</b> view toolbar. </p>
+<h5>Table 1. <span class="figure">Registers</span> toolbar options </h5>
 <table width="88%"  border="0" cellpadding="2" cellspacing="0">
   <tr>
-    <th width="34%" scope="col">Item</th>
-    <th width="14%" scope="col">Icons</th>
+      <th width="12%" scope="col">Icons</th>
+    <th width="36%" scope="col">Item</th>
     <th width="52%" scope="col">Explanation</th>
   </tr>
   <tr>
+      <td><div align="center"><img src="../images/icons/var_toggle_type_names_icon.png" alt="Toggle Type Names icon" width="19" height="19" /></div></td>
     <td><b>Show Type Names </b></td>
-    <td><div align="center"><img src="../images/icons/var_toggle_type_names_icon.png" width="19" height="19" /></div></td>
-    <td>Toggles the display of type names in the <span class="figure">Registers</span> view. </td>
+    <td>Toggles the display of type names in the <span class="figure"><b>Registers</b></span> view. </td>
   </tr>
   <tr>
+      <td><div align="center"><img src="../images/icons/var_show_logical_struct_icon.png" alt="Logical Structure icon" width="19" height="19" /></div></td>
     <td><b>Show Logical Structure </b></td>
-    <td><div align="center"><img src="../images/icons/var_show_logical_struct_icon.png" width="19" height="19" /></div></td>
     <td>Not available in C/C++ yet. </td>
   </tr>
   <tr>
+      <td><div align="center"><img src="../images/icons/var_collapse_all_icon.png" alt="Collapse All icon" width="17" height="18" /></div></td>
     <td><b>Collapse All </b></td>
-    <td><div align="center"><img src="../images/icons/var_collapse_all_icon.png" width="17" height="18" /></div></td>
-    <td>Collapses all expanded variables into the top level. </td>
+    <td>Collapses all expanded variables into the top level.</td>
+  </tr>
+  <tr>
+      <td><div align="center"><img src="images/icon_menu_white.png" alt="View menu icon" width="12" height="12"></div></td>
+      <td><b>View Menu</b></td>
+      <td><p>Provides access to Layout options for the view. Options include:</p>
+          <ul>
+              <li>Vertical - shows panes in vertical mode (default)</li>
+              <li>Horizontal &ndash; show panes in horizontal mode</li>
+              <li>Automatic &ndash; selects mode</li>
+              <li>Registers View Only &ndash; hides details pane</li>
+        </ul></td>
   </tr>
 </table>
-<p align="left">For more information, see the <b>C/C++ Development User Guide &gt; Reference &gt; Debug View &gt; Registers view</b>. </p>
-<div class="step">
-  <h4>To open a Registers view </h4>
-  <ul>
-    <li>Click Window &gt; Show View &gt; Registers </li>
-    <p>A Registers view appears.</p>
-  </ul>
-</div>
+<h2>Registers view context menu options</h2>
+<p>The <b>Registers</b> view contains these contextual menu options:</p>
+<h5>Table 2. <span class="figure">Registers</span> context menu options &ndash; Registers pane</h5>
+<table width="88%"  border="0" cellpadding="2" cellspacing="0">
+    <tr>
+        <th width="33%" scope="col">Item</th>
+        <th width="67%" scope="col">Explanation</th>
+    </tr>
+    <tr>
+        <td><b>Select All</b></td>
+        <td>Selects all register values shown.</td>
+    </tr>
+    <tr>
+        <td><b>Copy Registers</b></td>
+        <td>Copies the register values to the clipboard.</td>
+    </tr>
+    <tr>
+        <td><b>Enable</b></td>
+        <td>Enables the display of register values for the selected register group.</td>
+    </tr>
+    <tr>
+        <td><b>Disable</b></td>
+        <td>Disables the display of register values for the selected register group.</td>
+    </tr>
+    <tr>
+        <td><b>Find...</b></td>
+        <td>Opens the <b>Find</b> dialog.</td>
+    </tr>
+    <tr>
+        <td><b>Add Register Group</b></td>
+        <td>Opens the <b>Register Group</b> dialog where you can define new register groups.</td>
+    </tr>
+    <tr>
+        <td><b>Restore Default Register Groups</b></td>
+        <td>Restores the default registers group.</td>
+    </tr>
+    <tr>
+        <td><b>Edit Register Group</b></td>
+        <td>Opens the <b>Register Group</b> dialog where you can edit the selected register group.</td>
+    </tr>
+    <tr>
+        <td><b>Remove Register Group</b></td>
+        <td>Removes the selected register group.</td>
+    </tr>
+</table>
+<h5>Table 3. <span class="figure">Registers</span> context menu options &ndash; Details pane</h5>
+<table width="88%"  border="0" cellpadding="2" cellspacing="0">
+    <tr>
+        <th width="33%" scope="col">Item</th>
+        <th width="67%" scope="col">Explanation</th>
+    </tr>
+    <tr>
+        <td><b>Assign Value</b></td>
+        <td>Assigns the edited value in the <b>Details</b> pane to the selected register in the Registers pane.</td>
+    </tr>
+    <tr>
+        <td><b>Content Assist</b></td>
+        <td>Shows the <b>Content Assist</b> hover pane.</td>
+    </tr>
+    <tr>
+        <td><b>Cut</b></td>
+        <td>Cut the selected value and place it on the clipboard.</td>
+    </tr>
+    <tr>
+        <td><b>Copy</b></td>
+        <td>Copy the selected value and place it on the clipboard.</td>
+    </tr>
+    <tr>
+        <td><b>Paste</b></td>
+        <td>Paste the contents of the clipboard into the selected value.</td>
+    </tr>
+    <tr>
+        <td><b>Select All</b></td>
+        <td>Select all values shown.</td>
+    </tr>
+    <tr>
+        <td><b>Find/Replace...</b></td>
+        <td>Opens the Find/Replace dialog.</td>
+    </tr>
+    <tr>
+        <td><b>Wrap Text</b></td>
+        <td>Toggles whether text is wrapped to the view or not.</td>
+    </tr>
+    <tr>
+        <td><b>Max Length</b></td>
+        <td>Opens the <b>Configure Details Pane</b> dialog to specify the maximum number of characters to display in the <b>Details</b> pane.</td>
+    </tr>
+    <tr>
+        <td><b>Symbian Build</b></td>
+        <td><p>A sub-menu of build options including:</p>
+            <ul>
+                <li>Freeze Exports</li>
+                <li>Build All Configurations</li>
+        </ul></td>
+    </tr>
+</table>
 <h5>Other references </h5>
 <ul>
   <li><a href="../concepts/registers.htm">Registers</a></li>
-  <li><a href="../concepts/arm_registers.htm">ARM Registers</a></li>
   <li><a href="../tasks/registers/mem_reg_open_wnd.htm">Opening Register View</a></li>
   <li><a href="../tasks/registers/mem_reg_viewing.htm">Viewing Register Values </a></li>
   <li><a href="../tasks/registers/mem_reg_changing.htm">Changing Register Values</a></li>
