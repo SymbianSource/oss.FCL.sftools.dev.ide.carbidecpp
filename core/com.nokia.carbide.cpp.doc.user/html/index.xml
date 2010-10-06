@@ -25,7 +25,7 @@
 	<entry keyword="Bluetooth setup">
 	   <topic href="html/tasks/trk/trk_connection_bluetooth.htm" label="TRK"/>
 	</entry>
-	
+
     <entry keyword="Breakpoints">
        <topic href="html/concepts/breakpoints.htm"/>
     </entry>
@@ -47,7 +47,7 @@
        <topic href="html/concepts/working_with_bp_templates.htm"/>
     </entry>
 	-->
-	
+
 	<entry keyword="Breakpoints view">
 	   <topic href="html/reference/view_breakpoints.htm"/>
 	</entry>
@@ -174,13 +174,13 @@
 	</entry>
 
 <!-- D -->
-	
+
 	<!--
 	<entry keyword="Data Viewer Plug-ins">
 	   <topic href="html/concepts/data_viewer_plugins.htm"/>
 	</entry>
 	-->
-	
+
 	<entry keyword="Debug Preferences">
 	   <topic href="html/reference/pref_carb_debugger.htm"/>
 	</entry>
@@ -192,7 +192,7 @@
 	   <topic href="html/reference/projects/launch/stop_mode.htm" label="Symbian OS Device Launch Configuration" />
 	   <topic href="html/reference/debugger_settings.htm" label="Debugger Settings"/>
 	</entry>
-	
+
 	<entry keyword="debugging">
 	   <topic label="Debugging a Program" href="html/tasks/debugger/work_debug_act_debug.htm" />
 	   <topic label="Debugging Applications" href="html/tasks/projects/prj_debug_console.htm" />
@@ -238,14 +238,14 @@
 	<entry keyword="DLL">
 	   <topic href="html/tasks/projects/prj_debug_dlls.htm"/>
 	   <topic label="Simple DLL Example" 		href="html/concepts/SampleExampleProjectCreate.html"/>
-	</entry>	
+	</entry>
 
 <!-- E -->
 
 	<entry keyword="emulator">
 	   <topic href="html/projects/launch/emulation.htm"/>
 	   <topic href="html/reference/pref_carb_build.htm"/>
-	</entry>	
+	</entry>
 
     <entry keyword="Environment variables">
        <topic href="html/reference/build_properties/pane_build_config_env.htm"/>
@@ -385,7 +385,7 @@
 
 	    <topic label="Symbian OS C++ Class" href="html/reference/new_symbian_class.htm" />
 	    <topic label="Symbian OS C++ Project" href="html/reference/new_symbian_project.htm" />
-		
+
 	    <topic href="html/reference/menus/open_cmd_window.htm" />
 	    <topic href="html/reference/menus/open_explorer_window.htm" />
 
@@ -393,14 +393,14 @@
 
 		<topic href="html/tasks/projects/prj_build.htm" />
 		<topic href="html/tasks/projects/prj_clean.htm" />
-	
+
 		<topic href="html/reference/menus/build_all_targets.htm" />
-		<topic href="html/reference/menus/compile_source.htm" />		
-	
+		<topic href="html/reference/menus/compile_source.htm" />
+
 		<topic href="html/reference/menus/build_symbian_comp.htm" />
 		<topic href="html/reference/menus/clean_symbian_comp.htm" />
 		<topic href="html/reference/menus/freeze_symbian_comp.htm" />
-	
+
 		<topic href="html/reference/menus/build_pkg_file.htm" />
 		<topic href="html/reference/ROM_build_settings.html" />
 
@@ -420,7 +420,7 @@
 	   <topic href="html/reference/MMP_Editor_mmp_tab.html" label="MMP File tab"/>
 	   <topic href="html/reference/MMP_Editor_resource_block.html" label="Resource Block"/>
 	</entry>
-	
+
 	<entry keyword="MMP Files">
 	   <topic href="html/concepts/mmpfiles.htm"/>
 	</entry>
@@ -640,7 +640,7 @@
     <entry keyword="Symbian Project Navigator">
        <topic href="html/reference/view_sym_proj_nav.htm"/>
     </entry>
-   
+
 	<entry keyword="Symbol Hint">
 	   <topic href="html/concepts/symbol_hints.htm"/>
 	</entry>

@@ -9,22 +9,22 @@
 <script language="JavaScript" src="PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
 </head>
 <body >
-<h2>Run Mode Debug Example (Symbian OS Device (Install SIS)) </h2>
-<p>This example shows how to create and build an application and debug it on a device using the Symbian OS Device (Install SIS) on-device debug agent. The majority of steps are identical to the ones used to create a program and debug in an emulator, with some minor variations.</p>
+<h2>Run Mode Debug Example (Symbian Device (Install SIS)) </h2>
+<p>This example shows how to create and build an application and debug it on a device using the Symbian Device (Install SIS) on-device debug agent. The majority of steps are identical to the ones used to create a program and debug in an emulator, with some minor variations.</p>
 <div class="step">
-  <h4>Debugging a Run-mode Project using Symbian OS Device (Install SIS) </h4>
+  <h4>Debugging a Run-mode Project using Symbian Device (Install SIS) </h4>
   <ol>
     <li>Import the Bld.inf to create a project using the Import wizard </li>
     <p>In this example we are importing a project called Music, a complex project that includes several EXEs (MusicPlayer, MusicShop, MusicVisualizer). For the import, we select an ARM target.</p>
     <li>Go to the project Properties page and in the Carbide Build Configuration panel specify the PKG file in the <a href="../../reference/build_properties/pane_build_config_sis.htm">SIS Builder</a> tab </li>
     <li>Build the project (Ctrl+B) </li>
-    <li>Verify that all the binaries built by the project appear  in the <a href="../../reference/view_executables.htm">Executables</a> view. </li>
+    <li>Verify that all the binaries built by the project appear  in the <a href="../../projects/views/view_executables.htm">Executables</a> view. </li>
     <p class="note"><b>NOTE</b> The symbolics are automatically loaded for the binaries that appear in the Executables view.</p>
     <li>Set  <a href="../breakpoints/pgm_bp_setting.htm">breakpoints</a> in the project source files </li>
     <p>In this example we will set one breakpoint in two different EXEs. The first is set in the file called <span class="code">MCEngine.cpp</span> (MCServer.exe) and the second is set in  <span class="code">MPlayerAppUI.cpp</span> (MusicPlayer.exe). </p>
     <li>Click the Debug icon (<img src="../../projects/images/icon_debug.png" width="17" height="16" align="absmiddle">) to launch the <a href="../../projects/launch/wiz_new_launch_config.htm">New Launch Configuration</a> wizard
       <ol type="a">
-        <li>Select the Symbian OS Device (Install SIS) Launch Configuration from the Launch Types page, then click Next</li>
+        <li>Select the Symbian Device (Install SIS) Launch Configuration from the Launch Types page, then click Next</li>
         <p align="center"><img src="../trk/images/trk_launch_types.png" width="438" height="533"></p>
         <p class="figure">Figure 1 - Launch Types page showing selection </p>
         <li>If you have more than one executable, select the Main Executable in the Executable Selection page of the wizard, then click Next</li>
@@ -59,12 +59,12 @@
       </ol>
     </li>
   </ol>
-  <p>In addition, you can click the <a href="../../reference/view_symbian_kernel.htm">Symbian OS Data View</a> to examine the processes running on the devise during the debug session. </p>
+  <p>In addition, you can click the <a href="../../reference/view_symbian_kernel.htm">Symbian Data View</a> to examine the processes running on the devise during the debug session. </p>
 </div>
 <h5>Related references</h5>
 <ul>
   <li><a href="../trk/trk_troubleshooting.htm">On-device Debugging Troubleshooting</a></li>
-  <li><a href="../../reference/view_symbian_kernel.htm">Symbian OS View</a></li>
+  <li><a href="../../reference/view_symbian_kernel.htm">Symbian View</a></li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

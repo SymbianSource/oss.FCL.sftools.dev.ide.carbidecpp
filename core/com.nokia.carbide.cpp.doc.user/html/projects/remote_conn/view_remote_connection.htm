@@ -1,0 +1,181 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Check TRK, TRK, Install TRK"
+><meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Remote Connections view</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<script language="JavaScript" src="../../reference/trk/PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+<style type="text/css">
+<!--
+.style1 {
+	font-family: Helvetica, sans-serif;
+	font-weight: bold;
+}
+-->
+</style>
+</head>
+<body >
+<h2>Remote Connections view</h2>
+<p>Use  the <strong>Remote Connections</strong> view to monitor, create, edit, or remove  common  connection settings for remote agents. Remote agents provide support for debugging, profiling, trace, and more. The connection types currently supported include:</p>
+<ul>
+    <li>Bluetooth &mdash; available for  debug support </li>
+    <li>Serial &mdash; mainly for boards with a serial interface</li>
+    <li>USB &mdash; available for both debug and trace support </li>
+</ul>
+<p>The columns in the <strong>Remote Connections</strong> view include:</p>
+<ul>
+  <li>Connection/Services - connection name defined by you and remote agent type</li>
+  <li>Type - connection type, i.e. Bluetooth, USB, TCP/IP, etc.</li>
+  <li>Status - current connection status, i.e. Available, Not Accessible, Ready, etc.</li>
+  <li>Description - provides information on the current connection test status.</li>
+</ul>
+<p align="center"><img src="../../reference/images/view_remote_connections.png" width="679" height="166"></p>
+<p class="figure">Figure 1 - Remote Connections view</p>
+<p>When the view is closed or another perspective opened, a small display  appears in the trim area in the lower-right corner of the workspace showing the current active remote connection. Click the connection name to  open the drop-down menu where you can open the Remote Connections view or switch between  connections.</p>
+<p align="center"><img src="../../reference/images/trim_remote_conns.png" width="212" height="44"></p>
+<p class="figure">Figure 2. Available remote connection trim indicator</p>
+<h3>Remote Connections view toolbar icons</h3>
+<p>The following commands appear on the toolbar within the Remote Connections view: </p>
+<table width="800"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="28%" scope="col">Item</th>
+    <th width="13%" scope="col">Icon</th>
+    <th width="59%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+      <td><strong>Toggle periodic service testing</strong></td>
+      <td><div align="center"><img src="../../reference/images/icon_periodic_testing.png" alt="Periodic testing icon" width="18" height="18"></div></td>
+      <td>Toggles service testing on or off.</td>
+  </tr>
+  <tr>
+    <td><strong>Refresh Connections</strong></td>
+    <td><center>
+      <img src="../../reference/images/icon_remote_connection_refresh.png" width="18" height="18">
+    </center>    </td>
+    <td><p>Click to update the connection list status.</p>    </td>
+  </tr>
+  <tr>
+    <td><strong>New Connection</strong></td>
+    <td><center>
+      <img src="../../reference/images/icon_remote_connection_new.png" width="18" height="17">
+    </center>    </td>
+    <td>Click to open the New  Connection wizard to add a connection.</td>
+  </tr>
+  <tr>
+    <td><strong>Edit Connection</strong></td>
+    <td><center>
+      <img src="../../reference/images/icon_remote_connection_edit.png" width="18" height="17">
+    </center>    </td>
+    <td><p>Click to edit the selected remote connection.</p>    </td>
+  </tr>
+  <tr>
+      <td><strong>View menu</strong></td>
+      <td><div align="center"><img src="../../reference/images/icon_menu_white.png" alt="View menu" width="12" height="12"></div></td>
+      <td>Select the connection types to monitor for remote connections.</td>
+  </tr>
+</table>
+<h3>Remote Connections view Status icons</h3>
+<p>The following status indicators appear in the Remote Connections view: </p>
+<table width="800"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="28%" scope="col">Item</th>
+    <th width="13%" scope="col">Icon</th>
+    <th width="59%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><strong>Connection</strong></td>
+    <td><center>
+      <img src="../../reference/images/icon_rc_connection.png" width="16" height="16">
+    </center></td>
+    <td><p>Indicates an inactive remote connection setting.</p></td>
+  </tr>
+  <tr>
+    <td><strong>Not Active</strong></td>
+    <td><center>
+      <img src="../../reference/images/icon_rc_not_active.png" width="17" height="17">
+    </center></td>
+    <td>Indicates an inactive connection type.</td>
+  </tr>
+  <tr>
+    <td><strong>Ready / Available</strong></td>
+    <td><center>
+      <img src="../../reference/images/icon_rc_available.png" width="17" height="18">
+    </center></td>
+    <td><p>Indicates an active remote connection is ready or that a particular connection type is available.</p></td>
+  </tr>
+  <tr>
+    <td><b>Not Accessible</b></td>
+    <td><center>
+      <img src="../../reference/images/icon_rc_not_accessible.png" width="16" height="16">
+    </center>    </td>
+    <td><p>Cannot access the connection type within the connection setup. This could be due to one of the following conditions:</p>
+        <ul>
+            <li>Nokia Ovi/PC Suite is not installed (Carbide uses their drivers to connect to remote devices)</li>
+            <li>User did not select Ovi/PC Suite mode on the device</li>
+            <li>CODA (Carbide On-device Debug Agent)   is not installed on the device</li>
+        </ul>        
+        <p>If all the above is setup the remote device should automatically appear when it is connected to the PC. The Description field contains useful debug information that can help solve the issue as well. </p></td>
+  </tr>
+</table>
+<h3>Remote Connections view context menu options</h3>
+<p>Based on the current selection, one or more of the following commands appear on the context menu when you right-click within the Remote Connections view. For example, if no connections are defined, only the <b>New Connection</b> command is available on the context menu. </p>
+<p align="center"><img src="../../reference/images/context_menu_remote_conn_view.png" width="246" height="141"></p>
+<p class="figure">Figure 3 - Remote Connections context menu</p>
+<table width="800"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="30%" scope="col">Item</th>
+    <th width="11%" scope="col">Icon</th>
+    <th width="59%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><span class="style1">New Connection...</span></td>
+    <td><center>
+      <img src="../../reference/images/icon_remote_connection_new.png" width="20" height="18">
+    </center>    </td>
+    <td>Select to open the New  Connection wizard to add a connection.</td>
+  </tr>
+  <tr>
+    <td><span class="style1">Rename</span></td>
+    <td>&nbsp;</td>
+    <td>Select to rename the currently selected connection.</td>
+  </tr>
+  <tr>
+    <td><span class="style1">Edit  Settings...</span></td>
+    <td><center>
+      <img src="../../reference/images/icon_remote_connection_edit.png" width="19" height="19">
+    </center>    </td>
+    <td><p>Select to edit the selected remote connection settings.</p></td>
+  </tr>
+  <tr>
+    <td><span class="style1">Delete</span></td>
+    <td><center>
+      <img src="../../reference/images/icon_remote_connection_delete.png" width="17" height="16">
+    </center>    </td>
+    <td><p>Select to delete the selected connection from the connection list.</p></td>
+  </tr>
+  <tr>
+    <td><span class="style1">Help for...</span></td>
+    <td><center>
+        <img src="../../reference/images/icon_remote_connection_docs.png" width="19" height="17">
+    </center></td>
+    <td>Select to open the Help view for connection information.</td>
+  </tr>
+  <tr>
+    <td><span class="style1">Make Current</span></td>
+    <td>&nbsp;</td>
+    <td>Make the selected connection the current connection.</td>
+  </tr>
+</table>
+<h5>Related references</h5>
+<ul>
+  <li><a href="wnd_on_device_setup.htm">On-Device Connections</a><a href="wnd_on_device_setup.htm"></a></li>
+  <li><a href="wnd_new_conn_install_tab.htm">Install latest CODA</a></li>
+  <li><a href="../../tasks/trk/trk_plug_n_play_01.htm">Plug-n-Play CODA Setup</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.htm</a></div>
+
+</body>
+</html>

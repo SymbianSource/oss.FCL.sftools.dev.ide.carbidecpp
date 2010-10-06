@@ -69,7 +69,7 @@
   <tr>
     <td><p class="style4">Manage dependency tracking (improves build speed) </p></td>
     <td><p>Enable to have Carbide manage the dependency tracking for source and resource files. Carbide does this by separating out the generation of dependency information from the makefile and managing the entire process.  All builds now can quickly compare whether new dependency information is required due to changes in a source file and only build those that need updating. </p>
-    <p>If not enabled, the Symbian OS command line build system handles all dependency tracking by generating the dependency information in the makefiles. Because it does this for all project files, regardless of the number of changes, it can result in a performance penalty. A single edit in a MMP file  forces a complete regeneration of the makefile dependency information for all project files. </p>    </td>
+    <p>If not enabled, the Symbian command line build system handles all dependency tracking by generating the dependency information in the makefiles. Because it does this for all project files, regardless of the number of changes, it can result in a performance penalty. A single edit in a MMP file  forces a complete regeneration of the makefile dependency information for all project files. </p>    </td>
   </tr>
   <tr>
     <td><p><strong>Show a dialog to modify build actions when modified MMPs are detected </strong></p></td>

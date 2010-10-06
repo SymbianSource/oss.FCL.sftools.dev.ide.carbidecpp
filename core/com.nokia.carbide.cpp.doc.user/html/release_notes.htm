@@ -1,106 +1,108 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+  <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <title>Carbide.c++ Release Notes</title>
-  <link href="../book.css" rel="stylesheet" type="text/css" />
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <link href="../book.css" rel="stylesheet" type="text/css" />
-  <script language="JavaScript" src="../projects/launch/launch_configs_overview.htm"></script>
+  <link href="../book.css" rel="stylesheet" type="text/css">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-16">
+  <link href="../book.css" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="../projects/launch/launch_configs_overview.htm" type="text/javascript">
+</script>
 </head>
-<body >
-<h2>Carbide.c++ Release Notes 3.0.0</h2>
-<p>The Carbide.c++  is a comprehensive development tool suite for Symbian OS that is based on the Eclipse framework. The C++ Development Toolkit (CDT), provides the foundation for project and build tools management, as well as the primary interface for the debugger to communicate with the IDE. </p>
-<p>This is a collection of important information concerning last-minute
-  changes and other topics that deserve special attention.&nbsp;Please
-  read these notes carefully before using the Carbide tools so you
-  understand the current limitations and workarounds for known
-  issues. </p>
-<ul>
-  <li><a href="#whatsNew">What's new </a></li>
-  <li><a href="bugs_fixed.htm">K</a><a href="#issues">nown issues</a></li>
-  <li><a href="bugs_fixed.htm">Bug Fixes</a></li>
-  <li><a href="#support">Technical support</a> </li>
-</ul>
-<h3><a name="whatsNew" id="whatsNew"></a>What's New in 3.0.0 </h3>
-<p>The following features for Symbian  development are provided within Carbide.c++:</p>
-<ul>
-    
-    <li><b>Eclipse 3.6 </b>&#8212; The Eclipse 3.6 project (Helios) provides the foundation, or integration platform, on which  Carbide.c++  is built. New features include: Breakpoint detail pane for editing properties, Expression View Columns, Rectangular cut/paste, Synchronize View for applying patches. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.6</a> for more information.</li>
-    <li><b>CDT 7.0 </b>&#8212; The final version of CDT is included as part of the Helios release. New Disassembly view with unlimited scrolling et al, new Templates view, compiler error/warning output highlighting, Regular Expression Error parser, Save build log to file, new key binding for &quot;Run last make target&quot;. See the <a href="http://wiki.eclipse.org/CDT/User/NewIn70">CDT 7.0 News and Noteworthy</a> page for more information. </li>
-    <li><strong>Eclipse Debugger for C/C++</strong><strong> </strong>&mdash; Carbide now uses the <strong>Eclipse Debugger for C/C++</strong> (EDC) as the default device debugger. EDC provided an entirely new Debug view with all of the standard debug features like variables, breakpoints, watchpoints, disassembly, and all the other views required to run a debugging session. In addition, EDC provides the framework to add new debug features like snapshots.</li>
-    <li><b>TCF Debug Agents</b> &ndash; Using Eclipse&rsquo;s Target Configuration Framework, a new set of debug agents are used with the new EDC debugger to provide a completely new end-to-end debug environment. </li>
-    <li><b>Plug-n-Play Debug Discovery</b> &ndash; a new method where Carbide can detect a debug target (phone device, PlatSim, etc) and automatically connect and configure the target so debugging can be initiated.</li>
-    <li><b>Snapshots</b> &ndash; Save the state of a debug session for later review. Multiple snapshots are stored in a debug album to be shared with others or used for comparing different debug sessions.</li>
-    <li><b>New SDK Manager</b> &ndash; Now automatically adds Symbian SDKs found on subst'ed drives and will link corresponding internally installed Qt SDKs. There are only two properties for SDKs now, the unique ID and location - no more messing around with OS or SDK versions!</li>
-    <li><b>Improved Raptor support</b> &ndash; The Build Configuration Filter selects which platforms are visible when creating new projects or build configurations. This preference panel populates the build configurations when importing new projects. Users can now create their own custom variants for any Raptor build alias.</li>
-    <li><b>CODA</b> replaces <b>TRK</b> as the debug agent on remote devices. CODA (Carbide On-device Debug Agent) uses the TCF interface to provide improved communication support between the Carbide debugger and the remote device. Can be downloaded and installed using the Install Remote Agents tab in the New Connection dialog. Requires both Carbide.c++ 3.x and EDC.</li>
-    <li><b>New Carbide.c++ portal view</b> &ndash; The new <a href="reference/view_carbide_portal.htm">Carbide.c++ Portal</a> view provides easier access to
-        <ul>
-            <li> Welcome and getting started information including videos, blogs, and much more</li>
-            <li>Installing and updating Symbian SDKs using the SDK Manager</li>
-            <li>Customizing the Carbide workspace to better suit your needs</li>
-            <li>Support information</li>
-        </ul>
-        </li>
-    <li><strong>Streamlined UI</strong> &mdash; Carbide's UI has been streamlined and minimized to a core set of functionality, mainly that of creating Symbian projects, building and debugging them. Context menus have been reworked to show a minimum set of options. If your favorite option is missing, you can use the <strong>Capability</strong> preference panel or the <strong>Customize Perspective</strong> dialog to add favorite commands back onto the context menus.</li>
-</ul>
-<ul><li><strong>Performance improvements</strong>  &mdash; We continue to address known performance issues as they reveal themselves. This release provides improvements for:
-      <ul>
-          <li><b>Cached SDK and SBS builds</b> &ndash; once your SDKs and build configurations are set up subsequent Carbide launches are faster.</li>
-          <li><strong>Stack frames</strong> &mdash; in the Debug view stack frames were displayed once the symbol tables were completely read. For large symbol files this sometimes slowed down the display and hence the ability to continue debugging. Now the Debug view will show a subset of stack frames after a set time and update the remainder once it has finished scanning the symbol file.</li>
-          <li><strong>Executables view</strong>   &mdash; eliminated several use cases that forced the Executables list to update too frequently.</li>
-          <li><strong>Large symbol tables</strong> supported &mdash; The Carbide symbol reader has been rewritten to provide faster access to symbols and to handle very large symbol files (larger than 10GB).</li>
-        </ul>
-  </li>
-  <li>The Variables view and debug hover provides  smart formatting for:
-      <ul>
-          <li>Symbian data types and descriptors</li>
-          <li>Qt data types:  <span class="code">QString</span>, <span class="code">QByteArray</span>, <span class="code">QSet</span>, <span class="code">QHash</span>, <span class="code">QMap</span>, <span class="code">QVector</span>, <span class="code">QList</span>, <span class="code">QLinkedList</span> and <span class="code">Qvariant</span>.</li>
-      </ul>
-  </li>
+<body>
+  <h2>Carbide.c++ Release Notes 3.0.0</h2>
+  <p>The Carbide.c++ is a comprehensive development tool suite for Symbian that is based on the Eclipse framework. The C++ Development Toolkit (CDT), provides the foundation for project and build tools management, as well as the primary interface for the debugger to communicate with the IDE.</p>
+  <p>This is a collection of important information concerning last-minute changes and other topics that deserve special attention. Please read these notes carefully before using the Carbide tools so you understand the current limitations and workarounds for known issues.</p>
+  <ul>
+    <li><a href="#whatsNew">What's new</a></li>
+    <li><a href="#issues">Known issues</a></li>
+    <li><a href="#bugs_fixed.htm">Bug Fixes</a></li>
+    <li><a href="#support">Technical support</a></li>
   </ul>
-<h4><a name="new270" id="new270"></a>2.7.0 </h4>
-<ul>
-    
-  <li>The Leavescan plug-in has been deprecated and is no longer included in  Carbide.c++ releases. Use Codescanner to replace the Leavescan functionality.</li>
-</ul>
-<h4><a name="new260" id="new2"></a>2.6.0 </h4>
-<ul>
-    <li><b>GCCE 4.0 </b> supported &mdash; required for future SBSv2 releases.</li>
-    <li><b>Symbian^3 </b>supported &mdash; new templates and improvements required for the public Symbian^3 SDK.</li>
-    <li><b>Known Issues in v2.6.0</b>: 
-        <p>GCCE4 support requires using a SBSv2 build alias (<span class="code">-c</span> parameter) of <span class="code">armv5_udeb_gcce</span> or <span class="code">armv5_urel_gcce</span>. As of this writing, these aliases were not available in the SDK or SBSv2, but will appear in some future version. Carbide versions prior to 2.6 do not support GCCE4.</p>
-        <p>Users should consult the SDK documentation for GCCE and SBSv2 issues and installation requirements.</p>
-        <p>TRK: If you install the TRK app onto your phone's flash memory (Mass Storage) a Remote Connection may not find the TRK-service even though TRK is already connected to your PC.         Workaround: Uninstall TRK then reinstall it onto your PHONE memory (C-drive). The TRK service should now be &quot;Available&quot;.</p>
+  <h3><a name="whatsNew" id="whatsNew"></a>What's New in 3.0.0</h3>
+  <p>The following features for Symbian development are provided within Carbide.c++:</p>
+  <ul>
+    <li><strong>Eclipse 3.6</strong> - The Eclipse 3.6 project (Helios) provides the foundation, or integration platform, on which Carbide.c++ is built. New features include: Breakpoint detail pane for editing properties, Expression View Columns, Rectangular cut/paste, Synchronize View for applying patches. See <a href="PLUGINS_ROOT/org.eclipse.platform.doc.user/whatsNew/platform_whatsnew.html">What's New in 3.6</a> for more information.</li>
+    <li><strong>CDT 7.0</strong> - The final version of CDT is included as part of the Helios release. New Disassembly view with unlimited scrolling et al, new Templates view, compiler error/warning output highlighting, Regular Expression Error parser, Save build log to file, new key binding for "Run last make target". See the <a href="http://wiki.eclipse.org/CDT/User/NewIn70">CDT 7.0 News and Noteworthy</a> page for more information.</li>
+    <li><strong>Eclipse Debugger for C/C++</strong> - Carbide now uses the <strong>Eclipse Debugger for C/C++</strong> (EDC) as the default device debugger. EDC provided an entirely new Debug view with all of the standard debug features like variables, breakpoints, watchpoints, disassembly, and all the other views required to run a debugging session. In addition, EDC provides the framework to add new debug features like snapshots.</li>
+    <li><strong>TCF Debug Agents</strong> - Using Eclipse's Target Configuration Framework, a new set of debug agents are used with the new EDC debugger to provide a completely new end-to-end debug environment.</li>
+    <li><strong>Plug-n-Play Debug Discovery</strong> - a new method where Carbide can detect a debug target (phone device, PlatSim, etc) and automatically connect and configure the target so debugging can be initiated.</li>
+    <li><strong>Snapshots</strong> - Save the state of a debug session for later review. Multiple snapshots are stored in a debug album to be shared with others or used for comparing different debug sessions.</li>
+    <li><strong>New SDK Manager</strong> - Now automatically adds Symbian SDKs found on subst'ed drives and will link corresponding internally installed Qt SDKs. There are only two properties for SDKs now, the unique ID and location - no more messing around with OS or SDK versions!</li>
+    <li><strong>Improved Raptor support</strong> - The Build Configuration Filter selects which platforms are visible when creating new projects or build configurations. This preference panel populates the build configurations when importing new projects. Users can now create their own custom variants for any Raptor build alias.</li>
+    <li><strong>CODA</strong> replaces <strong>TRK</strong> as the debug agent on remote devices. CODA (Carbide On-device Debug Agent) uses the TCF interface to provide improved communication support between the Carbide debugger and the remote device. Can be downloaded and installed using the Install Remote Agents tab in the New Connection dialog. Requires both Carbide.c++ 3.x and EDC.</li>
+    <li>
+      <strong>New Carbide.c++ portal view</strong> - The new <a href="projects/views/view_carbide_portal.htm">Carbide.c++ Portal</a> view provides easier access to
+      <ul>
+        <li>Welcome and getting started information including videos, blogs, and much more</li>
+        <li>Installing and updating Symbian SDKs using the SDK Manager</li>
+        <li>Customizing the Carbide workspace to better suit your needs</li>
+        <li>Support information</li>
+      </ul>
     </li>
-</ul>
-<h4><a name="new250" id="new"></a>2.5.0</h4>
-<ul>
-  <li><b>Plug-and-Play (PnP) On-device Debugging </b> supported &mdash; debugging a target device just got easier. Using a USB cable, connect the PC to the target device, then launch Carbide.c++. Carbide locates the connected device and creates a remote connection setup to communicate with it. Build the program and launch it on the device to start the debugging session. </li>
-  <li><b>PnP Phone Launch Wizard</b> - If the project does not already have a launch configuration, the PnP Launch Wizard makes it easy to create one for <a href="projects/launch/launch_phone.htm">phones</a>. In addition the new <a href="projects/launch/launch_configs_overview.htm">Configure Launch Configuration</a> dialog provides a quick summary of the remote connection for easy review and modification.</li>
-  <li><b>Carbide  automatically detects TRK on target phones and devices</b> - Carbide  now detects the presence of either Application or System TRK on a connected device when TRK 3.2.6 or later are installed. Earlier TRK versions  do not support this recognition feature.</li>
-  <li><b>TRK improvements</b> - TRK continues to evolve and now includes these improvements:
-    <ul>
-        <li>Both Application and System TRK v3.2.6 support PnP debugging. Update and install  using the <b>Help &gt; On Device Connections &gt; Install Remote Agents</b> pane in the <b>New Connection</b> dialog.</li>
-      <li><span class="code">VERSION3</span> command now supported</li>
-    </ul>
-  </li>
-  <li><b>RVCT 4.0 (ARMv5)</b> builds and some limited debugging is supported</li>
-  <li><b>Symbian ^3 SDK</b> now supported</li>
-</ul>
-<h3><a name="issues" id="issues"></a>Known issues</h3>
-<p>Workarounds for known issues: </p>
-<ul>
-    <li><strong>Qt issues</strong> &mdash; If Qt does not seem to be working as expected, be sure to run the <span class="code">\configuration\qt\register_plugins.bat</span> file to properly register the Qt plugins. This is especially important if you installed Carbide using a zip file and not an installer.</li>
-    <li><strong>USB issues</strong>  &mdash; There are known problems with some USB configurations. We are working to resolve these asap.</li>
-</ul>
-<h3><a name="support" id="support"></a>Technical support </h3>
-<p>The following support services are available:</p>
-<ul><li>Visit the <a href="http://developer.symbian.org/">Symbian Foundation</a> for Carbide.c++ and Symbian development information </li>
-</ul>
-<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
-
+    <li><strong>Streamlined UI</strong> - Carbide's UI has been streamlined and minimized to a core set of functionality, mainly that of creating Symbian projects, building and debugging them. Context menus have been reworked to show a minimum set of options. If your favorite option is missing, you can use the <strong>Capability</strong> preference panel or the <strong>Customize Perspective</strong> dialog to add favorite commands back onto the context menus.</li>
+  </ul>
+  <ul>
+    <li>
+      <strong>Performance improvements</strong> - We continue to address known performance issues as they reveal themselves. This release provides improvements for:
+      <ul>
+        <li><strong>Cached SDK and SBS builds</strong> - once your SDKs and build configurations are set up subsequent Carbide launches are faster.</li>
+        <li><strong>Stack frames</strong> - in the Debug view stack frames were displayed once the symbol tables were completely read. For large symbol files this sometimes slowed down the display and hence the ability to continue debugging. Now the Debug view will show a subset of stack frames after a set time and update the remainder once it has finished scanning the symbol file.</li>
+        <li><strong>Executables view</strong> - eliminated several use cases that forced the Executables list to update too frequently.</li>
+        <li><strong>Large symbol tables</strong> supported - The Carbide symbol reader has been rewritten to provide faster access to symbols and to handle very large symbol files (larger than 10GB).</li>
+      </ul>
+    </li>
+    <li>The Variables view and debug hover provides smart formatting for:
+      <ul>
+        <li>Symbian data types and descriptors</li>
+        <li>Qt data types: <span class="code">QString</span>, <span class="code">QByteArray</span>, <span class="code">QSet</span>, <span class="code">QHash</span>, <span class="code">QMap</span>, <span class="code">QVector</span>, <span class="code">QList</span>, <span class="code">QLinkedList</span> and <span class="code">Qvariant</span>.</li>
+      </ul>
+    </li>
+  </ul>
+  <h4><a name="new270" id="new270"></a>2.7.0</h4>
+  <ul>
+    <li>The Leavescan plug-in has been deprecated and is no longer included in Carbide.c++ releases. Use Codescanner to replace the Leavescan functionality.</li>
+  </ul>
+  <h4><a name="new260" id="new260"></a>2.6.0</h4>
+  <ul>
+    <li><strong>GCCE 4.0</strong> supported - required for future SBSv2 releases.</li>
+    <li><strong>Symbian^3</strong> supported - new templates and improvements required for the public Symbian^3 SDK.</li>
+    <li>
+      <strong>Known Issues in v2.6.0</strong>:
+      <p>GCCE4 support requires using a SBSv2 build alias (<span class="code">-c</span> parameter) of <span class="code">armv5_udeb_gcce</span> or <span class="code">armv5_urel_gcce</span>. As of this writing, these aliases were not available in the SDK or SBSv2, but will appear in some future version. Carbide versions prior to 2.6 do not support GCCE4.</p>
+      <p>Users should consult the SDK documentation for GCCE and SBSv2 issues and installation requirements.</p>
+      <p>TRK: If you install the TRK app onto your phone's flash memory (Mass Storage) a Remote Connection may not find the TRK-service even though TRK is already connected to your PC. Workaround: Uninstall TRK then reinstall it onto your PHONE memory (C-drive). The TRK service should now be "Available".</p>
+    </li>
+  </ul>
+  <h4><a name="new250" id="new250"></a>2.5.0</h4>
+  <ul>
+    <li><strong>Plug-and-Play (PnP) On-device Debugging</strong> supported - debugging a target device just got easier. Using a USB cable, connect the PC to the target device, then launch Carbide.c++. Carbide locates the connected device and creates a remote connection setup to communicate with it. Build the program and launch it on the device to start the debugging session.</li>
+    <li><strong>PnP Phone Launch Wizard</strong> - If the project does not already have a launch configuration, the PnP Launch Wizard makes it easy to create one for <a href="projects/launch/launch_phone.htm">phones</a>. In addition the new <a href="projects/launch/launch_configs_overview.htm">Configure Launch Configuration</a> dialog provides a quick summary of the remote connection for easy review and modification.</li>
+    <li><strong>Carbide automatically detects TRK on target phones and devices</strong> - Carbide now detects the presence of either Application or System TRK on a connected device when TRK 3.2.6 or later are installed. Earlier TRK versions do not support this recognition feature.</li>
+    <li>
+      <strong>TRK improvements</strong> - TRK continues to evolve and now includes these improvements:
+      <ul>
+        <li>Both Application and System TRK v3.2.6 support PnP debugging. Update and install using the <strong>Help &gt; On Device Connections &gt; Install Remote Agents</strong> pane in the <strong>New Connection</strong> dialog.</li>
+        <li><span class="code">VERSION3</span> command now supported</li>
+      </ul>
+    </li>
+    <li><strong>RVCT 4.0 (ARMv5)</strong> builds and some limited debugging is supported</li>
+    <li><strong>Symbian ^3 SDK</strong> now supported</li>
+  </ul>
+  <h3><a name="issues" id="issues"></a>Known issues</h3>
+  <p>Workarounds for known issues:</p>
+  <ul>
+    <li><strong>Qt issues</strong> - If Qt does not seem to be working as expected, be sure to run the <span class="code">\configuration\qt\register_plugins.bat</span> file to properly register the Qt plugins. This is especially important if you installed Carbide using a zip file and not an installer.</li>
+    <li><strong>USB issues</strong> - There are known problems with some USB configurations. We are working to resolve these asap.</li>
+  </ul>
+  <h3><a name="support" id="support"></a>Technical support</h3>
+  <p>The following support services are available:</p>
+  <ul>
+    <li>Visit the <a href="http://developer.symbian.org/">Symbian Foundation</a> for Carbide.c++ and Symbian development information</li>
+  </ul>
+  <div id="footer">
+    Copyright © 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved.<br>
+    License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a>
+  </div>
 </body>
 </html>

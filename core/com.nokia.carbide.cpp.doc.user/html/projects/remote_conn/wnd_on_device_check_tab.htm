@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="keywords" content="Check TRK, TRK, Install TRK"
+><meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Test Connection</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+<script language="JavaScript" src="../../reference/trk/PLUGINS_ROOT/org.eclipse.help/livehelp.js"></script>
+</head>
+<body >
+<h2>Test Connection</h2>
+<p>Use  the <b>Set Connection Settings</b> pane to compare the version of remote service installed on the device with the latest version available for Carbide. A remote service is any software on the device that can communicate with Carbide. This includes CODA (Carbide On-device Debug Agent), Trace, Performance Investigator, and other services. In this pane you can:</p>
+<ul><li>Set  the device OS used by the device and supported by the remote service</li>
+  <li>Verify that Carbide can communicate with the remote service via the chosen connection setting</li>
+  <li>Verify that you have the latest version of the remote service  installed on the device</li>
+</ul>
+<p>Options presented may differ based on the type of connection setting  chosen.</p>
+<p align="center"><img src="../../reference/images/tab_new_conn_test_conn.png" width="525" height="576"></p>
+<p class="figure">Figure 1 - Test Connection  pane in the New Connection dialog </p>
+<h5>Table 1<span class="figure"> Test Connection </span> pane &mdash; items</h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="29%" scope="col">Item</th>
+    <th width="57%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><strong>Device OS (used to determine installer version)</strong></td>
+    <td><p>A dropdown list of device OSes that are supported by  CODA. Select the OS used by the device before running a check. </p>    </td>
+  </tr>
+  <tr>
+    <td><strong>Select a service to test</strong></td>
+    <td>Select the remote service type to query on the remote device.</td>
+  </tr>
+  <tr>
+    <td><b>Initiate service testing</b></td>
+    <td><p>Click <b>Initiate service testing</b> to query the  remote software on the device for its version number. It then compares the version number found with the latest version available for Carbide. A progress bar will appear when the operation requires more than a few seconds.</p>
+      <p class="note"><strong>NOTE</strong> The PC must have an internet connection to perform a remote service version check.</p>
+      <p>Once the comparison is complete the Status text is updated with the result and further instructions as required.</p>
+      <p align="center"><img src="../../reference/images/wnd_on_device_setup_install_new_version.png" width="466" height="67"></p>
+      <p align="left">If a connection fails, the errors normally fall into these two categories: </p>
+      <ul>
+        <li><strong>connection failure</strong> - this usually indicates the chosen COM port  is not open. Try selecting a different COM port, specifically one with a name attached to it (<span class="code">COM4 - BthModem0</span>) for the type of connection you are using (USB or Bluetooth). Repeat as necessary until you get a successful response. </li>
+        <li><strong>Service not responding</strong> - this indicates that the COM port is open but the remote service is not responding. First, verify that remote service is up and running on the device. Second, the remote service may be listening on a different COM port, so choose another named COM port and try again.</li>
+      </ul>      </td>
+  </tr>
+</table>
+<h5>Related references</h5>
+<ul>
+  <li><a href="wnd_on_device_setup.htm">On-Device Connections</a></li>
+  <li><a href="wnd_new_connection_wizard.htm">Setup Connection</a></li>
+  <li><a href="wnd_on_device_check_tab.htm">Install Remote Agents</a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>
+  License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+</body>
+</html>

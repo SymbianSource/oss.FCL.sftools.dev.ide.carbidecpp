@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head>
+<title>MMP Editor Resource Block</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+   </head>
+   <body>
+   <h2>MMP Editor Resource Block</h2>
+   
+   <p>
+   The MMP editor resource block dialog allows you to add or remove resource files to your project. The Edit Resource Block dialog is shown in Figure 1.  You can add, remove or edit resource files to be included with your project.</p>
+   <p align="center"><img src="../../reference/images/mmp_editor_resrcblock.png" width="444" height="350" /></p>
+   <p align="left" class="figure">Figure 1 - MMP Editor Resource Block Dialog</p>
+   <p></p>
+   <table cellpadding="2" cellspacing="0"
+border="0">
+	 <tr valign="top"><th width="173" class="Cell">Name</th><th width="516" class="Cell">Function</th></tr><tr valign="top"><td class="Cell">
+		    <p>
+			   <b>Project RSS files</b></p></td><td class="Cell">
+			 <p>
+				Select or browse to the resource file to be included in all builds.</p></td></tr><tr valign="top"><td class="Cell">
+			 <p>
+				<b>RSS file path</b></p></td><td class="Cell">
+			 <p>
+				Enter the path to the resource file. </p></td></tr>
+			 <tr valign="top">
+			   <td class="Cell"><b>Target file name</b></td>
+			   <td class="Cell">Enter the target file name.</td>
+     </tr>
+			 <tr valign="top">
+			   <td class="Cell"><b>Target file path</b></td>
+			   <td class="Cell">Select the target file path, such as the executable directory or /resource directory on the target device.</td>
+     </tr>
+			 <tr valign="top">
+			   <td class="Cell"><b>UID 2</b></td>
+			   <td class="Cell">Enter the unique identifier. UID2 may need to be a specific value for some kinds of DLLs, especially those used by plug-in frameworks.</td>
+     </tr>
+			 <tr valign="top">
+			   <td class="Cell"><b>UID 3 </b></td>
+			   <td class="Cell"><p>Enter the unique identifier. In the current implementation of platform security, UID3 is used as the Secure ID if SECUREID is not specified in the .mmp file. If it is specified, UID3 will be used to identify the application as its original purpose.</p>
+		       <p>However, the SID is used to determine which private directory a process can access as well as to identify the caller applications, whereas the UID is used to uniquely identify an application. It is theoretically possible that these two identifiers could have different values, but to avoid confusion Symbian recommends that a SECUREID not be specified in the application's MMP file; UID3 should always be specified instead.</p></td>
+     </tr>
+			 <tr valign="top">
+			   <td class="Cell"><b>Generate header file</b></td>
+			   <td class="Cell">Check this option to generate a header file for the resource files.</td>
+     </tr>
+   </table>
+	 <h5>Related references</h5>
+    <ul>
+      <li><a href="MMP_Editor.html">MMP Editor</a></li>
+      <li><a href="MMP_Editor_sources.html">MMP Editor Sources window</a></li>
+      <li><a href="MMP_Editor_libraries.html">MMP Editor Libraries window</a></li>
+      <li><a href="MMP_Editor_options.html">MMP Editor Options window</a></li>
+    </ul>
+  
+   
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+</html>
+   

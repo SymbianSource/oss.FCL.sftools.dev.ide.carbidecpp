@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+<title>MIF Editor</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+   <body>
+
+<h2>MBM/MIF Editor</h2>
+	  
+	 <p>The <b>MIF Editor</b> allows you to create or edit the <span class="code">.mif</span> files list of scalable icons (<span class="code">.svg</span>)
+     included in  a S60 v3.0 and later GUI projects as well as standard <span class="code">.bmp</span> files. A .mif file is a MSX Interchange Format (MIF) file that should be built by the project.</p>
+   <p class="note"><b>NOTE</b> This editor is only supported by the S60 3.0  and later SDKs.</p>
+	 <p class="note"><b>NOTE</b> For resources that are included after creating a project, you should ensure that the output location is set correctly by viewing the file properties. The output location is set to &quot;<span class="code">{EPOCROOT}\epoc32\include</span>&quot; by default, so if an alternate location is required you can set this in the file properties.</p>
+   <p align="center" class="Image"><img src="../../tasks/projects/images/mif_file_symprojnav.png" width="299" height="292"></p>
+		<p class="figure">Figure 1 - MIF File in the Symbian Project Navigator view</p>
+   <p>The <b>MIF Editor</b> appears when a MIF  file is
+   opened for editing. To open the editor double-click on a .mif file in the <a href="view_sym_proj_nav.htm">Symbian Project Navigator</a> view (figure 1), or select a scalable icon makefile (for example, <span class="code">Icons_scalable_dc.mk</span>), right-click and select the <b>Add MBM/MIF Entry</b> command.</p>
+   <p align="center"><img src="../../tasks/projects/images/MBM_MIF_editor.png" width="900" height="600"> </p>
+   <p class="figure">Figure 2 - MBM/MIF Editor</p>
+		<h5>Table 1. MBM/MIF Editor &mdash;Items</h5>
+		<table width="94%"  border="0" cellpadding="2" cellspacing="0">
+          <tr>
+            <th width="32%" scope="col">Item</th>
+            <th width="68%" scope="col">Explanation</th>
+          </tr>
+          <tr>
+            <td><b>Target File </b></td>
+            <td><p>Specifies the <span class="code">EPOCROOT</span> relative path for the compiled images. Click the Default button to set the target file based on the SDK and project name. </p></td>
+          </tr>
+          <tr>
+            <td><b>Header File </b></td>
+            <td>Shows the generated header file. Select the Header option in the Header Generation group to create a default .mbg file. The path cannot be edited in this field. </td>
+          </tr>
+          <tr>
+            <td><b>Header Generation</b></td>
+            <td><p>Options include:</p>
+                <ul>
+                  <li>No header - If selected, no .mbg header will be generated. </li>
+                  <li>Header - If selected, a .mbg header will be generated.</li>
+              </ul></td>
+          </tr>
+          <tr>
+            <td><b>Up</b></td>
+            <td>Select an image in the list and click Up to move the selection one position up in the list.</td>
+          </tr>
+          <tr>
+            <td><b>Down</b></td>
+            <td><p>Select an image in the list and click Down to move the selection one position down in the list. </p></td>
+          </tr>
+          <tr>
+            <td><b>Pair Image and Mask </b></td>
+            <td>Select two adjacent unpaired BMP image entries in the list and click this button to combine the images together into image/mask pairs.</td>
+          </tr>
+          <tr>
+            <td><b>Split Image and Mask </b></td>
+            <td>Select a paired BMP image in the list and click this button to split the image into image and mask entries. </td>
+          </tr>
+          <tr>
+            <td><b>Swap Image and Mask </b></td>
+            <td>Select a paired BMP image in the list and click this button to swap the image and mask files and format information in paired image entries. </td>
+          </tr>
+          <tr>
+            <td><b>Add From Project </b></td>
+            <td>Click this button to open the <b>Add Images from Project</b> dialog to reference available images in the project.</td>
+          </tr>
+          <tr>
+            <td><b>Add From Filesystem </b></td>
+            <td>Click this button to open the <b>Add Images From Filesystem</b> dialog to locate and reference existing images in the filesystem or copy images to the project.</td>
+          </tr>
+          <tr>
+            <td><b>Remove</b></td>
+            <td>Select an image and click <b>Remove</b> to remove image entry from the list. This does not delete file from directory.</td>
+          </tr>
+          <tr>
+            <td><b>Color depth </b></td>
+            <td>Select the bit depth used to encode the image at build time.</td>
+          </tr>
+          <tr>
+            <td><b>Mask depth </b></td>
+            <td><p>Select the bit depth used to encode the mask at build time. Options include:</p>
+                <ul>
+                  <li>n/a - Do not apply mask depth to images </li>
+                  <li>1 - A 1-bit mask treats pixels as &quot;on/off&quot; bits, where black is opaque and white is transparent. </li>
+                  <li>8 - An 8-bit mask is treated as alpha values, where black is transparent and white is opaque.</li>
+              </ul></td>
+          </tr>
+          <tr>
+            <td><b>Color format </b></td>
+            <td>Select Color to encode the image(s) as color or select Grayscale to encode the image(s) as grayscale.</td>
+          </tr>
+          <tr>
+            <td><b>Set from image </b></td>
+            <td>Click this button to auto-detect the image depth, mask depth, and color/grayscale setting from the image contents.</td>
+          </tr>
+          <tr>
+            <td><b>Preview</b></td>
+            <td>A preview of the image as it will appear at runtime. </td>
+          </tr>
+        </table>
+		<p>&nbsp;</p>
+   <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+   </body>
+</html>
+   

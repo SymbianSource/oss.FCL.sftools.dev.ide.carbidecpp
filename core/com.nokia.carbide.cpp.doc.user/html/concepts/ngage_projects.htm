@@ -17,7 +17,7 @@
   <li>Install the N-Gage SDK on your PC</li>
   <li>Place your game project inside the N-Gage SDK</li>
   <li> In Carbide.c++, click<b> File &gt; <a href="../tasks/ImportingProjects.html">Import</a></b></li>
-  <li>Select <b>Symbian OS Bld.inf</b> <strong>File</strong> importer and navigate to your <span class="code">bld.inf</span>  file to import it </li>
+  <li>Select <b>Symbian Bld.inf</b> <strong>File</strong> importer and navigate to your <span class="code">bld.inf</span>  file to import it </li>
 </ol>
 <h4>Building the N-Gage project</h4>
 <p>Once the game project has been imported, use these steps to create an N-GAGE game file:</p>
@@ -54,14 +54,14 @@
       <p align="center" class="figure">Figure 4 - <b>Builder</b> dialog with new N-Gage Builder defined </p>
   <li>Click OK to close the <b>Properties for <i>project_name</i></b> window</li>
   <li>Build the project and its SISX file by selecting the <b>Project &gt; Build Project</b> menu item</li>
-  <p>The <a href="../reference/view_console.htm">Console</a> view shows information as the project  and it's SISX file are built and then the build of the installation file (<span class="code">N-GAGE</span>).</p>
+  <p>The <a href="../projects/views/view_console.htm">Console</a> view shows information as the project  and it's SISX file are built and then the build of the installation file (<span class="code">N-GAGE</span>).</p>
     </ol>
 <h3>For On-device Debugging </h3>
 <h4>Deploying the N-Gage project   to a device </h4>
 <p>Once you have an <span class="code">.N-GAGE</span> game file, you need to deploy it on the target device:</p>
 <ol>
   <li>Verify that you have a valid developer certificate on the target device given to you by the  Nokia R&amp;D Certificate Service. If not, get and install one.</li>
-  <li>Verify that you have CODA installed on the target device. If not, install it now using <a href="../reference/trk/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</li>
+  <li>Verify that you have CODA installed on the target device. If not, install it now using <a href="../projects/remote_conn/wnd_new_connection_wizard.htm">On-Device Connections &gt; New Connection Wizard &gt; Install remote agents</a> pane.</li>
 <li>Manually install the <span class="code">.N-GAGE</span>  file on the device</li>
 </ol>
 <h4>Debugging the Game project</h4>
@@ -69,7 +69,7 @@
 <ol>
   <li>Open <span class="note"><b>Window &gt; Preferences &gt; Run/Debug &gt;<img src="../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.debug.ui.LaunchingPreferencePage)")'> Launching</a></b> preference panel </span>and disable the <b>Build (if required) before launching</b> option under the General Options group</li>
   <li>Right-click the project and choose <b>Debug As &gt; Debug Configuration</b> to open the <b><a href="../reference/wnd_debug_configuration.htm">Debug Cinfigurations</a></b> window</li>
-  <li><a href="../tasks/projects/prj_debug_config.htm">Create</a> an <b>Symbian OS Device (Install SIS)</b> launch configuration
+  <li><a href="../tasks/projects/prj_debug_config.htm">Create</a> an <b>Symbian Device (Install SIS)</b> launch configuration
       <ul>
       <li>In the <b><a href="../projects/launch/page_connection.htm">Connection</a></b> tab select the COM port used to connect to the device. </li>
       <li> In the <b><a href="../projects/launch/page_installation.htm">Installation</a></b> tab, verify that the game SISX file is correct </li>
@@ -86,7 +86,7 @@
 <ol>
   <li>Open <b>Window &gt; Preferences &gt;   Run/Debug &gt; Launching</b> and disable the <b>Build (if required) before launching</b> option under the General Options group</li>
   <li>Right-click the project and choose <b>Debug As &gt; Debug Configurations</b> to open the <b>Debug Configurations</b> window</li>
-  <li>Create an <b>Symbian OS Emulation </b> launch configuration</li>
+  <li>Create an <b>Symbian Emulation </b> launch configuration</li>
   <li>Click <b>Debug</b> to launch the emulator </li>
   <li>In the emulator, select <b>File &gt; Open</b>,  locate and select the <span class="code">.N-GAGE</span> installation file and click <b>Open</b> to install the project </li>
   <li>Open the Installation folder, launch the N-Gage runtime application</li>

@@ -259,7 +259,7 @@
 	<!-- DEBUG AS DIALOG -->
 	<!-- ADDED 2.5  -->
 	<context id="select_launch_method_dialog" >
-		<description>Select the type of Symbian OS device to debug.</description>
+		<description>Select the type of Symbian device to debug.</description>
 		<topic label="Emulator Launch"  				href="html/projects/launch/emulator_phone.htm" />
 		<topic label="Phone Launch"  					href="html/projects/launch/launch_phone.htm" />
 		<topic label="Reference Board Launch"  			href="html/projects/launch/board_phone.htm" />
@@ -287,7 +287,7 @@
 	<!-- ============================================================== -->
 	<!-- NEW WIZARD -->
 	<context id="new_wizard_selection_wizard_page_context" >
-		<label>Symbian OS</label>
+		<label>Symbian</label>
 		<description>Select the project, class, or file to create.</description>
 		<topic label="New Symbian OS ++ Projects" 				href="html/tasks/CreatingNewProjects.html"/>
 		<topic label="New Symbian OS C++ Classes"				href="html/tasks/projects/prj_adding_symbian_class.htm" />

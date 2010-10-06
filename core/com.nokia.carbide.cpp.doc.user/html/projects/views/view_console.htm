@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Console View</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body >
+<h2>Console view </h2>
+<p>The <b>Console</b> view display<span><span>s the output of a process and allows you to provide keyboard input to a process</span></span>. There are numerous consoles available, see the Open Console dropdown list for those available to you. Most are enabled from various project panels in Carbide. </p>
+<p align="center"><img src="../../images/views/view_console_build.png" width="778" height="203" /></p>
+<p class="figure">Figure 1 - Console view showing build console information</p>
+<p>To view <span class="code">RDebug::Printf</span> output in the <b>Console</b> view when targeting devices, ensure that the following <a href="../launch/page_debugger.htm">Debugger</a> options are matched with settings in the <span class="code">epoc.ini</span> file. </p>
+<ul>
+  <li>Set <span class="code">LogToDebugger 1</span> to use the <b>View program output</b> option </li>
+  <li>Set <span class="code">LogToFile 1</span> to enable the <b>View emulator output</b> option</li>
+</ul>
+<h5>Table 1 Console view&mdash;items </h5>
+<table width="100%"  border="0" cellpadding="2" cellspacing="0">
+  <tr>
+    <th width="29%" scope="col">Item</th>
+    <th width="14%" scope="col">Icon</th>
+    <th width="57%" scope="col">Explanation</th>
+  </tr>
+  <tr>
+    <td><b>Scroll Lock </b></td>
+    <td><div align="center"><img src="../../images/icons/console_scroll_lock_icon.png" width="15" height="18" /></div></td>
+    <td>Toggles the scrolling of the console view contents. </td>
+  </tr>
+  <tr>
+    <td><b>Clear Console </b></td>
+    <td><div align="center"><img src="../../images/icons/console_clear_console_icon.png" width="19" height="18" /></div></td>
+    <td>Clears all content in the Console view.</td>
+  </tr>
+  <tr>
+    <td><b>Pin Console </b></td>
+    <td><div align="center"><img src="../../images/icons/console_pin_console_icon.png" width="19" height="18" /></div></td>
+    <td><p>Toggles the behavior of the console. When enabled the current console content is fixed all the time instead of scrolling out of sight. When disabled, the console changes according to the action. </p>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Display Selected Console </b></td>
+    <td><div align="center"><img src="../../images/icons/console_display_selected_icon.png" width="30" height="18" /></div></td>
+    <td>Changes the contents of the current console view to show the selected console output. </td>
+  </tr>
+  <tr>
+    <td><b>Open Console </b></td>
+    <td><div align="center"><img src="../../images/icons/console_open_console_icon.png" width="30" height="18" /></div></td>
+    <td><p>Opens a new  console to display  the log for:</p>
+      <ul>
+        <li>Platform Security Diagnostics</li>
+        <li>New Windows System Messages Console </li>
+        <li>New Emulation Program Output Console</li>
+        <li>New CODA Program Output Console</li>
+        <li>New CODA Communications Log Console</li>
+        <li>New Symbian Rom Log Console</li>
+        <li>New Emulator Output Console</li>
+        <li>CVS</li>
+        <li>New Console View</li>
+      </ul>
+      <p>Remember  that <i>program output</i> is console output from the running binary  and <i>communications log</i> is the messages sent between CODA and the on-device debug agent. </p>      
+      <p class="note"><b>NOTE</b> You can pin any message log view so that it does not lose focus.</p></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

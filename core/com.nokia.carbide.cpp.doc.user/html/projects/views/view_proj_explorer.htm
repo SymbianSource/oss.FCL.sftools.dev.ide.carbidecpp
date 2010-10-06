@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="LASTUPDATED" content="06/17/05 11:09:43" />
+<title>Project Explorer View</title>
+<link rel="StyleSheet" href="../../../book.css" type="text/css"/>
+</head>
+<body >
+<h2>Project Explorer view </h2>
+<p>  The <b>Project Explorer</b> view (Figure 1) display<span><span>s  relevant C/C++ projects located in the current workspace using a tree structure</span></span>. Use this view to manage all the projects located in the current workspace. The view is customizable and takes advantage of working sets. </p>
+<p>The content of a project is dependent upon how it was created in the workspace.</p>
+<p align="center"><img src="../../reference/images/view_project_explorer.png" alt="Project Explorer view" width="281" height="424"></p>
+<p class="figure">Figure 1 - Project Explorer view showing projects in the current workspace</p>
+<p>The directories that appear in the project include:</p>
+<ul>
+  <li><b>sis</b>&#8212;the storage location for the final output files. The output file is linked from the top level of the project with a file of the same name.  Both the binary and link files can be expanded to show the source files used to build the program.</li>
+  <li><b>Includes</b>&#8212;a listing of all the include files used to build the project.</li>
+  <li><b>Executables</b> - a listing of debuggable executables imported into the <a href="view_executables.htm">Executables</a> view </li>
+  <li><b>User specified</b>&#8212;many other directories like <span class="code">src</span>, <span class="code">inc</span>, <span class="code">data</span>, and others are used to store specific types of project files. The names used for the directories are defined in the <a href="../../reference/ProjectDirectories.html">Project Directories</a> page when the project is created. </li>
+</ul>
+<blockquote>
+  <p class="note"><b>NOTE</b> Only the directories specified by the mmp file are created during import. </p>
+</blockquote>
+<p>The files that appear in the project directories can be either:</p>
+<ul>
+  <li><b>files</b> (<img src="../../reference/images/icon_project_file.png" width="15" height="16" align="absmiddle" />)&#8212;these files are located in the workspace within the project directories. Double-click a file icon to open it for editing.</li>
+  <li><b>folder links</b>&#8212;these are links pointing to folders that enable the project to support  cvs related sources. </li>
+</ul>
+<p>See  <b>C/C++ Development User Guide &gt; Reference &gt; C/C++ Views and Editors &gt; <a href="../../reference/PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_project_explorer_view.htm">Project Explorer view</a></b> for more info. </p>
+<h5>Related references</h5>
+<ul>
+  <li><a href="perspective_carbide.htm">Carbide C/C++ Perspective  </a></li>
+</ul>
+<div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
+
+</body>
+</html>

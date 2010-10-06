@@ -15,20 +15,20 @@
     <li><a href="new_proj_dll_example_02.htm">Building</a> the DLL object code based on the project sources</li>
     <li><a href="new_proj_dll_example_03.htm">Debugging</a> the DLL using  the Carbide debugger</li>
     </ol>
-<p class="note"><b>NOTE</b> There must be at least one recognized SDK installed before you can create a project. See the <a href="../../reference/pref_carb_symbian_sdk.htm">Symbian SDKs</a>preference panel to determine if the installed SDKs are recognized by Carbide.c++ IDE. If the SDK you have installed is not recognized, you may still be able to <a href="../../sdks/sdk_add.htm">add</a> it to the Discovered Symbian OS SDK list.</p>
+<p class="note"><b>NOTE</b> There must be at least one recognized SDK installed before you can create a project. See the <a href="../../reference/pref_carb_symbian_sdk.htm">Symbian SDKs</a>preference panel to determine if the installed SDKs are recognized by Carbide.c++ IDE. If the SDK you have installed is not recognized, you may still be able to <a href="../../sdks/sdk_add.htm">add</a> it to the Discovered Symbian SDK list.</p>
 <hr>
-<p>In this tutorial you'll create a simple DLL project using the <strong>New Symbian OS C++ Project</strong> wizard, attach it to the HelloWorld project created <a href="new_proj_from_template_00.htm">here</a>, then debug it.</p>
+<p>In this tutorial you'll create a simple DLL project using the <strong>New Symbian C++ Project</strong> wizard, attach it to the HelloWorld project created <a href="new_proj_from_template_00.htm">here</a>, then debug it.</p>
 <div class="step">
     <h4><strong></strong>Creating a DLL project from a template</h4>
     <ol>
-        <li>Click the <strong>File &gt; New &gt; Symbian OS C++ Project</strong> menu option.<br />
-                <p>The <strong>New Symbian OS C++ Project</strong> window appears to guide you through project creation process.</p>
+        <li>Click the <strong>File &gt; New &gt; Symbian C++ Project</strong> menu option.<br />
+                <p>The <strong>New Symbian C++ Project</strong> window appears to guide you through project creation process.</p>
             <p><img src="../images/new_dll_project_02.png" alt="New DLL project" width="525" height="503"></p>
         </li>
         <li>Select a template from the available options, then click <strong>Next</strong>.<br />
-                <p>Select the template for the type of project you want to create. For this example we chose the <strong>Generic Symbian OS > Baisc dynamically linked library (DLL)</strong> template. Note that as you select a template a brief description appears below the list explaining it attributes.</p>
+                <p>Select the template for the type of project you want to create. For this example we chose the <strong>Generic Symbian > Baisc dynamically linked library (DLL)</strong> template. Note that as you select a template a brief description appears below the list explaining it attributes.</p>
         </li>
-        <li>Use the <strong>New Symbian OS C++ Project</strong> page to define the project name and build system.<br />
+        <li>Use the <strong>New Symbian C++ Project</strong> page to define the project name and build system.<br />
                 <p><img src="../images/new_dll_project_03.png" alt="New Symbian OS C++ Project page" width="525" height="503"></p>
             <ol type="a">
                     <li>Type a name into the <strong>Project name</strong> text box.<br />
@@ -43,14 +43,14 @@
                 <li>Click <strong>Next</strong>.</li>
             </ol>
         </li>
-        <li>In the Symbian OS SDKs page, select the SDK and build configurations for the project.<br />
+        <li>In the Symbian SDKs page, select the SDK and build configurations for the project.<br />
             <p>Here you can select from any SDK that is both installed and recognized by Carbide. If the SDK supports several build configurations (GCCE, RVCT, etc.) then you can pick and choose among them for your project.</p>
         	<p><img src="../images/new_dll_project_04.png" alt="Symbian OS SDKs page" width="573" height="550"></p>
         </li>
         <li>(Optional) Click Next to provide Basic Settings like author, copyright and other info for your project.</li>
         <li>(Optional) Click Next to rename the Project Directories used to organize the project.</li>
         <li>Click Finish.<br>
-            <p>Carbide uses the selected project template and your settings to create the DLL project in the <a href="../../reference/view_proj_explorer.htm">Project Explorer</a> view.</p>
+            <p>Carbide uses the selected project template and your settings to create the DLL project in the <a href="../views/view_proj_explorer.htm">Project Explorer</a> view.</p>
             <p><img src="../images/new_dll_project_07.png" alt="DLL project in Project Explorer view"></p>
         </li>
     </ol>

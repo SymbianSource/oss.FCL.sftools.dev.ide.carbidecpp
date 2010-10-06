@@ -5,17 +5,17 @@
 <link rel="StyleSheet" href="../../book.css" type="text/css"/>
 </head>
 <body>
-<h2>Creating New Symbian OS C++ Projects</h2>
+<h2>Creating New Symbian C++ Projects</h2>
   <div class="Bodytext">
     <p>New  projects are created using the <b>New Project Wizard</b>. Carbide includes a number of templates that make creating projects for different SDKs and executables quick and easy.</p>
-    <p class="note"><b>NOTE</b> You must have  at least one recognized SDK installed before you can create a project. See the <a href="../reference/pref_carb_symbian_sdk.htm">Symbian SDKs panel</a> to determine if the installed SDKs are recognized by Carbide.c++ IDE. If the SDK you have is not recognized, you may still be able to <a href="sdks/sdk_add.htm">add</a> it to the Discovered Symbian OS SDK list.</p>
+    <p class="note"><b>NOTE</b> You must have  at least one recognized SDK installed before you can create a project. See the <a href="../reference/pref_carb_symbian_sdk.htm">Symbian SDKs panel</a> to determine if the installed SDKs are recognized by Carbide.c++ IDE. If the SDK you have is not recognized, you may still be able to <a href="sdks/sdk_add.htm">add</a> it to the Discovered Symbian SDK list.</p>
     <p class="note"><b>NOTE</b> When creating or importing projects the sources and SDK must be on the same drive. This is due to many of the internal SDK tools using an implicit working drive to calculate paths (e.g. \epoc32\tools). Avoid spaces in SDK paths since this will also cause problems.</p>
     <div class="step">
-    <h3>Creating New Symbian OS C++ Projects</h3>
+    <h3>Creating New Symbian C++ Projects</h3>
     <ol>
-      <li class="step">Select <b>File &gt; New &gt; Symbian OS C++ Project</b> to invoke the <b>New Project</b> wizard.</li>
+      <li class="step">Select <b>File &gt; New &gt; Symbian C++ Project</b> to invoke the <b>New Project</b> wizard.</li>
         <p><img src="images/new_proj_step1.png" width="548" height="120" alt="" ></p>
-        <li>The <b class="step">New Symbian OS C++ Project</b> wizard appears. Select a template to create a project that matches the intended final application.</li>
+        <li>The <b class="step">New Symbian C++ Project</b> wizard appears. Select a template to create a project that matches the intended final application.</li>
       <p>A project template provides the initial source files and project settings appropriate for the chosen project type. A brief description of each template appears below the list. The project type determines the type of program that you are writing.</p>
       <p class="note"><b>NOTE</b> If the selected template requires user input, additional wizard pages will collect data from the user before creating the project.</p>
       <p>Checkmark the <b>Filter templates based on enabled SDKs</b> option to only list  SDKs enabled in the <a href="../reference/pref_carb_symbian_sdk.htm">Symbian SDKs panel</a>. Uncheck this option to list  SDKs that can be used with Carbide. Click <b>Next</b>.</p>
@@ -27,7 +27,7 @@
       <li>Select the <b>SDKs and Build Configurations</b>. </li>
       <p>Checkmark the <b>Filter SDKs based on selected template</b> option to only show  build configurations based on the selected SDK template, or uncheck to show all enabled SDKs and their related build configurations.</p>
       <p align="center"><img src="images/new_proj_step4.png" width="525" height="503" alt="" ></p>
-      <p class="Image">The Symbian OS SDKs wizard page shows a tree of the SDKs and the type of builds available within that SDK. Select a single SDK
+      <p class="Image">The Symbian SDKs wizard page shows a tree of the SDKs and the type of builds available within that SDK. Select a single SDK
         if the program you are developing is for just one version of a platform,
       or select multiple SDKs to build the program for multiple build platforms or SDK versions.</p>
       <p> The build configuration allows you to specify the compiler(s) to
@@ -42,7 +42,7 @@
         notice and Target Type for console EXEs.</p>
     
   <p>Application UID (or UID3) is used to uniquely identify the binary (EXE or DLL) within the system. The purpose of UID 3 is to prevent one executable from interfering the operation of another executable.</p>
-      <p>    A Vendor ID (VID) is a unique identifier for the organization that is supplying the program. In versions of Symbian OS with platform security, a program can read a VID at runtime to check that a binary comes from a particular source. In most cases, the VID should be zero, meaning that source of the executable is not required for any security checks.</p>
+      <p>    A Vendor ID (VID) is a unique identifier for the organization that is supplying the program. In versions of Symbian with platform security, a program can read a VID at runtime to check that a binary comes from a particular source. In most cases, the VID should be zero, meaning that source of the executable is not required for any security checks.</p>
       <p style="font-weight: normal;">UID 2 is a unique identifier number that identifies the type of interface that the
           project implements. The values are defined by Symbian</p>
     
@@ -68,7 +68,7 @@
         </div>
       <p>Accept the defaults or enter the names for Include and Source folders to be created under the project root directory. Generated files will be copied to these directories.</p>
       <li> Click <b>Finish</b> to create the project.</li>
-      <p>This generates the necessary files for the project based on the template selected and show them in the <a href="../reference/view_proj_explorer.htm">Project Explorer</a> view.</p>
+      <p>This generates the necessary files for the project based on the template selected and show them in the <a href="../projects/views/view_proj_explorer.htm">Project Explorer</a> view.</p>
     </ol>
     <blockquote>
       <p align="center"><img src="images/new_proj_step7.png" width="224" height="267" alt="" > </p>
@@ -92,7 +92,7 @@
   <ul>
     <li><a href="projects/prj_build.htm">Building Projects</a></li>
     <li><a href="projects/prj_debug_config.htm">Creating a Launch Configuration</a></li>
-    <li><a href="start/carbide_debugging.htm">Debugging a Symbian OS Program</a> </li>
+    <li><a href="start/carbide_debugging.htm">Debugging a Symbian Program</a> </li>
   </ul>
   
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>

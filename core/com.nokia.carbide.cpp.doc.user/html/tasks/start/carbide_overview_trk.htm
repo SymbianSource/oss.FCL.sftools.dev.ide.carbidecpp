@@ -10,34 +10,34 @@
 </head>
 <body >
 <h2>Run Mode Overview </h2>
-<p>This example shows how to create and build an application and debug it on a device using the Symbian OS Device (Install SIS) on-device debug agent. Click this link to the <img src="../../images/command_link.png" width="16" height="12" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=com.nokia.carbide.cpp.doc.user.trk_appTRK_Using)")'>HelloCarbide</a> cheatsheet that provides links to detailed steps. The majority of steps are identical to the ones used to create a program and debug in an emulator, with some minor variations.</p>
+<p>This example shows how to create and build an application and debug it on a device using the Symbian Device (Install SIS) on-device debug agent. Click this link to the <img src="../../images/command_link.png" width="16" height="12" /> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=com.nokia.carbide.cpp.doc.user.trk_appTRK_Using)")'>HelloCarbide</a> cheatsheet that provides links to detailed steps. The majority of steps are identical to the ones used to create a program and debug in an emulator, with some minor variations.</p>
 <p>See the <a href="carbide_example_trk.htm">Run Mode Debug Example</a> for a walkthrough of the following steps which include:</p>
 <ol>
   <li>Verify that your SDK or customer kit is recognized in the <a href="../../reference/pref_carb_symbian_sdk.htm">Symbian SDKs panel</a>.</li>
   <li>Create a project by <a href="../ImportingProjects.html">importing</a> a Bld.inf  </li>
-  <li>Verify that all the symbolics for the binaries are visible in the <a href="../../reference/view_executables.htm">Executables</a> view</li>
+  <li>Verify that all the symbolics for the binaries are visible in the <a href="../../projects/views/view_executables.htm">Executables</a> view</li>
   <li><a href="../projects/prj_creating_sis_file.htm">Manage</a> the project's PKG file, being sure to:
     <ul>
-      <li><a href="../projects/working_with_sis_pkg_files.htm">Create</a> a PKG file for the application (if using Symbian OS Device (Install SIS))</li>
+      <li><a href="../projects/working_with_sis_pkg_files.htm">Create</a> a PKG file for the application (if using Symbian Device (Install SIS))</li>
       <li><a href="../../reference/build_properties/pane_build_config_sis.htm">Include</a> the PKG file as part of the project in the SIS Builder pane of your project Properties </li>
       <li><a href="../../reference/build_properties/wnd_sis_properties.htm">Specify</a> application keys (if not a self-signing application) in the SIS Properties dialog </li>
     </ul>
   </li>
   <li><a href="../projects/prj_build.htm">Build</a> the project using a target for on-device build configuration (GCCE or ARM) </li>
   <li>Start the CODA software on the device</li>
-  <li><a href="../projects/prj_debug_config.htm">Create</a> a Symbian OS Device (Install SIS) <a href="../trk/trk_carbide_setup.htm">launch configuration</a> to provide additional information to the debugger</li>
+  <li><a href="../projects/prj_debug_config.htm">Create</a> a Symbian Device (Install SIS) <a href="../trk/trk_carbide_setup.htm">launch configuration</a> to provide additional information to the debugger</li>
   <li>Launch the <a href="carbide_debugging.htm">debugger</a> to interactively control the program on the  device</li>
 </ol>
 <p class="note"><b>NOTE</b> Carbide will install the SISX file on the device prior to launching the debugger.</p>
 <p>At this point you can open sources files from the <b>Executables</b> view or project view in order to set breakpoints.</p>
 <h5>Related tasks</h5>
 <ul>
-  <li><a href="../processes/attach_to_process.htm">Attaching to a Symbian OS Process </a></li>
+  <li><a href="../processes/attach_to_process.htm">Attaching to a Symbian Process </a></li>
 </ul>
 <h5>Related references</h5>
 <ul>
   <li><a href="../trk/trk_troubleshooting.htm">On-device Debugging Troubleshooting</a></li>
-  <li><a href="../../reference/view_symbian_kernel.htm">Symbian OS View</a></li>
+  <li><a href="../../reference/view_symbian_kernel.htm">Symbian View</a></li>
 </ul>
 <div id="footer">Copyright &copy; 2010 Nokia Corporation and/or its subsidiary(-ies). All rights reserved. <br>License: <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a></div>
 

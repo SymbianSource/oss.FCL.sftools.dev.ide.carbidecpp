@@ -19,8 +19,8 @@
 <hr>
 <p><strong></strong>Once you have a project in hand, the next thing to do is compile or build it into object code.</p>
 <p>Building projects consists of a sbs or abld-based build system that wraps build functionality around existing SDK build tools that invoke <span class="code">makmake</span> commands (e.g. <span class="code">makmake bldfiles</span> and <span class="code">sbs build</span>).</p>
-<p> The plug-ins provide extra functionality to set up suitable build configurations for Symbian OS C++ projects.  The initial selection of a build configuration is done when you create a project, as described in <a href="new_proj_from_template_01.htm">Creating New Projects from Templates</a>. You can later <a href="../../tasks/projects/prj_set_build_tgt.htm">change</a> the Active Build Configuration. The Build Configurations also provides a command (<b>Project &gt; <a href="../../reference/menus/build_all_targets.htm">Build All Configurations</a></b>) to build all the selected build configurations in a batch.</p>
-<p> Building Symbian OS C++ projects can involve the use of Symbian OS specific tools, such as the Symbian OS resource compiler. For detailed information on such tools, see the documentation for the SDK that you are using.</p>
+<p> The plug-ins provide extra functionality to set up suitable build configurations for Symbian C++ projects.  The initial selection of a build configuration is done when you create a project, as described in <a href="new_proj_from_template_01.htm">Creating New Projects from Templates</a>. You can later <a href="../../tasks/projects/prj_set_build_tgt.htm">change</a> the Active Build Configuration. The Build Configurations also provides a command (<b>Project &gt; <a href="../../reference/menus/build_all_targets.htm">Build All Configurations</a></b>) to build all the selected build configurations in a batch.</p>
+<p> Building Symbian C++ projects can involve the use of Symbian specific tools, such as the Symbian resource compiler. For detailed information on such tools, see the documentation for the SDK that you are using.</p>
 <p>You build  projects to process the source files that comprise a program and
     generate object code. The compiler flags syntax errors in the source files. Use the <a href="../../reference/ProjectPreferences.html">Properties for &lt;project_name&gt; </a> window to control how the project is built. The following methods build a project:</p>
 <ul>
@@ -45,14 +45,14 @@
         </li>
     </ol>
     <blockquote>
-        <p>Choosing any of the above actions causes Carbide to build the selected project. A <strong>Build Project</strong> dialog  (below) and a progress bar appear during a lengthy build operation. All build output  is shown in a <a href="../../reference/view_console.htm">Console</a> view while build errors and warnings appear in the Problems view.</p>
+        <p>Choosing any of the above actions causes Carbide to build the selected project. A <strong>Build Project</strong> dialog  (below) and a progress bar appear during a lengthy build operation. All build output  is shown in a <a href="../views/view_console.htm">Console</a> view while build errors and warnings appear in the Problems view.</p>
         <p align="left"><img src="../images/dlg_build_project_progress.png" alt="Build Project progress dialog" width="532" height="233"></p>
         <p>Whether a full build or incremental build is requested, Carbide forwards the request to the SDK make system. The SDK make system determines if anything needs to be
             built. Carbide  always checks that makefiles are up-to-date and
             dependencies present.</p>
         <p>The project is also built if you make a change to it and then click <b>Debug</b>. It may be useful to automatically save modified resources before a manual build process by enabling the <b>Save automatically before build</b> option in the <b>Window &gt; Preferences &gt; General &gt;</b> <img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.ui.preferencePages.Workbench)")'> Workspace</a> preference panel. </p>
         <p class="note"><b>NOTE</b> If you want to turn off building before launching, uncheck the <b>Build (if required) before launching</b> option in the <b>Window &gt; Preferences &gt; Run/Debug &gt;<img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.debug.ui.LaunchingPreferencePage)")'> Launching</a></b> preference panel.</p>
-        <p>When performing a build, output is displayed in the <a href="../../reference/view_console.htm">Console</a> view. If you do not want to clear the console before each build you need to uncheck the option <b>Always clear console before building</b> in the <b> Console</b> panel. This option is enabled by default. You can access this panel by selecting <b>Window &gt; Preferences &gt; C/C++ &gt; Build &gt;<img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferneces.CBuildConsolePreferernces)")'> Console</a></b> preference panel (below).</p>
+        <p>When performing a build, output is displayed in the <a href="../views/view_console.htm">Console</a> view. If you do not want to clear the console before each build you need to uncheck the option <b>Always clear console before building</b> in the <b> Console</b> panel. This option is enabled by default. You can access this panel by selecting <b>Window &gt; Preferences &gt; C/C++ &gt; Build &gt;<img src="../../images/command_link.png" width="16" height="12"> <a class="command-link" href='javascript:executeCommand("org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.cdt.ui.preferneces.CBuildConsolePreferernces)")'> Console</a></b> preference panel (below).</p>
         <p align="left"><img src="../images/pref_cdt_build_console.png" alt="Console preference panel" width="635" height="554"></p>
         <p>Not clearing the console is useful when you are performing multiple builds, such as a regular project build, building a project package (.pkg) file, and building a ROM image. For example, if you do not clear the console before each build, then a subsequent build will not overwrite information from a previous build.</p>
     </blockquote>
@@ -73,11 +73,11 @@
                	    <p><img src="../images/new_build_project_problems_view.png" alt="Executables view" width="797" height="210"></p>
                 </li>
                 <li>Examine the Console view for more specific details on  an error or warning message<br />
-                    <p>Use the <a href="../../reference/view_console.htm">Console</a> view to see where a specific problem occured during the build.</p>
+                    <p>Use the <a href="../views/view_console.htm">Console</a> view to see where a specific problem occured during the build.</p>
                	    <p><img src="../images/new_build_project_console_view.png" alt="Executables view" width="797" height="210"></p>
                 </li>
                 <li>Examine the Executables view for  missing source files<br />
-                    <p>Use the <a href="../../reference/view_executables.htm">Executables</a> view to see what source files were used during the build. Sources shown in gray are those Carbide cannot find. Missing sources in an SDK not built on your machine are common, but missing sources that you created can be resolved.</p>
+                    <p>Use the <a href="../views/view_executables.htm">Executables</a> view to see what source files were used during the build. Sources shown in gray are those Carbide cannot find. Missing sources in an SDK not built on your machine are common, but missing sources that you created can be resolved.</p>
                	    <p><img src="../images/new_build_project_executables_view.png" alt="Executables view" width="713" height="210"></p>
                 </li>
        	    </ol>
