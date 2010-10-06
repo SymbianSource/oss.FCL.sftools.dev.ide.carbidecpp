@@ -316,7 +316,6 @@
         <topic label="Adding and removing global variables" 	href="html/debugger/variables/adding_variables.htm" />
       </topic>
       <topic label="Viewing expressions" 						href="html/debugger/variables/viewing_expressions.htm" >
-        <topic label="Adding and removing expressions" 		href="html/debugger/variables/adding_expressions.htm" />
         <topic label="Editing expressions" 					href="html/debugger/variables/editing_expressions.htm" />
       </topic>
     </topic>
