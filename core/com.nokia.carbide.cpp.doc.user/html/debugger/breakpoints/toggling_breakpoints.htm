@@ -9,7 +9,7 @@
 </head>
 <body >
 <h2> Enabling, Disabling and Removing Breakpoints </h2>
-<p>Use the <b>Toggle Breakpoint</b> command  (<span class="code">Ctrl+Shift+B</span>) to set a regular breakpoint in an <a href="properties_breakpoints.htm">Editor</a>  or  <a href="../../reference/view_disassembly.htm">Disassembly</a> view. Only a single breakpoint can exist on a source code line. A regular breakpoint suspends program execution when it is hit, or executed, during a debug session. The debugger executes the line of source code that contains the regular breakpoint, then opens the <a href="../../reference/perspective_debug.htm">Debug</a> perspective to allow examination and modification.</p>
+<p>Use the <b>Toggle Breakpoint</b> command  (<span class="code">Ctrl+Shift+B</span>) to set a regular breakpoint in an <a href="properties_breakpoints.htm">Editor</a>  or  <a href="../views/view_disassembly.htm">Disassembly</a> view. Only a single breakpoint can exist on a source code line. A regular breakpoint suspends program execution when it is hit, or executed, during a debug session. The debugger executes the line of source code that contains the regular breakpoint, then opens the <a href="../views/perspective_debug.htm">Debug</a> perspective to allow examination and modification.</p>
 <p>If a regular breakpoint already exists on the  selected line, as indicated by the enabled breakpoint badge (<img src="../../tasks/breakpoints/images/breakpoints_enabled_icon.png" width="9" height="10" align="baseline">) in the marker bar,  use <b>Toggle Breakpoint</b> to remove the breakpoint.</p>
 <h4>Enabling and Disabling breakpoints</h4>
 <p>Once a source line is selected in an editor or Disassembly view, the methods of toggling breakpoints to be enabled of disabled include: </p>
@@ -20,7 +20,7 @@
   <li>Double-click in the marker bar to enable or disable a breakpoint on that source line </li>
 </ul>
 <h4>Removing breakpoints</h4>
-<p>In the  <a href="../../reference/view_breakpoints.htm">Breakpoints</a> view, locate the source code line to modify and: </p>
+<p>In the  <a href="../views/view_breakpoints.htm">Breakpoints</a> view, locate the source code line to modify and: </p>
 <ul>
   <li>Right-click the breakpoint and choose <b>Remove</b> from the context menu to remove the breakpoint </li>
 </ul>
@@ -28,7 +28,7 @@
 <p>Breakpoints must first be loaded and resolved before they can be hit during a debug session. See <a href="resolving_breakpoints.htm">Resolving Breakpoint States</a> for more information on the various states a breakpoint can exhibit. </p>
 <p>See <a href="exporting_breakpoints.htm">Saving and importing breakpoints</a> for information on storing breakpoint data sets for sharing or re-use. </p>
 <p class="note"><strong>TIP</strong> If you find that a breakpoint is not being hit during a debug session, verify that the EXE or DLL is listed in the <a href="../../projects/views/view_executables.htm">Executables</a> view. </p>
-<p class="note"><strong>TIP</strong> If debugging a server launched by a client, you must attach to the server  process using the <a href="../../reference/view_symbian_kernel.htm">Symbian Data</a> view in order to hit the breakpoints in the server. Alternately, you can launch the server and  client as two independent EXEs using the same COM port and debug them that way.</p>
+<p class="note"><strong>TIP</strong> If debugging a server launched by a client, you must attach to the server  process using the <a href="../views/view_symbian_kernel.htm">Symbian Data</a> view in order to hit the breakpoints in the server. Alternately, you can launch the server and  client as two independent EXEs using the same COM port and debug them that way.</p>
 <h4>Other references</h4>
 <ul>
   <li><a href="breakpoints.htm">Breakpoints overview </a></li>
