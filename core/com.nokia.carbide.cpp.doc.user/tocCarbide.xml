@@ -88,13 +88,10 @@
       </topic>
       <topic label="Remote Connections view"		href="html/reference/trk/view_remote_connection.htm" />
       <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data view"></topic>
-      <topic label="Symbian Project Navigator view"	href="html/reference/view_sym_proj_nav.htm" />
+      <topic label="Symbian Project Navigator view"	href="html/debugger/variables/variables.htm" />
       <topic label="Variables and Expressions"					href="html/concepts/working_with_variables.htm" >
-        <topic label="Variables view"							href="html/reference/view_variables.htm" />
-        <topic label="Viewing Variables"						href="html/debugger/variables/viewing_variables.htm" />
-        <topic label="Adding and Removing Global Variables"		href="html/debugger/variables/adding_variables.htm" />
-        <topic label="Expressions view"							href="html/reference/view_expressions.htm" />
-        <topic label="Viewing Expressions"						href="html/debugger/variables/viewing_expressions.htm" />
+        <topic label="Variables view"							href="html/debugger/variables/view_variables.htm" />
+        <topic label="Expressions view"							href="html/debugger/variables/view_expressions.htm" />
         <topic label="Editing Expressions" 						href="html/debugger/variables/editing_expressions.htm" />
         <topic label="Adding and Removing Expressions"			href="html/debugger/variables/adding_expressions.htm" />
       </topic>
@@ -311,13 +308,10 @@
       <topic label="Exporting breakpoints and watchpoints" href="html/debugger/breakpoints/exporting_breakpoints.htm" />
       <topic label="Importing breakpoints and watchpoints" href="html/debugger/breakpoints/importing_breakpoints.htm" />
     </topic>
-    <topic label="Variables and Expressions" 			href="html/debugger/variables/variables.htm" >
-      <topic label="Viewing variables"                   		href="html/debugger/variables/viewing_variables.htm" >
-        <topic label="Adding and removing global variables" 	href="html/debugger/variables/adding_variables.htm" />
-      </topic>
-      <topic label="Viewing expressions" 						href="html/debugger/variables/viewing_expressions.htm" >
-        <topic label="Editing expressions" 					href="html/debugger/variables/editing_expressions.htm" />
-      </topic>
+    <topic label="Variables and Expressions" 				href="html/debugger/variables/variables.htm" >
+      <topic label="Viewing variables"                   	href="html/debugger/variables/view_variables.htm" />
+      <topic label="Viewing expressions" 					href="html/debugger/variables/view_expressions.htm" />
+      <topic label="Editing expressions" 					href="html/debugger/variables/editing_expressions.htm" />
     </topic>
     <topic label="Debugging variations"                     href="html/concepts/debugger_about.htm" >
       <topic label="Attaching to a Process"					href="html/tasks/processes/attach_to_process.htm" />
