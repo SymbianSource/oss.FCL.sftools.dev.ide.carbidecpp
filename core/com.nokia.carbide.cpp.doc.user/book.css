@@ -1,172 +1,174 @@
-/*	
-	Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies). 
-	All rights reserved. 
+/*
+	Copyright (c) 2010 Nokia Corporation and/or its subsidiary(-ies).
+	All rights reserved.
 	License: http://www.eclipse.org/legal/epl-v10.html
 */
 
 /*	Add whitespace around entire display to avoid crowding edges of view 	*/
-html {
-	margin: 2px 10px 10px 10px;
-	}
+html { margin: 2px 10px 10px 10px; }
 
 /* 20091007 added verdana and ariel to list to match SFO website fonts choices */
-body, p, table, li {
+body, p, table, li
+{
 	font-family: Verdana, Ariel, Helvetica, sans-serif;
 	font-size: 1.0em;
-	font-size: 0.9em;
 	font-weight: normal;
 }
 
-h1, h2, h3, h4, h5, h6, strong, em {
+h1, h2, h3, h4, h5, h6, strong, em
+{
 	font-family: Verdana, Ariel, Helvetica, sans-serif;
-	color: #000000;	
-	}
+	color: #000000;
+}
 
 /* 20091007 - changed sizes to use em versus px */
-h1 { font-size: 1.3em }
-h2 { font-size: 1.2em }
-h3 { font-size: 1.1em }
-h4 { font-size: 1.0em }
-h5 { font-size: 0.9em }
-h6 { font-size: 0.8em }
+h1 { font-size: 1.3em; }
+h2 { font-size: 1.2em; }
+h3 { font-size: 1.1em; }
+h4 { font-size: 1.0em; }
+h5 { font-size: 0.9em; }
+h6 { font-size: 0.8em; }
 
 /*	For headlines at the top of a view, add space	*/
 /*	20090224-changed green fade to gold header image	*/
-h1, h2, h3 {
+h1, h2, h3
+{
 	background-image: url(html/images/gold_header.png);
 	background-repeat: no-repeat;
-	padding:10px 0px 10px 12px;	
-	}
+	padding: 10px 0px 10px 12px;
+}
 
 /* 20091007 SFO styling added */
-h1.NavTitle		{ font-size: 1.2em }
-h3	.NavListTitle 	{ font-size: 1.1em }
+h1.NavTitle { font-size: 1.2em; }
+h3	.NavListTitle { font-size: 1.1em; }
 
-li	{
-	margin-bottom:8px;	
-	margin-top:8px;
-	}
+li
+{
+	margin-bottom: 8px;
+	margin-top: 8px;
+}
 
 /*	Footer includes space and a gray line above the company logo	*/
-#footer {
-	padding-top:10px;
-	margin-top:20px;
-	border-top:1px solid #999;
+#footer
+{
+	padding-top: 10px;
+	margin-top: 20px;
+	border-top: 1px solid #999;
 	font-family: Verdana, Ariel, Helvetica, sans-serif;
 	font-size: 0.8em;
 	color: #333333;
-	}
+}
 
-.listing	{
+.listing
+{
 	background-color: #FFFFCC;
 	font-family: "Courier New", Courier, mono;
 	font-size: 1.1em;
 	color: #000000;
 	margin: 5px 0px;
-	}
-		
-.code, pre	{
+}
+
+.code, pre
+{
 	font-family: "Courier New", Courier, mono;
 	font-size: 1.1em;
 	color: #000000;
-	}
+}
 
-.step	{
+.step
+{
 	/* background-color: #EEE; */
 	/* margin: 10px 0px; */
 	/* color: #111; */
 	/* border-bottom:2px solid #EEE; */
-	}
-	
-.substep	{
-	background-color: #EEE;
-	}
-	
-	
+}
+
+.substep { background-color: #EEE; }
+
 /*	Figure/Listing/Table titles are centered and gray	*/
-p.table {
+p.table
+{
 	color: #999;
 	font-weight: bold;
 	padding-top: 5px;
-	}
+}
 
-table	{
+table
+{
 	border: solid #999 1px;
 	table-layout: auto;
-	}
+}
 
-td, th	{
+td, th
+{
 	border: solid #999 1px;
 	padding: 5px;
-	vertical-align:top;
-	}
-	
-th	{
-	background-color: #C9D2C9;
-	}
+	vertical-align: top;
+}
 
-div.ol.p	{
-	margin-left: 3em;
-	}
+th { background-color: #C9D2C9; }
+div.ol.p { margin-left: 3em; }
 
 /* Make all ordered/unordered list items appear in bold gray */
-div ol > li, div ul > li {
-	font-weight:bold;
+div ol > li, div ul > li
+{
+	font-weight: bold;
 	color: #333;
-	}
+}
 
-div ol > p, div ul > p, div li > p {
-	font-weight:normal;
-	}
-	
-div h5, div h4	{
-	padding:5px 0px 5px 12px;
+div ol > p, div ul > p, div li > p { font-weight: normal; }
+
+div h5, div h4
+{
+	padding: 5px 0px 5px 12px;
 	background-color: #D3DAD4;
-	font-weight:bold;
+	font-weight: bold;
 	color: #000000;
-	}
-	
-	
+}
+
 /*	Notes stand out using a light top & bottom borders with dark gray text	*/
-p.note {
+p.note
+{
 	color: #333;
 	padding: 5px;
 	margin-left: 1em;
 	margin-right: 1em;
 	border-top: solid #BBB thin;
 	border-bottom: solid #BBB thin;
-	}
+}
 
-	
 /*	Figure/Listing/Table titles are centered and gray	*/
-p.figure {
+p.figure
+{
 	color: #026690;
 	text-align: center;
 	font-weight: bold;
-	}
-
+}
 
 /*	highly visible red background and white text for things that need fixing before release	*/
 /*  SHOULD NOT BE PRESENT IN RELEASED PRODUCTS */
-.fix	{
+.fix
+{
 	background-color: red;
 	font-weight: bold;
 	color: white;
-	}
+}
 
-.question	{
-	font-style:italic;
-	font-weight:bold;
+.question
+{
+	font-style: italic;
+	font-weight: bold;
 	color: #555;
-	}
-	
-.titleSmall {
+}
+
+.titleSmall
+{
 	font-family: Verdana, Ariel, Helvetica, sans-serif;
 	font-size: 0.8em;
-	}
+}
 
-	
-.plain {
+.plain
+{
 	font-family: Verdana, Ariel, Helvetica, sans-serif;
 	font-size: 0.9em;
 	font-style: normal;
@@ -175,8 +177,8 @@ p.figure {
 	font-variant: normal;
 	color: #000000;
 	text-decoration: none;
-	}
+}
 
-a:link 		{ color: #026690 }
-a:visited	{ color: #555555 }
-a:hover 	{ color: #FFD62C }
+a:link { color: #026690; }
+a:visited { color: #555555; }
+a:hover { color: #FFD62C; }
