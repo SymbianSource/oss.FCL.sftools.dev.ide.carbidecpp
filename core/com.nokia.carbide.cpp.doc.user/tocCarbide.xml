@@ -41,7 +41,7 @@
 		  <topic label="Debug on remote device"						href="html/projects/tutorials/run_mode_debug_example_04.htm" />
 		</topic>
    </topic>
-  <topic label="Carbide menus" 					href="html/reference/menus/menus.htm" >
+  <topic label="Carbide menu options"			href="html/reference/menus/menus.htm" >
     <topic label="ABLD Actions" 				href="html/reference/menus/abld.htm" />
     <topic label="Build All Configurations" 	href="html/reference/menus/build_all_targets.htm" />
     <topic label="Build PKG File" 				href="html/reference/menus/build_pkg_file.htm" />
@@ -56,20 +56,20 @@
     <topic label="Show in Explorer"				href="html/reference/menus/open_explorer_window.htm" />
     <topic label="Symbian OS C++ Class"			href="html/tasks/projects/prj_adding_symbian_class.htm"  />
     <topic label="Symbian OS C++ Project"		href="html/tasks/CreatingNewProjects.html" />
-    <topic label="Symbian OS MMP File"			href="html/reference/NewMMP_wizard.html" />
+    <topic label="Symbian OS MMP File"			href="html/projects/mmp/NewMMP_wizard.html" />
     <topic label="Toggle HW Breakpoint"         href="html/reference/menus/hardware_breakpoints.htm" />
     <topic label="Update Projects"          	href="html/reference/olderproject_updater.html" />
   </topic>
   <topic label="Carbide views" 						href="html/reference/views_overview.htm"  >
-      <topic label="BreakPoints view" 				href="html/reference/view_breakpoints.htm" />
-      <topic label="Carbide.c++ Portal"	    		href="html/reference/view_carbide_portal.htm" >
+      <topic label="BreakPoints view" 				href="html/debugger/views/view_breakpoints.htm" />
+      <topic label="Carbide.c++ Portal"	    		href="html/projects/views/view_carbide_portal.htm" >
       	<topic label="Installing Extensions"	    href="html/tasks/installing_extensions.htm" />
   	  </topic>
-      <topic label="Console view" 					href="html/reference/view_console.htm" />
-      <topic label="Debug view"						href="html/debugger/debug/viewing_debug.htm" />
-      <topic label="Disassembly view"				href="html/reference/view_disassembly.htm" />
-      <topic label="Executables view"				href="html/reference/view_executables.htm" />
-      <topic label="Memory view"				href="html/reference/view_memory.htm" >
+      <topic label="Console view" 						href="html/projects/views/view_console.htm" />
+      <topic label="Debug view"							href="html/debugger/debug/viewing_debug.htm" />
+      <topic label="Disassembly view"					href="html/debugger/views/view_disassembly.htm" />
+      <topic label="Executables view"					href="html/prjects/views/view_executables.htm" />
+      <topic label="Memory view"						href="html/debugger/views/view_memory.htm" >
         <topic href="html/concepts/working_with_memory.htm" label="Working with Memory"></topic>
         <topic label="Opening a Memory View"					href="html/tasks/memory/view_memory_show.htm" />
         <topic label="Adding a Memory Monitor"					href="html/tasks/memory/memory_monitor_adding.htm" />
@@ -77,29 +77,29 @@
         <topic label="Removing a Memory Monitor or Rendering"	href="html/tasks/memory/memory_monitor_removing.htm" />
         <topic label="Memory Rendering Options"         		href="html/reference/memory_rendering_options.htm" />
       </topic>
-      <topic label="Modules View"				href="html/reference/view_module.htm" />
-      <topic label="Project Explorer view"			href="html/reference/view_proj_explorer.htm" />
+      <topic label="Modules View"						href="html/debugger/views/view_module.htm" />
+      <topic label="Project Explorer view"				href="html/projects/views/view_proj_explorer.htm" />
       <topic label="Registers"								href="html/concepts/registers.htm" >
-        <topic label="Registers view"						href="html/reference/view_registers.htm" />
+        <topic label="Registers view"						href="html/debugger/views/view_registers.htm" />
         <topic label="Opening a Registers View"				href="html/tasks/registers/mem_reg_open_wnd.htm" />
         <topic href="html/tasks/registers/mem_reg_data_views.htm" label="Changing Register Data Views"></topic>
         <topic label="Expanding Register Groups"			href="html/tasks/registers/mem_reg_viewing.htm" />
         <topic label="Changing Register Values"				href="html/tasks/registers/mem_reg_changing.htm" />
       </topic>
-      <topic label="Remote Connections view"		href="html/reference/trk/view_remote_connection.htm" />
-      <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data view"></topic>
-      <topic label="Symbian Project Navigator view"	href="html/debugger/variables/variables.htm" />
+      <topic label="Remote Connections view"				href="html/projects/remote_conn/view_remote_connection.htm" />
+      <topic label="Symbian OS Data view" 					href="html/debugger/views/view_sym_os_data_overview.htm" />
+      <topic label="Symbian Project Navigator view"			href="html/projects/views/view_sym_proj_nav.htm" />
       <topic label="Variables and Expressions"					href="html/concepts/working_with_variables.htm" >
         <topic label="Variables view"							href="html/debugger/variables/view_variables.htm" />
         <topic label="Expressions view"							href="html/debugger/variables/view_expressions.htm" />
         <topic label="Editing Expressions" 						href="html/debugger/variables/editing_expressions.htm" />
         <topic label="Adding and Removing Expressions"			href="html/debugger/variables/adding_expressions.htm" />
       </topic>
-      <topic label="Workspace Information"	        href="html/concepts/workspaces.htm" />
+      <topic label="Workspace Information"	        	href="html/concepts/workspaces.htm" />
   </topic>
   <topic label="Project management" >
-    <topic label="Carbide C/C++ perspective" 			href="html/concepts/CarbidePerspective.html" />
-    <topic label="Symbian Build System (SBSv2)" 			href="html/concepts/sbsv2.htm" />
+    <topic label="Carbide C/C++ perspective" 			href="html/projects/views/perspective_carbide.html" />
+    <topic label="Symbian Build System (SBSv2)" 		href="html/concepts/sbsv2.htm" />
     <topic label="Carbide.c++ preferences" 				href="html/reference/pref_carb_cpp.htm" >
       <topic label="Build"								href="html/reference/pref_carb_build.htm" />
       <topic label="Build Configuration Filtering"		href="html/tasks/sdks/sdk_platform_filter.htm" />
@@ -120,7 +120,7 @@
       <topic label="Searching for SDKs"				href="html/tasks/sdks/sdk_search.htm" />
       <topic label="Viewing SDK Properties"			href="html/tasks/sdks/sdk_view_properties.htm" />
     </topic>
-    <topic label="Creating projects" 								href="html/tasks/CreatingProjectsToc.htm" >
+    <topic label="Creating projects" 							href="html/tasks/CreatingProjectsToc.htm" >
       <topic label="Project Templates" 					    	href="html/concepts/templates.htm" />
       <topic label="Creating from a Template" 					href="html/tasks/CreatingNewProjects.html" />
       <topic label="Importing Projects from a BLD.INF File"		href="html/tasks/ImportingProjects.html" />
@@ -146,7 +146,6 @@
       <topic label="Setting an Active Configuration"			href="html/tasks/projects/prj_set_build_tgt.htm" />
       <topic label="Adding/Removing Build Configurations"		href="html/tasks/projects/prj_new_build_config.htm" />
       <topic label="Preprocessing Files"						href="html/tasks/projects/prj_preprocess.htm" />
-      <topic label="Dependency Tracking"						href="html/concepts/dependency_tracking.htm" />
       <topic label="Building Projects"						href="html/tasks/projects/prj_build.htm" />
       <topic label="Cleaning Projects" 					    href="html/tasks/projects/prj_clean.htm" />
       <topic label="Build All Configurations"			    	href="html/reference/menus/build_all_targets.htm" />
@@ -165,36 +164,36 @@
         <topic label="New C++ Class Wizard" 				href="html/reference/NewClassWizard.html" />
         <topic label="Adding Symbian OS Classes Wizard"		href="html/tasks/projects/prj_adding_symbian_class.htm" />
       </topic>
-      <topic label="INF editor"					href="html/reference/INF_Editor.html" >
-        <topic label="Overview tab"				href="html/reference/INF_Editor.html" />
-        <topic label="Exports tab"				href="html/reference/INF_Editor_exports.html" />
-        <topic label="BLD.INF tab"				href="html/reference/INF_Editor_file.html" />
-        <topic label="Add / Edit Make File"		href="html/reference/INF_Editor_addedit_make.html" />
-        <topic label="Add / Edit MMP File"		href="html/reference/INF_Editor_addedit_mmp.html" />
+      <topic label="INF editor" >
+        <topic label="Overview tab"				href="html/projects/inf/INF_Editor.html" />
+        <topic label="Exports tab"				href="html/projects/inf/INF_Editor_exports.html" />
+        <topic label="BLD.INF tab"				href="html/projects/inf/INF_Editor_file.html" />
+        <topic label="Add / Edit Make File"		href="html/projects/inf/INF_Editor_addedit_make.html" />
+        <topic label="Add / Edit MMP File"		href="html/projects/inf/INF_Editor_addedit_mmp.html" />
       </topic>
-      <topic label="MBM/MIF files" 			href="html/concepts/MBMDefWizard.html" >
+      <topic label="MBM files" 				href="html/concepts/MBMDefWizard.html" >
         <topic label="MBM Editor" 			href="html/reference/MBMEditor.html" />
         <topic label="Creating MBM Files" 	href="html/tasks/Multi-BitmapFile.html" />
-        <topic label="MBM/MIF Editor"		href="html/reference/view_mifdef_editor.htm" />
+        <topic label="MBM Editor"			href="html/reference/view_mifdef_editor.htm" />
       </topic>
       <topic label="MMP files" 				href="html/concepts/mmpfiles.htm" >
-        <topic label="MMP Wizard"		    href="html/reference/NewMMP_wizard.html" />
-        <topic label="MMP Editor"			href="html/reference/MMP_Editor.html" >
-          <topic label="Sources tab"		href="html/reference/MMP_Editor_sources.html" />
-          <topic label="Libraries tab"	href="html/reference/MMP_Editor_libraries.html" />
-          <topic label="Options tab"		href="html/reference/MMP_Editor_options.html" />
-          <topic label="MMP File tab"		href="html/reference/MMP_Editor_mmp_tab.html" />
+        <topic label="MMP Wizard"		    href="html/projects/mmp/NewMMP_wizard.html" />
+        <topic label="MMP Editor"			href="html/projects/mmp/MMP_Editor.html" >
+          <topic label="Sources tab"		href="html/projects/mmp/MMP_Editor_sources.html" />
+          <topic label="Libraries tab"		href="html/projects/mmp/MMP_Editor_libraries.html" />
+          <topic label="Options tab"		href="html/projects/mmp/MMP_Editor_options.html" />
+          <topic label="MMP File tab"		href="html/projects/mmp/MMP_Editor_mmp_tab.html" />
         </topic>
       </topic>
     </topic>
-    <topic label="Launch configurations"				href="html/projects/launch/launch_configs_overview.htm" >
-      <topic label="New Launch Configuration Wizard"	href="html/projects/launch/wiz_new_launch_config.htm" />
-      <topic label="Debug dialog"						href="html/projects/launch/wnd_debug_configuration.htm" />
-      <topic label="Launch types"								href="html/projects/launch/launch_types.htm" >
-        <topic label="Symbian OS Device"						href="html/projects/launch/stop_mode.htm" />
-        <topic label="Symbian OS Device (Install SIS)"			href="html/projects/launch/run_mode.htm" />
-        <topic label="Symbian OS Device (Attach to Process)"	href="html/projects/launch/attach_process.htm" />
-        <topic label="Symbian OS Emulator"						href="html/projects/launch/emulation.htm" />
+    <topic label="Launch configurations"					href="html/projects/launch/launch_configs_overview.htm" >
+      <topic label="New Launch Configuration Wizard"		href="html/projects/launch/wiz_new_launch_config.htm" />
+      <topic label="Debug dialog"							href="html/projects/launch/wnd_debug_configuration.htm" />
+      <topic label="Launch types"							href="html/projects/launch/launch_types.htm" >
+        <topic label="Symbian Device"						href="html/projects/launch/stop_mode.htm" />
+        <topic label="Symbian Device (Install SIS)"			href="html/projects/launch/run_mode.htm" />
+        <topic label="Symbian Device (Attach to Process)"	href="html/projects/launch/attach_process.htm" />
+        <topic label="Symbian Emulator"						href="html/projects/launch/emulation.htm" />
       </topic>
       <topic label="Configuration panes"				href="html/projects/launch/pages_overview.htm" >
         <topic label="Arguments"					href="PLUGINS_ROOT/org.eclipse.cdt.doc.user/reference/cdt_u_run_dbg_arg.htm" />
@@ -214,37 +213,37 @@
     </topic>
     <topic label="Qt project support"					href="html/qt_help/qt_overview.htm" >
       <topic label="Qt development setup"				href="html/qt_help/qt_project_setup.htm" >
-        <topic label="Creating Qt projects"			href="html/qt_help/qt_creating_projs_01.htm" />
-        <topic label="Importing Qt projects"		href="html/qt_help/qt_importing_projs_01.htm" />
+        <topic label="Creating Qt projects"				href="html/qt_help/qt_creating_projs_01.htm" />
+        <topic label="Importing Qt projects"			href="html/qt_help/qt_importing_projs_01.htm" />
       </topic>
       <topic label="Qt C/C++ perspective"				href="html/qt_help/qt_perspectives.htm" />
       <topic label="Qt preference panel"				href="html/qt_help/qt_pref_panel.htm" />
-      <topic label="Qt project properties"			href="html/qt_help/qt_project_properties.htm" />
+      <topic label="Qt project properties"				href="html/qt_help/qt_project_properties.htm" />
     </topic>
     <topic label="Software Configuration Management"	href="html/concepts/cvs.htm" />
   </topic>
   
   <topic label="Debugging projects" 				href="html/concepts/debugger_about.htm" >
-    <topic label="Running a program" 			href="html/debugger/debug/cmds_starting.htm" />
-    <topic label="Debug perspective" 			href="html/reference/perspective_debug.htm" >
+    <topic label="Running a program" 				href="html/debugger/debug/cmds_starting.htm" />
+    <topic label="Debug perspective" 				href="html/debugger/views/perspective_debug.htm" >
     </topic>
     <topic label="Debugging actions" href="html/debugger/debug/debug.htm">
-      <topic href="html/debugger/debug/viewing_debug.htm" label="View debugging"></topic>
-      <topic href="html/debugger/debug/cmds_starting.htm" label="Starting and Terminating"></topic>
-      <topic href="html/debugger/debug/cmds_resuming.htm" label="Suspending and Resuming"></topic>
-      <topic href="html/debugger/debug/cmds_stepping.htm" label="Stepping Over, Into, and Out of Routines"></topic>
-      <topic href="html/debugger/debug/cmds_other.htm" label="Other useful commands"></topic>
-      <topic href="html/debugger/debug/cmds_reposition_pc.htm" label="Reposition the program counter"></topic>
+      <topic href="html/debugger/debug/viewing_debug.htm" label="View debugging" />
+      <topic href="html/debugger/debug/cmds_starting.htm" label="Starting and Terminating" />
+      <topic href="html/debugger/debug/cmds_resuming.htm" label="Suspending and Resuming" />
+      <topic href="html/debugger/debug/cmds_stepping.htm" label="Stepping Over, Into, and Out of Routines" />
+      <topic href="html/debugger/debug/cmds_other.htm" label="Other useful commands" />
+      <topic href="html/debugger/debug/cmds_reposition_pc.htm" label="Reposition the program counter" />
     </topic>
     
-    <topic href="html/reference/trk/wnd_on_device_setup.htm" 			label="On-Device Connections" >
-      <topic href="html/tasks/trk/trk_start_sisx.htm" 	label="Starting the CODA Software" />
-      <topic href="html/reference/trk/wnd_new_connection_wizard.htm" 	label="Setup Connection" />
-      <topic href="html/reference/trk/wnd_on_device_check_tab.htm" 		label="Test Connections" />
-      <topic href="html/reference/trk/wnd_new_conn_install_tab.htm" 	label="Install Remote Agents" />
-      <topic label="Remote Connections view"			href="html/reference/trk/view_remote_connection.htm" />
-      <topic href="html/reference/trk/exporting_remote_conns.htm" 		label="Exporting remote connections"></topic>
-      <topic href="html/reference/trk/importing_remote_conns.htm" 		label="Importing remote connections"></topic>
+    <topic href="html/projects/remote_conn/wnd_on_device_setup.htm" 		label="On-Device Connections" >
+      <topic href="html/tasks/trk/trk_start_sisx.htm" 						label="Starting the CODA Software" />
+      <topic href="html/projects/remote_conn/wnd_new_connection_wizard.htm" 	label="Setup Connection" />
+      <topic href="html/projects/remote_conn/wnd_on_device_check_tab.htm" 		label="Test Connections" />
+      <topic href="html/projects/remote_conn/wnd_new_conn_install_tab.htm" 		label="Install Remote Agents" />
+      <topic href="html/projects/remote_conn/view_remote_connection.htm"		label="Remote Connections view"							 />
+      <topic href="html/projects/remote_conn/exporting_remote_conns.htm" 		label="Exporting remote connections"></topic>
+      <topic href="html/projects/remote_conn/importing_remote_conns.htm" 		label="Importing remote connections"></topic>
     </topic>
 	
 	<!--
@@ -273,10 +272,10 @@
     </topic>
     -->
         
-      <topic href="html/tasks/projects/prj_debug_dlls.htm" label="Debugging DLLs"></topic>
-      <topic href="html/tasks/processes/attach_to_process.htm" label="Attaching to a Process"></topic>
-      <topic href="html/tasks/start/carbide_debugging.htm" label="Debugging a Symbian OS Program"></topic>
-      <topic href="html/reference/view_sym_os_data_overview.htm" label="Symbian OS Data View"></topic>
+      <topic href="html/tasks/projects/prj_debug_dlls.htm" 				label="Debugging DLLs" />
+      <topic href="html/tasks/processes/attach_to_process.htm" 			label="Attaching to a Process" />
+      <topic href="html/tasks/start/carbide_debugging.htm" 				label="Debugging a Symbian OS Program" />
+      <topic href="html/debugger/views/view_sym_os_data_overview.htm" 	label="Symbian OS Data View" />
         
     
     <topic label="Stop mode projects" 					href="html/tasks/StopModeToc.htm">
@@ -298,7 +297,7 @@
       </topic>
       <topic label="Exporting breakpoints and watchpoints" href="html/debugger/breakpoints/exporting_breakpoints.htm" />
       <topic label="Importing breakpoints and watchpoints" href="html/debugger/breakpoints/importing_breakpoints.htm" />
-      <topic label="Toggle hardware breakpoints" href="html/reference/menus/hardware_breakpoints.htm" />
+      <topic label="Toggling hardware breakpoint"          href="html/reference/menus/hardware_breakpoints.htm" />
     </topic>
     <topic href="html/debugger/watchpoints/watchpoints.htm" label="Watchpoints">
       <topic label="Viewing watchpoints" href="html/debugger/breakpoints/viewing_breakpoints.htm" />
