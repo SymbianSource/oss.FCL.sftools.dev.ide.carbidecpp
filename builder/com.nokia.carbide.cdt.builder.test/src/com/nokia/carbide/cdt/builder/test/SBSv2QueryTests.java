@@ -24,6 +24,7 @@ import org.osgi.framework.Version;
 
 import com.nokia.carbide.cpp.internal.api.sdk.ISBSv2BuildContext;
 import com.nokia.carbide.cpp.internal.api.sdk.sbsv2.SBSv2QueryUtils;
+import com.nokia.carbide.cpp.internal.sdk.core.model.AbstractSDKManager;
 import com.nokia.carbide.cpp.sdk.core.ISDKBuildInfo;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuildContext;
 import com.nokia.carbide.cpp.sdk.core.ISymbianBuilderID;
@@ -32,19 +33,18 @@ import com.nokia.carbide.cpp.sdk.core.SDKCorePlugin;
 
 public class SBSv2QueryTests extends BaseTest {
 	
-	//private boolean printTimingStats = true;
-	
 	private long startTime;
 	
-	//private final String SDK_ID1 = "s3"; // SDK with additional aliases and products
-	private final String SDK_ID1 = "K_92_WK12";
+	/** Test SDK - Note that this SDK does not have /epoc32/sbs_config/variant_configs.xml
+	 * to test the products. Any working variant_configs.xml can be insterted to get the tests working
+	 */
+	private final String SDK_ID1 = "Nokia_Symbian3_SDK_v0.9";
 	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		Version sbsVersion = SDKCorePlugin.getSDKManager().getSBSv2Version(true);
-		if ((sbsVersion.getMajor() == 2 && sbsVersion.getMinor() < 15) ||
-			 sbsVersion.getMajor() < 2){
+		if (sbsVersion.compareTo(AbstractSDKManager.MINIMUM_RAPTOR_VERSION) < 0){
 			
 			fail("SBS Query tests require Raptor 2.15 or greater. Raptor version found is: " + sbsVersion);
 		}
