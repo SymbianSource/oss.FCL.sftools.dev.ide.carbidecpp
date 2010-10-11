@@ -19,7 +19,7 @@
     <topic label="Updating Carbide" 			href="html/tasks/start/carbide_updating.htm" />
   </topic>
    <topic label="Concepts" 					href="html/concepts/concepts.htm" />
-   <topic label="Carbide tutorials">
+   <topic label="Carbide tutorials"  		href="html/projects/tutorials/tutorials.htm">
 		<topic label="Emulator Application Projects"				href="html/projects/tutorials/new_proj_from_template_00.htm" >
 		  <topic label="Creating new projects from templates" 		href="html/projects/tutorials/new_proj_from_template_01.htm" />
 		  <topic label="Building projects and components" 			href="html/projects/tutorials/new_proj_from_template_02.htm" />
