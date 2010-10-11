@@ -34,7 +34,8 @@ public class TestCreateGlobalPrefs extends BaseTest {
 		"com.nokia.carbide.cpp.preferences.ExtensionsPreferencesPage",
 		"com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage",
 		"com.nokia.carbide.cpp.internal.project.ui.preferences.CarbidePreferencePage",
-		"com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage"
+		"com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage",
+		"com.nokia.carbide.search.system.internal.ui.SearchPreferencePage"
 	};
 	
 	@Override
