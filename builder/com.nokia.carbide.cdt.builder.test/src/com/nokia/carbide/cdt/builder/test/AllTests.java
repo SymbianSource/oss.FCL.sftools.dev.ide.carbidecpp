@@ -39,6 +39,7 @@ public class AllTests {
 		suite.addTestSuite(TestCarbideProjectSettingsModifier.class);
 		suite.addTestSuite(TestEpocEngineHelper.class);
 		suite.addTestSuite(SBSv2QueryTests.class);
+		suite.addTestSuite(TestCreateGlobalPrefs.class);
 		
 		// error parser tests....
 		suite.addTestSuite(com.nokia.carbide.cdt.builder.test.errorParsers.TestMakmakeErrorParser.class);
