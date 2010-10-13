@@ -17,6 +17,7 @@
 */
 package com.nokia.carbide.cdt.builder.test;
 
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 
 import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
@@ -27,6 +28,9 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
  */
 public class TestCreateGlobalPrefs extends BaseTest {
 	
+	// Deprecated - are filtered
+	//com.nokia.cdt.debug.cw.symbian.ui.GlobalSettings
+	//com.nokia.carbide.cpp.logging.LoggingPreferencesPage
 	private static final String[] carbidePrefIds = { "com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage",
 		"com.nokia.carbide.cpp.internal.sdk.ui.SDKPreferencePage",
 		"com.nokia.carbide.cpp.internal.sdk.ui.SDKPreferencePage",
@@ -57,12 +61,23 @@ public class TestCreateGlobalPrefs extends BaseTest {
 	 */
 	public void testCreatePrefs() throws Exception {
 		
-		for (String id : carbidePrefIds){
-			PreferencesUtil.createPreferenceDialogOn(WorkbenchUtils.getSafeShell(), id, null, null, 0);
-		}
+//		make sure to run on UI thread
+//		Display getAsynch()
+//		capture and throw exception
+//		wait to finish before existing
 		
-		// Deprecated - to be filtered
-		//com.nokia.cdt.debug.cw.symbian.ui.GlobalSettings
-		//com.nokia.carbide.cpp.logging.LoggingPreferencesPage
+		// TODO: Need to throw exception on error when loading a pref page
+		
+		Display.getDefault().asyncExec(new Runnable() {
+
+			@Override
+			public void run() {
+				for (String id : carbidePrefIds){
+					PreferencesUtil.createPreferenceDialogOn(WorkbenchUtils.getSafeShell(), id, null, null, 0);
+				}
+			}
+			
+		});
+		
 	}
 }
