@@ -10,10 +10,10 @@
 <body >
 <h2>Attaching  to a Process</h2>
 <div>
-  <p>Use a <b>Symbian Attach to Process</b> launch configuration to attach the debugger to an already running Symbian process or thread on a target device. This is useful for debugging DLLs where the main process is unknown or for servers running in RAM in a client-server relationship where the client relies on the presence of the server process to operate.</p>
+  <p>Use a <b>Symbian Attach to Process</b> launch configuration to attach the debugger to an already running Symbian process or thread on a target device or simulator. This is useful for debugging DLLs where the main process is unknown or for servers running in RAM in a client-server relationship where the client relies on the presence of the server process to operate.</p>
   <p>One common debugging DLL use case is when the developer doesn't know which process calls the DLL. This makes it difficult to debug the DLL because you doesn't know which process to attach to nor start. Carbide enables DLL debugging  by simply attaching the DLL to any running process as long as the DLL is included in the <a href="../../projects/views/view_executables.htm">Executables</a> view.</p>
   <p>You can also attach to a process in the <a href="../../debugger/views/view_symbian_kernel.htm">Symbian Data</a> view when debugging.</p>
-  <p class="note"><b>NOTE</b> You cannot attach to a process running on the emulator. It must be a target device running the Symbian and the CODA software.</p>
+  <p class="note"><b>NOTE</b> You cannot attach to a process running on an emulator. It must be a target device or simulator running the Symbian and the CODA software.</p>
   <p>When attempting to find a process the debugger  uses the UID3  to locate the process. </p>
   <div class="step">
     <h4>Attaching to any Running Process</h4>
