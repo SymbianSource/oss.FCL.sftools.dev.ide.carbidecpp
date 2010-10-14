@@ -33,8 +33,6 @@ public class TestCreateGlobalPrefs extends BaseTest {
 	//com.nokia.carbide.cpp.logging.LoggingPreferencesPage
 	private static final String[] carbidePrefIds = { "com.nokia.carbide.cpp.sdk.ui.preferences.BuildPlatformFilterPage",
 		"com.nokia.carbide.cpp.internal.sdk.ui.SDKPreferencePage",
-		"com.nokia.carbide.cpp.internal.sdk.ui.SDKPreferencePage",
-		"com.nokia.carbide.cdt.internal.builder.ui.BuilderPreferencePage",
 		"com.nokia.carbide.cpp.preferences.ExtensionsPreferencesPage",
 		"com.nokia.carbide.cpp.internal.builder.utils.ui.PreprocessPreferencePage",
 		"com.nokia.carbide.cpp.internal.project.ui.preferences.CarbidePreferencePage",
@@ -64,11 +62,11 @@ public class TestCreateGlobalPrefs extends BaseTest {
 //		make sure to run on UI thread
 //		Display getAsynch()
 //		capture and throw exception
-//		wait to finish before existing
+//		wait to finish before exiting
 		
 		// TODO: Need to throw exception on error when loading a pref page
 		
-		Display.getDefault().asyncExec(new Runnable() {
+		Display.getDefault().syncExec(new Runnable() {
 
 			@Override
 			public void run() {
