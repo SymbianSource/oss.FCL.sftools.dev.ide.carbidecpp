@@ -34,7 +34,7 @@
 		<!-- Product attributes that support themes and universal intro -->
 		<property
 			name="introTitle"
-			value="Carbide.c++ v3.0.0 for Symbian"/> 
+			value="Carbide.c++ v3.1.0 for Symbian"/> 
 		<property
 			name="introBrandingImage"
 			value="intro/css/graphics/rootpage/brandmark.png"/>
