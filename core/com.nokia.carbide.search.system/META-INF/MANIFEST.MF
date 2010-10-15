@@ -7,7 +7,7 @@ Bundle-Activator: com.nokia.carbide.search.system.internal.ui.SearchPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Export-Package: com.nokia.carbide.search.system.core.text,
- com.nokia.carbide.search.system.internal.core.text;x-internal:=true,
+ com.nokia.carbide.search.system.internal.core.text;x-friends:="com.nokia.carbide.search.system.tests",
  com.nokia.carbide.search.system.internal.ui,
  com.nokia.carbide.search.system.internal.ui.text,
  com.nokia.carbide.search.system.internal.ui.util,
