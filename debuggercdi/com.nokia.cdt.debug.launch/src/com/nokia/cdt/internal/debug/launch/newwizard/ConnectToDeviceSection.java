@@ -43,7 +43,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	 * @param unifiedLaunchOptionsPage 
 	 * 
 	 */
-	public ConnectToDeviceSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
+	public ConnectToDeviceSection(LaunchWizardData data, AbstractUnifiedLaunchOptionsPage launchOptionsPage) {
 		super(data, Messages.getString("ConnectToDeviceSection.Title"), launchOptionsPage); //$NON-NLS-1$
 		manager = RemoteConnectionsActivator.getConnectionsManager();
 	}

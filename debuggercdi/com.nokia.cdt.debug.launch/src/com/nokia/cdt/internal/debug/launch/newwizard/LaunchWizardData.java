@@ -116,7 +116,7 @@ public class LaunchWizardData extends LaunchOptions {
 		USE_WORKSPACE_SETTING,
 	}
 
-	public LaunchWizardData(LaunchOptions launchOptions, IService trkService) {
+	public LaunchWizardData(LaunchOptions launchOptions, IService dbgService) {
 		this.mmps = launchOptions.mmps;
 		this.exes = launchOptions.exes;
 		this.defaultExecutable = launchOptions.defaultExecutable;
@@ -125,7 +125,7 @@ public class LaunchWizardData extends LaunchOptions {
 		this.isEmulation = launchOptions.isEmulation;
 		this.emulatorOnly = launchOptions.emulatorOnly;
 		this.mode = launchOptions.mode;
-		this.service = trkService;
+		this.service = dbgService;
 	}
 
 	/**

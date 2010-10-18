@@ -37,7 +37,7 @@ import com.nokia.cpp.internal.api.utils.core.PathUtils;
  */
 public class DebugRunProcessSection extends AbstractLaunchWizardSection {
 
-	public DebugRunProcessSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
+	public DebugRunProcessSection(LaunchWizardData data, AbstractUnifiedLaunchOptionsPage launchOptionsPage) {
 		super(data, MessageFormat.format(Messages.getString("DebugRunProcessSection.Title"), data.getModeLabel()), launchOptionsPage); //$NON-NLS-1$
 	}
 	

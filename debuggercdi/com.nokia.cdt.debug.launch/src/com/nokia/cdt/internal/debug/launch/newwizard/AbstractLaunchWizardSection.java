@@ -56,10 +56,10 @@ public abstract class AbstractLaunchWizardSection implements IWizardSection {
 	protected Button changeButton;
 	protected Composite control;
 	private ISectionChangeListener changeListener;
-	protected final UnifiedLaunchOptionsPage launchOptionsPage;
+	protected final AbstractUnifiedLaunchOptionsPage launchOptionsPage;
 
 
-	public AbstractLaunchWizardSection(LaunchWizardData data, String sectionName, UnifiedLaunchOptionsPage launchOptionsPage) {
+	public AbstractLaunchWizardSection(LaunchWizardData data, String sectionName, AbstractUnifiedLaunchOptionsPage launchOptionsPage) {
 		this.data = data;
 		this.sectionName = sectionName;
 		this.launchOptionsPage = launchOptionsPage;

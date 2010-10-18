@@ -31,7 +31,7 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	/**
 	 * 
 	 */
-	public OtherSettingsSection(LaunchWizardData data, UnifiedLaunchOptionsPage launchOptionsPage) {
+	public OtherSettingsSection(LaunchWizardData data, AbstractUnifiedLaunchOptionsPage launchOptionsPage) {
 		super(data, Messages.getString("OtherSettingsSection.Title"), launchOptionsPage); //$NON-NLS-1$
 		
 	}
