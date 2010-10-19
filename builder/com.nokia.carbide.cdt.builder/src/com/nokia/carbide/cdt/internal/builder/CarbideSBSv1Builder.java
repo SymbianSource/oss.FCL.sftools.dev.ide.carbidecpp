@@ -358,7 +358,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), componentPath)){
 			buildPlatform = buildConfig.getPlatformString().toLowerCase();
 		} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-				buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+				buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 		}
 		
 		SubMonitor progress = SubMonitor.convert(monitor, 2);
@@ -422,7 +422,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 				 EpocEngineHelper.hasFeatureVariantKeyword(buildConfig.getCarbideProject(), componentPath)){
 			buildPlatform = buildConfig.getPlatformString().toLowerCase();
 		} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-			buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+			buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 		}
 		
 		// run abld makefile platform for each component to be built if needed
@@ -1180,7 +1180,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				List<String> argsList = new ArrayList<String>();
@@ -1212,7 +1212,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				List<String> argsList = new ArrayList<String>();
@@ -1307,7 +1307,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1339,7 +1339,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1372,7 +1372,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1403,7 +1403,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1457,7 +1457,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1490,7 +1490,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1524,7 +1524,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1557,7 +1557,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				argsList.clear();
@@ -1730,7 +1730,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				List<String> argsList = new ArrayList<String>();
@@ -1907,7 +1907,7 @@ public class CarbideSBSv1Builder implements ICarbideBuilder {
 					buildPlatform = buildConfig.getPlatformString().toLowerCase();
 					
 				} else if (buildConfig.getBuildContext() instanceof ISBSv1BuildContext) {
-					buildPlatform = ((ISBSv1BuildContext)buildConfig).getBasePlatformForVariation().toLowerCase();
+					buildPlatform = ((ISBSv1BuildContext)buildConfig.getBuildContext()).getBasePlatformForVariation().toLowerCase();
 				}
 				
 				List<String> argsList = new ArrayList<String>();
