@@ -40,7 +40,6 @@ import org.eclipse.swt.widgets.Shell;
 
 import com.nokia.carbide.cpp.ui.CarbideUIPlugin;
 import com.nokia.carbide.cpp.ui.ICarbideSharedImages;
-import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cdt.internal.debug.launch.wizard.ILaunchCreationWizard;
 import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
@@ -52,33 +51,29 @@ import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
  */
 public abstract class AbstractLaunchWizard extends Wizard implements ILaunchCreationWizard {
 	 
-	private LaunchWizardData launchData;
+	protected IWizardData launchData;
 	private AbstractUnifiedLaunchOptionsPage mainPage;
 	private Button advancedButton;
 	private boolean advancedEdit;
 	private IPageChangedListener pageChangedListener;
 	private boolean hasFinished;
 	
-	public AbstractLaunchWizard(LaunchOptions launchOptions, IService dbgService, String title) {
-		launchData = new LaunchWizardData(launchOptions, dbgService);
+	public AbstractLaunchWizard(LaunchOptions launchOptions, String title) {
+		launchData = createWizardData(launchOptions);
 		mainPage = createMainPage(launchData); 
 		mainPage.initializeSettings();
 		setWindowTitle(title);
     }
 
-	protected abstract AbstractUnifiedLaunchOptionsPage createMainPage(LaunchWizardData data);
+	protected abstract AbstractUnifiedLaunchOptionsPage createMainPage(IWizardData data);
+	
+	protected abstract IWizardData createWizardData(LaunchOptions options);
 
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.wizard.Wizard#addPages()
-	 */
 	@Override
 	public void addPages() {
 		addPage(mainPage);
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.eclipse.jface.wizard.Wizard#setContainer(org.eclipse.jface.wizard.IWizardContainer)
-	 */
 	@Override
 	public void setContainer(final IWizardContainer wizardContainer) {
 		super.setContainer(wizardContainer);

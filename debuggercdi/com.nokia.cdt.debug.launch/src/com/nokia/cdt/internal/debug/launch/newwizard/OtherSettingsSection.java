@@ -21,19 +21,21 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EBuildBeforeLaunchOption;
+import com.nokia.cdt.internal.debug.launch.newwizard.IOtherSettingsWizardData.EBuildBeforeLaunchOption;
 
 /**
  * Present the "Build before debug" section with a short description.
  */
 public class OtherSettingsSection extends AbstractLaunchWizardSection {
 
+	private IOtherSettingsWizardData otherSettingsWizardData;
+
 	/**
 	 * 
 	 */
-	public OtherSettingsSection(LaunchWizardData data, AbstractUnifiedLaunchOptionsPage launchOptionsPage) {
+	public OtherSettingsSection(IWizardData data, AbstractUnifiedLaunchOptionsPage launchOptionsPage) {
 		super(data, Messages.getString("OtherSettingsSection.Title"), launchOptionsPage); //$NON-NLS-1$
-		
+		otherSettingsWizardData = (IOtherSettingsWizardData) data;
 	}
 	
 	/* (non-Javadoc)
@@ -51,7 +53,7 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	}
 	
 	public void initializeSettings() {
-		data.setBuildBeforeLaunchOption(EBuildBeforeLaunchOption.USE_WORKSPACE_SETTING);
+		otherSettingsWizardData.setBuildBeforeLaunchOption(EBuildBeforeLaunchOption.USE_WORKSPACE_SETTING);
 	}
 
 	/* (non-Javadoc)
@@ -70,10 +72,10 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 		String msg;
 		
 		String ifWorkspace = ""; //$NON-NLS-1$
-		if (data.getBuildBeforeLaunch() == EBuildBeforeLaunchOption.USE_WORKSPACE_SETTING)
+		if (otherSettingsWizardData.getBuildBeforeLaunch() == EBuildBeforeLaunchOption.USE_WORKSPACE_SETTING)
 			ifWorkspace = Messages.getString("OtherSettingsSection.WorkspaceLabel"); //$NON-NLS-1$
 		
-		if (data.isCurrentBuildBeforeLaunch())
+		if (otherSettingsWizardData.isCurrentBuildBeforeLaunch())
 			msg = Messages.getString("OtherSettingsSection.BuildBeforeLabel"); //$NON-NLS-1$
 		else
 			msg = Messages.getString("OtherSettingsSection.NoBuildBeforeLabel"); //$NON-NLS-1$
@@ -86,7 +88,7 @@ public class OtherSettingsSection extends AbstractLaunchWizardSection {
 	 */
 	@Override
 	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(
-			Shell shell, LaunchWizardData dialogData) {
+			Shell shell, IWizardData dialogData) {
 		return new OtherSettingsDialog(shell, dialogData);
 	}
 	

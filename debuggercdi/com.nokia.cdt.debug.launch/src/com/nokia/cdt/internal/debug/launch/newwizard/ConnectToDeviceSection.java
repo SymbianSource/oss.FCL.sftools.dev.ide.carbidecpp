@@ -38,14 +38,16 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 
 	private static final String NO_CURRENT_CONNECTION_MSG = Messages.getString("ConnectToDeviceSection.NoConnectionMsg"); //$NON-NLS-1$
 	private final IConnectionsManager manager;
+	private IConnectionWizardData connectionData;
 
 	/**
 	 * @param unifiedLaunchOptionsPage 
 	 * 
 	 */
-	public ConnectToDeviceSection(LaunchWizardData data, AbstractUnifiedLaunchOptionsPage launchOptionsPage) {
+	public ConnectToDeviceSection(IWizardData data, AbstractUnifiedLaunchOptionsPage launchOptionsPage) {
 		super(data, Messages.getString("ConnectToDeviceSection.Title"), launchOptionsPage); //$NON-NLS-1$
 		manager = RemoteConnectionsActivator.getConnectionsManager();
+		connectionData = (IConnectionWizardData) data;
 	}
 	
 	public void createControl(Composite parent) {
@@ -59,16 +61,16 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	}
 	
 	public void initializeSettings() {
-		data.setConnection(manager.getCurrentConnection());
+		connectionData.setConnection(manager.getCurrentConnection());
 	}
 
 	@Override
 	protected void validate() {
-		status = revalidate(data);
+		status = revalidate(connectionData);
 	}
 
 	/** Get the simple status for the connection state */
-	static IStatus revalidate(LaunchWizardData data) {
+	static IStatus revalidate(IConnectionWizardData data) {
 		IStatus status = Status.OK_STATUS;
 		
 		if (data.getConnection() == null) {
@@ -88,8 +90,8 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 			return;
 		
 		String msg;
-		if (data.getConnection() != null)
-			msg = MessageFormat.format(Messages.getString("ConnectToDeviceSection.CurrentConnectionLabel"), data.getConnectionName()); //$NON-NLS-1$
+		if (connectionData.getConnection() != null)
+			msg = MessageFormat.format(Messages.getString("ConnectToDeviceSection.CurrentConnectionLabel"), connectionData.getConnectionName()); //$NON-NLS-1$
 		else
 			msg = MessageFormat.format("{0} {1}", NO_CURRENT_CONNECTION_MSG, getStandardPNPMessage()); //$NON-NLS-1$
 			
@@ -98,7 +100,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	}
 	
 	@Override
-	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, LaunchWizardData dialogData) {
+	protected AbstractLaunchSettingsDialog createChangeSettingsDialog(Shell shell, IWizardData dialogData) {
 		return new ConnectToDeviceDialog(shell, dialogData);
 	}
 	
@@ -112,7 +114,7 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 	}
 	
 	private void doConnectionsChanged() {
-		data.setConnection(manager.getCurrentConnection());
+		connectionData.setConnection(manager.getCurrentConnection());
 		refresh();
 	}
 	
@@ -133,15 +135,15 @@ public class ConnectToDeviceSection extends AbstractLaunchWizardSection implemen
 		// if no connections are available, immediately offer to create a connection
 		
 		if (manager.getConnections().isEmpty()) {
-			SettingsWizard wizard = new SettingsWizard(null, data.getService());
+			SettingsWizard wizard = new SettingsWizard(null, connectionData.getService());
 			wizard.open(getControl().getShell());
 			IConnection newConnection = wizard.getConnectionToEdit();
-			data.setConnection(newConnection);
+			connectionData.setConnection(newConnection);
 		} else {
 			super.doChange();
 		}
 		
-		IConnection connection = data.getConnection();
+		IConnection connection = connectionData.getConnection();
 		if (connection != null && !connection.equals(manager.getCurrentConnection()))
 			manager.setCurrentConnection(connection);
 	}

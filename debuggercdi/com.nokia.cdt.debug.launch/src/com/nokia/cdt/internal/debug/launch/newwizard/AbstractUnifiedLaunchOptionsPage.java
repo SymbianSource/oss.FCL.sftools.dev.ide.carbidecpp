@@ -36,10 +36,10 @@ import com.nokia.cpp.internal.api.utils.ui.WorkbenchUtils;
 
 public abstract class AbstractUnifiedLaunchOptionsPage extends WizardPage implements ISectionChangeListener {
 
-	protected LaunchWizardData data;
+	protected IWizardData data;
 	protected ArrayList<IWizardSection> sections;
 
-	protected AbstractUnifiedLaunchOptionsPage(String pageName, LaunchWizardData data) {
+	protected AbstractUnifiedLaunchOptionsPage(String pageName, IWizardData data) {
 		super(pageName);
 		this.data = data;
 		this.sections = new ArrayList<IWizardSection>();
@@ -113,7 +113,7 @@ public abstract class AbstractUnifiedLaunchOptionsPage extends WizardPage implem
 		
 		setTitle(Messages.getString("UnifiedLaunchOptionsPage.TitleText")); //$NON-NLS-1$
 		
-		if (pageStatus != null && !pageStatus.isOK()) {
+		if (!pageStatus.isOK()) {
 			setMessage(pageStatus.getMessage(), severityToMsgType(pageStatus.getSeverity()));
 			setPageComplete(pageStatus.getSeverity() < IStatus.ERROR);
 		}

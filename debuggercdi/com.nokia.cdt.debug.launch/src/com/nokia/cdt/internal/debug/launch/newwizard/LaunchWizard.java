@@ -17,7 +17,6 @@
 
 package com.nokia.cdt.internal.debug.launch.newwizard;
 
-import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
 
 /**
@@ -27,13 +26,20 @@ import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
  */
 public class LaunchWizard extends AbstractLaunchWizard {
 	 
-	public LaunchWizard(LaunchOptions launchOptions, IService trkService) {
-		super(launchOptions, trkService, Messages.getString("LaunchWizard.Title")); //$NON-NLS-1$
-    }
+	public LaunchWizard(LaunchOptions launchOptions) {
+		super(launchOptions, Messages.getString("LaunchWizard.Title")); //$NON-NLS-1$
+	}
 
 	@Override
-	protected AbstractUnifiedLaunchOptionsPage createMainPage(LaunchWizardData data) {
+	protected AbstractUnifiedLaunchOptionsPage createMainPage(IWizardData data) {
 		return new UnifiedLaunchOptionsPage(data);
+	}
+
+	@Override
+	protected IWizardData createWizardData(LaunchOptions launchOptions) {
+		LaunchWizardData wizardData = new LaunchWizardData();
+		wizardData.initialize(launchOptions);
+		return wizardData;
 	}
 
 }

@@ -34,7 +34,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.dialogs.PreferencesUtil;
 
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EBuildBeforeLaunchOption;
+import com.nokia.cdt.internal.debug.launch.newwizard.IOtherSettingsWizardData.EBuildBeforeLaunchOption;
 
 /**
  *	This dialog allows in-depth configuration of the other settings in the launch.
@@ -46,9 +46,11 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 	private Button fEnableBuildButton;
 	private Button fWorkspaceSettingsButton;
 	private Link fWorkspaceSettingsLink;
+	private IOtherSettingsWizardData otherSettingsWizardData;
 
-	protected OtherSettingsDialog(Shell shell, LaunchWizardData data) {
+	protected OtherSettingsDialog(Shell shell, IWizardData data) {
 		super(shell, data);
+		otherSettingsWizardData = (IOtherSettingsWizardData) data;
 	}
 
 	
@@ -93,7 +95,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		fDisableBuildButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				data.setBuildBeforeLaunchOption(EBuildBeforeLaunchOption.NEVER);
+				otherSettingsWizardData.setBuildBeforeLaunchOption(EBuildBeforeLaunchOption.NEVER);
 			}
 		});
 		
@@ -108,7 +110,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		fEnableBuildButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				data.setBuildBeforeLaunchOption(EBuildBeforeLaunchOption.ALWAYS);
+				otherSettingsWizardData.setBuildBeforeLaunchOption(EBuildBeforeLaunchOption.ALWAYS);
 			}
 		});
 		
@@ -123,7 +125,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		fWorkspaceSettingsButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				data.setBuildBeforeLaunchOption(EBuildBeforeLaunchOption.USE_WORKSPACE_SETTING);
+				otherSettingsWizardData.setBuildBeforeLaunchOption(EBuildBeforeLaunchOption.USE_WORKSPACE_SETTING);
 			}
 		});
 		
@@ -145,7 +147,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 			}
 		});
 		
-		switch (data.getBuildBeforeLaunch()) {
+		switch (otherSettingsWizardData.getBuildBeforeLaunch()) {
 		case ALWAYS:
 			fEnableBuildButton.setSelection(true);
 			fEnableBuildButton.setFocus();
@@ -171,7 +173,7 @@ public class OtherSettingsDialog extends AbstractLaunchSettingsDialog {
 		updateStatus(status);
 		
 		String wsState = ""; //$NON-NLS-1$
-		if (data.isWorkspaceBuildBeforeLaunch())
+		if (otherSettingsWizardData.isWorkspaceBuildBeforeLaunch())
 			wsState = Messages.getString("OtherSettingsDialog.EnabledLabel"); //$NON-NLS-1$
 		else
 			wsState = Messages.getString("OtherSettingsDialog.DisabledLabel"); //$NON-NLS-1$

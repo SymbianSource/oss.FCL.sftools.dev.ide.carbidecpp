@@ -82,11 +82,13 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	private Label descriptionLabel;
 	private Button newButton;
 	private IConnectedService currentServiceListener;
+	private IConnectionWizardData connectionData;
 
-	protected ConnectToDeviceDialog(Shell shell, LaunchWizardData data) {
+	protected ConnectToDeviceDialog(Shell shell, IWizardData data) {
 		super(shell, data);
 		manager = RemoteConnectionsActivator.getConnectionsManager();
 		typeProvider = RemoteConnectionsActivator.getConnectionTypeProvider();
+		connectionData = (IConnectionWizardData) data;
 	}
 	
 	@Override
@@ -153,7 +155,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 		newButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				SettingsWizard wizard = new SettingsWizard(null, data.getService());
+				SettingsWizard wizard = new SettingsWizard(null, connectionData.getService());
 				wizard.open(composite.getShell());
 				IConnection connection = wizard.getConnectionToEdit();
 				setViewerInput(connection);
@@ -173,7 +175,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 			public void widgetSelected(SelectionEvent e) {
 				IConnection connection = getConnectionFromSelection(viewer.getSelection()); 
 				if (connection != null) {
-					SettingsWizard wizard = new SettingsWizard(connection, data.getService());
+					SettingsWizard wizard = new SettingsWizard(connection, connectionData.getService());
 					wizard.open(composite.getShell());
 				}
 			}
@@ -188,7 +190,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 			}
 		});
 		
-		setViewerInput(data.getConnection());
+		setViewerInput(connectionData.getConnection());
 
 		return composite;
 	}
@@ -201,17 +203,17 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	}
 
 	protected void validate() {
-		IStatus status = ConnectToDeviceSection.revalidate(data);
+		IStatus status = ConnectToDeviceSection.revalidate(connectionData);
 
 		if (status.isOK()) {
-			IConnection connection = data.getConnection();
+			IConnection connection = connectionData.getConnection();
 			if (connection != null) {
 				IConnectedService connectedService = findConnectedServiceFromConnection(connection);
 				
 				if (connectedService == null) {
 					status = error(MessageFormat.format(
 							Messages.getString("ConnectToDeviceDialog.ServiceNotSupportedError"), //$NON-NLS-1$
-							data.getService().getDisplayName()));
+							connectionData.getService().getDisplayName()));
 				}
 				else {
 					com.nokia.carbide.remoteconnections.interfaces.IConnectedService.IStatus serviceStatus = 
@@ -236,7 +238,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	private IConnectedService findConnectedServiceFromConnection(IConnection connection) {
 		Collection<IConnectedService> services = manager.getConnectedServices(connection);
 		for (IConnectedService connectedService : services) {
-			if (connectedService != null && connectedService.getService().getIdentifier().equals(data.getService().getIdentifier())) {
+			if (connectedService != null && connectedService.getService().getIdentifier().equals(connectionData.getService().getIdentifier())) {
 				return connectedService;
 			}
 		}
@@ -249,7 +251,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	 */
 	private void updateConnection(IConnection connection) {
 		String standardPNPMessage = ConnectToDeviceSection.getStandardPNPMessage();
-		data.setConnection(connection);
+		connectionData.setConnection(connection);
 		if (connection != null) {
 			descriptionLabel.setText(standardPNPMessage);
 		} else {
@@ -286,7 +288,7 @@ public class ConnectToDeviceDialog extends AbstractLaunchSettingsDialog implemen
 	private Set<IConnectionType> getCompatibleConnectionTypes() {
 		HashSet<IConnectionType> types = new HashSet<IConnectionType>();
 		Collection<String> compatibleTypeIds =
-			typeProvider.getCompatibleConnectionTypeIds(data.getService());
+			typeProvider.getCompatibleConnectionTypeIds(connectionData.getService());
 		for (String typeId : compatibleTypeIds) {
 			types.add(typeProvider.getConnectionType(typeId));
 		}

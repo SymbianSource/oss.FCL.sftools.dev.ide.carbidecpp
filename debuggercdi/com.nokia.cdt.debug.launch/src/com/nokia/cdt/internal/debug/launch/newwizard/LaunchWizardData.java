@@ -29,14 +29,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunchConfigurationType;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.ui.IDebugUIConstants;
 import org.osgi.framework.Bundle;
-import org.osgi.service.prefs.Preferences;
 
 import com.freescale.cdt.debug.cw.core.RemoteConnectionsTRKHelper;
 import com.nokia.carbide.remoteconnections.RemoteConnectionsActivator;
@@ -46,6 +43,7 @@ import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.carbide.remoteconnections.internal.api.IConnectedService2;
 import com.nokia.carbide.remoteconnections.internal.registry.Registry;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
+import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
 import com.nokia.cdt.internal.debug.launch.wizard.LaunchOptions;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 
@@ -55,7 +53,11 @@ import cwdbg.PreferenceConstants;
  * Data manipulated by the launch wizard and its dialogs.
  */
 @SuppressWarnings("restriction")
-public class LaunchWizardData extends LaunchOptions {
+public class LaunchWizardData extends LaunchOptions implements 
+		IWizardData, 
+		IConnectionWizardData,
+		IDebugRunProcessWizardData,
+		IOtherSettingsWizardData {
 	/**
 	 * This plugin is only shipped in internal layouts and is used as a fallback
 	 * to determine whether Sys TRK is more likely to be available than App TRK 
@@ -71,7 +73,7 @@ public class LaunchWizardData extends LaunchOptions {
 		String isValidPath(IPath path);
 	}
 
-	private final IService service;
+	private IService service;
 	
 	// overall target
 	public static class LaunchType {
@@ -94,13 +96,6 @@ public class LaunchWizardData extends LaunchOptions {
 	public final static LaunchType SYS_TRK = new LaunchType(null);
 	public final static LaunchType ATTACH_TO_PROCESS_LAUNCH = new LaunchType(null);
 	
-	// settings made in Debug/Run Process section
-	enum EExeSelection {
-		USE_PROJECT_EXECUTABLE,
-		USE_REMOTE_EXECUTABLE,
-		ATTACH_TO_PROCESS,
-	};
-	
 	private EExeSelection exeSelection;
 	private IPath exeSelectionPath = Path.EMPTY;
 	private EBuildBeforeLaunchOption buildBeforeLaunch;
@@ -109,14 +104,10 @@ public class LaunchWizardData extends LaunchOptions {
 	private IConnection connection;
 	private List<IPath> launchableExes;
 	
-	// settings made in the Other Settings section
-	enum EBuildBeforeLaunchOption {
-		ALWAYS,
-		NEVER,
-		USE_WORKSPACE_SETTING,
+	public LaunchWizardData() {
 	}
 
-	public LaunchWizardData(LaunchOptions launchOptions, IService dbgService) {
+	public void initialize(LaunchOptions launchOptions) {
 		this.mmps = launchOptions.mmps;
 		this.exes = launchOptions.exes;
 		this.defaultExecutable = launchOptions.defaultExecutable;
@@ -125,7 +116,7 @@ public class LaunchWizardData extends LaunchOptions {
 		this.isEmulation = launchOptions.isEmulation;
 		this.emulatorOnly = launchOptions.emulatorOnly;
 		this.mode = launchOptions.mode;
-		this.service = dbgService;
+		service = LaunchPlugin.getRunModeDebugService();
 	}
 
 	/**
@@ -230,12 +221,7 @@ public class LaunchWizardData extends LaunchOptions {
 	
 	/** Get current workspace setting */
 	public boolean isWorkspaceBuildBeforeLaunch() {
-		// here's how to get the prefs from a plugin's #getPreferenceStore() without violating access
-		String prefId = IDebugUIConstants.PREF_BUILD_BEFORE_LAUNCH;
-		int idx = prefId.lastIndexOf('.');
-		String plugin = prefId.substring(0, idx);
-		Preferences node = Platform.getPreferencesService().getRootNode().node(InstanceScope.SCOPE).node(plugin);
-		return node.getBoolean(prefId, true);
+		return WizardDataUtils.isWorkspaceBuildBeforeLaunch();
 	}
 
 	/** Get actual launch-time setting */
@@ -294,13 +280,15 @@ public class LaunchWizardData extends LaunchOptions {
 		launchOptions.isEmulation = isEmulation;
 		launchOptions.emulatorOnly = emulatorOnly;
 		launchOptions.mode = mode;
-		LaunchWizardData d = new LaunchWizardData(launchOptions, service);
+		LaunchWizardData d = new LaunchWizardData();
+		d.initialize(launchOptions);
 		d.exeSelection = exeSelection;
 		d.exeSelectionPath = exeSelectionPath;
 		d.buildBeforeLaunch = buildBeforeLaunch;
 		d.installPackage = installPackage;
 		d.sisPath = sisPath;
 		d.connection = connection;
+		d.service = service;
 		return d;
 	}
 
@@ -308,7 +296,8 @@ public class LaunchWizardData extends LaunchOptions {
 	 * Apply the given data to the receiver (when a transient dialog is accepted) 
 	 * @param dialogData
 	 */
-	public void apply(LaunchWizardData dialogData) {
+	public void apply(IWizardData launchWizardData) {
+		LaunchWizardData dialogData = (LaunchWizardData) launchWizardData;
 		exeSelection = dialogData.exeSelection;
 		exeSelectionPath = dialogData.exeSelectionPath;
 		buildBeforeLaunch = dialogData.buildBeforeLaunch;
@@ -467,5 +456,6 @@ public class LaunchWizardData extends LaunchOptions {
 		}
 		config.setAttribute(ICDTLaunchConfigurationConstants.ATTR_BUILD_BEFORE_LAUNCH, buildBeforeLaunchValue);
 	}
+
 }
 

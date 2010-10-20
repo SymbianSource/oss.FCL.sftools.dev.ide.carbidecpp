@@ -70,7 +70,7 @@ import com.nokia.carbide.cdt.builder.project.ICarbideBuildConfiguration;
 import com.nokia.carbide.cdt.builder.project.ICarbideProjectInfo;
 import com.nokia.carbide.cdt.builder.project.ISISBuilderInfo;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EExeSelection;
+import com.nokia.cdt.internal.debug.launch.newwizard.IDebugRunProcessWizardData.EExeSelection;
 import com.nokia.cpp.internal.api.utils.core.PathUtils;
 import com.nokia.cpp.internal.api.utils.core.TextUtils;
 import com.nokia.cpp.internal.api.utils.ui.BrowseDialogUtils;
@@ -95,8 +95,11 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private List<IPath> remotePathEntries = new ArrayList<IPath>();
 	private List<IPath> projectGeneratedRemotePaths;
 	
-	protected DebugRunProcessDialog(Shell shell, LaunchWizardData data) {
+	private IDebugRunProcessWizardData debugRunProcessWizardData;
+	
+	protected DebugRunProcessDialog(Shell shell, IWizardData data) {
 		super(shell, data);
+		debugRunProcessWizardData = (IDebugRunProcessWizardData) data;
 	}
 
 	
@@ -203,7 +206,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			msg = Messages.getString("DebugRunProcessDialog.RunConfigureMsg"); //$NON-NLS-1$
 		setMessage(msg);
 		
-		switch (data.getExeSelection()) {
+		switch (debugRunProcessWizardData.getExeSelection()) {
 		case USE_PROJECT_EXECUTABLE:
 			projectExecutableRadioButton.setSelection(true);
 			break;
@@ -249,13 +252,13 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		installPackageCheckbox.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				data.setInstallPackage(installPackageCheckbox.getSelection());
+				debugRunProcessWizardData.setInstallPackage(installPackageCheckbox.getSelection());
 				updatePackageUI();
 			}
 		});
 		
 		
-		if (data.isInstallPackage()) {
+		if (debugRunProcessWizardData.isInstallPackage()) {
 			installPackageCheckbox.setSelection(true);
 			updatePackageUI();
 		}
@@ -327,7 +330,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 					validate();
 				}
 			});
-			String sisPath = data.getSisPath();
+			String sisPath = debugRunProcessWizardData.getSisPath();
 			if (sisPath != null)
 				sisEdit.setText(sisPath);
 			sisEdit.setData(UID, "DebugRunProcessDialog.sisEdit"); //$NON-NLS-1$
@@ -384,18 +387,18 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		String sisPath;
     	if (sisFile != null) {
         	sisPath = sisFile.getSelectionIndex() == 0 ? null : sisFile.getText(); //$NON-NLS-1$
-        	data.setSisPath(sisPath);
+        	debugRunProcessWizardData.setSisPath(sisPath);
     	} else if (sisEdit != null) {
     		sisPath = sisEdit.getText();
-    		data.setSisPath(sisPath);
+    		debugRunProcessWizardData.setSisPath(sisPath);
     	}
 	}
 
 
 	private void updatePackageUI() {
-		installPackageUI.setEnabled(data.isInstallPackage());
+		installPackageUI.setEnabled(debugRunProcessWizardData.isInstallPackage());
 		for (Control kid : installPackageUI.getChildren())
-			kid.setEnabled(data.isInstallPackage());
+			kid.setEnabled(debugRunProcessWizardData.isInstallPackage());
 	}
 
 
@@ -422,18 +425,18 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	}
 	
 	protected void initUI() {
-		List<IPath> exes = data.getLaunchableExes();
+		List<IPath> exes = debugRunProcessWizardData.getLaunchableExes();
 		projectExecutableViewer.setInput(exes);
 		
 		// this path may either be a project-relative or remote path
-		IPath exeSelectionPath = data.getExeSelectionPath();
+		IPath exeSelectionPath = debugRunProcessWizardData.getExeSelectionPath();
 		if (exeSelectionPath.equals(Path.EMPTY) && !exes.isEmpty())
 			exeSelectionPath = exes.get(0);
 		
 		if (!Path.EMPTY.equals(exeSelectionPath)) {
 			// keep previous path if possible...
 			IPath remotePath = exeSelectionPath;
-			if (data.getExes().contains(remotePath)) {
+			if (debugRunProcessWizardData.getExes().contains(remotePath)) {
 				// unless that was actually a host-side path, which should be converted
 				remotePath = createSuggestedRemotePath(exeSelectionPath);
 			} else {
@@ -459,15 +462,15 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			}
 		}
 		
-		if (data.getExeSelection() == EExeSelection.USE_PROJECT_EXECUTABLE && exeSelectionPath != null) {
+		if (debugRunProcessWizardData.getExeSelection() == EExeSelection.USE_PROJECT_EXECUTABLE && exeSelectionPath != null) {
 			projectExecutableViewer.getControl().forceFocus();
 		}
 		
-		if (data.getExeSelection() == EExeSelection.USE_REMOTE_EXECUTABLE && exeSelectionPath != null) {
+		if (debugRunProcessWizardData.getExeSelection() == EExeSelection.USE_REMOTE_EXECUTABLE && exeSelectionPath != null) {
 			remoteProgramViewer.getControl().forceFocus();
 		}
 		
-		if (data.getExeSelection() == EExeSelection.ATTACH_TO_PROCESS) {
+		if (debugRunProcessWizardData.getExeSelection() == EExeSelection.ATTACH_TO_PROCESS) {
 			attachToProcessRadioButton.forceFocus();
 		}
 
@@ -490,7 +493,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	 * @return host path or <code>null</code>
 	 */
 	private IPath getHostFileForRemoteLocation(IPath path) {
-		for (IPath exe : data.getExes()) {
+		for (IPath exe : debugRunProcessWizardData.getExes()) {
 			// no... we don't have any knowledge (yet) of the actual install path,
 			// so comparing the exact path will fail if the user edited it.
 			// IPath remoteSuggested = createSuggestedRemotePath(exe);
@@ -544,12 +547,12 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 				Object sel = ((IStructuredSelection) event.getSelection()).getFirstElement();
 				if (sel instanceof IPath) {
 					if (projectExecutableRadioButton.getSelection()) {
-						data.setExeSelectionPath((IPath) sel);
+						debugRunProcessWizardData.setExeSelectionPath((IPath) sel);
 					}
 					
 					// track the default remote program from the executable, for easy editing
 					if (remoteProgramViewer != null && !remoteExecutableRadioButton.getSelection()) {
-						IPath exeSelectionPath = createSuggestedRemotePath(data.getExeSelectionPath());
+						IPath exeSelectionPath = createSuggestedRemotePath(debugRunProcessWizardData.getExeSelectionPath());
 						// path should already be in model
 						remoteProgramViewer.setSelection(new StructuredSelection(exeSelectionPath)); 
 					}
@@ -563,10 +566,10 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private void handleProjectExecutableRadioSelected() {
 		if (projectExecutableRadioButton.getSelection()) {
 			projectExecutableViewer.getControl().setEnabled(true);
-			data.setExeSelection(EExeSelection.USE_PROJECT_EXECUTABLE);
+			debugRunProcessWizardData.setExeSelection(EExeSelection.USE_PROJECT_EXECUTABLE);
 			IPath selectedPath = (IPath) ((IStructuredSelection) projectExecutableViewer.getSelection()).getFirstElement();
 			if (selectedPath != null) {
-				data.setExeSelectionPath(selectedPath);
+				debugRunProcessWizardData.setExeSelectionPath(selectedPath);
 			}
 			validate();
 		} else {
@@ -591,7 +594,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		GridDataFactory.fillDefaults().grab(true, false).applyTo(remoteProgramViewer.getControl());
 		
 		projectGeneratedRemotePaths = new ArrayList<IPath>();
-		for (IPath launchable : data.getLaunchableExes()) {
+		for (IPath launchable : debugRunProcessWizardData.getLaunchableExes()) {
 			projectGeneratedRemotePaths.add(createSuggestedRemotePath(launchable));
 		}
 		
@@ -625,7 +628,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 			public void modifyText(ModifyEvent e) {
 				IPath path = PathUtils.createPath(remoteProgramViewer.getCombo().getText().trim());
 				if (remoteExecutableRadioButton.getSelection()) {
-					data.setExeSelectionPath(path);
+					debugRunProcessWizardData.setExeSelectionPath(path);
 				}
 				
 				if (!projectExecutableRadioButton.getSelection()) {
@@ -657,9 +660,9 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	private void handleRemoteExecutableRadioSelected() {
 		if (remoteExecutableRadioButton.getSelection()) {
 			remoteProgramViewer.getControl().setEnabled(true);
-			data.setExeSelection(EExeSelection.USE_REMOTE_EXECUTABLE);
+			debugRunProcessWizardData.setExeSelection(EExeSelection.USE_REMOTE_EXECUTABLE);
 			IPath path = PathUtils.createPath(remoteProgramViewer.getCombo().getText());
-			data.setExeSelectionPath(path);
+			debugRunProcessWizardData.setExeSelectionPath(path);
 			validate();
 		} else {
 			remoteProgramViewer.getControl().setEnabled(false);
@@ -696,8 +699,8 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 	
 	private void handleAttachToProcessRadioSelected() {
 		if (attachToProcessRadioButton.getSelection()) {
-			data.setExeSelection(EExeSelection.ATTACH_TO_PROCESS);
-			data.setExeSelectionPath(null);
+			debugRunProcessWizardData.setExeSelection(EExeSelection.ATTACH_TO_PROCESS);
+			debugRunProcessWizardData.setExeSelectionPath(null);
 			validate();
 		} else {
 			// another button becomes active and sets the new launch process
@@ -709,8 +712,8 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		IStatus status = Status.OK_STATUS;
 		
 		// check launch method
-		IPath exePath = data.getExeSelectionPath(); 
-		switch (data.getExeSelection()) {
+		IPath exePath = debugRunProcessWizardData.getExeSelectionPath(); 
+		switch (debugRunProcessWizardData.getExeSelection()) {
 		case USE_PROJECT_EXECUTABLE:
 			if (exePath.isEmpty()) {
 				status = error(Messages.getString("DebugRunProcessDialog.NoExesError")); //$NON-NLS-1$
@@ -738,7 +741,7 @@ public class DebugRunProcessDialog extends AbstractLaunchSettingsDialog implemen
 		}
 		
 		// check SIS selection
-		if (data.isInstallPackage()) {
+		if (debugRunProcessWizardData.isInstallPackage()) {
 	    	if (sisEdit != null) {
 	    		String text = sisEdit.getText().trim();
 	    		if (text.length() > 0) {

@@ -22,7 +22,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.debug.core.ILaunchConfiguration;
 
-import com.nokia.carbide.remoteconnections.interfaces.IService;
 import com.nokia.cdt.debug.cw.symbian.SettingsData;
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin.ILaunchCreationWizardFactory;
 import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizard;
@@ -45,8 +44,7 @@ public class PhoneLaunchShortcut extends AbstractSymbianLaunchShortcut {
 		LaunchPlugin.getDefault().launchProject(project, executable, defaultMMP, mode, 
 																new ILaunchCreationWizardFactory() {
 					public ILaunchCreationWizard createLaunchCreationWizard(LaunchOptions launchOptions) throws Exception {
-						IService trkService = LaunchPlugin.getRunModeDebugService();
-						LaunchWizard launchWizard = new LaunchWizard(launchOptions, trkService);
+						LaunchWizard launchWizard = new LaunchWizard(launchOptions);
 						return launchWizard;
 					};
 				});

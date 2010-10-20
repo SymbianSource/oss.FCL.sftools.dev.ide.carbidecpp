@@ -43,7 +43,7 @@ public abstract class AbstractLaunchSettingsDialog extends TitleAreaDialog {
 	
 	protected final static String UID = ".uid"; //$NON-NLS-1$
 	
-	protected final LaunchWizardData data;
+	protected final IWizardData data;
 	protected int INDENT;
 	private String title;
 
@@ -53,7 +53,7 @@ public abstract class AbstractLaunchSettingsDialog extends TitleAreaDialog {
 	 * @param parentShell
 	 * @param data 
 	 */
-	public AbstractLaunchSettingsDialog(Shell parentShell, LaunchWizardData data) {
+	public AbstractLaunchSettingsDialog(Shell parentShell, IWizardData data) {
 		super(parentShell);
 		setShellStyle(getShellStyle() | SWT.RESIZE);
 		this.data = data;

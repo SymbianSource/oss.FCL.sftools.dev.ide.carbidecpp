@@ -23,7 +23,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 
 import com.nokia.cdt.internal.debug.launch.LaunchPlugin;
-import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EExeSelection;
+import com.nokia.cdt.internal.debug.launch.newwizard.IDebugRunProcessWizardData.EExeSelection;
 
 /**
  * This page presents three sections:
@@ -43,7 +43,7 @@ import com.nokia.cdt.internal.debug.launch.newwizard.LaunchWizardData.EExeSelect
  */
 public class UnifiedLaunchOptionsPage extends AbstractUnifiedLaunchOptionsPage {
 
-	public UnifiedLaunchOptionsPage(LaunchWizardData data) {
+	public UnifiedLaunchOptionsPage(IWizardData data) {
 		super(Messages.getString("UnifiedLaunchOptionsPage.Title"), data); //$NON-NLS-1$
 		setDescription(Messages.getString("UnifiedLaunchOptionsPage.Desc")); //$NON-NLS-1$
 		
@@ -57,17 +57,19 @@ public class UnifiedLaunchOptionsPage extends AbstractUnifiedLaunchOptionsPage {
 	}
 
 	private IStatus checkBuildProducts() {
-		if (!data.isCurrentBuildBeforeLaunch()) {
+		IOtherSettingsWizardData otherSettingsWizardData = (IOtherSettingsWizardData) data;
+		if (!otherSettingsWizardData.isCurrentBuildBeforeLaunch()) {
 			// check sis files
-			String sisPath = data.getSisPath();
-			if (data.isInstallPackage() && 
+			IDebugRunProcessWizardData debugRunProcessWizardData = (IDebugRunProcessWizardData) data;
+			String sisPath = debugRunProcessWizardData.getSisPath();
+			if (debugRunProcessWizardData.isInstallPackage() && 
 					sisPath != null && !new File(sisPath).exists()) {
 				return new Status(IStatus.WARNING, LaunchPlugin.PLUGIN_ID,
 						Messages.getString("UnifiedLaunchOptionsPage.SISFileMissingWarning")); //$NON-NLS-1$
 			}
 			// check launch file
-			if (data.getExeSelection().equals(EExeSelection.USE_PROJECT_EXECUTABLE) && 
-					!data.getExePath().toFile().exists()) {
+			if (debugRunProcessWizardData.getExeSelection().equals(EExeSelection.USE_PROJECT_EXECUTABLE) && 
+					!debugRunProcessWizardData.getExePath().toFile().exists()) {
 				return new Status(IStatus.WARNING, LaunchPlugin.PLUGIN_ID,
 						Messages.getString("UnifiedLaunchOptionsPage.ExeFileMissingWarning")); //$NON-NLS-1$
 			}
