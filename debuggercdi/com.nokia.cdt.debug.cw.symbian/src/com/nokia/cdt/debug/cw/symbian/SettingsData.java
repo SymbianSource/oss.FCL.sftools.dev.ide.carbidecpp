@@ -79,7 +79,6 @@ public class SettingsData {
 	public static final String LaunchConfig_Emulator = PREFIX + ".LaunchConfig_Emulator"; //$NON-NLS-1$
 	public static final String LaunchConfig_AppTRK = PREFIX + ".LaunchConfig_AppTRK"; //$NON-NLS-1$
 	public static final String LaunchConfig_SysTRK = PREFIX + ".LaunchConfig_SysTRK"; //$NON-NLS-1$
-	public static final String LaunchConfig_PlatSim = PREFIX + ".LaunchConfig_PlatSim"; //$NON-NLS-1$
 
 	public static final String ATTR_originalName = "originalName"; //$NON-NLS-1$
 
@@ -696,7 +695,7 @@ public class SettingsData {
 			configuration.setAttribute(TARGET_PATH_INCLUDES_FILENAME, "true"); //$NON-NLS-1$
 		}
 		
-		if (settingsGroup.equals(LaunchConfig_SysTRK) || settingsGroup.equals(LaunchConfig_PlatSim)) {
+		if (settingsGroup.equals(LaunchConfig_SysTRK)) {
 			setFileTransferTab(configuration, project);
 		}
 
